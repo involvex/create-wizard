@@ -2,121 +2,62 @@
  * @format
  */
 
+/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b6;
-  --ifm-color-primary-lightest: #4fddc2;
-
-  /* Hacker Theme Colors */
-  --ifm-background-color: #0d0d0d;
-  --ifm-font-color-base: #00ff00;
+  --ifm-color-primary: #00ff00; /* Bright Green */
+  --ifm-color-primary-dark: #00e600;
+  --ifm-color-primary-darker: #00cc00;
+  --ifm-color-primary-darkest: #00b300;
+  --ifm-color-primary-light: #1aff1a;
+  --ifm-color-primary-lighter: #33ff33;
+  --ifm-color-primary-lightest: #4dff4d;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 255, 0, 0.1);
   --ifm-font-family-base: 'Courier New', Courier, monospace;
   --ifm-font-family-monospace: 'Courier New', Courier, monospace;
-  --ifm-code-font-size: 95%;
-  --ifm-navbar-background-color: #000000;
-  --ifm-footer-background-color: #000000;
-  --ifm-hero-background-color: #000000;
-  --ifm-card-background-color: #1a1a1a;
-  --ifm-link-color: #00ff00;
-  --ifm-link-hover-color: #25c2a0;
-  --ifm-heading-color: #00ff00;
 }
 
 html[data-theme='dark'] {
-  --ifm-background-color: #0d0d0d;
+  --ifm-background-color: #000000;
+  --ifm-background-surface-color: #121212;
+  --ifm-global-card-background-color: #0a0a0a;
   --ifm-font-color-base: #00ff00;
-  --ifm-navbar-background-color: #000000;
-  --ifm-footer-background-color: #000000;
-  --ifm-hero-background-color: #000000;
-  --ifm-card-background-color: #1a1a1a;
+  --ifm-color-primary: #00ff00;
+  --ifm-color-primary-dark: #00e600;
+  --ifm-color-primary-darker: #00cc00;
+  --ifm-color-primary-darkest: #00b300;
+  --ifm-color-primary-light: #1aff1a;
+  --ifm-color-primary-lighter: #33ff33;
+  --ifm-color-primary-lightest: #4dff4d;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 255, 0, 0.3);
 }
 
-.hero--primary {
-  background-color: #000;
-  color: var(--ifm-font-color-base);
-}
-
-.button--secondary {
-  background-color: #00ff00;
-  color: #0d0d0d;
-  border-color: #00ff00;
-  transition: all 0.3s ease-in-out; /* Added transition */
-}
-
-.button--secondary:hover {
-  background-color: #25c2a0;
-  border-color: #25c2a0;
-  transform: translateY(-2px); /* Added subtle animation */
-}
-
-.footer {
-  background-color: var(--ifm-footer-background-color);
-}
-
-/* Add a subtle text-shadow to mimic CRT screens */
 body {
-  text-shadow: 0 0 2px #00ff00;
+  text-shadow: 0 0 5px #00ff00;
 }
 
-/* Add a blinking cursor animation to headings */
-.hero__title::after {
-  content: '_';
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  from,
-  to {
-    color: transparent;
-  }
-  50% {
-    color: #00ff00;
-  }
-}
-
-/* Style the navbar logo */
-.navbar__logo img {
-  width: 32px;
-  height: 32px;
-  margin-right: 8px;
-  filter: grayscale(1) brightness(3); /* Make it look more thematic */
-}
-
-.navbar__link--active {
-  color: var(--ifm-color-primary-lightest);
-  text-shadow: 0 0 5px var(--ifm-color-primary-lightest);
-}
-
-.footer__link-item {
-  color: var(--ifm-font-color-base);
-  transition: color 0.3s ease-in-out; /* Added transition */
-}
-
-.footer__link-item:hover {
-  color: var(--ifm-link-hover-color);
-}
-
-/* Add transitions to general links */
-a {
-  transition: color 0.3s ease-in-out;
-}
-
+.button,
+.button:hover,
+a,
 a:hover {
-  color: var(--ifm-link-hover-color);
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 }
 
-/* Add subtle hover effects to cards/features */
+.button:hover,
+a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+}
+
 .card {
   transition:
-    transform 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out;
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 255, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 255, 0, 0.5);
 }

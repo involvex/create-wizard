@@ -30,7 +30,10 @@
     "lint:fix": "npx eslint . --config eslint.config.js --fix",
     "check": "npm run lint:fix && npm run format",
     "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --format=esm --external:yoctocolors-cjs --external:mute-stream --external:safer-buffer --external:iconv-lite --external:cross-spawn --external:graceful-fs --external:fs-extra --external:inquirer --external:cli-progress --outfile=dist/create-wizard.mjs",
-    "start": "node dist/create-wizard.mjs"
+    "start": "node dist/create-wizard.mjs",
+    "docs:start": "docusaurus start",
+    "docs:build": "docusaurus build",
+    "docs:serve": "docusaurus serve"
   },
   "bin": {
     "create-wizard": "dist/create-wizard.mjs"
@@ -43,8 +46,11 @@
     "ora": "^9.0.0"
   },
   "devDependencies": {
+    "@docusaurus/core": "^3.8.1",
+    "@docusaurus/preset-classic": "^3.8.1",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^10.0.0",
+    "@mdx-js/react": "^3.0.0",
     "conventional-changelog-cli": "^5.0.0",
     "ddc-copyright-head": "^1.4.0",
     "esbuild": "0.25.9",

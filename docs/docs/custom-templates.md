@@ -4,6 +4,8 @@ title: Creating Custom Templates
 sidebar_label: Custom Templates
 ---
 
+<!-- @format -->
+
 This guide explains how to create your own custom templates for `@involvex/create-wizard` using the `npm run template:create` command.
 
 ## Using `npm run template:create`
@@ -62,17 +64,17 @@ This file defines the metadata, dependencies, and scripts for your template. It'
 }
 ```
 
--   `dependencies`: An object where keys are production dependency names and values are their versions.
--   `devDependencies`: An object where keys are development dependency names and values are their versions.
--   `scripts`: An object where keys are npm script names and values are the commands to execute.
+- `dependencies`: An object where keys are production dependency names and values are their versions.
+- `devDependencies`: An object where keys are development dependency names and values are their versions.
+- `scripts`: An object where keys are npm script names and values are the commands to execute.
 
 ### `files/` Directory
 
 This directory contains all the boilerplate files that will be copied into the user's new project. You can include any files and folders here that you want to be part of your template. For example:
 
--   `src/index.js`: Your main application entry point.
--   `public/index.html`: An HTML file for web projects.
--   `.gitignore`, `.env.example`, etc.
+- `src/index.js`: Your main application entry point.
+- `public/index.html`: An HTML file for web projects.
+- `.gitignore`, `.env.example`, etc.
 
 **Important:** The `template:create` script will automatically generate `tsconfig.json`, `eslint.config.js`, and `.prettierrc` inside this `files/` directory if you selected those options during template creation.
 

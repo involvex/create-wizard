@@ -56,6 +56,7 @@ export async function main(deps) {
       fsExtra.copySync(templateFilesPath, projectDir, { overwrite: true })
       spinner.succeed('Template files copied.')
     }
+    return templateConfig
   }
 
   const answers = await prompt([
@@ -153,20 +154,18 @@ export async function main(deps) {
 
   // Process user-selected dependencies
   const userDependencies = answers.dependencies.reduce((acc, dep) => {
-    acc[dep.name] = dep.version;
-    return acc;
-  }, {});
+    acc[dep.name] = dep.version
+    return acc
+  }, {})
 
   // Merge user-selected dependencies with template dependencies
   packageJson.dependencies = {
     ...packageJson.dependencies,
     ...userDependencies,
-    ...templateConfig.dependencies,
-  };
+  }
   packageJson.devDependencies = {
     ...packageJson.devDependencies,
-    ...templateConfig.devDependencies,
-  };
+  }
 
   if (answers.features.includes('jest')) {
     packageJson.devDependencies = {
@@ -183,7 +182,7 @@ export async function main(deps) {
     packageJson.devDependencies = {
       ...packageJson.devDependencies,
       typescript: '^5.3.3',
-    };
+    }
     fs.writeFileSync(
       join(projectDir, 'tsconfig.json'),
       JSON.stringify(
@@ -200,36 +199,36 @@ export async function main(deps) {
         null,
         2,
       ),
-    );
+    )
   }
 
   if (answers.includeEslint) {
     packageJson.devDependencies = {
       ...packageJson.devDependencies,
       eslint: '^8.56.0',
-    };
+    }
     if (answers.includePrettier) {
       packageJson.devDependencies = {
         ...packageJson.devDependencies,
         'eslint-config-prettier': '^9.1.0',
-      };
+      }
     }
     fs.writeFileSync(
       join(projectDir, 'eslint.config.js'),
-      `import js from "@eslint/js";\nimport globals from "globals";\n${answers.includePrettier ? 'import prettierConfig from \'eslint-config-prettier\';\n' : ''}export default [\n  {languageOptions: { globals: { ...globals.node, ...globals.browser } }},\n  js.configs.recommended,\n  ${answers.includePrettier ? 'prettierConfig,\n' : ''}];\n`,
-    );
+      `import js from "@eslint/js";\nimport globals from "globals";\n${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier';\n" : ''}export default [\n  {languageOptions: { globals: { ...globals.node, ...globals.browser } }},\n  js.configs.recommended,\n  ${answers.includePrettier ? 'prettierConfig,\n' : ''}];\n`,
+    )
     packageJson.scripts = {
       ...packageJson.scripts,
       lint: 'eslint .',
       'lint:fix': 'eslint . --fix',
-    };
+    }
   }
 
   if (answers.includePrettier) {
     packageJson.devDependencies = {
       ...packageJson.devDependencies,
       prettier: '^3.2.5',
-    };
+    }
     fs.writeFileSync(
       join(projectDir, '.prettierrc'),
       JSON.stringify(
@@ -241,12 +240,12 @@ export async function main(deps) {
         null,
         2,
       ),
-    );
+    )
     packageJson.scripts = {
       ...packageJson.scripts,
       'format:check': 'prettier --check .',
       format: 'prettier --write .',
-    };
+    }
   }
 
   if (answers.includeDocker) {
@@ -273,7 +272,7 @@ EXPOSE 3000
 # Define the command to run the app
 CMD ["npm", "start"]
 `,
-    );
+    )
     fs.writeFileSync(
       join(projectDir, '.dockerignore'),
       `node_modules
@@ -285,13 +284,13 @@ yarn-debug.log
 Dockerfile
 .dockerignore
 `,
-    );
+    )
   }
 
   if (answers.includeGithubActions) {
-    const githubDir = join(projectDir, '.github');
-    const workflowsDir = join(githubDir, 'workflows');
-    fs.mkdirSync(workflowsDir, { recursive: true });
+    const githubDir = join(projectDir, '.github')
+    const workflowsDir = join(githubDir, 'workflows')
+    fs.mkdirSync(workflowsDir, { recursive: true })
     fs.writeFileSync(
       join(workflowsDir, 'main.yml'),
       `name: CI/CD Pipeline
@@ -312,7 +311,7 @@ jobs:
       - run: npm run build --if-present
       - run: npm test
 `,
-    );
+    )
   }
 
   if (answers.includeGitlabCi) {
@@ -339,7 +338,7 @@ test-job:
   tags:
     - docker
 `,
-    );
+    )
   }
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
@@ -368,8 +367,12 @@ test-job:
     )
   }
 
-  const allDependencies = Object.entries(packageJson.dependencies || {}).map(([name, version]) => `${name}@${version}`);
-  const allDevDependencies = Object.entries(packageJson.devDependencies || {}).map(([name, version]) => `${name}@${version}`);
+  const allDependencies = Object.entries(packageJson.dependencies || {}).map(
+    ([name, version]) => `${name}@${version}`,
+  )
+  const allDevDependencies = Object.entries(packageJson.devDependencies || {}).map(
+    ([name, version]) => `${name}@${version}`,
+  )
 
   if (allDependencies.length > 0) {
     const installSpinner = ora('Installing dependencies...').start()

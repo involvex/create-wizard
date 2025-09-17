@@ -4,6 +4,8 @@ title: Theme Customization
 sidebar_label: Theme Customization
 ---
 
+<!-- @format -->
+
 This section explains how to customize the Docusaurus theme, including details on the current "hacker" theme.
 
 ## The "Hacker" Theme

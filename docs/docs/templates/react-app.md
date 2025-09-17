@@ -4,28 +4,30 @@ title: React App Template
 sidebar_label: React App
 ---
 
+<!-- @format -->
+
 This template provides a basic React application setup using Vite.
 
 ## Features
 
--   **React**: The JavaScript library for building user interfaces.
--   **Vite**: A fast build tool that provides a lightning-fast development experience.
+- **React**: The JavaScript library for building user interfaces.
+- **Vite**: A fast build tool that provides a lightning-fast development experience.
 
 ## Files Included
 
--   `index.html`: The main HTML file for your application.
--   `src/App.jsx`: The root React component of your application.
--   `src/index.jsx`: The entry point for your React application, rendering the `App` component.
--   `.gitignore`: Configured to ignore `node_modules`, `dist`, and other common files.
--   `package.json`: Configured with `dev`, `build`, and `preview` scripts, and necessary dependencies.
+- `index.html`: The main HTML file for your application.
+- `src/App.jsx`: The root React component of your application.
+- `src/index.jsx`: The entry point for your React application, rendering the `App` component.
+- `.gitignore`: Configured to ignore `node_modules`, `dist`, and other common files.
+- `package.json`: Configured with `dev`, `build`, and `preview` scripts, and necessary dependencies.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
--   `npm run dev`: Starts the development server.
--   `npm run build`: Builds the application for production to the `dist` folder.
--   `npm run preview`: Serves the production build locally.
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the application for production to the `dist` folder.
+- `npm run preview`: Serves the production build locally.
 
 ## Getting Started
 

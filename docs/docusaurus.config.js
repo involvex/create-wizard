@@ -53,7 +53,14 @@ const config = {
           editUrl:
             'https://github.com/involvex/create-wizard',
         },
-        blog: false,
+        blog: {
+          showReadingTime: true,
+          path: './changelog',
+          routeBasePath: '/changelog',
+          blogTitle: 'Changelog',
+          blogDescription: 'Keep up with the latest changes to create-wizard!',
+          blogSidebarTitle: 'Recent Changes',
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -79,6 +86,7 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
+          { to: '/changelog', label: 'Changelog', position: 'left' },
           {
             href: 'https://github.com/involvex/create-wizard',
             label: 'GitHub',

@@ -1,6 +1,7 @@
 /**
  * @format
  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 /* You can override the default Infima variables here. */
 :root {
@@ -12,14 +13,21 @@
   --ifm-color-primary-lighter: #33ff33;
   --ifm-color-primary-lightest: #4dff4d;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 255, 0, 0.1);
-  --ifm-font-family-base: 'Courier New', Courier, monospace;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-font-family-base: 'Roboto', 'Courier New', Courier, monospace;
   --ifm-font-family-monospace: 'Courier New', Courier, monospace;
 }
 
 /* Light theme adjustments */
 html[data-theme='light'] {
   --ifm-background-color: #f0f2f5; /* Soft, off-white background */
+}
+
+/* Make the main welcome header black in light mode for contrast */
+html[data-theme='light'] .hero__title,
+html[data-theme='light'] .hero__subtitle {
+  color: black;
+  text-shadow: none;
 }
 
 /* Dark theme adjustments for "hacker" feel */

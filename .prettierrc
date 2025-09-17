@@ -1,0 +1,17 @@
+# @format
+
+{
+  '$schema': 'https://www.schemastore.org/prettierrc.json',
+  'semi': false,
+  'singleQuote': true,
+  'trailingComma': 'all',
+  'printWidth': 100,
+  'tabWidth': 2,
+  'arrowParens': 'avoid',
+  'endOfLine': 'auto',
+  'requirePragma': false,
+  'insertPragma': true,
+  'checkIgnorePragma': true,
+  'proseWrap': 'preserve',
+  'plugins': ['eslint-plugin-license-header', 'prettier'],
+}

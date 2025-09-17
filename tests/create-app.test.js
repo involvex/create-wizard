@@ -1,0 +1,275 @@
+import { jest } from '@jest/globals';
+import { join } from 'path';
+import { rmSync } from 'fs';
+
+// Mock inquirer and execa
+jest.mock('inquirer', () => ({
+  prompt: jest.fn(),
+}));
+jest.mock('execa', () => ({
+  execa: jest.fn(() => ({
+    stdout: { pipe: jest.fn() },
+    stderr: { pipe: jest.fn() },
+    catch: jest.fn(),
+  })),
+}));
+
+// Mock fs-extra's copySync
+jest.mock('fs-extra', () => ({
+  copySync: jest.fn(),
+}));
+
+// Completely mock the 'fs' module
+jest.mock('fs', () => {
+  const actualFs = jest.requireActual('fs');
+  return {
+    ...actualFs, // Keep all actual fs functions by default
+    existsSync: jest.fn(),
+    mkdirSync: jest.fn(),
+    readFileSync: jest.fn(),
+    writeFileSync: jest.fn(),
+    readdirSync: jest.fn(),
+  };
+});
+
+const projectRoot = 'D:\\repos\\create-universe'; // Define project root
+const cliPath = join(projectRoot, 'scripts/create-app.js');
+const templatesDir = join(projectRoot, 'templates');
+
+describe('create-universe CLI', () => {
+  let inquirer;
+  let execa;
+  let fsExtra;
+  let originalCwd;
+  let tempProjectDir;
+  let fs;
+
+  beforeEach(() => {
+    inquirer = require('inquirer');
+    execa = require('execa');
+    fsExtra = require('fs-extra');
+    fs = require('fs'); // Get the mocked fs module
+
+    // Reset mocks before each test
+    inquirer.prompt.mockReset();
+    execa.execa.mockReset();
+    fsExtra.copySync.mockReset();
+
+    // Store original CWD and create a temporary directory for each test
+    originalCwd = process.cwd();
+    tempProjectDir = join(projectRoot, `temp-test-project-${Date.now()}`);
+    jest.requireActual('fs').mkdirSync(tempProjectDir, { recursive: true });
+    process.chdir(tempProjectDir);
+
+    // Set mock implementations for fs functions
+    fs.existsSync.mockImplementation((path) => {
+      // Only mock the initial project directory existence check
+      if (path === join(originalCwd, 'existing-app')) {
+        return true;
+      }
+      // For the initial check of a new project, it should not exist
+      if (path.startsWith(tempProjectDir) && path !== tempProjectDir) {
+        const relativePath = path.substring(tempProjectDir.length + 1);
+        if (relativePath === 'my-discord-app' || relativePath === 'my-next-app' || relativePath === 'existing-app') {
+          return false; // Simulate that the project directory does not exist initially for new projects
+        }
+      }
+      // For all other existsSync calls, use the actual function
+      return jest.requireActual('fs').existsSync(path);
+    });
+
+    fs.readFileSync.mockImplementation((path, options) => {
+      // Mock template.json content
+      if (path.includes('template.json')) {
+        const templateName = path.split('/').slice(-2, -1)[0]; // Extract template name from path
+        if (templateName === 'discord-bot') {
+          return JSON.stringify({
+            dependencies: { 'discord.js': '^14.0.0' },
+            devDependencies: {},
+            scripts: { start: 'node src/index.js' },
+          });
+        } else if (templateName === 'nextjs') {
+          return JSON.stringify({
+            dependencies: { 'react': '^18.2.0', 'react-dom': '^18.2.0', 'next': '^14.0.0' },
+            devDependencies: {},
+            scripts: { dev: 'next dev', build: 'next build', start: 'next start', lint: 'next lint' },
+          });
+        } else if (templateName === 'vite') {
+          return JSON.stringify({
+            dependencies: { 'vite': '^5.0.0' },
+            devDependencies: {},
+            scripts: { dev: 'vite', build: 'vite build', preview: 'vite preview' },
+          });
+        } else if (templateName === 'vuejs') {
+          return JSON.stringify({
+            dependencies: { 'vue': '^3.0.0' },
+            devDependencies: {},
+            scripts: { dev: 'vite', build: 'vite build', preview: 'vite preview' },
+          });
+        } else if (templateName === 'webpack') {
+          return JSON.stringify({
+            dependencies: {},
+            devDependencies: { 'webpack': '^5.0.0', 'webpack-cli': '^5.0.0' },
+            scripts: { build: 'webpack' },
+          });
+        }
+      }
+      // For all other readFileSync calls, use the actual function
+      return jest.requireActual('fs').readFileSync(path, options);
+    });
+
+    fs.readdirSync.mockImplementation((path, options) => {
+      if (path.includes('templates')) {
+        // Mock template directory listing
+        return [
+          { name: 'discord-bot', isDirectory: () => true },
+          { name: 'nextjs', isDirectory: () => true },
+          { name: 'vite', isDirectory: () => true },
+          { name: 'vuejs', isDirectory: () => true },
+          { name: 'webpack', isDirectory: () => true },
+        ];
+      }
+      return jest.requireActual('fs').readdirSync(path, options);
+    });
+
+    fs.writeFileSync.mockImplementation((path, data) => {
+      // Allow writing to the temp directory
+      return jest.requireActual('fs').writeFileSync(path, data);
+    });
+
+    fs.mkdirSync.mockImplementation((path, options) => {
+      // Allow creating directories in the temp directory
+      return jest.requireActual('fs').mkdirSync(path, options);
+    });
+  });
+
+  afterEach(() => {
+    // Restore original CWD
+    process.chdir(originalCwd);
+    // Clean up the temporary directory after each test
+    if (jest.requireActual('fs').existsSync(tempProjectDir)) {
+      rmSync(tempProjectDir, { recursive: true, force: true });
+    }
+    jest.restoreAllMocks(); // Restore all spied-on functions
+  });
+
+  test('should create a project with default settings (discord-bot template, no extra deps, git init)', async () => {
+    // Mock user input
+    inquirer.prompt.mockResolvedValueOnce({
+      projectName: 'my-discord-app',
+      template: 'discord-bot',
+      dependencies: [],
+      initGit: true,
+    });
+
+    // Dynamically import the CLI tool after setting up mocks
+    const { main } = await import(cliPath);
+    await main();
+
+    // Assertions
+    expect(inquirer.prompt).toHaveBeenCalledTimes(1);
+    expect(inquirer.prompt).toHaveBeenCalledWith(expect.arrayContaining([
+      expect.objectContaining({ name: 'projectName' }),
+      expect.objectContaining({ name: 'template' }),
+      expect.objectContaining({ name: 'dependencies' }),
+      expect.objectContaining({ name: 'initGit' }),
+    ]));
+
+    // Verify execa calls
+    expect(execa.execa).toHaveBeenCalledWith('npm', ['init', '-y']);
+    expect(fsExtra.copySync).toHaveBeenCalledTimes(1);
+    expect(fsExtra.copySync).toHaveBeenCalledWith(
+      join(templatesDir, 'discord-bot/files'),
+      join(tempProjectDir),
+      { overwrite: true }
+    );
+
+    // Verify npm install calls
+    expect(execa.execa).toHaveBeenCalledWith('npm', ['install', 'discord.js']);
+    expect(execa.execa).not.toHaveBeenCalledWith('npm', ['install', '--save-dev', expect.any(String)]);
+
+    // Verify Git initialization
+    expect(execa.execa).toHaveBeenCalledWith('git', ['init']);
+    expect(execa.execa).toHaveBeenCalledWith('git', ['add', '.']);
+    expect(execa.execa).toHaveBeenCalledWith('git', ['commit', '-m', 'Initial commit']);
+
+    // Verify package.json content after template application and dependency installation
+    const projectPackageJsonPath = join(tempProjectDir, 'package.json');
+    const projectPackageJson = JSON.parse(jest.requireActual('fs').readFileSync(projectPackageJsonPath, 'utf-8'));
+    expect(projectPackageJson.dependencies).toEqual({ 'discord.js': '^14.0.0' });
+    expect(projectPackageJson.scripts).toEqual({ start: 'node src/index.js' });
+  });
+
+  test('should create a project with nextjs template and additional dependencies, no git init', async () => {
+    inquirer.prompt.mockResolvedValueOnce({
+      projectName: 'my-next-app',
+      template: 'nextjs',
+      dependencies: ['axios', 'dotenv'],
+      initGit: false,
+    });
+
+    const { main } = await import(cliPath);
+    await main();
+
+    expect(execa.execa).toHaveBeenCalledWith('npm', ['init', '-y']);
+    expect(fsExtra.copySync).toHaveBeenCalledTimes(1);
+    expect(fsExtra.copySync).toHaveBeenCalledWith(
+      join(templatesDir, 'nextjs/files'),
+      join(tempProjectDir),
+      { overwrite: true }
+    );
+
+    // Verify npm install calls
+    expect(execa.execa).toHaveBeenCalledWith('npm', ['install', 'react', 'react-dom', 'next', 'axios', 'dotenv']);
+    expect(execa.execa).not.toHaveBeenCalledWith('npm', ['install', '--save-dev', expect.any(String)]);
+
+    // Verify Git not initialized
+    expect(execa.execa).not.toHaveBeenCalledWith('git', ['init']);
+
+    const projectPackageJsonPath = join(tempProjectDir, 'package.json');
+    const projectPackageJson = JSON.parse(jest.requireActual('fs').readFileSync(projectPackageJsonPath, 'utf-8'));
+    expect(projectPackageJson.dependencies).toEqual({
+      'react': '^18.2.0',
+      'react-dom': '^18.2.0',
+      'next': '^14.0.0',
+      'axios': undefined, // axios and dotenv are added by the prompt, not the template. They will be installed but not necessarily in the template's package.json
+      'dotenv': undefined,
+    });
+    expect(projectPackageJson.scripts).toEqual({
+      dev: 'next dev',
+      build: 'next build',
+      start: 'next start',
+      lint: 'next lint',
+    });
+  });
+
+  test('should handle project directory already exists', async () => {
+    inquirer.prompt.mockResolvedValueOnce({
+      projectName: 'existing-app',
+      template: 'discord-bot',
+      dependencies: [],
+      initGit: false,
+    });
+
+    // Mock existsSync to return true for the project directory
+    fs.existsSync.mockImplementation((path) => {
+      if (path === join(originalCwd, 'existing-app')) {
+        return true; // Simulate existing directory
+      }
+      return jest.requireActual('fs').existsSync(path);
+    });
+
+    // Mock process.exit to prevent actual exit during test
+    const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {});
+    const mockError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    const { main } = await import(cliPath);
+    await main();
+
+    expect(mockError).toHaveBeenCalledWith('Error: Project folder already exists.');
+    expect(mockExit).toHaveBeenCalledWith(1);
+
+    mockExit.mockRestore();
+    mockError.mockRestore();
+  });
+});

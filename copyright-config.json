@@ -1,0 +1,12 @@
+{
+  "copyrightContent": "\n/***********************************************\n           * Copyright Involvex\n           * Copyright 2025()\n           ***********************************************/\n",
+  "fileTypes": {
+    "JavaScript": "js",
+    "JSX": "jsx",
+    "TypeScript": "ts",
+    "TSX": "tsx",
+    "HTML": "html",
+    "CSS": "css"
+  },
+  "folderExcludeList": ["node_modules", "public", "coverage", ".git"]
+}

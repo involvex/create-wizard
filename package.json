@@ -1,0 +1,58 @@
+{
+  "name": "@involvex/create-universe",
+  "version": "0.0.2",
+  "description": "create everything with ease interactive ",
+  "keywords": [
+    "cli",
+    "create-apps",
+    "npm"
+  ],
+  "homepage": "https://github.com/involvex/create-universe#readme",
+  "bugs": {
+    "url": "https://github.com/involvex/create-universe/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/involvex/create-universe.git"
+  },
+  "license": "ISC",
+  "author": "Involvex",
+  "type": "module",
+  "main": "scripts/create-app.js",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "echo \"no tests\"",
+    "format:check": "npx prettier --check .",
+    "format": "npx prettier --write .",
+    "lint": "npx eslint . --config eslint.config.js",
+    "lint:fix": "npx eslint . --config eslint.config.js --fix",
+    "check": "npm run lint:fix && npm run format",
+    "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --outfile=dist/create-universe.cjs",
+    "start": "node dist/create-universe.cjs"
+  },
+  "bin": {
+    "create-universe": "dist/create-universe.cjs"
+  },
+  "dependencies": {
+    "execa": "^9.6.0",
+    "fs-extra": "^11.3.2",
+    "inquirer": "^12.9.6"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^10.0.0",
+    "conventional-changelog-cli": "^5.0.0",
+    "ddc-copyright-head": "^1.4.0",
+    "esbuild": "0.25.9",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-license-header": "^0.8.0",
+    "eslint-plugin-markdownlint": "^0.9.0",
+    "eslint-plugin-node": "^11.1.0",
+    "markdownlint": "^0.38.0",
+    "prettier": "^3.6.2"
+  }
+}

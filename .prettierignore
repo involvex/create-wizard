@@ -1,0 +1,9 @@
+node_modules
+android
+ios
+build
+dist
+.env
+.json
+*.config*
+.vscode

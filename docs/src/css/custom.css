@@ -24,9 +24,9 @@ html[data-theme='light'] {
 
 /* Dark theme adjustments for "hacker" feel */
 html[data-theme='dark'] {
-  --ifm-background-color: #0d1117; /* Dark charcoal, less stark than pure black */
-  --ifm-background-surface-color: #161b22;
-  --ifm-global-card-background-color: #0d1117;
+  --ifm-background-color: #000000; /* Pure black background */
+  --ifm-background-surface-color: #0a0a0a; /* Very dark surface color */
+  --ifm-global-card-background-color: #050505; /* Almost black card background */
   --ifm-font-color-base: #58a6ff; /* Bright blue for contrast and readability */
   --ifm-color-primary: #39d353; /* Vibrant Green */
   --ifm-color-primary-dark: #2fb948;
@@ -45,6 +45,18 @@ html[data-theme='dark'] .hero__title {
   text-shadow:
     0 0 10px #39d353,
     0 0 20px #39d353;
+}
+
+/* Highlight the tagline */
+html[data-theme='dark'] .hero__subtitle {
+  color: #58a6ff; /* Bright blue */
+  text-shadow: 0 0 8px rgba(88, 166, 255, 0.7);
+}
+
+/* Highlight the navbar title */
+html[data-theme='dark'] .navbar__title {
+  color: #39d353;
+  text-shadow: 0 0 5px #39d353;
 }
 
 body {

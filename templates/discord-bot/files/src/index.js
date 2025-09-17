@@ -30,21 +30,46 @@ client.once('ready', () => {
 })
 
 client.on('interactionCreate', async interaction => {
-  if (!interaction.isChatInputCommand()) return
+  if (!interaction.isChatInputCommand()) return;
 
-  const command = client.commands.get(interaction.commandName)
+  const command = client.commands.get(interaction.commandName);
 
-  if (!command) return
+  if (!command) return;
 
-  try {
-    await command.execute(interaction)
-  } catch (error) {
-    console.error(error)
-    await interaction.reply({
-      content: 'There was an error while executing this command!',
+  // 1. Permission Handling
+  if (command.permissions && !interaction.member.permissions.has(command.permissions)) {
+    return interaction.reply({
+      content: 'You do not have the required permissions to use this command.',
       ephemeral: true,
-    })
+    });
   }
-})
+
+  // 2. Cooldown Handling
+  if (command.cooldown) {
+    const { setCooldown, getCooldown } = require('./utils/cooldowns');
+    const now = Date.now();
+    const cooldownAmount = command.cooldown * 1000; // Convert to milliseconds
+    const expirationTime = getCooldown(interaction.user.id, command.data.name);
+
+    if (expirationTime > now) {
+      const timeLeft = (expirationTime - now) / 1000;
+      return interaction.reply({
+        content: `Please wait ${timeLeft.toFixed(
+          1,
+        )} more second(s) before reusing the \`${command.data.name}\` command.`,
+        ephemeral: true,
+      });
+    }
+    setCooldown(interaction.user.id, command.data.name, cooldownAmount);
+  }
+
+  // 3. Command Execution and Error Handling
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    const { handleError } = require('./utils/errorHandler');
+    handleError(interaction, error);
+  }
+});
 
 client.login(token)

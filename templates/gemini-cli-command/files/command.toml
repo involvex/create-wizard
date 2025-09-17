@@ -1,0 +1,22 @@
+# Command definition for Gemini CLI
+
+# The name of the slash command
+name = "greet"
+# A brief description of what the command does
+description = "Greets a user with an optional custom message."
+
+# Define the options (arguments) for the command
+[[options]]
+name = "user"
+description = "The user to greet."
+type = "user" # Valid types: string, integer, boolean, user, channel, role
+required = true
+
+[[options]]
+name = "message"
+description = "An optional custom message to include."
+type = "string"
+required = false
+
+# Path to the script that handles the command's logic
+handler = "src/handler.js"

@@ -1,0 +1,5 @@
+{
+  "description": "A template for creating Gemini CLI slash commands with a command.toml definition.",
+  "dependencies": {},
+  "devDependencies": {}
+}

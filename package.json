@@ -1,6 +1,6 @@
 {
   "name": "@involvex/create-wizard",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "create everything with ease interactive ",
   "keywords": [
     "cli",
@@ -29,16 +29,18 @@
     "lint": "npx eslint . --config eslint.config.js",
     "lint:fix": "npx eslint . --config eslint.config.js --fix",
     "check": "npm run lint:fix && npm run format",
-    "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --outfile=dist/create-universe.cjs",
-    "start": "node dist/create-universe.cjs"
+    "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --format=esm --external:yoctocolors-cjs --external:mute-stream --external:safer-buffer --external:iconv-lite --external:cross-spawn --external:graceful-fs --external:fs-extra --external:inquirer --external:cli-progress --outfile=dist/create-wizard.mjs",
+    "start": "node dist/create-wizard.mjs"
   },
   "bin": {
-    "create-wizard": "dist/create-wizard.cjs"
+    "create-wizard": "dist/create-wizard.mjs"
   },
   "dependencies": {
+    "cli-progress": "^3.12.0",
     "execa": "^9.6.0",
     "fs-extra": "^11.3.2",
-    "inquirer": "^12.9.6"
+    "inquirer": "^12.9.6",
+    "ora": "^9.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -52,7 +54,6 @@
     "eslint-plugin-license-header": "^0.8.0",
     "eslint-plugin-markdownlint": "^0.9.0",
     "eslint-plugin-node": "^11.1.0",
-    "markdownlint": "^0.38.0",
     "prettier": "^3.6.2"
   }
 }

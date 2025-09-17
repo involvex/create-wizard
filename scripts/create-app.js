@@ -8,53 +8,53 @@
  * @format
  */
 
-import _inquirer from 'inquirer';
-import { execa as _execa } from 'execa';
-import { join, dirname } from 'path';
-import _fs from 'fs';
-import _fsExtra from 'fs-extra';
-import { fileURLToPath } from 'url';
-import ora from 'ora';
+import _inquirer from 'inquirer'
+import { execa as _execa } from 'execa'
+import { join, dirname } from 'path'
+import _fs from 'fs'
+import _fsExtra from 'fs-extra'
+import { fileURLToPath } from 'url'
+import ora from 'ora'
 
 // Main function
 export async function main(deps) {
-  const inquirer = deps.inquirer || _inquirer;
-  const execa = deps.execa || _execa;
-  const fs = deps.fs || _fs;
-  const fsExtra = deps.fsExtra || _fsExtra;
-  const templatesDir = deps.templatesDir;
+  const inquirer = deps.inquirer || _inquirer
+  const execa = deps.execa || _execa
+  const fs = deps.fs || _fs
+  const fsExtra = deps.fsExtra || _fsExtra
+  const templatesDir = deps.templatesDir
 
-  const prompt = inquirer.prompt;
+  const prompt = inquirer.prompt
 
   async function applyTemplate(templateName, projectDir) {
-    const templatePath = join(templatesDir, templateName);
-    const templateConfigPath = join(templatePath, 'template.json');
-    const templateFilesPath = join(templatePath, 'files');
+    const templatePath = join(templatesDir, templateName)
+    const templateConfigPath = join(templatePath, 'template.json')
+    const templateFilesPath = join(templatePath, 'files')
 
-    let templateConfig = { dependencies: {}, devDependencies: {}, scripts: {} };
+    let templateConfig = { dependencies: {}, devDependencies: {}, scripts: {} }
     if (fs.existsSync(templateConfigPath)) {
-      templateConfig = JSON.parse(fs.readFileSync(templateConfigPath, 'utf-8'));
+      templateConfig = JSON.parse(fs.readFileSync(templateConfigPath, 'utf-8'))
     }
 
-    const projectPackageJsonPath = join(projectDir, 'package.json');
-    let projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, 'utf-8'));
+    const projectPackageJsonPath = join(projectDir, 'package.json')
+    let projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, 'utf-8'))
 
     projectPackageJson.dependencies = {
       ...projectPackageJson.dependencies,
       ...templateConfig.dependencies,
-    };
+    }
     projectPackageJson.devDependencies = {
       ...projectPackageJson.devDependencies,
       ...templateConfig.devDependencies,
-    };
-    projectPackageJson.scripts = { ...projectPackageJson.scripts, ...templateConfig.scripts };
+    }
+    projectPackageJson.scripts = { ...projectPackageJson.scripts, ...templateConfig.scripts }
 
-    fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
+    fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2))
 
     if (fs.existsSync(templateFilesPath)) {
-      const spinner = ora('Copying template files...').start();
-      fsExtra.copySync(templateFilesPath, projectDir, { overwrite: true });
-      spinner.succeed('Template files copied.');
+      const spinner = ora('Copying template files...').start()
+      fsExtra.copySync(templateFilesPath, projectDir, { overwrite: true })
+      spinner.succeed('Template files copied.')
     }
   }
 
@@ -66,8 +66,8 @@ export async function main(deps) {
       message: 'Select a project template:',
       choices: fs
         .readdirSync(templatesDir, { withFileTypes: true })
-        .filter((dirent) => dirent.isDirectory())
-        .map((dirent) => dirent.name),
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name),
     },
     {
       type: 'checkbox',
@@ -87,59 +87,107 @@ export async function main(deps) {
       message: 'Initialize a Git repository?',
       default: true,
     },
-  ]);
+    {
+      type: 'checkbox',
+      name: 'features',
+      message: 'Select optional features:',
+      choices: [
+        { name: 'jest', message: 'Include Jest testing framework' },
+        { name: 'debug', message: 'Include VS Code debug configuration' },
+      ],
+    },
+  ])
 
-  const projectDir = join(process.cwd(), answers.projectName);
+  const projectDir = join(process.cwd(), answers.projectName)
   if (fs.existsSync(projectDir)) {
-    console.error('Error: Project folder already exists.');
-    process.exit(1);
+    console.error('Error: Project folder already exists.')
+    process.exit(1)
   }
 
-  fs.mkdirSync(projectDir);
-  process.chdir(projectDir);
+  fs.mkdirSync(projectDir)
+  process.chdir(projectDir)
 
-  const npmInitSpinner = ora('Initializing new project (npm init -y)...').start();
-  await execa('npm', ['init', '-y']);
-  npmInitSpinner.succeed('Project initialized.');
+  const npmInitSpinner = ora('Initializing new project (npm init -y)...').start()
+  await execa('npm', ['init', '-y'])
+  npmInitSpinner.succeed('Project initialized.')
 
-  await applyTemplate(answers.template, projectDir);
+  await applyTemplate(answers.template, projectDir)
 
-  const packageJson = JSON.parse(fs.readFileSync(join(projectDir, 'package.json'), 'utf-8'));
-  const allDependencies = [...answers.dependencies, ...Object.keys(packageJson.dependencies || {})];
-  const allDevDependencies = Object.keys(packageJson.devDependencies || {});
+  const packageJsonPath = join(projectDir, 'package.json')
+  let packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
+
+  if (answers.features.includes('jest')) {
+    packageJson.devDependencies = {
+      ...packageJson.devDependencies,
+      jest: '^29.7.0',
+    }
+    packageJson.scripts = {
+      ...packageJson.scripts,
+      test: 'jest',
+    }
+  }
+
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
+
+  if (answers.features.includes('debug')) {
+    const vscodeDir = join(projectDir, '.vscode')
+    fs.mkdirSync(vscodeDir, { recursive: true })
+    fs.writeFileSync(
+      join(vscodeDir, 'launch.json'),
+      JSON.stringify(
+        {
+          version: '0.2.0',
+          configurations: [
+            {
+              type: 'node',
+              request: 'launch',
+              name: 'Launch Program',
+              skipFiles: ['<node_internals>/**'],
+              program: '${workspaceFolder}/src/index.js',
+            },
+          ],
+        },
+        null,
+        2,
+      ),
+    )
+  }
+
+  const allDependencies = [...answers.dependencies, ...Object.keys(packageJson.dependencies || {})]
+  const allDevDependencies = Object.keys(packageJson.devDependencies || {})
 
   if (allDependencies.length > 0) {
-    const installSpinner = ora('Installing dependencies...').start();
-    await execa('npm', ['install', ...new Set(allDependencies)]);
-    installSpinner.succeed('Dependencies installed.');
+    const installSpinner = ora('Installing dependencies...').start()
+    await execa('npm', ['install', ...new Set(allDependencies)])
+    installSpinner.succeed('Dependencies installed.')
   }
   if (allDevDependencies.length > 0) {
-    const devInstallSpinner = ora('Installing dev dependencies...').start();
-    await execa('npm', ['install', '--save-dev', ...new Set(allDevDependencies)]);
-    devInstallSpinner.succeed('Dev dependencies installed.');
+    const devInstallSpinner = ora('Installing dev dependencies...').start()
+    await execa('npm', ['install', '--save-dev', ...new Set(allDevDependencies)])
+    devInstallSpinner.succeed('Dev dependencies installed.')
   }
 
   if (answers.initGit) {
-    const gitInitSpinner = ora('Initializing Git repository...').start();
-    await execa('git', ['init']);
-    gitInitSpinner.succeed('Git repository initialized.');
+    const gitInitSpinner = ora('Initializing Git repository...').start()
+    await execa('git', ['init'])
+    gitInitSpinner.succeed('Git repository initialized.')
 
-    const gitAddSpinner = ora('Staging files...').start();
-    await execa('git', ['add', '.']);
-    gitAddSpinner.succeed('Files staged.');
+    const gitAddSpinner = ora('Staging files...').start()
+    await execa('git', ['add', '.'])
+    gitAddSpinner.succeed('Files staged.')
 
-    const gitCommitSpinner = ora('Committing initial changes...').start();
-    await execa('git', ['commit', '-m', 'Initial commit']);
-    gitCommitSpinner.succeed('Initial commit created.');
+    const gitCommitSpinner = ora('Committing initial changes...').start()
+    await execa('git', ['commit', '-m', 'Initial commit'])
+    gitCommitSpinner.succeed('Initial commit created.')
   }
 
-  console.log('Project successfully created!');
+  console.log('Project successfully created!')
 }
 
 // This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
-  const templatesDir = join(__dirname, '../templates');
-  main({ templatesDir });
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = dirname(__filename)
+  const templatesDir = join(__dirname, '../templates')
+  main({ templatesDir })
 }

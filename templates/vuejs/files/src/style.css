@@ -1,0 +1,16 @@
+/** @format */
+
+body {
+  font-family: sans-serif;
+  display: flex;
+  place-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+#app {
+  margin: 0 auto;
+  text-align: center;
+}

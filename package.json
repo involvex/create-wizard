@@ -1,11 +1,13 @@
 {
   "name": "@involvex/create-wizard",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "create everything with ease interactive ",
   "keywords": [
     "cli",
     "create-apps",
-    "npm"
+    "npm",
+    "init",
+    "node"
   ],
   "homepage": "https://github.com/involvex/create-wizard#readme",
   "bugs": {
@@ -33,7 +35,8 @@
     "start": "node dist/create-wizard.mjs",
     "docs:start": "cd docs && npm start",
     "docs:build": "cd docs && npm run build",
-    "docs:serve": "cd docs && npm run serve"
+    "docs:serve": "cd docs && npm run serve",
+    "template:create": "node scripts/create-template.js"
   },
   "bin": {
     "create-wizard": "dist/create-wizard.mjs"

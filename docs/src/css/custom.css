@@ -1,7 +1,98 @@
-/* docusaurus.css */
+/**
+ * @format
+ */
 
+:root {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b6;
+  --ifm-color-primary-lightest: #4fddc2;
+
+  /* Hacker Theme Colors */
+  --ifm-background-color: #0d0d0d;
+  --ifm-font-color-base: #00ff00;
+  --ifm-font-family-base: 'Courier New', Courier, monospace;
+  --ifm-font-family-monospace: 'Courier New', Courier, monospace;
+  --ifm-code-font-size: 95%;
+  --ifm-navbar-background-color: #000000;
+  --ifm-footer-background-color: #000000;
+  --ifm-hero-background-color: #000000;
+  --ifm-card-background-color: #1a1a1a;
+  --ifm-link-color: #00ff00;
+  --ifm-link-hover-color: #25c2a0;
+  --ifm-heading-color: #00ff00;
+}
+
+html[data-theme='dark'] {
+  --ifm-background-color: #0d0d0d;
+  --ifm-font-color-base: #00ff00;
+  --ifm-navbar-background-color: #000000;
+  --ifm-footer-background-color: #000000;
+  --ifm-hero-background-color: #000000;
+  --ifm-card-background-color: #1a1a1a;
+}
+
+.hero--primary {
+  background-color: #000;
+  color: var(--ifm-font-color-base);
+}
+
+.button--secondary {
+  background-color: #00ff00;
+  color: #0d0d0d;
+  border-color: #00ff00;
+}
+
+.button--secondary:hover {
+  background-color: #25c2a0;
+  border-color: #25c2a0;
+}
+
+.footer {
+  background-color: var(--ifm-footer-background-color);
+}
+
+/* Add a subtle text-shadow to mimic CRT screens */
+body {
+  text-shadow: 0 0 2px #00ff00;
+}
+
+/* Add a blinking cursor animation to headings */
+.hero__title::after {
+  content: '_';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from,
+  to {
+    color: transparent;
+  }
+  50% {
+    color: #00ff00;
+  }
+}
+
+/* Style the navbar logo */
 .navbar__logo img {
   width: 32px;
   height: 32px;
   margin-right: 8px;
+  filter: grayscale(1) brightness(3); /* Make it look more thematic */
+}
+
+.navbar__link--active {
+  color: var(--ifm-color-primary-lightest);
+  text-shadow: 0 0 5px var(--ifm-color-primary-lightest);
+}
+
+.footer__link-item {
+  color: var(--ifm-font-color-base);
+}
+
+.footer__link-item:hover {
+  color: var(--ifm-link-hover-color);
 }

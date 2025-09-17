@@ -96,5 +96,22 @@ export default [
       "react/prop-types": "off",
     },
   },
+  {
+    files: ["templates/**/*.{js,jsx}"],
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        ...globals.browser,
+      },
+    },
+    rules: {
+      "no-undef": "off",
+      "no-unused-vars": ["warn", { "varsIgnorePattern": "^(Head|React|App)$" }],
+    },
+  },
   prettierConfig,
 ];

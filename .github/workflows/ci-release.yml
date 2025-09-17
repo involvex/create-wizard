@@ -1,3 +1,5 @@
+# @format
+
 name: CI/CD Release
 
 on:

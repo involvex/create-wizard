@@ -15,24 +15,24 @@ If you find a bug, please open an issue on our GitHub repository. When reporting
 - Expected behavior.
 - Actual behavior.
 - Screenshots or error messages (if applicable).
-- Your operating system, Node.js version, and `create-universe` version.
+- Your operating system, Node.js version, and `create-wizard` version.
 
 ### Suggesting Enhancements
 
-We're always looking for ways to improve `create-universe`. If you have an idea for a new feature or an enhancement to an existing one, please open an issue on GitHub. Describe your suggestion clearly and explain why you think it would be valuable.
+We're always looking for ways to improve `create-wizard`. If you have an idea for a new feature or an enhancement to an existing one, please open an issue on GitHub. Describe your suggestion clearly and explain why you think it would be valuable.
 
 ### Code Contributions
 
 We encourage code contributions! If you'd like to submit code, please follow these steps:
 
 1.  **Fork the repository**:
-    Go to [https://github.com/involvex/create-universe]https://github.com/involvex/create-wizard and click the "Fork" button.
+    Go to [https://github.com/involvex/create-wizard]https://github.com/involvex/create-wizard and click the "Fork" button.
 
 2.  **Clone your forked repository**:
 
     ```bash
-    git clone https://github.com/YOUR_USERNAME/create-universe.git
-    cd create-universe
+    git clone https://github.com/YOUR_USERNAME/create-wizard.git
+    cd create-wizard
     ```
 
 3.  **Install dependencies**:
@@ -81,7 +81,7 @@ We encourage code contributions! If you'd like to submit code, please follow the
     ```
 
 10. **Open a Pull Request (PR)**:
-    Go to your forked repository on GitHub and open a new pull request to the `main` branch of the original `involvex/create-universe` repository. Provide a clear description of your changes and reference any related issues.
+    Go to your forked repository on GitHub and open a new pull request to the `main` branch of the original `involvex/create-wizard` repository. Provide a clear description of your changes and reference any related issues.
 
 ## Code Style and Conventions
 

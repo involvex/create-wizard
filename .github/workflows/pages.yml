@@ -39,6 +39,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs # The directory containing your built documentation
+          publish_dir: ./build # The directory containing your built documentation
           # If you have a custom domain, uncomment and set:
           # cname: example.com

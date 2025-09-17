@@ -1,6 +1,6 @@
 <!-- @format -->
 
-# Project: @involvex/create-universe
+# Project: @involvex/create-wizard
 
 ## Project Overview
 
@@ -20,9 +20,9 @@ The `@involvex/create-wizard` project is a command-line interface (CLI) tool des
 The project includes several npm scripts for common development tasks:
 
 - **Build**: `npm run build`
-  - Compiles the `scripts/create-app.js` file into `dist/create-universe.cjs` using `esbuild`, targeting Node.js v22.
+  - Compiles the `scripts/create-app.js` file into `dist/create-wizard.cjs` using `esbuild`, targeting Node.js v22.
 - **Run**: `npm start`
-  - Executes the bundled CLI tool located at `dist/create-universe.cjs`.
+  - Executes the bundled CLI tool located at `dist/create-wizard.cjs`.
 - **Lint**: `npm run lint`
   - Runs ESLint to check for code quality and style issues.
 - **Lint Fix**: `npm run lint:fix`

@@ -19,7 +19,7 @@
 
 ## Installation
 
-To use `create-universe`, you need Node.js (version 22.0.0 or higher) installed on your system.
+To use `create-wizard`, you need Node.js (version 22.0.0 or higher) installed on your system.
 
 ```bash
 npm install -g @involvex/create-wizard
@@ -30,17 +30,17 @@ npm install -g @involvex/create-wizard
 You can quickly create a new project using `npx` without global installation:
 
 ```bash
-npx https://github.com/involvex/create-wizard
+npx @involvex/create-wizard
 ```
 
-This command will download and execute the latest version of `@involvex/create-wizard`, guiding you through the project setup process.
+This command will execute the latest version of `@involvex/create-wizard` without download, guiding you through the project setup process.
 
 ## Usage
 
 To create a new project, run the following command in your terminal:
 
 ```bash
-create-universe
+create-wizard
 ```
 
 The CLI will then guide you through the following steps:
@@ -70,7 +70,7 @@ The CLI will then guide you through the following steps:
 1.  Clone the repository:
     ```bash
     git clone https://github.com/involvex/create-wizard/issues
-    cd create-universe
+    cd create-wizard
     ```
 2.  Install dependencies:
     ```bash

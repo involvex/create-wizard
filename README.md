@@ -57,7 +57,7 @@ The CLI will then guide you through the following steps:
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/involvex/create-universe.git
+    git clone https://github.com/involvex/create-wizard/issues
     cd create-universe
     ```
 2.  Install dependencies:

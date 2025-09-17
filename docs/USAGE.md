@@ -1,13 +1,13 @@
-# Usage Guide for @involvex/create-universe
+# Usage Guide for @involvex/create-wizard
 
-This document provides a detailed guide on how to use the `@involvex/create-universe` CLI tool to create new JavaScript projects. This tool is designed to provide a comprehensive, all-in-one project configuration, streamlining project initialization, reducing manual setup, ensuring consistency, and accelerating developer onboarding.
+This document provides a detailed guide on how to use the `@involvex/create-wizard` CLI tool to create new JavaScript projects. This tool is designed to provide a comprehensive, all-in-one project configuration, streamlining project initialization, reducing manual setup, ensuring consistency, and accelerating developer onboarding.
 
 ## Creating a New Project
 
-To create a new project, navigate to the directory where you want your new project to be created and run the `create-universe` command:
+To create a new project, navigate to the directory where you want your new project to be created and run the `create-wizard` command:
 
 ```bash
-create-universe
+create-wizard
 ```
 
 The CLI will then guide you through a series of interactive prompts:
@@ -90,7 +90,7 @@ Confirm if you want to generate an `INSTRUCTIONS.md` file within your new projec
 
 ## Project Structure After Creation
 
-After successfully running `create-universe`, your new project directory (`my-awesome-project` in the example above) will contain:
+After successfully running `create-wizard`, your new project directory (`my-awesome-project` in the example above) will contain:
 
 *   **`package.json`**: Fully configured with the project name, merged dependencies (from both template and your selections), and template-defined npm scripts.
 *   **`node_modules/`**: Contains all installed npm dependencies.
@@ -106,7 +106,7 @@ After successfully running `create-universe`, your new project directory (`my-aw
 cd ~/my-projects
 
 # Run the CLI tool
-create-universe
+create-wizard
 
 # Follow the prompts:
 # ? Project name: my-react-app

@@ -44,7 +44,7 @@ If you plan to contribute to the `create-universe` project or want to run it loc
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/involvex/create-universe.git
+    git clone https://github.com/involvex/create-wizard.git
     cd create-universe
     ```
 
@@ -76,5 +76,5 @@ If you plan to contribute to the `create-universe` project or want to run it loc
     *   On some systems, you might need `sudo npm install -g @involvex/create-universe`.
 *   **Permission errors during global installation**:
     *   This often indicates that npm doesn't have write permissions to the global installation directory. You can either:
-        *   Use `sudo` (on macOS/Linux): `sudo npm install -g @involvex/create-universe`.
+        *   Use `sudo` (on macOS/Linux): `sudo npm install -g @involvex/create-wizard`.
         *   Change npm's default directory: Refer to npm's official documentation on "Fixing npm permissions".

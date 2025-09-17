@@ -1,5 +1,5 @@
 {
-  "name": "@involvex/create-universe",
+  "name": "@involvex/create-wizard",
   "version": "0.0.2",
   "description": "create everything with ease interactive ",
   "keywords": [
@@ -7,13 +7,13 @@
     "create-apps",
     "npm"
   ],
-  "homepage": "https://github.com/involvex/create-universe#readme",
+  "homepage": "https://github.com/involvex/create-wizard#readme",
   "bugs": {
-    "url": "https://github.com/involvex/create-universe/issues"
+    "url": "https://github.com/involvex/create-wizard/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/involvex/create-universe.git"
+    "url": "git+https://github.com/involvex/create-wizard.git"
   },
   "license": "ISC",
   "author": "Involvex",
@@ -33,7 +33,7 @@
     "start": "node dist/create-universe.cjs"
   },
   "bin": {
-    "create-universe": "dist/create-universe.cjs"
+    "create-wizard": "dist/create-wizard.cjs"
   },
   "dependencies": {
     "execa": "^9.6.0",

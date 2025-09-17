@@ -24,7 +24,7 @@ We're always looking for ways to improve `create-universe`. If you have an idea 
 We encourage code contributions! If you'd like to submit code, please follow these steps:
 
 1.  **Fork the repository**:
-    Go to [https://github.com/involvex/create-universe](https://github.com/involvex/create-universe) and click the "Fork" button.
+    Go to [https://github.com/involvex/create-universe]https://github.com/involvex/create-wizard and click the "Fork" button.
 
 2.  **Clone your forked repository**:
     ```bash

@@ -389,7 +389,7 @@ runTest(
     expect(existsSync(readmePath)).toBe(true);
     const readmeContent = readFileSync(readmePath, 'utf-8');
     expect(readmeContent).toContain('# my-instruction-app');
-    expect(readmeContent).toContain('This project was generated using [@involvex/create-universe](https://github.com/involvex/create-universe).');
+    expect(readmeContent).toContain('This project was generated using [@involvex/create-wizard](https://github.com/involvex/create-wizard).');
     expect(readmeContent).toContain('This is a new project based on the **vite** template.');
     expect(readmeContent).toContain('## Setup');
     expect(readmeContent).toContain('npm install');

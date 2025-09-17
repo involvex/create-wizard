@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-The `@involvex/create-universe` project is a command-line interface (CLI) tool designed to streamline the setup of new JavaScript projects. It provides an interactive experience, guiding users through the process of naming their project, selecting essential dependencies (such as `express`, `discord.js`, `axios`, `eslint`, and `dotenv`), and optionally initializing a Git repository. Upon completion, the tool creates the project directory, sets up a `package.json` file, installs the chosen dependencies, generates a basic `src/index.js` file, and performs an initial Git commit if requested.
+The `@involvex/create-wizard` project is a command-line interface (CLI) tool designed to streamline the setup of new JavaScript projects. It provides an interactive experience, guiding users through the process of naming their project, selecting essential dependencies (such as `express`, `discord.js`, `axios`, `eslint`, and `dotenv`), and optionally initializing a Git repository. Upon completion, the tool creates the project directory, sets up a `package.json` file, installs the chosen dependencies, generates a basic `src/index.js` file, and performs an initial Git commit if requested.
 
 ## Main Technologies
 
@@ -52,5 +52,5 @@ The project includes several npm scripts for common development tasks:
 
 ## NPM Publishing
 
--when package is published to npm, it should be published with the name '@involvex/create.universe'
+-when package is published to npm, it should be published with the name '@involvex/create-wizard'
 -ensured build is clean and all errors are fixed before publishing

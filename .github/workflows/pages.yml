@@ -10,6 +10,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Grant write permission to GITHUB_TOKEN
 
     steps:
       - name: Checkout repository

@@ -402,10 +402,20 @@ test-job:
   console.log('Project successfully created!')
 }
 
+import { main as createPlugin } from './create-plugin.js';
+
 // This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const __filename = fileURLToPath(import.meta.url)
-  const __dirname = dirname(__filename)
-  const templatesDir = join(__dirname, '../templates')
-  main({ templatesDir })
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+  const templatesDir = join(__dirname, '../templates');
+
+  // Check for --plugin flag
+  if (process.argv.includes('--plugin')) {
+    createPlugin({
+      /* dependencies */
+    });
+  } else {
+    main({ templatesDir });
+  }
 }

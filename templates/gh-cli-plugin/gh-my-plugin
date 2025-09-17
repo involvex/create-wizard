@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# gh-my-plugin: A sample GitHub CLI plugin
+#
+
+set -e
+
+# Main logic for the plugin
+case "$1" in
+  "hello")
+    echo "Hello, world!"
+    ;;
+  *)
+    echo "Usage: gh my-plugin <command>"
+    echo "Available commands: hello"
+    exit 1
+    ;;
+esac

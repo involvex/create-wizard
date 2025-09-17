@@ -68,7 +68,24 @@ export async function main(deps) {
       },
       filter: input => JSON.parse(input),
     },
-  ])
+    {
+      type: 'confirm',
+      name: 'includeTsconfig',
+      message: 'Include tsconfig.json (for TypeScript projects)?',
+      default: false,
+    },
+    {
+      type: 'confirm',
+      name: 'includeEslintConfig',
+      message: 'Include eslint.config.js?',
+      default: false,
+    },
+    {
+      type: 'confirm',
+      name: 'includePrettierConfig',
+      message: 'Include .prettierrc?',
+      default: false,
+    },
 
   const newTemplatePath = join(templatesDir, answers.templateName)
   const newTemplateFilesPath = join(newTemplatePath, 'files')
@@ -99,6 +116,48 @@ export async function main(deps) {
   }
 
   fs.writeFileSync(join(newTemplatePath, 'template.json'), JSON.stringify(templateConfig, null, 2))
+
+  if (answers.includeTsconfig) {
+    fs.writeFileSync(
+      join(newTemplateFilesPath, 'tsconfig.json'),
+      JSON.stringify(
+        {
+          compilerOptions: {
+            target: 'es2016',
+            module: 'commonjs',
+            esModuleInterop: true,
+            forceConsistentCasingInFileNames: true,
+            strict: true,
+            skipLibCheck: true,
+          },
+        },
+        null,
+        2,
+      ),
+    );
+  }
+
+  if (answers.includeEslintConfig) {
+    fs.writeFileSync(
+      join(newTemplateFilesPath, 'eslint.config.js'),
+      `import js from "@eslint/js";\nimport globals from "globals";\nexport default [\n  {languageOptions: { globals: { ...globals.node, ...globals.browser } }},\n  js.configs.recommended,\n];\n`,
+    );
+  }
+
+  if (answers.includePrettierConfig) {
+    fs.writeFileSync(
+      join(newTemplateFilesPath, '.prettierrc'),
+      JSON.stringify(
+        {
+          semi: false,
+          singleQuote: true,
+          trailingComma: 'all',
+        },
+        null,
+        2,
+      ),
+    );
+  }
 
   console.log(`Template '${answers.templateName}' created successfully!`)
   console.log(`You can now add your template files to '${newTemplateFilesPath}'.`)

@@ -1,25 +1,28 @@
-/**
- * @format
- */
+---
+id: theme-customization
+title: Theme Customization
+sidebar_label: Theme Customization
+---
 
+This section explains how to customize the Docusaurus theme, including details on the current "hacker" theme.
+
+## The "Hacker" Theme
+
+The `@involvex/create-wizard` documentation site uses a custom "hacker" theme, characterized by a dark background, green text, and a terminal-like aesthetic. This theme is primarily defined in `docs/src/css/custom.css`.
+
+### Key CSS Variables
+
+The `custom.css` file overrides several Docusaurus CSS variables to achieve the desired look:
+
+```css
 :root {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b6;
-  --ifm-color-primary-lightest: #4fddc2;
-
-  /* Hacker Theme Colors */
-  --ifm-background-color: #0d0d0d;
-  --ifm-font-color-base: #00ff00;
+  --ifm-color-primary: #25c2a0; /* A vibrant green */
+  --ifm-background-color: #0d0d0d; /* Dark background */
+  --ifm-font-color-base: #00ff00; /* Bright green text */
   --ifm-font-family-base: 'Courier New', Courier, monospace;
-  --ifm-font-family-monospace: 'Courier New', Courier, monospace;
-  --ifm-code-font-size: 95%;
   --ifm-navbar-background-color: #000000;
   --ifm-footer-background-color: #000000;
-  --ifm-hero-background-color: #000000;
+  --ifm-hero-background-color: #000; /* Explicitly black for hero section */
   --ifm-card-background-color: #1a1a1a;
   --ifm-link-color: #00ff00;
   --ifm-link-hover-color: #25c2a0;
@@ -35,6 +38,7 @@ html[data-theme='dark'] {
   --ifm-card-background-color: #1a1a1a;
 }
 
+/* Additional styles for specific elements */
 .hero--primary {
   background-color: #000;
   color: var(--ifm-font-color-base);
@@ -44,25 +48,21 @@ html[data-theme='dark'] {
   background-color: #00ff00;
   color: #0d0d0d;
   border-color: #00ff00;
-  transition: all 0.3s ease-in-out; /* Added transition */
 }
 
 .button--secondary:hover {
   background-color: #25c2a0;
   border-color: #25c2a0;
-  transform: translateY(-2px); /* Added subtle animation */
 }
 
 .footer {
   background-color: var(--ifm-footer-background-color);
 }
 
-/* Add a subtle text-shadow to mimic CRT screens */
 body {
   text-shadow: 0 0 2px #00ff00;
 }
 
-/* Add a blinking cursor animation to headings */
 .hero__title::after {
   content: '_';
   animation: blink 1s step-end infinite;
@@ -78,12 +78,11 @@ body {
   }
 }
 
-/* Style the navbar logo */
 .navbar__logo img {
   width: 32px;
   height: 32px;
   margin-right: 8px;
-  filter: grayscale(1) brightness(3); /* Make it look more thematic */
+  filter: grayscale(1) brightness(3);
 }
 
 .navbar__link--active {
@@ -93,28 +92,13 @@ body {
 
 .footer__link-item {
   color: var(--ifm-font-color-base);
-  transition: color 0.3s ease-in-out; /* Added transition */
 }
 
 .footer__link-item:hover {
   color: var(--ifm-link-hover-color);
 }
+```
 
-/* Add transitions to general links */
-a {
-  transition: color 0.3s ease-in-out;
-}
+### How to Customize
 
-a:hover {
-  color: var(--ifm-link-hover-color);
-}
-
-/* Add subtle hover effects to cards/features */
-.card {
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 255, 0, 0.2);
-}
+You can modify these CSS variables and add your own custom styles in `docs/src/css/custom.css` to further tailor the theme to your preferences. Refer to the [Docusaurus theming documentation](https://docusaurus.io/docs/styling-layout) for more details on how to override default styles and create your own custom themes.

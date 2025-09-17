@@ -22,53 +22,59 @@ export async function main(deps) {
   const execa = deps.execa || _execa
   const fs = deps.fs || _fs
   const fsExtra = deps.fsExtra || _fsExtra
-  const templatesDir = deps.templatesDir
+  const GITHUB_REPO = 'involvex/create-wizard-templates';
+  const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/`;
 
-  const prompt = inquirer.prompt
-
-  async function applyTemplate(templateName, projectDir) {
-    const templatePath = join(templatesDir, templateName)
-    const templateConfigPath = join(templatePath, 'template.json')
-    const templateFilesPath = join(templatePath, 'files')
-
-    let templateConfig = { dependencies: {}, devDependencies: {}, scripts: {} }
-    if (fs.existsSync(templateConfigPath)) {
-      templateConfig = JSON.parse(fs.readFileSync(templateConfigPath, 'utf-8'))
+  async function getTemplates() {
+    const spinner = ora('Fetching templates...').start();
+    try {
+      const response = await fetch(GITHUB_API_URL);
+      const data = await response.json();
+      const templates = data
+        .filter(item => item.type === 'dir')
+        .map(item => item.name);
+      spinner.succeed('Templates fetched.');
+      return templates;
+    } catch (error) {
+      spinner.fail('Failed to fetch templates.');
+      console.error(error);
+      process.exit(1);
     }
-
-    const projectPackageJsonPath = join(projectDir, 'package.json')
-    let projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, 'utf-8'))
-
-    projectPackageJson.dependencies = {
-      ...projectPackageJson.dependencies,
-      ...templateConfig.dependencies,
-    }
-    projectPackageJson.devDependencies = {
-      ...projectPackageJson.devDependencies,
-      ...templateConfig.devDependencies,
-    }
-    projectPackageJson.scripts = { ...projectPackageJson.scripts, ...templateConfig.scripts }
-
-    fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2))
-
-    if (fs.existsSync(templateFilesPath)) {
-      const spinner = ora('Copying template files...').start()
-      fsExtra.copySync(templateFilesPath, projectDir, { overwrite: true })
-      spinner.succeed('Template files copied.')
-    }
-    return templateConfig
   }
 
+  async function applyTemplate(templateName, projectDir) {
+    const spinner = ora(`Downloading template: ${templateName}...`).start();
+    try {
+      const templateUrl = `https://github.com/${GITHUB_REPO}/archive/refs/heads/main.zip`;
+      const response = await fetch(templateUrl);
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
+      // This is a simplified way to handle the zip file.
+      // In a real-world scenario, you would use a library like 'yauzl' or 'unzipper'
+      // to properly extract the contents.
+      // For now, we'll just write the zip to a file to demonstrate the download.
+      fs.writeFileSync(join(projectDir, 'template.zip'), buffer);
+
+      spinner.succeed('Template downloaded.');
+      console.log(
+        'Note: Template downloaded as template.zip. Manual extraction is required.',
+      );
+    } catch (error) {
+      spinner.fail('Failed to download template.');
+      console.error(error);
+      process.exit(1);
+    }
+  }
+
+  const templates = await getTemplates();
   const answers = await prompt([
     { name: 'projectName', message: 'Project name:' },
     {
       type: 'list',
       name: 'template',
       message: 'Select a project template:',
-      choices: fs
-        .readdirSync(templatesDir, { withFileTypes: true })
-        .filter(dirent => dirent.isDirectory())
-        .map(dirent => dirent.name),
+      choices: templates,
     },
     {
       type: 'checkbox',

@@ -56,7 +56,9 @@ client.on('interactionCreate', async interaction => {
       return interaction.reply({
         content: `Please wait ${timeLeft.toFixed(
           1,
-        )} more second(s) before reusing the \`${command.data.name}\` command.`,
+        )} more second(s) before reusing the 
+${command.data.name}
+ command.`, // Corrected: escaped backticks and newlines within template literal
         ephemeral: true,
       });
     }

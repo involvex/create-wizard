@@ -4,7 +4,7 @@ This template provides a basic structure for creating a new PowerShell module.
 
 ## Structure
 
--   `MyPowerShellModule.psd1`: The module manifest file.
+-   `MyPower-Shell-Module.psd1`: The module manifest file.
 -   `MyPowerShellModule.psm1`: The main module file containing the PowerShell code.
 -   `template.json`: The metadata for the `create-wizard` tool.
 

@@ -17,23 +17,38 @@
   --ifm-font-family-monospace: 'Courier New', Courier, monospace;
 }
 
+/* Light theme adjustments */
+html[data-theme='light'] {
+  --ifm-background-color: #f0f2f5; /* Soft, off-white background */
+}
+
+/* Dark theme adjustments for "hacker" feel */
 html[data-theme='dark'] {
-  --ifm-background-color: #000000;
-  --ifm-background-surface-color: #121212;
-  --ifm-global-card-background-color: #0a0a0a;
-  --ifm-font-color-base: #00ff00;
-  --ifm-color-primary: #00ff00;
-  --ifm-color-primary-dark: #00e600;
-  --ifm-color-primary-darker: #00cc00;
-  --ifm-color-primary-darkest: #00b300;
-  --ifm-color-primary-light: #1aff1a;
-  --ifm-color-primary-lighter: #33ff33;
-  --ifm-color-primary-lightest: #4dff4d;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 255, 0, 0.3);
+  --ifm-background-color: #0d1117; /* Dark charcoal, less stark than pure black */
+  --ifm-background-surface-color: #161b22;
+  --ifm-global-card-background-color: #0d1117;
+  --ifm-font-color-base: #58a6ff; /* Bright blue for contrast and readability */
+  --ifm-color-primary: #39d353; /* Vibrant Green */
+  --ifm-color-primary-dark: #2fb948;
+  --ifm-color-primary-darker: #28a13f;
+  --ifm-color-primary-darkest: #218834;
+  --ifm-color-primary-light: #47e263;
+  --ifm-color-primary-lighter: #56e671;
+  --ifm-color-primary-lightest: #72ec89;
+  --docusaurus-highlighted-code-line-bg: rgba(57, 211, 83, 0.3);
+}
+
+/* Make the main welcome header more prominent in dark mode */
+html[data-theme='dark'] .hero__title {
+  color: #39d353; /* Use the primary green */
+  font-size: 4rem;
+  text-shadow:
+    0 0 10px #39d353,
+    0 0 20px #39d353;
 }
 
 body {
-  text-shadow: 0 0 5px #00ff00;
+  text-shadow: 0 0 2px rgba(57, 211, 83, 0.5);
 }
 
 .button,
@@ -48,10 +63,11 @@ a:hover {
 .button:hover,
 a:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+  box-shadow: 0 5px 15px rgba(57, 211, 83, 0.4);
 }
 
 .card {
+  border: 1px solid #30363d;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -59,5 +75,5 @@ a:hover {
 
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(0, 255, 0, 0.5);
+  box-shadow: 0 8px 25px rgba(57, 211, 83, 0.5);
 }

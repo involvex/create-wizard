@@ -7,22 +7,15 @@
 ## Features
 
 -   **Interactive Project Setup**: Guides you through project creation with prompts for project name, template selection, and additional dependencies.
+-   **Remote Template Library**: Fetches templates from a centralized GitHub repository, ensuring you always have access to the latest versions.
+-   **Interactive Plugin Configuration**: Use `create-wizard --plugin` to interactively configure and install plugins like Prettier, ESLint, and TypeScript.
 -   **Explicit Dependency Versioning**: Allows specifying exact versions for dependencies, ensuring consistent project setups.
 -   **TypeScript Support**: Option to initialize projects with TypeScript, including `tsconfig.json`.
 -   **Linting & Formatting Integration**: Choose to include ESLint and Prettier for code quality and consistent formatting.
 -   **Docker Support**: Option to generate a basic `Dockerfile` and `.dockerignore` for containerization.
 -   **CI/CD Workflow Generation**: Generate basic GitHub Actions or GitLab CI/CD pipelines.
--   **Comprehensive Template Support**: Choose from predefined templates that provide a complete project configuration, including:
-    -   **Dependencies**: Automatically installs necessary npm packages (both regular and dev dependencies) defined by the template.
-    -   **Scripts**: Merges template-specific scripts into your `package.json`.
-    -   **File Scaffolding**: Copies an entire initial file structure, including `src` directories, configuration files, and example code.
 -   **Custom Template Creation**: Use `npm run template:create` to easily build and manage your own project templates.
--   **Instruction File Generation**: Optionally generates an `INSTRUCTIONS.md` file in the new project with basic setup and usage steps.
--   **Comprehensive Project README**: Generates a detailed `README.md` for the new project, including setup, usage, and contribution guidelines.
--   **Dependency Management**: Beyond template-defined dependencies, you can select additional npm packages you want to install.
 -   **Git Initialization**: Option to initialize a Git repository and make an initial commit, setting up version control from the start.
--   **Consistency and Speed**: Ensures projects are set up consistently and rapidly, accelerating developer onboarding and reducing boilerplate.
-
 
 ## Installation
 
@@ -54,13 +47,6 @@ The CLI will then guide you through the following steps:
 
 1.  **Project Name**: Enter the name for your new project.
 2.  **Template Selection**: Choose a template from the available options. Each template will set up a complete initial project structure, including its own `package.json` configurations (dependencies, scripts) and files.
-    - `discord-bot`
-    - `nextjs`
-    - `node-api` (New!)
-    - `react-app` (New!)
-    - `vite`
-    - `vuejs`
-    - `webpack`
 3.  **Additional Dependency Installation**: Select any _additional_ npm packages you want to install. Note that template-specific dependencies will be installed automatically.
 4.  **Optional Features**: Choose to include:
     *   TypeScript support
@@ -70,7 +56,6 @@ The CLI will then guide you through the following steps:
     *   GitHub Actions workflow
     *   GitLab CI/CD pipeline
 5.  **Git Initialization**: Confirm if you want to initialize a Git repository for your project.
-6.  **Generate Instruction File**: Confirm if you want to generate an `INSTRUCTIONS.md` file with basic setup steps for your new project.
 
 ## Development
 
@@ -93,14 +78,15 @@ The CLI will then guide you through the following steps:
 
 ### Scripts
 
-- **Build**: `npm run build` - Compiles the CLI tool.
-- **Run**: `npm start` - Executes the compiled CLI tool.
-- **Lint**: `npm run lint` - Checks code for style and quality issues.
-- **Lint Fix**: `npm run lint:fix` - Fixes linting issues automatically.
-- **Format Check**: `npm run format:check` - Checks code formatting.
-- **Format**: `npm run format` - Formats code automatically.
-- **Check**: `npm run check` - Runs linting and formatting checks.
+-   **Build**: `npm run build` - Compiles the CLI tool.
+-   **Run**: `npm start` - Executes the compiled CLI tool.
+-   **Lint**: `npm run lint` - Checks code for style and quality issues.
+-   **Lint Fix**: `npm run lint:fix` - Fixes linting issues automatically.
+-   **Format Check**: `npm run format:check` - Checks code formatting.
+-   **Format**: `npm run format` - Formats code automatically.
+-   **Check**: `npm run check` - Runs linting and formatting checks.
 -   **Create Template**: `npm run template:create` - Interactively creates a new project template.
+-   **Release**: `npm run release` - Automates versioning, tagging, and pushing.
 
 ## Contributing
 

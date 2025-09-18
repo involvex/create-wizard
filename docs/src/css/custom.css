@@ -48,7 +48,8 @@ html[data-theme='dark'] {
 
 /* Make the main welcome header more prominent in dark mode */
 html[data-theme='dark'] .hero__title {
-  color: #39d353; /* Use the primary green */
+  background-color: #39d353; /* Use the primary green */
+  color: #000000;
   font-size: 4rem;
   text-shadow:
     0 0 10px #39d353,

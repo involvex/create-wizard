@@ -37,7 +37,7 @@
     "docs:build": "cd docs && npm run build",
     "docs:serve": "cd docs && npm run serve",
     "template:create": "node scripts/create-template.js",
-    "release": "npm version major --sign-git-tag -m \"chore(release): %s\" && conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md && git commit --amend --no-edit && git push --follow-tags"
+    "release": "npm version major -m \"chore(release): %s\" && conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md && git commit --amend --no-edit && git push --follow-tags"
   },
   "bin": {
     "create-wizard": "dist/create-wizard.mjs"

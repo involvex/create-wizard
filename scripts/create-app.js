@@ -409,6 +409,7 @@ test-job:
 }
 
 import { main as createPlugin } from './create-plugin.js';
+import { main as generateLicense } from './generate-license.js';
 
 // This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
@@ -416,9 +417,13 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const __dirname = dirname(__filename);
   const templatesDir = join(__dirname, '../templates');
 
-  // Check for --plugin flag
+  // Check for flags
   if (process.argv.includes('--plugin')) {
     createPlugin({
+      /* dependencies */
+    });
+  } else if (process.argv.includes('--license')) {
+    generateLicense({
       /* dependencies */
     });
   } else {

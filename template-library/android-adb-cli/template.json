@@ -1,0 +1,8 @@
+{
+  "description": "A template for creating an Android ADB CLI.",
+  "dependencies": {
+    "inquirer": "^12.9.6",
+    "execa": "^9.6.0"
+  },
+  "devDependencies": {}
+}

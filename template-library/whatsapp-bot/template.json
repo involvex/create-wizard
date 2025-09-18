@@ -1,0 +1,8 @@
+{
+  "description": "A template for creating a WhatsApp bot with whatsapp-web.js.",
+  "dependencies": {
+    "whatsapp-web.js": "^1.23.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {}
+}

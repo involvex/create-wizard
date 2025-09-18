@@ -60,6 +60,7 @@ const config = {
           blogTitle: 'Changelog',
           blogDescription: 'Keep up with the latest changes to create-wizard!',
           blogSidebarTitle: 'Recent Changes',
+          authorsMapPath: '../authors.yml', // Relative to the docs directory
         },
         theme: {
           customCss: './src/css/custom.css',

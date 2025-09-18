@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[852],{7940:e=>{e.exports=JSON.parse('{"authors":[{"name":"Involvex","title":"Creator of Create-Wizard","url":"https://github.com/involvex","imageURL":"https://github.com/involvex.png","key":"involvex","page":null,"count":1}]}')}}]);

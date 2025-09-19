@@ -6,7 +6,7 @@ var __export = (target, all) => {
 };
 
 // scripts/create-app.js
-import _inquirer from "inquirer";
+import _inquirer3 from "inquirer";
 
 // node_modules/is-plain-obj/index.js
 function isPlainObject(value) {
@@ -6789,8 +6789,8 @@ var {
 } = getIpcExport();
 
 // scripts/create-app.js
-import { join, dirname } from "path";
-import _fs from "fs";
+import { join as join3, dirname } from "path";
+import _fs3 from "fs";
 import _fsExtra from "fs-extra";
 import { fileURLToPath as fileURLToPath3 } from "url";
 
@@ -9541,58 +9541,394 @@ function ora(options) {
   return new Ora(options);
 }
 
-// scripts/create-app.js
+// scripts/create-plugin.js
+import _inquirer from "inquirer";
+import { join } from "path";
+import _fs from "fs";
 async function main(deps) {
   const inquirer = deps.inquirer || _inquirer;
   const execa2 = deps.execa || execa;
   const fs = deps.fs || _fs;
-  const fsExtra = deps.fsExtra || _fsExtra;
-  const templatesDir = deps.templatesDir;
-  const prompt = inquirer.prompt;
-  async function applyTemplate(templateName, projectDir2) {
-    const templatePath = join(templatesDir, templateName);
-    const templateConfigPath = join(templatePath, "template.json");
-    const templateFilesPath = join(templatePath, "files");
-    let templateConfig = { dependencies: {}, devDependencies: {}, scripts: {} };
-    if (fs.existsSync(templateConfigPath)) {
-      templateConfig = JSON.parse(fs.readFileSync(templateConfigPath, "utf-8"));
+  console.log("Interactive Plugin Setup Wizard");
+  const { targetDir } = await inquirer.prompt([
+    {
+      name: "targetDir",
+      message: "Enter the target directory for the configuration (leave empty for current directory):",
+      default: "."
     }
-    const projectPackageJsonPath = join(projectDir2, "package.json");
-    let projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, "utf-8"));
-    projectPackageJson.dependencies = {
-      ...projectPackageJson.dependencies,
-      ...templateConfig.dependencies
-    };
-    projectPackageJson.devDependencies = {
-      ...projectPackageJson.devDependencies,
-      ...templateConfig.devDependencies
-    };
-    projectPackageJson.scripts = { ...projectPackageJson.scripts, ...templateConfig.scripts };
-    fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
-    if (fs.existsSync(templateFilesPath)) {
-      const spinner = ora("Copying template files...").start();
-      fsExtra.copySync(templateFilesPath, projectDir2, { overwrite: true });
-      spinner.succeed("Template files copied.");
+  ]);
+  const absoluteTargetDir = join(process.cwd(), targetDir);
+  if (!fs.existsSync(absoluteTargetDir)) {
+    fs.mkdirSync(absoluteTargetDir, { recursive: true });
+  }
+  const { pluginType } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "pluginType",
+      message: "Which type of plugin do you want to configure?",
+      choices: ["formatter", "linter", "typescript", "gitignore"]
+    }
+  ]);
+  let configGenerated = false;
+  let depsInstalled = false;
+  switch (pluginType) {
+    case "formatter":
+      {
+        console.log("Configuring Prettier...");
+        const answers = await inquirer.prompt([
+          {
+            type: "confirm",
+            name: "semi",
+            message: "Use semicolons?",
+            default: false
+          },
+          {
+            type: "confirm",
+            name: "singleQuote",
+            message: "Use single quotes?",
+            default: true
+          },
+          {
+            type: "list",
+            name: "trailingComma",
+            message: "Use trailing commas?",
+            choices: ["none", "es5", "all"],
+            default: "all"
+          }
+        ]);
+        const prettierConfig = {
+          semi: answers.semi,
+          singleQuote: answers.singleQuote,
+          trailingComma: answers.trailingComma
+        };
+        fs.writeFileSync(
+          join(absoluteTargetDir, ".prettierrc"),
+          JSON.stringify(prettierConfig, null, 2)
+        );
+        configGenerated = true;
+        const { installDeps } = await inquirer.prompt([
+          {
+            type: "confirm",
+            name: "installDeps",
+            message: "Install Prettier dependency?",
+            default: true
+          }
+        ]);
+        if (installDeps) {
+          const spinner = ora("Installing Prettier...").start();
+          try {
+            await execa2("npm", ["install", "--save-dev", "prettier"], {
+              cwd: absoluteTargetDir
+            });
+            spinner.succeed("Prettier installed.");
+            depsInstalled = true;
+          } catch (error2) {
+            spinner.fail("Failed to install Prettier.");
+            console.error(error2);
+          }
+        }
+      }
+      break;
+    case "linter":
+      {
+        console.log("Configuring ESLint...");
+        const answers = await inquirer.prompt([
+          {
+            type: "checkbox",
+            name: "env",
+            message: "Select the environments your code will run in:",
+            choices: ["browser", "node"],
+            default: ["browser", "node"]
+          },
+          {
+            type: "confirm",
+            name: "extendPrettier",
+            message: "Extend Prettier configuration (if you use Prettier)?",
+            default: true
+          }
+        ]);
+        const globals = {};
+        if (answers.env.includes("browser")) {
+          globals.browser = true;
+        }
+        if (answers.env.includes("node")) {
+          globals.node = true;
+        }
+        const eslintConfig = `
+import globals from "globals";
+import js from "@eslint/js";
+${answers.extendPrettier ? 'import prettierConfig from "eslint-config-prettier";' : ""}
+
+export default [
+  { languageOptions: { globals: ${JSON.stringify(globals)} } },
+  js.configs.recommended,
+  ${answers.extendPrettier ? "prettierConfig," : ""}
+];
+`;
+        fs.writeFileSync(
+          join(absoluteTargetDir, "eslint.config.js"),
+          eslintConfig.trim()
+        );
+        configGenerated = true;
+        const { installDeps } = await inquirer.prompt([
+          {
+            type: "confirm",
+            name: "installDeps",
+            message: "Install ESLint dependencies?",
+            default: true
+          }
+        ]);
+        if (installDeps) {
+          const spinner = ora("Installing ESLint dependencies...").start();
+          const deps2 = ["eslint", "@eslint/js", "globals"];
+          if (answers.extendPrettier) {
+            deps2.push("eslint-config-prettier");
+          }
+          try {
+            await execa2("npm", ["install", "--save-dev", ...deps2], {
+              cwd: absoluteTargetDir
+            });
+            spinner.succeed("ESLint dependencies installed.");
+            depsInstalled = true;
+          } catch (error2) {
+            spinner.fail("Failed to install ESLint dependencies.");
+            console.error(error2);
+          }
+        }
+      }
+      break;
+    case "typescript":
+      {
+        console.log("Configuring TypeScript...");
+        const answers = await inquirer.prompt([
+          {
+            type: "list",
+            name: "target",
+            message: "Select the ECMAScript target version:",
+            choices: ["ES5", "ES6", "ES2020", "ES2021", "ESNext"],
+            default: "ES6"
+          },
+          {
+            type: "list",
+            name: "module",
+            message: "Select the module system:",
+            choices: ["CommonJS", "ESNext", "NodeNext"],
+            default: "CommonJS"
+          },
+          {
+            type: "confirm",
+            name: "strict",
+            message: "Enable strict type-checking?",
+            default: true
+          },
+          {
+            type: "confirm",
+            name: "esModuleInterop",
+            message: "Enable esModuleInterop?",
+            default: true
+          }
+        ]);
+        const tsConfig = {
+          compilerOptions: {
+            target: answers.target,
+            module: answers.module.toLowerCase(),
+            strict: answers.strict,
+            esModuleInterop: answers.esModuleInterop,
+            forceConsistentCasingInFileNames: true,
+            skipLibCheck: true
+          }
+        };
+        fs.writeFileSync(
+          join(absoluteTargetDir, "tsconfig.json"),
+          JSON.stringify(tsConfig, null, 2)
+        );
+        configGenerated = true;
+        const { installDeps } = await inquirer.prompt([
+          {
+            type: "confirm",
+            name: "installDeps",
+            message: "Install TypeScript dependency?",
+            default: true
+          }
+        ]);
+        if (installDeps) {
+          const spinner = ora("Installing TypeScript...").start();
+          try {
+            await execa2("npm", ["install", "--save-dev", "typescript"], {
+              cwd: absoluteTargetDir
+            });
+            spinner.succeed("TypeScript installed.");
+            depsInstalled = true;
+          } catch (error2) {
+            spinner.fail("Failed to install TypeScript.");
+            console.error(error2);
+          }
+        }
+      }
+      break;
+    case "gitignore":
+      {
+        console.log("Configuring .gitignore...");
+        const { templates } = await inquirer.prompt([
+          {
+            type: "checkbox",
+            name: "templates",
+            message: "Select .gitignore templates:",
+            choices: [
+              "node",
+              "visualstudiocode",
+              "windows",
+              "macos",
+              "linux",
+              "jetbrain"
+            ],
+            default: ["node", "visualstudiocode"]
+          }
+        ]);
+        if (templates.length > 0) {
+          const spinner = ora("Fetching .gitignore content...").start();
+          try {
+            const url = `https://www.toptal.com/developers/gitignore/api/${templates.join(",")}`;
+            const fetch2 = (await import("node-fetch")).default;
+            const response = await fetch2(url);
+            const content = await response.text();
+            fs.writeFileSync(join(absoluteTargetDir, ".gitignore"), content);
+            spinner.succeed(".gitignore file created.");
+            configGenerated = true;
+          } catch (error2) {
+            spinner.fail("Failed to fetch .gitignore templates.");
+            console.error(error2);
+          }
+        }
+      }
+      break;
+  }
+  if (configGenerated) {
+    console.log("\u2714\uFE0F Configuration file generated successfully.");
+  }
+  if (depsInstalled) {
+    console.log("\u2714\uFE0F Dependencies installed successfully.");
+  }
+}
+
+// scripts/generate-license.js
+import _inquirer2 from "inquirer";
+import _fs2 from "fs";
+import { join as join2 } from "path";
+async function main2(deps) {
+  const inquirer = deps.inquirer || _inquirer2;
+  const fs = deps.fs || _fs2;
+  console.log("License Header Generation Wizard");
+  const { copyrightHolder } = await inquirer.prompt([
+    {
+      name: "copyrightHolder",
+      message: "Enter the copyright holder name:",
+      default: "Involvex"
+    }
+  ]);
+  const { targetDir } = await inquirer.prompt([
+    {
+      name: "targetDir",
+      message: "Enter the target directory (leave empty for current directory):",
+      default: "."
+    }
+  ]);
+  const absoluteTargetDir = join2(process.cwd(), targetDir);
+  const licenseHeader = `/**
+ * ********************************************
+ * Copyright ${copyrightHolder}
+ * Copyright ${(/* @__PURE__ */ new Date()).getFullYear()}
+ * *********************************************
+ *
+ * @format
+ */`;
+  const spinner = ora("Adding license headers...").start();
+  let filesModified = 0;
+  function scanDirectory(dir) {
+    const files = fs.readdirSync(dir);
+    for (const file of files) {
+      const filePath = join2(dir, file);
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+        scanDirectory(filePath);
+      } else if (new RegExp("\\.(js|ts|jsx|tsx)").test(filePath)) {
+        const content = fs.readFileSync(filePath, "utf-8");
+        if (!content.includes("Copyright")) {
+          fs.writeFileSync(filePath, `${licenseHeader}
+
+${content}`);
+          filesModified++;
+        }
+      }
     }
   }
-  const answers = await prompt([
+  try {
+    scanDirectory(absoluteTargetDir);
+    spinner.succeed(`Added license headers to ${filesModified} files.`);
+  } catch (error2) {
+    spinner.fail("Failed to add license headers.");
+    console.error(error2);
+  }
+}
+
+// scripts/create-app.js
+async function main3(deps) {
+  const inquirer = deps.inquirer || _inquirer3;
+  const execa2 = deps.execa || execa;
+  const fs = deps.fs || _fs3;
+  const fsExtra = deps.fsExtra || _fsExtra;
+  const GITHUB_REPO = "involvex/create-wizard-templates";
+  const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/`;
+  async function getTemplates() {
+    const spinner = ora("Fetching templates...").start();
+    try {
+      const response = await fetch(GITHUB_API_URL);
+      const data = await response.json();
+      const templates = data.filter((item) => item.type === "dir").map((item) => item.name);
+      spinner.succeed("Templates fetched.");
+      return templates;
+    } catch (error2) {
+      spinner.fail("Failed to fetch templates.");
+      console.error(error2);
+      process.exit(1);
+    }
+  }
+  async function applyTemplate(templateName, projectDir2) {
+    const spinner = ora(`Downloading template: ${templateName}...`).start();
+    try {
+      const templateUrl = `https://github.com/${GITHUB_REPO}/archive/refs/heads/main.zip`;
+      const response = await fetch(templateUrl);
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      fs.writeFileSync(join3(projectDir2, "template.zip"), buffer);
+      spinner.succeed("Template downloaded.");
+      console.log(
+        "Note: Template downloaded as template.zip. Manual extraction is required."
+      );
+    } catch (error2) {
+      spinner.fail("Failed to download template.");
+      console.error(error2);
+      process.exit(1);
+    }
+  }
+  const answers = await inquirer.prompt([
     { name: "projectName", message: "Project name:" },
     {
       type: "list",
       name: "template",
       message: "Select a project template:",
-      choices: fs.readdirSync(templatesDir, { withFileTypes: true }).filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name)
+      choices: await getTemplates()
     },
     {
       type: "checkbox",
       name: "dependencies",
       message: "Which packages should be installed?",
       choices: [
-        { name: "express" },
-        { name: "discord.js" },
-        { name: "axios" },
-        { name: "eslint" },
-        { name: "dotenv" }
+        { name: "express", value: { name: "express", version: "^4.18.2" } },
+        { name: "discord.js", value: { name: "discord.js", version: "^14.14.1" } },
+        { name: "axios", value: { name: "axios", version: "^1.6.2" } },
+        { name: "eslint", value: { name: "eslint", version: "^8.56.0" } },
+        { name: "dotenv", value: { name: "dotenv", version: "^16.3.1" } }
       ]
     },
     {
@@ -9600,9 +9936,53 @@ async function main(deps) {
       name: "initGit",
       message: "Initialize a Git repository?",
       default: true
+    },
+    {
+      type: "checkbox",
+      name: "features",
+      message: "Select optional features:",
+      choices: [
+        { name: "jest", message: "Include Jest testing framework" },
+        { name: "debug", message: "Include VS Code debug configuration" }
+      ]
+    },
+    {
+      type: "confirm",
+      name: "includeTypeScript",
+      message: "Include TypeScript?",
+      default: false
+    },
+    {
+      type: "confirm",
+      name: "includeEslint",
+      message: "Include ESLint for linting?",
+      default: false
+    },
+    {
+      type: "confirm",
+      name: "includePrettier",
+      message: "Include Prettier for code formatting?",
+      default: false
+    },
+    {
+      type: "confirm",
+      name: "includeDocker",
+      default: false
+    },
+    {
+      type: "confirm",
+      name: "includeGithubActions",
+      message: "Include GitHub Actions workflow?",
+      default: false
+    },
+    {
+      type: "confirm",
+      name: "includeGitlabCi",
+      message: "Include GitLab CI/CD pipeline?",
+      default: false
     }
   ]);
-  const projectDir = join(process.cwd(), answers.projectName);
+  const projectDir = join3(process.cwd(), answers.projectName);
   if (fs.existsSync(projectDir)) {
     console.error("Error: Project folder already exists.");
     process.exit(1);
@@ -9613,17 +9993,230 @@ async function main(deps) {
   await execa2("npm", ["init", "-y"]);
   npmInitSpinner.succeed("Project initialized.");
   await applyTemplate(answers.template, projectDir);
-  const packageJson = JSON.parse(fs.readFileSync(join(projectDir, "package.json"), "utf-8"));
-  const allDependencies = [...answers.dependencies, ...Object.keys(packageJson.dependencies || {})];
-  const allDevDependencies = Object.keys(packageJson.devDependencies || {});
+  const packageJsonPath = join3(projectDir, "package.json");
+  let packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+  const userDependencies = answers.dependencies.reduce((acc, dep) => {
+    acc[dep.name] = dep.version;
+    return acc;
+  }, {});
+  packageJson.dependencies = {
+    ...packageJson.dependencies,
+    ...userDependencies
+  };
+  packageJson.devDependencies = {
+    ...packageJson.devDependencies
+  };
+  if (answers.features.includes("jest")) {
+    packageJson.devDependencies = {
+      ...packageJson.devDependencies,
+      jest: "^29.7.0"
+    };
+    packageJson.scripts = {
+      ...packageJson.scripts,
+      test: "jest"
+    };
+  }
+  if (answers.includeTypeScript) {
+    packageJson.devDependencies = {
+      ...packageJson.devDependencies,
+      typescript: "^5.3.3"
+    };
+    fs.writeFileSync(
+      join3(projectDir, "tsconfig.json"),
+      JSON.stringify(
+        {
+          compilerOptions: {
+            target: "es2016",
+            module: "commonjs",
+            esModuleInterop: true,
+            forceConsistentCasingInFileNames: true,
+            strict: true,
+            skipLibCheck: true
+          }
+        },
+        null,
+        2
+      )
+    );
+  }
+  if (answers.includeEslint) {
+    packageJson.devDependencies = {
+      ...packageJson.devDependencies,
+      eslint: "^8.56.0"
+    };
+    if (answers.includePrettier) {
+      packageJson.devDependencies = {
+        ...packageJson.devDependencies,
+        "eslint-config-prettier": "^9.1.0"
+      };
+    }
+    fs.writeFileSync(
+      join3(projectDir, "eslint.config.js"),
+      `import js from "@eslint/js";
+import globals from "globals";
+${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier';\n" : ""}export default [
+  {languageOptions: { globals: { ...globals.node, ...globals.browser } }},
+  js.configs.recommended,
+  ${answers.includePrettier ? "prettierConfig,\n" : ""}];
+`
+    );
+    packageJson.scripts = {
+      ...packageJson.scripts,
+      lint: "eslint .",
+      "lint:fix": "eslint . --fix"
+    };
+  }
+  if (answers.includePrettier) {
+    packageJson.devDependencies = {
+      ...packageJson.devDependencies,
+      prettier: "^3.2.5"
+    };
+    fs.writeFileSync(
+      join3(projectDir, ".prettierrc"),
+      JSON.stringify(
+        {
+          semi: false,
+          singleQuote: true,
+          trailingComma: "all"
+        },
+        null,
+        2
+      )
+    );
+    packageJson.scripts = {
+      ...packageJson.scripts,
+      "format:check": "prettier --check .",
+      format: "prettier --write ."
+    };
+  }
+  if (answers.includeDocker) {
+    fs.writeFileSync(
+      join3(projectDir, "Dockerfile"),
+      `# Use an official Node.js runtime as a parent image
+FROM node:20-alpine
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json .
+
+# Install any dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Define the command to run the app
+CMD ["npm", "start"]
+`
+    );
+    fs.writeFileSync(
+      join3(projectDir, ".dockerignore"),
+      `node_modules
+npm-debug.log
+yarn-debug.log
+.git
+.gitignore
+.vscode
+Dockerfile
+.dockerignore
+`
+    );
+  }
+  if (answers.includeGithubActions) {
+    const githubDir = join3(projectDir, ".github");
+    const workflowsDir = join3(githubDir, "workflows");
+    fs.mkdirSync(workflowsDir, { recursive: true });
+    fs.writeFileSync(
+      join3(workflowsDir, "main.yml"),
+      `name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+`
+    );
+  }
+  if (answers.includeGitlabCi) {
+    fs.writeFileSync(
+      join3(projectDir, ".gitlab-ci.yml"),
+      `stages:
+  - build
+  - test
+
+build-job:
+  stage: build
+  script:
+    - echo "Compiling the code..."
+    - npm ci
+    - npm run build --if-present
+  tags:
+    - docker
+
+test-job:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - npm test
+  tags:
+    - docker
+`
+    );
+  }
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  if (answers.features.includes("debug")) {
+    const vscodeDir = join3(projectDir, ".vscode");
+    fs.mkdirSync(vscodeDir, { recursive: true });
+    fs.writeFileSync(
+      join3(vscodeDir, "launch.json"),
+      JSON.stringify(
+        {
+          version: "0.2.0",
+          configurations: [
+            {
+              type: "node",
+              request: "launch",
+              name: "Launch Program",
+              skipFiles: ["<node_internals>/**"],
+              program: "${workspaceFolder}/src/index.js"
+            }
+          ]
+        },
+        null,
+        2
+      )
+    );
+  }
+  const allDependencies = Object.entries(packageJson.dependencies || {}).map(
+    ([name, version]) => `${name}@${version}`
+  );
+  const allDevDependencies = Object.entries(packageJson.devDependencies || {}).map(
+    ([name, version]) => `${name}@${version}`
+  );
   if (allDependencies.length > 0) {
     const installSpinner = ora("Installing dependencies...").start();
-    await execa2("npm", ["install", ...new Set(allDependencies)]);
+    await execa2("npm", ["install", ...allDependencies]);
     installSpinner.succeed("Dependencies installed.");
   }
   if (allDevDependencies.length > 0) {
     const devInstallSpinner = ora("Installing dev dependencies...").start();
-    await execa2("npm", ["install", "--save-dev", ...new Set(allDevDependencies)]);
+    await execa2("npm", ["install", "--save-dev", ...allDevDependencies]);
     devInstallSpinner.succeed("Dev dependencies installed.");
   }
   if (answers.initGit) {
@@ -9638,13 +10231,22 @@ async function main(deps) {
     gitCommitSpinner.succeed("Initial commit created.");
   }
   console.log("Project successfully created!");
+  console.log("\nThank you for using @involvex/create-wizard!");
+  console.log("If you want to support the project, you can do so at https://buymeacoffee.com/involvex");
 }
 if (process.argv[1] === fileURLToPath3(import.meta.url)) {
-  const __filename = fileURLToPath3(import.meta.url);
-  const __dirname = dirname(__filename);
-  const templatesDir = join(__dirname, "../templates");
-  main({ templatesDir });
+  if (process.argv.includes("--plugin")) {
+    main({
+      /* dependencies */
+    });
+  } else if (process.argv.includes("--license")) {
+    main2({
+      /* dependencies */
+    });
+  } else {
+    main3({});
+  }
 }
 export {
-  main
+  main3 as main
 };

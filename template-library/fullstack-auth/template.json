@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\"",
+    "start": "concurrently \"npm run start --workspace=frontend\" \"npm run start --workspace=backend\"",
+    "build": "npm run build --workspace=frontend && npm run build --workspace=backend"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}

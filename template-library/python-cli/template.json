@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "click": "^8.1.7"
+  },
+  "scripts": {
+    "start": "python src/main.py",
+    "test": "pytest"
+  }
+}

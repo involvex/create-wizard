@@ -451,6 +451,7 @@ test-job:
 
 import { main as createPlugin } from './create-plugin.js';
 import { main as generateLicense } from './generate-license.js';
+import { main as createTestSetup } from './create-test-setup.js';
 
 // This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
@@ -463,6 +464,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     generateLicense({
       /* dependencies */
     });
+  } else if (process.argv.includes('--test-setup')) {
+    createTestSetup();
   } else {
     main({});
   }

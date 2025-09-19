@@ -11052,13 +11052,11 @@ describe('create-app main function', () => {
     expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'Initial commit']);
   });
 });
-jest.mock('execa', () => ({
-  execa: jest.fn(() => ({
-    stdout: { pipe: jest.fn() },
-    stderr: { pipe: jest.fn() },
-    catch: jest.fn(),
+vi.mock('execa', () => ({
+  execa: vi.fn(() => ({
+    stdout: { pipe: vi.fn() },
   })),
-}))
+}));
 
 // Mock fs-extra's copySync
 jest.mock('fs-extra', () => ({

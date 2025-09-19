@@ -7,7 +7,7 @@ import { main } from '../scripts/create-app.js'
 import fs from 'fs'
 import { join } from 'path'
 
-// Mock external dependencies
+// Mock external dependencies that are not the subject of the test
 vi.mock('inquirer', () => ({ default: { prompt: vi.fn() } }))
 vi.mock('execa', () => ({ execa: vi.fn() }))
 vi.mock('ora', () => {
@@ -66,29 +66,28 @@ describe('create-app', () => {
       initGit: true,
     })
 
-    // Mock fs functions for this specific test
-    const writeFileSyncSpy = vi.spyOn(fs, 'writeFileSync').mockImplementation(() => {})
-    const readFileSyncSpy = vi.spyOn(fs, 'readFileSync').mockReturnValue('{}') // Mock reading package.json
-    const mkdirSyncSpy = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => {}) // Prevent real mkdir
+    // Since npm init is mocked, we need to create a dummy package.json for the app to read
+    execa.mockImplementation(async (command, args) => {
+      if (command === 'npm' && args[0] === 'init') {
+        fs.writeFileSync(join(process.cwd(), 'package.json'), '{}')
+      }
+    })
 
     await main({ inquirer, execa, fs })
 
-    expect(mkdirSyncSpy).toHaveBeenCalledWith(join(tempDir, projectName))
+    const projectDir = join(tempDir, projectName)
+    expect(fs.existsSync(projectDir)).toBe(true)
     expect(execa).toHaveBeenCalledWith('npm', ['init', '-y'])
     expect(execa).toHaveBeenCalledWith('git', ['init'])
-
-    // Restore spies
-    writeFileSyncSpy.mockRestore()
-    readFileSyncSpy.mockRestore()
-    mkdirSyncSpy.mockRestore()
   })
 
   it('should exit if project folder already exists', async () => {
     const projectName = 'existing-app'
+    const projectDir = join(tempDir, projectName)
+    fs.mkdirSync(projectDir) // Pre-create the directory
+
     inquirer.prompt.mockResolvedValue({ projectName })
 
-    // Mock existsSync to simulate the folder existing
-    const existsSyncSpy = vi.spyOn(fs, 'existsSync').mockReturnValue(true)
     const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {})
     const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
@@ -97,8 +96,6 @@ describe('create-app', () => {
     expect(consoleErrorSpy).toHaveBeenCalledWith('Error: Project folder already exists.')
     expect(exitSpy).toHaveBeenCalledWith(1)
 
-    // Restore spies
-    existsSyncSpy.mockRestore()
     exitSpy.mockRestore()
     consoleErrorSpy.mockRestore()
   })

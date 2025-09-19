@@ -40,6 +40,9 @@ async function main() {
     spinner.text = 'Staging changelog...';
     await run('git', ['add', 'CHANGELOG.md']);
 
+    spinner.text = 'Committing changelog...';
+    await run('git', ['commit', '-m', 'docs: Update CHANGELOG.md for release']);
+
     spinner.text = 'Bumping version...';
     await run('npm', ['version', versionType, '-m', `chore(release): %s`]);
 

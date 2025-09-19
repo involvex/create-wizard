@@ -9893,20 +9893,43 @@ async function main3(deps) {
       process.exit(1);
     }
   }
-  async function applyTemplate(templateName, projectDir2) {
-    const spinner = ora(`Downloading template: ${templateName}...`).start();
+  async function applyTemplate(templateName, projectDir2, answers2) {
+    const spinner = ora(`Applying template: ${templateName}...`).start();
     try {
-      const templateUrl = `https://github.com/${GITHUB_REPO}/archive/refs/heads/main.zip`;
-      const response = await fetch(templateUrl);
-      const arrayBuffer = await response.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      fs.writeFileSync(join3(projectDir2, "template.zip"), buffer);
-      spinner.succeed("Template downloaded.");
-      console.log(
-        "Note: Template downloaded as template.zip. Manual extraction is required."
+      const templateDir = join3(
+        dirname(fileURLToPath3(import.meta.url)),
+        "..",
+        "template-library",
+        templateName,
+        "files"
       );
+      fsExtra.copySync(templateDir, projectDir2);
+      if (answers2.discordFeatures) {
+        if (answers2.discordFeatures.includes("welcome")) {
+          fsExtra.copySync(
+            join3(templateDir, "../features/welcome"),
+            projectDir2
+          );
+        }
+        if (answers2.discordFeatures.includes("logging")) {
+          fsExtra.copySync(
+            join3(templateDir, "../features/logging"),
+            projectDir2
+          );
+        }
+        if (answers2.discordFeatures.includes("moderation")) {
+          fsExtra.copySync(
+            join3(templateDir, "../features/moderation"),
+            projectDir2
+          );
+        }
+      }
+      if (answers2.discordRPC) {
+        fsExtra.copySync(join3(templateDir, "../features/rpc"), projectDir2);
+      }
+      spinner.succeed("Template applied.");
     } catch (error2) {
-      spinner.fail("Failed to download template.");
+      spinner.fail("Failed to apply template.");
       console.error(error2);
       process.exit(1);
     }
@@ -9918,6 +9941,24 @@ async function main3(deps) {
       name: "template",
       message: "Select a project template:",
       choices: await getTemplates()
+    },
+    {
+      type: "checkbox",
+      name: "discordFeatures",
+      message: "Select Discord bot features:",
+      choices: [
+        { name: "welcome", message: "Include welcome messages for new users" },
+        { name: "logging", message: "Include message logging" },
+        { name: "moderation", message: "Include moderation commands (kick/ban)" }
+      ],
+      when: (answers2) => answers2.template === "discord-bot"
+    },
+    {
+      type: "confirm",
+      name: "discordRPC",
+      message: "Include Discord RPC (activity status)?",
+      default: false,
+      when: (answers2) => answers2.template === "discord-bot"
     },
     {
       type: "checkbox",
@@ -9992,7 +10033,7 @@ async function main3(deps) {
   const npmInitSpinner = ora("Initializing new project (npm init -y)...").start();
   await execa2("npm", ["init", "-y"]);
   npmInitSpinner.succeed("Project initialized.");
-  await applyTemplate(answers.template, projectDir);
+  await applyTemplate(answers.template, projectDir, answers);
   const packageJsonPath = join3(projectDir, "package.json");
   let packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
   const userDependencies = answers.dependencies.reduce((acc, dep) => {

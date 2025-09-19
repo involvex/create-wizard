@@ -22,17 +22,18 @@ export async function main(deps) {
   const execa = deps.execa || _execa
   const fs = deps.fs || _fs
   const fsExtra = deps.fsExtra || _fsExtra
-  const GITHUB_REPO = 'involvex/create-wizard-templates';
-  const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/`;
-
   async function getTemplates() {
     const spinner = ora('Fetching templates...').start();
     try {
-      const response = await fetch(GITHUB_API_URL);
-      const data = await response.json();
-      const templates = data
-        .filter(item => item.type === 'dir')
-        .map(item => item.name);
+      const templatesPath = join(
+        dirname(fileURLToPath(import.meta.url)),
+        '..',
+        'template-library'
+      );
+      const templates = fs.readdirSync(templatesPath).filter(file => {
+        const filePath = join(templatesPath, file);
+        return fs.statSync(filePath).isDirectory();
+      });
       spinner.succeed('Templates fetched.');
       return templates;
     } catch (error) {

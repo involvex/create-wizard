@@ -58,10 +58,7 @@ describe('create-app', () => {
     const projectName = 'my-test-app'
     inquirer.prompt.mockResolvedValue({
       projectName,
-      template: 'react',
-      dependencies: [],
-      features: [],
-      initGit: true,
+      template: 'react-app',
     })
 
     execa.mockImplementation(async (command, args) => {

@@ -59,6 +59,17 @@ describe('create-app', () => {
     inquirer.prompt.mockResolvedValue({
       projectName,
       template: 'react-app',
+      dependencies: [],
+      features: [],
+      discordFeatures: [],
+      discordRPC: false,
+      initGit: true,
+      includeTypeScript: false,
+      includeEslint: false,
+      includePrettier: false,
+      includeDocker: false,
+      includeGithubActions: false,
+      includeGitlabCi: false,
     })
 
     execa.mockImplementation(async (command, args) => {

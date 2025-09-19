@@ -9789,8 +9789,8 @@ export default [
           const spinner = ora("Fetching .gitignore content...").start();
           try {
             const url = `https://www.toptal.com/developers/gitignore/api/${templates.join(",")}`;
-            const fetch2 = (await import("node-fetch")).default;
-            const response = await fetch2(url);
+            const fetch = (await import("node-fetch")).default;
+            const response = await fetch(url);
             const content = await response.text();
             fs.writeFileSync(join(absoluteTargetDir, ".gitignore"), content);
             spinner.succeed(".gitignore file created.");
@@ -9877,14 +9877,18 @@ async function main3(deps) {
   const execa2 = deps.execa || execa;
   const fs = deps.fs || _fs3;
   const fsExtra = deps.fsExtra || _fsExtra;
-  const GITHUB_REPO = "involvex/create-wizard-templates";
-  const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/`;
   async function getTemplates() {
     const spinner = ora("Fetching templates...").start();
     try {
-      const response = await fetch(GITHUB_API_URL);
-      const data = await response.json();
-      const templates = data.filter((item) => item.type === "dir").map((item) => item.name);
+      const templatesPath = join3(
+        dirname(fileURLToPath3(import.meta.url)),
+        "..",
+        "template-library"
+      );
+      const templates = fs.readdirSync(templatesPath).filter((file) => {
+        const filePath = join3(templatesPath, file);
+        return fs.statSync(filePath).isDirectory();
+      });
       spinner.succeed("Templates fetched.");
       return templates;
     } catch (error2) {

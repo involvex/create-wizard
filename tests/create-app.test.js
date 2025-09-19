@@ -33,12 +33,10 @@ describe('create-app', () => {
     inquirer = (await import('inquirer')).default
     execa = (await import('execa')).execa
 
-    // Set up a clean temporary directory for each test
     fs.rmSync(tempDir, { recursive: true, force: true })
     fs.mkdirSync(tempDir, { recursive: true })
     process.chdir(tempDir)
 
-    // Mock fetch for templates
     global.fetch = vi.fn((url) => {
       if (url.includes('api.github.com')) {
         return Promise.resolve({ ok: true, json: () => Promise.resolve([]) })
@@ -66,7 +64,6 @@ describe('create-app', () => {
       initGit: true,
     })
 
-    // Since npm init is mocked, we need to create a dummy package.json for the app to read
     execa.mockImplementation(async (command, args) => {
       if (command === 'npm' && args[0] === 'init') {
         fs.writeFileSync(join(process.cwd(), 'package.json'), '{}')
@@ -83,7 +80,14 @@ describe('create-app', () => {
 
   it('should exit if project folder already exists', async () => {
     const projectName = 'existing-app'
-    inquirer.prompt.mockResolvedValue({ projectName })
+    // Provide a complete mock answer object to prevent type errors
+    inquirer.prompt.mockResolvedValue({
+      projectName,
+      template: 'react',
+      dependencies: [],
+      features: [],
+      initGit: false,
+    })
 
     // Mock that the directory exists to test the exit condition
     const existsSyncSpy = vi.spyOn(fs, 'existsSync').mockReturnValue(true)

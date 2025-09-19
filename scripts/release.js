@@ -34,15 +34,14 @@ async function main() {
   const spinner = ora(`Creating a new ${versionType} release...`).start();
 
   try {
-    spinner.text = 'Bumping version...';
-    await run('npm', ['version', versionType, '-m', `chore(release): %s`]);
-
     spinner.text = 'Generating changelog...';
     await run('conventional-changelog', ['-p', 'angular', '-i', 'CHANGELOG.md', '-s']);
 
-    spinner.text = 'Amending commit...';
+    spinner.text = 'Staging changelog...';
     await run('git', ['add', 'CHANGELOG.md']);
-    await run('git', ['commit', '--amend', '--no-edit']);
+
+    spinner.text = 'Bumping version...';
+    await run('npm', ['version', versionType, '-m', `chore(release): %s`]);
 
     spinner.text = 'Pushing to remote...';
     await run('git', ['push', '--follow-tags']);

@@ -11059,8 +11059,8 @@ vi.mock('execa', () => ({
 }));
 
 // Mock fs-extra's copySync
-jest.mock('fs-extra', () => ({
-  copySync: jest.fn(),
+vi.mock('fs-extra', () => ({
+  copySync: vi.fn(),
 }))
 
 // Completely mock the 'fs' module

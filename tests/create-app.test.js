@@ -10999,7 +10999,7 @@ module.exports = `
 
 /** @format */
 
-import { vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { join } from 'path'
 import { rmSync } from 'fs'
 

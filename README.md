@@ -2,6 +2,8 @@
 
 # @involvex/create-wizard
 
+![npm install -g @involvex/create-wizard](https://via.placeholder.com/800x200.png?text=npm+install+-g+%40involvex%2Fcreate-wizard)
+
 [![npm version](https://badge.fury.io/js/%40involvex%2Fcreate-wizard.svg)](https://badge.fury.io/js/%40involvex%2Fcreate-wizard)
 [![Build Status](https://github.com/involvex/create-wizard/actions/workflows/ci-release.yml/badge.svg)](https://github.com/involvex/create-wizard/actions/workflows/ci-release.yml)
 [![GitHub release](https://img.shields.io/github/release/involvex/create-wizard.svg)](https://github.com/involvex/create-wizard/releases/)

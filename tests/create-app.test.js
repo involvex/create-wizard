@@ -7,7 +7,7 @@ import { main } from '../scripts/create-app.js'
 import fs from 'fs'
 import { join } from 'path'
 
-// Mock external dependencies that are not the subject of the test
+// Mock external dependencies
 vi.mock('inquirer', () => ({ default: { prompt: vi.fn() } }))
 vi.mock('execa', () => ({ execa: vi.fn() }))
 vi.mock('ora', () => {
@@ -83,11 +83,10 @@ describe('create-app', () => {
 
   it('should exit if project folder already exists', async () => {
     const projectName = 'existing-app'
-    const projectDir = join(tempDir, projectName)
-    fs.mkdirSync(projectDir) // Pre-create the directory
-
     inquirer.prompt.mockResolvedValue({ projectName })
 
+    // Mock that the directory exists to test the exit condition
+    const existsSyncSpy = vi.spyOn(fs, 'existsSync').mockReturnValue(true)
     const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {})
     const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
@@ -96,6 +95,8 @@ describe('create-app', () => {
     expect(consoleErrorSpy).toHaveBeenCalledWith('Error: Project folder already exists.')
     expect(exitSpy).toHaveBeenCalledWith(1)
 
+    // Restore mocks
+    existsSyncSpy.mockRestore()
     exitSpy.mockRestore()
     consoleErrorSpy.mockRestore()
   })

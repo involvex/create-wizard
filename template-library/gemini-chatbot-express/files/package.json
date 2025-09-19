@@ -1,0 +1,31 @@
+{
+  "name": "gemini-chatbot-express",
+  "version": "1.0.0",
+  "description": "AI Chatbot using Node.js, Express.js, and Google's Gemini API with tool usage.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "gemini",
+    "ai",
+    "chatbot",
+    "express",
+    "nodejs",
+    "tools"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "fs-extra": "^11.2.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

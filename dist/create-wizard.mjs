@@ -18,7 +18,7 @@ function isPlainObject(value) {
 }
 
 // node_modules/execa/lib/arguments/file-url.js
-import { fileURLToPath as fileURLToPath2 } from "node:url";
+import { fileURLToPath } from "node:url";
 var safeNormalizeFileUrl = (file, name) => {
   const fileString = normalizeFileUrl(normalizeDenoExecPath(file));
   if (typeof fileString !== "string") {
@@ -28,7 +28,7 @@ var safeNormalizeFileUrl = (file, name) => {
 };
 var normalizeDenoExecPath = (file) => isDenoExecPath(file) ? file.toString() : file;
 var isDenoExecPath = (file) => typeof file !== "string" && file && Object.getPrototypeOf(file) === String.prototype;
-var normalizeFileUrl = (file) => file instanceof URL ? fileURLToPath2(file) : file;
+var normalizeFileUrl = (file) => file instanceof URL ? fileURLToPath(file) : file;
 
 // node_modules/execa/lib/methods/parameters.js
 var normalizeParameters = (rawFile, rawArguments = [], rawOptions = {}) => {
@@ -876,10 +876,10 @@ function pathKey(options = {}) {
 import { promisify } from "node:util";
 import { execFile as execFileCallback, execFileSync as execFileSyncOriginal } from "node:child_process";
 import path from "node:path";
-import { fileURLToPath as fileURLToPath3 } from "node:url";
+import { fileURLToPath as fileURLToPath2 } from "node:url";
 var execFileOriginal = promisify(execFileCallback);
 function toPath(urlOrPath) {
-  return urlOrPath instanceof URL ? fileURLToPath3(urlOrPath) : urlOrPath;
+  return urlOrPath instanceof URL ? fileURLToPath2(urlOrPath) : urlOrPath;
 }
 function traversePathUp(startPath) {
   return {
@@ -9875,6 +9875,7 @@ ${content}`);
 import inquirer from "inquirer";
 import fs from "fs-extra";
 import { join as join3 } from "path";
+import { fileURLToPath as fileURLToPath3 } from "url";
 async function main3() {
   const answers = await inquirer.prompt([
     {
@@ -9983,7 +9984,7 @@ function updatePackageJsonScripts(newScripts) {
     console.error("package.json not found. Please run npm init first.");
   }
 }
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (process.argv[1] === fileURLToPath3(import.meta.url)) {
   main3();
 }
 

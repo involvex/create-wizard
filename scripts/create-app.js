@@ -67,14 +67,13 @@ export async function main(deps) {
     }
   }
 
-  const templates = await getTemplates();
-  const answers = await prompt([
+  const answers = await inquirer.prompt([
     { name: 'projectName', message: 'Project name:' },
     {
       type: 'list',
       name: 'template',
       message: 'Select a project template:',
-      choices: templates,
+      choices: await getTemplates(),
     },
     {
       type: 'checkbox',

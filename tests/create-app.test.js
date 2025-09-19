@@ -11004,9 +11004,54 @@ import { join } from 'path'
 import { rmSync } from 'fs'
 
 // Mock inquirer and execa
-jest.mock('inquirer', () => ({
-  prompt: jest.fn(),
-}))
+vi.mock('inquirer', () => ({
+  prompt: vi.fn(),
+}));
+vi.mock('execa', () => ({
+  execa: vi.fn(),
+}));
+vi.mock('fs');
+vi.mock('fs-extra');
+
+describe('create-app main function', () => {
+  let inquirer;
+  let execa;
+  let fs;
+  let fsExtra;
+
+  beforeEach(() => {
+    // Dynamically import mocked modules
+    import('inquirer').then(mod => (inquirer = mod));
+    import('execa').then(mod => (execa = mod));
+    import('fs').then(mod => (fs = mod));
+    import('fs-extra').then(mod => (fsExtra = mod));
+    vi.clearAllMocks();
+  });
+
+  it('should create a new project with default options', async () => {
+    // Arrange
+    inquirer.prompt.mockResolvedValue({
+      projectName: 'test-project',
+      template: 'react',
+      dependencies: [],
+      initGit: true,
+      features: [],
+    });
+
+    fs.existsSync.mockReturnValue(false);
+    fs.readFileSync.mockReturnValue(JSON.stringify({}));
+
+    // Act
+    await main({ inquirer, execa, fs, fsExtra, templatesDir: './templates' });
+
+    // Assert
+    expect(fs.mkdirSync).toHaveBeenCalledWith(join(process.cwd(), 'test-project'));
+    expect(execa).toHaveBeenCalledWith('npm', ['init', '-y']);
+    expect(execa).toHaveBeenCalledWith('git', ['init']);
+    expect(execa).toHaveBeenCalledWith('git', ['add', '.']);
+    expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'Initial commit']);
+  });
+});
 jest.mock('execa', () => ({
   execa: jest.fn(() => ({
     stdout: { pipe: jest.fn() },

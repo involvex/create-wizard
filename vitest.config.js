@@ -6,5 +6,9 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
     },
+    environment: 'node',
+  },
+  resolve: {
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json'],
   },
 });

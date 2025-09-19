@@ -11064,8 +11064,8 @@ vi.mock('fs-extra', () => ({
 }))
 
 // Completely mock the 'fs' module
-jest.mock('fs', () => {
-  const actualFs = jest.requireActual('fs')
+vi.mock('fs', () => {
+  const actualFs = vi.requireActual('fs')
   return {
     ...actualFs, // Keep all actual fs functions by default
     existsSync: jest.fn(),

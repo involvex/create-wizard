@@ -1,0 +1,12 @@
+{
+  "ID": "YOUR_CMDPAL_PLUGIN_ID",
+  "ActionKeyword": ">",
+  "IsGlobal": false,
+  "Name": "My Command Palette Plugin",
+  "Author": "Your Name",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/your-repo/your-plugin",
+  "ExecuteFileName": "MyCmdPalPlugin.dll",
+  "IcoPath": "Images\\app.png"
+}

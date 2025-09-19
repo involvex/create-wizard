@@ -1,0 +1,12 @@
+{
+  "ID": "YOUR_PLUGIN_ID",
+  "ActionKeyword": "run",
+  "IsGlobal": false,
+  "Name": "My PowerToys Run Plugin",
+  "Author": "Your Name",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/your-repo/your-plugin",
+  "ExecuteFileName": "MyPowerToysRunPlugin.dll",
+  "IcoPath": "Images\\app.png"
+}

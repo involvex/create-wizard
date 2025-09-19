@@ -78,16 +78,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Bump version, generate changelog, and push tag
-        run: |
-          npm version patch -m "chore(release): %s"
-          npx conventional-changelog -p angular -i CHANGELOG.md -s
-          export NEW_VERSION=$(node -p "require('./package.json').version")
-          echo "---title: Version ${NEW_VERSION} Release\nauthors: [involvex]\ntags: [release]\n---" > docs/changelog/v${NEW_VERSION}.md
-          npx conventional-changelog -p angular -r 1 >> docs/changelog/v${NEW_VERSION}.md
-          git add CHANGELOG.md docs/changelog/
-          git commit --amend --no-edit
-          git push --follow-tags
+      - name: Run release script
+        run: node scripts/release.js
 
   publish:
     runs-on: ubuntu-latest

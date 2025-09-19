@@ -406,6 +406,8 @@ test-job:
   }
 
   console.log('Project successfully created!')
+  console.log('\nThank you for using @involvex/create-wizard!');
+  console.log('If you want to support the project, you can do so at https://buymeacoffee.com/involvex');
 }
 
 import { main as createPlugin } from './create-plugin.js';

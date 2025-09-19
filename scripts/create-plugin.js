@@ -40,7 +40,7 @@ export async function main(deps) {
       type: 'list',
       name: 'pluginType',
       message: 'Which type of plugin do you want to configure?',
-      choices: ['formatter', 'linter', 'typescript'],
+      choices: ['formatter', 'linter', 'typescript', 'gitignore'],
     },
   ]);
 
@@ -250,6 +250,44 @@ export default [
             depsInstalled = true;
           } catch (error) {
             spinner.fail('Failed to install TypeScript.');
+            console.error(error);
+          }
+        }
+      }
+      break;
+    case 'gitignore':
+      {
+        console.log('Configuring .gitignore...');
+        const { templates } = await inquirer.prompt([
+          {
+            type: 'checkbox',
+            name: 'templates',
+            message: 'Select .gitignore templates:',
+            choices: [
+              'node',
+              'visualstudiocode',
+              'windows',
+              'macos',
+              'linux',
+              'jetbrain',
+            ],
+            default: ['node', 'visualstudiocode'],
+          },
+        ]);
+
+        if (templates.length > 0) {
+          const spinner = ora('Fetching .gitignore content...').start();
+          try {
+            const url = `https://www.toptal.com/developers/gitignore/api/${templates.join(',')}`;
+            // We need to use a dynamic import for node-fetch
+            const fetch = (await import('node-fetch')).default;
+            const response = await fetch(url);
+            const content = await response.text();
+            fs.writeFileSync(join(absoluteTargetDir, '.gitignore'), content);
+            spinner.succeed('.gitignore file created.');
+            configGenerated = true;
+          } catch (error) {
+            spinner.fail('Failed to fetch .gitignore templates.');
             console.error(error);
           }
         }

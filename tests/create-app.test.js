@@ -10999,7 +10999,7 @@ module.exports = `
 
 /** @format */
 
-import { jest } from '@jest/globals'
+import { vi } from 'vitest';
 import { join } from 'path'
 import { rmSync } from 'fs'
 

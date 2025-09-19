@@ -37,7 +37,7 @@ export async function main() {
   }
 }
 
-async function setupJest() {
+export async function setupJest() {
   await execa('npm', ['install', '--save-dev', 'jest', 'ts-jest', '@types/jest']);
 
   const jestConfigContent = `/** @type {import('ts-jest').JestConfigWithTsJest} */
@@ -62,7 +62,7 @@ module.exports = {
   });
 }
 
-async function setupVitest() {
+export async function setupVitest() {
   await execa('npm', ['install', '--save-dev', 'vitest', 'typescript']);
 
   const vitestConfigContent = `import { defineConfig } from 'vitest/config';
@@ -91,7 +91,7 @@ describe('Example Test', () => {
   });
 }
 
-async function setupMochaChai() {
+export async function setupMochaChai() {
   await execa('npm', ['install', '--save-dev', 'mocha', 'chai', 'ts-node', 'typescript', '@types/mocha', '@types/chai']);
 
   const mochaConfigContent = `module.exports = {

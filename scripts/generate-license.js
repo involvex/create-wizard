@@ -56,8 +56,7 @@ export async function main(deps) {
       const stat = fs.statSync(filePath);
       if (stat.isDirectory()) {
         scanDirectory(filePath);
-      } else if (/
-.(js|ts|jsx|tsx)$/.test(filePath)) {
+      } else if (new RegExp('\.(js|ts|jsx|tsx)
         const content = fs.readFileSync(filePath, 'utf-8');
         if (!content.includes('Copyright')) {
           fs.writeFileSync(filePath, `${licenseHeader}\n\n${content}`);

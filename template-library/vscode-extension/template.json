@@ -1,0 +1,9 @@
+{
+  "description": "A template for creating a Visual Studio Code extension.",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/vscode": "^1.87.0",
+    "@types/node": "20.x",
+    "typescript": "^5.3.3"
+  }
+}

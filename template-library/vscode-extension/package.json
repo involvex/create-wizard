@@ -1,0 +1,34 @@
+{
+  "name": "my-vscode-extension",
+  "displayName": "My VSCode Extension",
+  "description": "A sample VS Code extension.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:my-vscode-extension.helloWorld"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "my-vscode-extension.helloWorld",
+        "title": "Hello World"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.87.0",
+    "@types/node": "20.x",
+    "typescript": "^5.3.3"
+  }
+}

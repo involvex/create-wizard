@@ -31,6 +31,8 @@
     "lint": "npx eslint . --config eslint.config.js",
     "lint:fix": "npx eslint . --config eslint.config.js --fix",
     "check": "npm run lint:fix && npm run format",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
     "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --format=esm --external:yoctocolors-cjs --external:mute-stream --external:safer-buffer --external:iconv-lite --external:cross-spawn --external:graceful-fs --external:fs-extra --external:inquirer --external:cli-progress --outfile=dist/create-wizard.mjs",
     "start": "node dist/create-wizard.mjs",
     "docs:start": "cd docs && npm start",
@@ -58,6 +60,7 @@
     "@docusaurus/eslint-plugin": "^3.8.1",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^10.0.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "conventional-changelog-cli": "^5.0.0",
     "ddc-copyright-head": "^1.4.0",
     "esbuild": "0.25.9",
@@ -69,6 +72,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "vitest": "^3.2.4"
   }
 }

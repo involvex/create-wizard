@@ -2,6 +2,10 @@
 
 # @involvex/create-wizard
 
+[![npm version](https://badge.fury.io/js/%40involvex%2Fcreate-wizard.svg)](https://badge.fury.io/js/%40involvex%2Fcreate-wizard)
+[![Build Status](https://github.com/involvex/create-wizard/actions/workflows/ci-release.yml/badge.svg)](https://github.com/involvex/create-wizard/actions/workflows/ci-release.yml)
+[![GitHub release](https://img.shields.io/github/release/involvex/create-wizard.svg)](https://github.com/involvex/create-wizard/releases/)
+
 `@involvex/create-wizard` is a powerful command-line interface (CLI) tool designed to streamline and accelerate the setup of new JavaScript projects. It offers an interactive and comprehensive solution for project initialization, ensuring consistency and reducing manual setup. Our goal is to be the go-to solution for quickly building new projects.
 
 ## Features

@@ -7,7 +7,7 @@ import { main } from '../scripts/create-app.js'
 import fs from 'fs'
 import { join } from 'path'
 
-// Mock external dependencies that are not the subject of the test
+// Mock external dependencies
 vi.mock('inquirer', () => ({ default: { prompt: vi.fn() } }))
 vi.mock('execa', () => ({ execa: vi.fn() }))
 vi.mock('ora', () => {
@@ -28,44 +28,46 @@ describe('create-app', () => {
   const tempDir = join(originalCwd, 'temp-test-dir-e2e')
 
   beforeEach(async () => {
-    // Reset modules to get fresh mocks
     vi.resetModules()
 
-    // Dynamically import mocked modules
     inquirer = (await import('inquirer')).default
     execa = (await import('execa')).execa
 
     // Set up a clean temporary directory for each test
-    if (fs.existsSync(tempDir)) {
-      fs.rmSync(tempDir, { recursive: true, force: true })
-    }
-    fs.mkdirSync(tempDir)
+    fs.rmSync(tempDir, { recursive: true, force: true })
+    fs.mkdirSync(tempDir, { recursive: true })
     process.chdir(tempDir)
 
-    // Mock fetch for templates
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        json: () =>
-          Promise.resolve([
-            { name: 'react', type: 'dir' },
-            { name: 'node-api', type: 'dir' },
-          ]),
-      }),
-    )
+    // A more robust fetch mock that handles both API calls
+    global.fetch = vi.fn((url) => {
+      if (url.includes('api.github.com')) {
+        return Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve([
+              { name: 'react', type: 'dir' },
+              { name: 'node-api', type: 'dir' },
+            ]),
+        })
+      }
+      if (url.endsWith('.zip')) {
+        return Promise.resolve({
+          ok: true,
+          arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)), // Mock zip content
+        })
+      }
+      return Promise.reject(new Error(`Unhandled fetch URL: ${url}`))
+    })
   })
 
   afterEach(() => {
-    // Clean up and restore CWD
     process.chdir(originalCwd)
-    if (fs.existsSync(tempDir)) {
-      fs.rmSync(tempDir, { recursive: true, force: true })
-    }
-    vi.clearAllMocks() // Clear mocks after each test
+    fs.rmSync(tempDir, { recursive: true, force: true })
+    vi.clearAllMocks()
   })
 
   it('should create a project with default options', async () => {
     const projectName = 'my-test-app'
-
     inquirer.prompt.mockResolvedValue({
       projectName,
       template: 'react',
@@ -74,45 +76,41 @@ describe('create-app', () => {
       initGit: true,
     })
 
-    // Spy on fs methods to verify calls without replacing the whole module
-    const writeFileSyncSpy = vi.spyOn(fs, 'writeFileSync').mockImplementation(() => {})
-    const readFileSyncSpy = vi.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify({}))
+    // Spy on fs.writeFileSync to ensure it's called for the template
+    const writeSpy = vi.spyOn(fs, 'writeFileSync').mockImplementation(() => {})
 
     await main({ inquirer, execa, fs })
 
     const projectDir = join(tempDir, projectName)
-
-    // Verify directory was created (by chdir logic)
     expect(process.cwd()).toBe(projectDir)
-
-    // Verify npm init and git init were called
     expect(execa).toHaveBeenCalledWith('npm', ['init', '-y'])
     expect(execa).toHaveBeenCalledWith('git', ['init'])
-    expect(execa).toHaveBeenCalledWith('git', ['add', '.'])
-    expect(execa).toHaveBeenCalledWith('git', ['commit', '-m', 'Initial commit'])
+    expect(writeSpy).toHaveBeenCalledWith(
+      join(projectDir, 'template.zip'),
+      expect.any(Buffer),
+    )
 
-    // Restore spies
-    writeFileSyncSpy.mockRestore()
-    readFileSyncSpy.mockRestore()
+    writeSpy.mockRestore()
   })
 
   it('should exit if project folder already exists', async () => {
     const projectName = 'existing-app'
     const projectDir = join(tempDir, projectName)
-
-    // Create the directory to make it exist
-    fs.mkdirSync(projectDir)
+    fs.mkdirSync(projectDir) // Pre-create the directory
 
     inquirer.prompt.mockResolvedValue({ projectName })
 
-    // Mock process.exit
     const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {})
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     await main({ inquirer, execa, fs })
 
-    // Verify it tried to exit
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'Error: Project folder already exists.',
+    )
     expect(exitSpy).toHaveBeenCalledWith(1)
 
     exitSpy.mockRestore()
+    consoleErrorSpy.mockRestore()
   })
 })

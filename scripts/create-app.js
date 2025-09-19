@@ -134,13 +134,17 @@ export async function main(deps) {
       default: true,
     },
     {
-      type: 'checkbox',
-      name: 'features',
-      message: 'Select optional features:',
-      choices: [
-        { name: 'jest', message: 'Include Jest testing framework' },
-        { name: 'debug', message: 'Include VS Code debug configuration' },
-      ],
+      type: 'confirm',
+      name: 'includeTestFramework',
+      message: 'Include a testing framework?',
+      default: false,
+    },
+    {
+      type: 'list',
+      name: 'testFramework',
+      message: 'Which testing framework?',
+      choices: ['Jest', 'Vitest', 'Mocha/Chai'],
+      when: (answers) => answers.includeTestFramework,
     },
     {
       type: 'confirm',
@@ -177,6 +181,12 @@ export async function main(deps) {
       message: 'Include GitLab CI/CD pipeline?',
       default: false,
     },
+    {
+      type: 'confirm',
+      name: 'includeDebugConfig',
+      message: 'Include VS Code debug configuration?',
+      default: false,
+    },
   ])
 
   const projectDir = join(process.cwd(), answers.projectName)
@@ -193,6 +203,29 @@ export async function main(deps) {
   npmInitSpinner.succeed('Project initialized.')
 
   await applyTemplate(answers.template, projectDir, answers)
+
+  if (answers.includeTestFramework) {
+    const testSetupSpinner = ora(`Setting up ${answers.testFramework}...`).start();
+    try {
+      process.chdir(projectDir); // Ensure we are in the project directory
+      switch (answers.testFramework) {
+        case 'Jest':
+          await setupJest();
+          break;
+        case 'Vitest':
+          await setupVitest();
+          break;
+        case 'Mocha/Chai':
+          await setupMochaChai();
+          break;
+      }
+      testSetupSpinner.succeed(`${answers.testFramework} setup complete!`);
+    } catch (error) {
+      testSetupSpinner.fail(`Failed to set up ${answers.testFramework}.`);
+      console.error(error);
+      process.exit(1);
+    }
+  }
 
   const packageJsonPath = join(projectDir, 'package.json')
   let packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
@@ -212,16 +245,7 @@ export async function main(deps) {
     ...packageJson.devDependencies,
   }
 
-  if (answers.features.includes('jest')) {
-    packageJson.devDependencies = {
-      ...packageJson.devDependencies,
-      jest: '^29.7.0',
-    }
-    packageJson.scripts = {
-      ...packageJson.scripts,
-      test: 'jest',
-    }
-  }
+
 
   if (answers.includeTypeScript) {
     packageJson.devDependencies = {
@@ -388,7 +412,7 @@ test-job:
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
-  if (answers.features.includes('debug')) {
+  if (answers.includeDebugConfig) {
     const vscodeDir = join(projectDir, '.vscode')
     fs.mkdirSync(vscodeDir, { recursive: true })
     fs.writeFileSync(
@@ -451,7 +475,7 @@ test-job:
 
 import { main as createPlugin } from './create-plugin.js';
 import { main as generateLicense } from './generate-license.js';
-import { main as createTestSetup } from './create-test-setup.js';
+import { main as createTestSetup, setupJest, setupVitest, setupMochaChai } from './create-test-setup.js';
 
 // This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
@@ -464,8 +488,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     generateLicense({
       /* dependencies */
     });
-  } else if (process.argv.includes('--test-setup')) {
-    createTestSetup();
+
   } else {
     main({});
   }

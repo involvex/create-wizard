@@ -11064,17 +11064,13 @@ vi.mock('fs-extra', () => ({
 }))
 
 // Completely mock the 'fs' module
-vi.mock('fs', () => {
-  const actualFs = vi.requireActual('fs')
-  return {
-    ...actualFs, // Keep all actual fs functions by default
-    existsSync: jest.fn(),
-    mkdirSync: jest.fn(),
-    readFileSync: jest.fn(),
-    writeFileSync: jest.fn(),
-    readdirSync: jest.fn(),
-  }
-})
+vi.mock('fs', () => ({
+  ...vi.importActual('fs'),
+  existsSync: vi.fn(),
+  readFileSync: vi.fn(),
+  writeFileSync: vi.fn(),
+  mkdirSync: vi.fn(),
+}));
 
 const projectRoot = 'D:\\repos\\create-universe' // Define project root
 const cliPath = join(projectRoot, 'scripts/create-app.js')

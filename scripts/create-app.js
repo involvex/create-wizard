@@ -42,26 +42,47 @@ export async function main(deps) {
     }
   }
 
-  async function applyTemplate(templateName, projectDir) {
-    const spinner = ora(`Downloading template: ${templateName}...`).start();
+  async function applyTemplate(templateName, projectDir, answers) {
+    const spinner = ora(`Applying template: ${templateName}...`).start();
     try {
-      const templateUrl = `https://github.com/${GITHUB_REPO}/archive/refs/heads/main.zip`;
-      const response = await fetch(templateUrl);
-      const arrayBuffer = await response.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-
-      // This is a simplified way to handle the zip file.
-      // In a real-world scenario, you would use a library like 'yauzl' or 'unzipper'
-      // to properly extract the contents.
-      // For now, we'll just write the zip to a file to demonstrate the download.
-      fs.writeFileSync(join(projectDir, 'template.zip'), buffer);
-
-      spinner.succeed('Template downloaded.');
-      console.log(
-        'Note: Template downloaded as template.zip. Manual extraction is required.',
+      const templateDir = join(
+        dirname(fileURLToPath(import.meta.url)),
+        '..',
+        'template-library',
+        templateName,
+        'files'
       );
+
+      fsExtra.copySync(templateDir, projectDir);
+
+      // Conditionally copy feature files
+      if (answers.discordFeatures) {
+        if (answers.discordFeatures.includes('welcome')) {
+          fsExtra.copySync(
+            join(templateDir, '../features/welcome'),
+            projectDir
+          );
+        }
+        if (answers.discordFeatures.includes('logging')) {
+          fsExtra.copySync(
+            join(templateDir, '../features/logging'),
+            projectDir
+          );
+        }
+        if (answers.discordFeatures.includes('moderation')) {
+          fsExtra.copySync(
+            join(templateDir, '../features/moderation'),
+            projectDir
+          );
+        }
+      }
+      if (answers.discordRPC) {
+        fsExtra.copySync(join(templateDir, '../features/rpc'), projectDir);
+      }
+
+      spinner.succeed('Template applied.');
     } catch (error) {
-      spinner.fail('Failed to download template.');
+      spinner.fail('Failed to apply template.');
       console.error(error);
       process.exit(1);
     }
@@ -74,6 +95,24 @@ export async function main(deps) {
       name: 'template',
       message: 'Select a project template:',
       choices: await getTemplates(),
+    },
+    {
+      type: 'checkbox',
+      name: 'discordFeatures',
+      message: 'Select Discord bot features:',
+      choices: [
+        { name: 'welcome', message: 'Include welcome messages for new users' },
+        { name: 'logging', message: 'Include message logging' },
+        { name: 'moderation', message: 'Include moderation commands (kick/ban)' },
+      ],
+      when: (answers) => answers.template === 'discord-bot',
+    },
+    {
+      type: 'confirm',
+      name: 'discordRPC',
+      message: 'Include Discord RPC (activity status)?',
+      default: false,
+      when: (answers) => answers.template === 'discord-bot',
     },
     {
       type: 'checkbox',
@@ -152,7 +191,7 @@ export async function main(deps) {
   await execa('npm', ['init', '-y'])
   npmInitSpinner.succeed('Project initialized.')
 
-  await applyTemplate(answers.template, projectDir)
+  await applyTemplate(answers.template, projectDir, answers)
 
   const packageJsonPath = join(projectDir, 'package.json')
   let packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))

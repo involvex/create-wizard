@@ -40,8 +40,14 @@ async function main() {
     spinner.text = 'Staging changelog...';
     await run('git', ['add', 'CHANGELOG.md']);
 
-    spinner.text = 'Committing changelog...';
-    await run('git', ['commit', '-m', 'docs: Update CHANGELOG.md for release']);
+    // Check if CHANGELOG.md has actual changes before committing
+    const gitStatusOutput = await execa('git', ['status', '--porcelain', 'CHANGELOG.md']);
+    if (gitStatusOutput.stdout.trim().length > 0) {
+      spinner.text = 'Committing changelog...';
+      await run('git', ['commit', '-m', 'docs: Update CHANGELOG.md for release']);
+    } else {
+      spinner.text = 'No new changelog entries. Skipping changelog commit.';
+    }
 
     spinner.text = 'Bumping version...';
     await run('npm', ['version', versionType, '-m', `chore(release): %s`]);

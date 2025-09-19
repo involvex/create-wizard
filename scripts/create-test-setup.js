@@ -2,6 +2,7 @@ import inquirer from 'inquirer';
 import { execa } from 'execa';
 import fs from 'fs-extra';
 import { join } from 'path';
+import { fileURLToPath } from 'url';
 import ora from 'ora';
 
 export async function main() {

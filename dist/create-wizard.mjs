@@ -18,7 +18,7 @@ function isPlainObject(value) {
 }
 
 // node_modules/execa/lib/arguments/file-url.js
-import { fileURLToPath } from "node:url";
+import { fileURLToPath as fileURLToPath2 } from "node:url";
 var safeNormalizeFileUrl = (file, name) => {
   const fileString = normalizeFileUrl(normalizeDenoExecPath(file));
   if (typeof fileString !== "string") {
@@ -28,7 +28,7 @@ var safeNormalizeFileUrl = (file, name) => {
 };
 var normalizeDenoExecPath = (file) => isDenoExecPath(file) ? file.toString() : file;
 var isDenoExecPath = (file) => typeof file !== "string" && file && Object.getPrototypeOf(file) === String.prototype;
-var normalizeFileUrl = (file) => file instanceof URL ? fileURLToPath(file) : file;
+var normalizeFileUrl = (file) => file instanceof URL ? fileURLToPath2(file) : file;
 
 // node_modules/execa/lib/methods/parameters.js
 var normalizeParameters = (rawFile, rawArguments = [], rawOptions = {}) => {
@@ -876,10 +876,10 @@ function pathKey(options = {}) {
 import { promisify } from "node:util";
 import { execFile as execFileCallback, execFileSync as execFileSyncOriginal } from "node:child_process";
 import path from "node:path";
-import { fileURLToPath as fileURLToPath2 } from "node:url";
+import { fileURLToPath as fileURLToPath3 } from "node:url";
 var execFileOriginal = promisify(execFileCallback);
 function toPath(urlOrPath) {
-  return urlOrPath instanceof URL ? fileURLToPath2(urlOrPath) : urlOrPath;
+  return urlOrPath instanceof URL ? fileURLToPath3(urlOrPath) : urlOrPath;
 }
 function traversePathUp(startPath) {
   return {
@@ -6789,10 +6789,10 @@ var {
 } = getIpcExport();
 
 // scripts/create-app.js
-import { join as join3, dirname } from "path";
+import { join as join4, dirname } from "path";
 import _fs3 from "fs";
 import _fsExtra from "fs-extra";
-import { fileURLToPath as fileURLToPath3 } from "url";
+import { fileURLToPath as fileURLToPath4 } from "url";
 
 // node_modules/ora/index.js
 import process14 from "node:process";
@@ -9546,11 +9546,11 @@ import _inquirer from "inquirer";
 import { join } from "path";
 import _fs from "fs";
 async function main(deps) {
-  const inquirer = deps.inquirer || _inquirer;
+  const inquirer2 = deps.inquirer || _inquirer;
   const execa2 = deps.execa || execa;
-  const fs = deps.fs || _fs;
+  const fs2 = deps.fs || _fs;
   console.log("Interactive Plugin Setup Wizard");
-  const { targetDir } = await inquirer.prompt([
+  const { targetDir } = await inquirer2.prompt([
     {
       name: "targetDir",
       message: "Enter the target directory for the configuration (leave empty for current directory):",
@@ -9558,10 +9558,10 @@ async function main(deps) {
     }
   ]);
   const absoluteTargetDir = join(process.cwd(), targetDir);
-  if (!fs.existsSync(absoluteTargetDir)) {
-    fs.mkdirSync(absoluteTargetDir, { recursive: true });
+  if (!fs2.existsSync(absoluteTargetDir)) {
+    fs2.mkdirSync(absoluteTargetDir, { recursive: true });
   }
-  const { pluginType } = await inquirer.prompt([
+  const { pluginType } = await inquirer2.prompt([
     {
       type: "list",
       name: "pluginType",
@@ -9575,7 +9575,7 @@ async function main(deps) {
     case "formatter":
       {
         console.log("Configuring Prettier...");
-        const answers = await inquirer.prompt([
+        const answers = await inquirer2.prompt([
           {
             type: "confirm",
             name: "semi",
@@ -9601,12 +9601,12 @@ async function main(deps) {
           singleQuote: answers.singleQuote,
           trailingComma: answers.trailingComma
         };
-        fs.writeFileSync(
+        fs2.writeFileSync(
           join(absoluteTargetDir, ".prettierrc"),
           JSON.stringify(prettierConfig, null, 2)
         );
         configGenerated = true;
-        const { installDeps } = await inquirer.prompt([
+        const { installDeps } = await inquirer2.prompt([
           {
             type: "confirm",
             name: "installDeps",
@@ -9632,7 +9632,7 @@ async function main(deps) {
     case "linter":
       {
         console.log("Configuring ESLint...");
-        const answers = await inquirer.prompt([
+        const answers = await inquirer2.prompt([
           {
             type: "checkbox",
             name: "env",
@@ -9665,12 +9665,12 @@ export default [
   ${answers.extendPrettier ? "prettierConfig," : ""}
 ];
 `;
-        fs.writeFileSync(
+        fs2.writeFileSync(
           join(absoluteTargetDir, "eslint.config.js"),
           eslintConfig.trim()
         );
         configGenerated = true;
-        const { installDeps } = await inquirer.prompt([
+        const { installDeps } = await inquirer2.prompt([
           {
             type: "confirm",
             name: "installDeps",
@@ -9700,7 +9700,7 @@ export default [
     case "typescript":
       {
         console.log("Configuring TypeScript...");
-        const answers = await inquirer.prompt([
+        const answers = await inquirer2.prompt([
           {
             type: "list",
             name: "target",
@@ -9738,12 +9738,12 @@ export default [
             skipLibCheck: true
           }
         };
-        fs.writeFileSync(
+        fs2.writeFileSync(
           join(absoluteTargetDir, "tsconfig.json"),
           JSON.stringify(tsConfig, null, 2)
         );
         configGenerated = true;
-        const { installDeps } = await inquirer.prompt([
+        const { installDeps } = await inquirer2.prompt([
           {
             type: "confirm",
             name: "installDeps",
@@ -9769,7 +9769,7 @@ export default [
     case "gitignore":
       {
         console.log("Configuring .gitignore...");
-        const { templates } = await inquirer.prompt([
+        const { templates } = await inquirer2.prompt([
           {
             type: "checkbox",
             name: "templates",
@@ -9792,7 +9792,7 @@ export default [
             const fetch = (await import("node-fetch")).default;
             const response = await fetch(url);
             const content = await response.text();
-            fs.writeFileSync(join(absoluteTargetDir, ".gitignore"), content);
+            fs2.writeFileSync(join(absoluteTargetDir, ".gitignore"), content);
             spinner.succeed(".gitignore file created.");
             configGenerated = true;
           } catch (error2) {
@@ -9816,17 +9816,17 @@ import _inquirer2 from "inquirer";
 import _fs2 from "fs";
 import { join as join2 } from "path";
 async function main2(deps) {
-  const inquirer = deps.inquirer || _inquirer2;
-  const fs = deps.fs || _fs2;
+  const inquirer2 = deps.inquirer || _inquirer2;
+  const fs2 = deps.fs || _fs2;
   console.log("License Header Generation Wizard");
-  const { copyrightHolder } = await inquirer.prompt([
+  const { copyrightHolder } = await inquirer2.prompt([
     {
       name: "copyrightHolder",
       message: "Enter the copyright holder name:",
       default: "Involvex"
     }
   ]);
-  const { targetDir } = await inquirer.prompt([
+  const { targetDir } = await inquirer2.prompt([
     {
       name: "targetDir",
       message: "Enter the target directory (leave empty for current directory):",
@@ -9845,16 +9845,16 @@ async function main2(deps) {
   const spinner = ora("Adding license headers...").start();
   let filesModified = 0;
   function scanDirectory(dir) {
-    const files = fs.readdirSync(dir);
+    const files = fs2.readdirSync(dir);
     for (const file of files) {
       const filePath = join2(dir, file);
-      const stat = fs.statSync(filePath);
+      const stat = fs2.statSync(filePath);
       if (stat.isDirectory()) {
         scanDirectory(filePath);
       } else if (new RegExp("\\.(js|ts|jsx|tsx)").test(filePath)) {
-        const content = fs.readFileSync(filePath, "utf-8");
+        const content = fs2.readFileSync(filePath, "utf-8");
         if (!content.includes("Copyright")) {
-          fs.writeFileSync(filePath, `${licenseHeader}
+          fs2.writeFileSync(filePath, `${licenseHeader}
 
 ${content}`);
           filesModified++;
@@ -9871,23 +9871,139 @@ ${content}`);
   }
 }
 
+// scripts/create-test-setup.js
+import inquirer from "inquirer";
+import fs from "fs-extra";
+import { join as join3 } from "path";
+async function main3() {
+  const answers = await inquirer.prompt([
+    {
+      type: "list",
+      name: "framework",
+      message: "Which testing framework would you like to set up?",
+      choices: ["Jest", "Vitest", "Mocha/Chai"]
+    }
+  ]);
+  const spinner = ora(`Setting up ${answers.framework}...`).start();
+  try {
+    switch (answers.framework) {
+      case "Jest":
+        await setupJest();
+        break;
+      case "Vitest":
+        await setupVitest();
+        break;
+      case "Mocha/Chai":
+        await setupMochaChai();
+        break;
+    }
+    spinner.succeed(`${answers.framework} setup complete!`);
+  } catch (error2) {
+    spinner.fail(`Failed to set up ${answers.framework}.`);
+    console.error(error2);
+    process.exit(1);
+  }
+}
+async function setupJest() {
+  await execa("npm", ["install", "--save-dev", "jest", "ts-jest", "@types/jest"]);
+  const jestConfigContent = `/** @type {import('ts-jest').JestConfigWithTsJest} */
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+};
+`;
+  fs.writeFileSync(join3(process.cwd(), "jest.config.js"), jestConfigContent);
+  const exampleTestContent = `describe('Example Test', () => {
+  test('should pass', () => {
+    expect(true).toBe(true);
+  });
+});
+`;
+  fs.mkdirSync(join3(process.cwd(), "__tests__"), { recursive: true });
+  fs.writeFileSync(join3(process.cwd(), "__tests__", "example.test.ts"), exampleTestContent);
+  updatePackageJsonScripts({
+    test: "jest"
+  });
+}
+async function setupVitest() {
+  await execa("npm", ["install", "--save-dev", "vitest", "typescript"]);
+  const vitestConfigContent = `import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    environment: 'node',
+  },
+});
+`;
+  fs.writeFileSync(join3(process.cwd(), "vitest.config.ts"), vitestConfigContent);
+  const exampleTestContent = `import { describe, it, expect } from 'vitest';
+
+describe('Example Test', () => {
+  it('should pass', () => {
+    expect(true).toBe(true);
+  });
+});
+`;
+  fs.mkdirSync(join3(process.cwd(), "src", "__tests__"), { recursive: true });
+  fs.writeFileSync(join3(process.cwd(), "src", "__tests__", "example.test.ts"), exampleTestContent);
+  updatePackageJsonScripts({
+    test: "vitest"
+  });
+}
+async function setupMochaChai() {
+  await execa("npm", ["install", "--save-dev", "mocha", "chai", "ts-node", "typescript", "@types/mocha", "@types/chai"]);
+  const mochaConfigContent = `module.exports = {
+  require: ['ts-node/register'],
+  extension: ['ts', 'tsx'],
+  spec: ['./test/**/*.test.ts'],
+};
+`;
+  fs.writeFileSync(join3(process.cwd(), ".mocharc.js"), mochaConfigContent);
+  const exampleTestContent = `import { expect } from 'chai';
+
+describe('Example Test', () => {
+  it('should pass', () => {
+    expect(true).to.be.true;
+  });
+});
+`;
+  fs.mkdirSync(join3(process.cwd(), "test"), { recursive: true });
+  fs.writeFileSync(join3(process.cwd(), "test", "example.test.ts"), exampleTestContent);
+  updatePackageJsonScripts({
+    test: "mocha"
+  });
+}
+function updatePackageJsonScripts(newScripts) {
+  const packageJsonPath = join3(process.cwd(), "package.json");
+  if (fs.existsSync(packageJsonPath)) {
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+    packageJson.scripts = { ...packageJson.scripts, ...newScripts };
+    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  } else {
+    console.error("package.json not found. Please run npm init first.");
+  }
+}
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  main3();
+}
+
 // scripts/create-app.js
-async function main3(deps) {
-  const inquirer = deps.inquirer || _inquirer3;
+async function main4(deps) {
+  const inquirer2 = deps.inquirer || _inquirer3;
   const execa2 = deps.execa || execa;
-  const fs = deps.fs || _fs3;
+  const fs2 = deps.fs || _fs3;
   const fsExtra = deps.fsExtra || _fsExtra;
   async function getTemplates() {
     const spinner = ora("Fetching templates...").start();
     try {
-      const templatesPath = join3(
-        dirname(fileURLToPath3(import.meta.url)),
+      const templatesPath = join4(
+        dirname(fileURLToPath4(import.meta.url)),
         "..",
         "template-library"
       );
-      const templates = fs.readdirSync(templatesPath).filter((file) => {
-        const filePath = join3(templatesPath, file);
-        return fs.statSync(filePath).isDirectory();
+      const templates = fs2.readdirSync(templatesPath).filter((file) => {
+        const filePath = join4(templatesPath, file);
+        return fs2.statSync(filePath).isDirectory();
       });
       spinner.succeed("Templates fetched.");
       return templates;
@@ -9900,8 +10016,8 @@ async function main3(deps) {
   async function applyTemplate(templateName, projectDir2, answers2) {
     const spinner = ora(`Applying template: ${templateName}...`).start();
     try {
-      const templateDir = join3(
-        dirname(fileURLToPath3(import.meta.url)),
+      const templateDir = join4(
+        dirname(fileURLToPath4(import.meta.url)),
         "..",
         "template-library",
         templateName,
@@ -9911,25 +10027,25 @@ async function main3(deps) {
       if (answers2.discordFeatures) {
         if (answers2.discordFeatures.includes("welcome")) {
           fsExtra.copySync(
-            join3(templateDir, "../features/welcome"),
+            join4(templateDir, "../features/welcome"),
             projectDir2
           );
         }
         if (answers2.discordFeatures.includes("logging")) {
           fsExtra.copySync(
-            join3(templateDir, "../features/logging"),
+            join4(templateDir, "../features/logging"),
             projectDir2
           );
         }
         if (answers2.discordFeatures.includes("moderation")) {
           fsExtra.copySync(
-            join3(templateDir, "../features/moderation"),
+            join4(templateDir, "../features/moderation"),
             projectDir2
           );
         }
       }
       if (answers2.discordRPC) {
-        fsExtra.copySync(join3(templateDir, "../features/rpc"), projectDir2);
+        fsExtra.copySync(join4(templateDir, "../features/rpc"), projectDir2);
       }
       spinner.succeed("Template applied.");
     } catch (error2) {
@@ -9938,7 +10054,7 @@ async function main3(deps) {
       process.exit(1);
     }
   }
-  const answers = await inquirer.prompt([
+  const answers = await inquirer2.prompt([
     { name: "projectName", message: "Project name:" },
     {
       type: "list",
@@ -10027,19 +10143,19 @@ async function main3(deps) {
       default: false
     }
   ]);
-  const projectDir = join3(process.cwd(), answers.projectName);
-  if (fs.existsSync(projectDir)) {
+  const projectDir = join4(process.cwd(), answers.projectName);
+  if (fs2.existsSync(projectDir)) {
     console.error("Error: Project folder already exists.");
     process.exit(1);
   }
-  fs.mkdirSync(projectDir);
+  fs2.mkdirSync(projectDir);
   process.chdir(projectDir);
   const npmInitSpinner = ora("Initializing new project (npm init -y)...").start();
   await execa2("npm", ["init", "-y"]);
   npmInitSpinner.succeed("Project initialized.");
   await applyTemplate(answers.template, projectDir, answers);
-  const packageJsonPath = join3(projectDir, "package.json");
-  let packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+  const packageJsonPath = join4(projectDir, "package.json");
+  let packageJson = JSON.parse(fs2.readFileSync(packageJsonPath, "utf-8"));
   const userDependencies = answers.dependencies.reduce((acc, dep) => {
     acc[dep.name] = dep.version;
     return acc;
@@ -10066,8 +10182,8 @@ async function main3(deps) {
       ...packageJson.devDependencies,
       typescript: "^5.3.3"
     };
-    fs.writeFileSync(
-      join3(projectDir, "tsconfig.json"),
+    fs2.writeFileSync(
+      join4(projectDir, "tsconfig.json"),
       JSON.stringify(
         {
           compilerOptions: {
@@ -10095,8 +10211,8 @@ async function main3(deps) {
         "eslint-config-prettier": "^9.1.0"
       };
     }
-    fs.writeFileSync(
-      join3(projectDir, "eslint.config.js"),
+    fs2.writeFileSync(
+      join4(projectDir, "eslint.config.js"),
       `import js from "@eslint/js";
 import globals from "globals";
 ${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier';\n" : ""}export default [
@@ -10116,8 +10232,8 @@ ${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier'
       ...packageJson.devDependencies,
       prettier: "^3.2.5"
     };
-    fs.writeFileSync(
-      join3(projectDir, ".prettierrc"),
+    fs2.writeFileSync(
+      join4(projectDir, ".prettierrc"),
       JSON.stringify(
         {
           semi: false,
@@ -10135,8 +10251,8 @@ ${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier'
     };
   }
   if (answers.includeDocker) {
-    fs.writeFileSync(
-      join3(projectDir, "Dockerfile"),
+    fs2.writeFileSync(
+      join4(projectDir, "Dockerfile"),
       `# Use an official Node.js runtime as a parent image
 FROM node:20-alpine
 
@@ -10159,8 +10275,8 @@ EXPOSE 3000
 CMD ["npm", "start"]
 `
     );
-    fs.writeFileSync(
-      join3(projectDir, ".dockerignore"),
+    fs2.writeFileSync(
+      join4(projectDir, ".dockerignore"),
       `node_modules
 npm-debug.log
 yarn-debug.log
@@ -10173,11 +10289,11 @@ Dockerfile
     );
   }
   if (answers.includeGithubActions) {
-    const githubDir = join3(projectDir, ".github");
-    const workflowsDir = join3(githubDir, "workflows");
-    fs.mkdirSync(workflowsDir, { recursive: true });
-    fs.writeFileSync(
-      join3(workflowsDir, "main.yml"),
+    const githubDir = join4(projectDir, ".github");
+    const workflowsDir = join4(githubDir, "workflows");
+    fs2.mkdirSync(workflowsDir, { recursive: true });
+    fs2.writeFileSync(
+      join4(workflowsDir, "main.yml"),
       `name: CI/CD Pipeline
 
 on: [push, pull_request]
@@ -10199,8 +10315,8 @@ jobs:
     );
   }
   if (answers.includeGitlabCi) {
-    fs.writeFileSync(
-      join3(projectDir, ".gitlab-ci.yml"),
+    fs2.writeFileSync(
+      join4(projectDir, ".gitlab-ci.yml"),
       `stages:
   - build
   - test
@@ -10224,12 +10340,12 @@ test-job:
 `
     );
   }
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  fs2.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
   if (answers.features.includes("debug")) {
-    const vscodeDir = join3(projectDir, ".vscode");
-    fs.mkdirSync(vscodeDir, { recursive: true });
-    fs.writeFileSync(
-      join3(vscodeDir, "launch.json"),
+    const vscodeDir = join4(projectDir, ".vscode");
+    fs2.mkdirSync(vscodeDir, { recursive: true });
+    fs2.writeFileSync(
+      join4(vscodeDir, "launch.json"),
       JSON.stringify(
         {
           version: "0.2.0",
@@ -10279,7 +10395,7 @@ test-job:
   console.log("\nThank you for using @involvex/create-wizard!");
   console.log("If you want to support the project, you can do so at https://buymeacoffee.com/involvex");
 }
-if (process.argv[1] === fileURLToPath3(import.meta.url)) {
+if (process.argv[1] === fileURLToPath4(import.meta.url)) {
   if (process.argv.includes("--plugin")) {
     main({
       /* dependencies */
@@ -10288,10 +10404,12 @@ if (process.argv[1] === fileURLToPath3(import.meta.url)) {
     main2({
       /* dependencies */
     });
+  } else if (process.argv.includes("--test-setup")) {
+    main3();
   } else {
-    main3({});
+    main4({});
   }
 }
 export {
-  main3 as main
+  main4 as main
 };

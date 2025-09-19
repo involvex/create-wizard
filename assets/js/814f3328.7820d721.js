@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Recent Changes","items":[{"title":"Version 0.0.6 Release","permalink":"/create-wizard/changelog/v0.0.6","unlisted":false,"date":"2025-09-19T16:10:35.000Z"}]}')}}]);

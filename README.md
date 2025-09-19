@@ -63,6 +63,22 @@ The CLI will then guide you through the following steps:
     *   GitLab CI/CD pipeline
 5.  **Git Initialization**: Confirm if you want to initialize a Git repository for your project.
 
+## Known Issues & Workarounds
+
+### Bundled CLI Prompts for Test Setup First
+
+When running the bundled CLI (`dist/create-wizard.mjs` via `npm start` or `create-wizard` command), you might observe that the tool unexpectedly prompts for "Which testing framework would you like to set up?" before asking for the project name or template selection. This is due to a known incompatibility between `esbuild`'s bundling process and the `inquirer` library's interactive prompts in certain environments.
+
+**Workaround:**
+
+To ensure the correct prompt order and full functionality, please run the CLI directly using the unbundled script:
+
+```bash
+node scripts/create-app.js
+```
+
+This command will execute the CLI with the intended flow, allowing you to select project templates and configure other features as expected.
+
 ## Development
 
 ### Prerequisites

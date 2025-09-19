@@ -35,7 +35,7 @@ async function main() {
 
   try {
     spinner.text = 'Generating changelog...';
-    await run('conventional-changelog', ['-p', 'angular', '-i', 'CHANGELOG.md', '-s']);
+    await run('npx', ['conventional-changelog', '-p', 'angular', '-i', 'CHANGELOG.md', '-s']);
 
     spinner.text = 'Staging changelog...';
     await run('git', ['add', 'CHANGELOG.md']);

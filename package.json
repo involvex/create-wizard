@@ -1,6 +1,6 @@
 {
   "name": "@involvex/create-wizard",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "create everything with ease interactive ",
   "keywords": [
     "cli",
@@ -25,13 +25,12 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "test": "echo \"no tests\"",
+    "test": "vitest",
     "format:check": "npx prettier --check .",
     "format": "npx prettier --write .",
     "lint": "npx eslint . --config eslint.config.js",
     "lint:fix": "npx eslint . --config eslint.config.js --fix",
     "check": "npm run lint:fix && npm run format",
-    "test": "vitest",
     "coverage": "vitest run --coverage",
     "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --format=esm --external:yoctocolors-cjs --external:mute-stream --external:safer-buffer --external:iconv-lite --external:cross-spawn --external:graceful-fs --external:fs-extra --external:inquirer --external:cli-progress --outfile=dist/create-wizard.mjs",
     "start": "node dist/create-wizard.mjs",

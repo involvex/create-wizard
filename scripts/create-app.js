@@ -22,6 +22,27 @@ const packageJson = require('../package.json')
 // Parse command line arguments for --debug flag
 const args = process.argv.slice(2)
 
+// Handle help flag
+if (args.includes('-h') || args.includes('--help')) {
+  console.log(`
+    Usage: create-wizard [projectName] [options]
+
+    Initializes a new project using an interactive wizard.
+
+    Arguments:
+      projectName         The name of the project to create. If provided, the wizard will skip the project name prompt.
+
+    Options:
+      -v, --version         Output the current version and exit.
+      -h, --help            Display this help message and exit.
+      --plugin              Configure and install a new plugin (e.g., Prettier, ESLint).
+      --create-test         Set up a new test framework for the project.
+      --license             Generate a new LICENSE file.
+      --debug=TRUE          Enable debug logging.
+  `)
+  process.exit(0)
+}
+
 // Handle version flag
 if (args.includes('-v') || args.includes('--version')) {
   console.log(packageJson.version)

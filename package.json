@@ -20,9 +20,9 @@
   "license": "ISC",
   "author": "Involvex",
   "type": "module",
-  "main": "dist/create-wizard.mjs",
+  "main": "dist/create-wizard.js",
   "bin": {
-    "create-wizard": "dist/create-wizard.mjs"
+    "create-wizard": "dist/create-wizard.js"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -35,7 +35,7 @@
     "lint:fix": "npx eslint . --config eslint.config.js --fix",
     "check": "npm run lint:fix && npm run format",
     "coverage": "vitest run --coverage",
-    "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --format=esm --external:yoctocolors-cjs --external:mute-stream --external:safer-buffer --external:iconv-lite --external:cross-spawn --external:graceful-fs --external:fs-extra --external:inquirer --external:cli-progress --external:debug --outfile=dist/create-wizard.mjs",
+    "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --format=esm --external:yoctocolors-cjs --external:mute-stream --external:safer-buffer --external:iconv-lite --external:cross-spawn --external:graceful-fs --external:fs-extra --external:inquirer --external:cli-progress --external:debug --outfile=dist/create-wizard.js",
     "start": "node scripts/create-app.js",
     "docs:start": "cd docs && npm start",
     "docs:build": "cd docs && npm run build",

@@ -10960,16 +10960,24 @@ async function main4(deps) {
     }
   }
   Ie("Let's create a new project!");
+  const cliArgs = process.argv.slice(2).filter((arg) => !arg.startsWith("--"));
+  const projectNameFromArg = cliArgs[0];
   const answers = {};
+  if (projectNameFromArg) {
+    answers.projectName = projectNameFromArg;
+    M2.info(`Using project name from argument: ${projectNameFromArg}`);
+  }
   const group = await Ce(
     {
-      projectName: () => he({
-        message: "Project name:",
-        placeholder: "my-awesome-project",
-        validate: (value) => {
-          if (!value) return "Please enter a project name.";
-        }
-      }),
+      ...!projectNameFromArg && {
+        projectName: () => he({
+          message: "Project name:",
+          placeholder: "my-awesome-project",
+          validate: (value) => {
+            if (!value) return "Please enter a project name.";
+          }
+        })
+      },
       template: async () => ve({
         message: "Select a project template:",
         options: (await getTemplates()).map((t) => ({ value: t, label: t }))

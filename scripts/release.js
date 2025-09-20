@@ -31,17 +31,38 @@ async function main() {
     process.exit(1)
   }
 
-  const spinner = ora(`Creating a new ${versionType} release...`).start()
+  const spinner = ora('Preparing release...').start()
 
   try {
+    spinner.text = 'Checking git status...'
+    const { stdout: gitStatus } = await execa('git', ['status', '--porcelain'])
+    if (gitStatus) {
+      spinner.fail('Git working directory is not clean. Please commit or stash your changes before releasing.')
+      return process.exit(1)
+    }
+
+    spinner.text = 'Checking current branch...'
+    const { stdout: gitBranch } = await execa('git', ['rev-parse', '--abbrev-ref', 'HEAD'])
+    if (gitBranch !== 'main') {
+      spinner.fail('Releases can only be created from the "main" branch.')
+      return process.exit(1)
+    }
+
+    spinner.text = 'Checking remote status...'
+    await run('git', ['fetch'])
+    const { stdout: remoteStatus } = await execa('git', ['status', '-uno'])
+    if (!remoteStatus.includes('Your branch is up to date')) {
+      spinner.fail('Your local branch is not up to date with origin/main. Please pull the latest changes.')
+      return process.exit(1)
+    }
+
+    spinner.text = `Creating a new ${versionType} release...`
+
     spinner.text = 'Generating changelog...'
     await run('npx', ['conventional-changelog', '-p', 'angular', '-i', 'CHANGELOG.md', '-s'])
 
     spinner.text = 'Staging all changes...'
     await run('git', ['add', '.'])
-
-    spinner.text = 'Checking git status before versioning...'
-    await run('git', ['status'])
 
     spinner.text = 'Bumping version and creating release commit...'
     await run('npm', ['version', versionType, '-m', `chore(release): %s`])

@@ -10148,6 +10148,7 @@ async function main4(deps) {
     {
       type: "confirm",
       name: "includeDocker",
+      message: "Include Docker support?",
       default: false
     },
     {
@@ -10174,7 +10175,7 @@ async function main4(deps) {
     console.error("Error: Project folder already exists.");
     process.exit(1);
   }
-  fs2.mkdirSync(projectDir);
+  fs2.mkdirSync(projectDir, { recursive: true });
   process.chdir(projectDir);
   const npmInitSpinner = ora("Initializing new project (npm init -y)...").start();
   await execa2("npm", ["init", "-y"]);
@@ -10241,24 +10242,47 @@ async function main4(deps) {
   if (answers.includeEslint) {
     packageJson.devDependencies = {
       ...packageJson.devDependencies,
-      eslint: "^8.56.0"
+      eslint: "^8.56.0",
+      globals: "^15.2.0"
     };
     if (answers.includePrettier) {
-      packageJson.devDependencies = {
-        ...packageJson.devDependencies,
-        "eslint-config-prettier": "^9.1.0"
-      };
+      packageJson.devDependencies["eslint-config-prettier"] = "^9.1.0";
     }
-    fs2.writeFileSync(
-      join4(projectDir, "eslint.config.js"),
-      `import js from "@eslint/js";
+    const isESM = [
+      "vite",
+      "nextjs",
+      "react-app",
+      "vuejs",
+      "electron-vite-vue",
+      "electron-next-ts",
+      "docusaurus-site"
+    ].includes(answers.template);
+    if (isESM) {
+      packageJson.type = "module";
+    }
+    let eslintConfigContent;
+    if (packageJson.type === "module") {
+      eslintConfigContent = `import js from "@eslint/js";
 import globals from "globals";
-${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier';\n" : ""}export default [
+${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier';\n" : ""}
+export default [
   {languageOptions: { globals: { ...globals.node, ...globals.browser } }},
   js.configs.recommended,
-  ${answers.includePrettier ? "prettierConfig,\n" : ""}];
-`
-    );
+  ${answers.includePrettier ? "prettierConfig,\n" : ""}
+];
+`;
+    } else {
+      eslintConfigContent = `const js = require("@eslint/js");
+const globals = require("globals");
+${answers.includePrettier ? "const prettierConfig = require('eslint-config-prettier');\n" : ""}
+module.exports = [
+  {languageOptions: { globals: { ...globals.node, ...globals.browser } }},
+  js.configs.recommended,
+  ${answers.includePrettier ? "prettierConfig,\n" : ""}
+];
+`;
+    }
+    fs2.writeFileSync(join4(projectDir, "eslint.config.js"), eslintConfigContent);
     packageJson.scripts = {
       ...packageJson.scripts,
       lint: "eslint .",

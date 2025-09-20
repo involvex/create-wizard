@@ -1,5 +1,14 @@
 <!-- @format -->
 
+## [3.2.11](https://github.com/involvex/create-wizard/compare/v3.2.10...v3.2.11) (2025-09-20)
+
+### Bug Fixes
+
+- **cli:** add message to Docker prompt to fix `undefined` question
+- **cli:** allow creating projects with scoped names by enabling recursive directory creation
+- **cli:** generate correct ESLint config (ESM/CJS) based on project type
+- **deps:** add `globals` as a dev dependency for ESLint config
+
 ## [3.2.10](https://github.com/involvex/create-wizard/compare/v0.0.5...v3.2.10) (2025-09-19)
 
 ### Bug Fixes

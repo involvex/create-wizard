@@ -400,8 +400,8 @@ export async function main(deps) {
 
     let eslintConfigContent
     if (packageJson.type === 'module') {
-      eslintConfigContent = `import js from \"@eslint/js\";
-import globals from \"globals\";
+      eslintConfigContent = `import js from "@eslint/js";
+import globals from "globals";
 ${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier';\n" : ''}
 export default [
   {languageOptions: { globals: { ...globals.node, ...globals.browser } }},

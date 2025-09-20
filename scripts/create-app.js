@@ -512,20 +512,22 @@ import { env } from 'process'
 
 //This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  // Check for flags
-  if (process.argv.includes('--plugin')) {
+  const userArgs = process.argv.slice(2); // Get arguments passed by the user
+
+  if (userArgs.includes('--plugin')) {
     createPlugin({
       /* dependencies */
     })
-  } else if (process.argv.includes('--license')) {
+  } else if (userArgs.includes('--license')) {
     generateLicense({
       /* dependencies */
     })
-  } else if (process.argv.includes('--create-test')) {
+  } else if (userArgs.includes('--create-test')) {
     createTestSetup({
       /* dependencies */
     })
   } else {
+    // If no specific flags are provided by the user, run main
     main({})
   }
 }

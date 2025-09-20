@@ -7,13 +7,12 @@
  * @format
  */
 
-import _inquirer from 'inquirer'
 import { execa as _execa } from 'execa'
 import { join, dirname } from 'path'
 import _fs from 'fs'
 import _fsExtra from 'fs-extra'
 import { fileURLToPath } from 'url'
-import ora from 'ora'
+import * as p from '@clack/prompts'
 import debug from 'debug'
 
 // Parse command line arguments for --debug flag
@@ -41,14 +40,14 @@ if (isDebugEnabled) {
 // Main function
 export async function main(deps) {
   debugLog('Starting create-app main function')
-  const inquirer = deps.inquirer || _inquirer
   const execa = deps.execa || _execa
   const fs = deps.fs || _fs
   const fsExtra = deps.fsExtra || _fsExtra
 
   async function getTemplates() {
     debugTemplates('Fetching available templates')
-    const spinner = ora('Fetching templates...').start()
+    const spinner = p.spinner()
+    spinner.start('Loading template library...')
     try {
       const templatesPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'template-library')
       const templates = fs.readdirSync(templatesPath).filter(file => {
@@ -56,11 +55,11 @@ export async function main(deps) {
         return fs.statSync(filePath).isDirectory()
       })
       debugTemplates('Found templates: %o', templates)
-      spinner.succeed('Templates fetched.')
+      spinner.stop('Template library loaded.')
       return templates
     } catch (error) {
       debugTemplates('Failed to fetch templates: %o', error)
-      spinner.fail('Failed to fetch templates.')
+      spinner.stop('Failed to load template library.')
       console.error(error)
       process.exit(1)
     }
@@ -68,7 +67,8 @@ export async function main(deps) {
 
   async function applyTemplate(templateName, projectDir, answers) {
     debugTemplatesApply('Applying template: %s to project: %s', templateName, projectDir)
-    const spinner = ora(`Applying template: ${templateName}...`).start()
+    const spinner = p.spinner()
+    spinner.start(`Applying template: ${templateName}...`)
     try {
       const templateDir = join(
         dirname(fileURLToPath(import.meta.url)),
@@ -99,133 +99,185 @@ export async function main(deps) {
         fsExtra.copySync(join(templateDir, '../features/rpc'), projectDir)
       }
 
-      spinner.succeed('Template applied.')
+      spinner.stop('Template applied.')
     } catch (error) {
       debugTemplatesApply('Failed to apply template: %o', error)
-      spinner.fail('Failed to apply template.')
+      spinner.stop('Failed to apply template.')
       console.error(error)
       process.exit(1)
     }
   }
 
-  const answers = await inquirer.prompt([
-    { name: 'projectName', message: 'Project name:' },
+  p.intro('Let\'s create a new project!')
+
+  const cliArgs = process.argv.slice(2).filter(arg => !arg.startsWith('--'))
+  const projectNameFromArg = cliArgs[0]
+
+  const answers = {}
+
+  if (projectNameFromArg) {
+    answers.projectName = projectNameFromArg
+    p.log.info(`Using project name from argument: ${projectNameFromArg}`)
+  }
+
+  const group = await p.group(
     {
-      type: 'list',
-      name: 'template',
-      message: 'Select a project template:',
-      choices: await getTemplates(),
+      ...(!projectNameFromArg && {
+        projectName: () =>
+          p.text({
+            message: 'Project name:',
+            placeholder: 'my-awesome-project',
+            validate: value => {
+              if (!value) return 'Please enter a project name.'
+            },
+          }),
+      }),
+      template: async () =>
+        p.select({
+          message: 'Select a project template:',
+          options: (await getTemplates()).map(t => ({ value: t, label: t })),
+        }),
     },
     {
-      type: 'checkbox',
-      name: 'discordFeatures',
-      message: 'Select Discord bot features:',
-      choices: [
-        { name: 'welcome', message: 'Include welcome messages for new users' },
-        { name: 'logging', message: 'Include message logging' },
-        { name: 'moderation', message: 'Include moderation commands (kick/ban)' },
-      ],
-      when: answers => answers.template === 'discord-bot',
+      onCancel: () => {
+        p.cancel('Operation cancelled.')
+        process.exit(0)
+      },
+    },
+  )
+
+  Object.assign(answers, group)
+
+  if (answers.template === 'discord-bot') {
+    const discordGroup = await p.group(
+      {
+        discordFeatures: () =>
+          p.multiselect({
+            message: 'Select Discord bot features:',
+            options: [
+              { value: 'welcome', label: 'Include welcome messages for new users' },
+              { value: 'logging', label: 'Include message logging' },
+              { value: 'moderation', label: 'Include moderation commands (kick/ban)' },
+            ],
+            required: false,
+          }),
+        discordRPC: () =>
+          p.confirm({
+            message: 'Include Discord RPC (activity status)?',
+            initialValue: false,
+          }),
+      },
+      {
+        onCancel: () => {
+          p.cancel('Operation cancelled.')
+          process.exit(0)
+        },
+      },
+    )
+    Object.assign(answers, discordGroup)
+  }
+
+  const customizationGroup = await p.group(
+    {
+      dependencies: () =>
+        p.multiselect({
+          message: 'Which packages should be installed?',
+          options: [
+            { value: { name: 'express', version: '^4.18.2' }, label: 'express' },
+            { value: { name: 'discord.js', version: '^14.14.1' }, label: 'discord.js' },
+            { value: { name: 'axios', version: '^1.6.2' }, label: 'axios' },
+            { value: { name: 'eslint', version: '^8.56.0' }, label: 'eslint' },
+            { value: { name: 'dotenv', version: '^16.3.1' }, label: 'dotenv' },
+          ],
+          required: false,
+        }),
+      initGit: () =>
+        p.confirm({
+          message: 'Initialize a Git repository?',
+          initialValue: true,
+        }),
+      includeTestFramework: () =>
+        p.confirm({
+          message: 'Include a testing framework?',
+          initialValue: false,
+        }),
+      testFramework: ({ results }) => {
+        if (results.includeTestFramework) {
+          return p.select({
+            message: 'Which testing framework?',
+            options: [
+              { value: 'Jest', label: 'Jest' },
+              { value: 'Vitest', label: 'Vitest' },
+              { value: 'Mocha/Chai', label: 'Mocha/Chai' },
+            ],
+          })
+        }
+      },
+      includeTypeScript: () =>
+        p.confirm({
+          message: 'Include TypeScript?',
+          initialValue: false,
+        }),
+      includeEslint: () =>
+        p.confirm({
+          message: 'Include ESLint for linting?',
+          initialValue: false,
+        }),
+      includePrettier: () =>
+        p.confirm({
+          message: 'Include Prettier for code formatting?',
+          initialValue: false,
+        }),
+      includeDocker: () =>
+        p.confirm({
+          message: 'Include Docker support?',
+          initialValue: false,
+        }),
+      includeGithubActions: () =>
+        p.confirm({
+          message: 'Include GitHub Actions workflow?',
+          initialValue: false,
+        }),
+      includeGitlabCi: () =>
+        p.confirm({
+          message: 'Include GitLab CI/CD pipeline?',
+          initialValue: false,
+        }),
+      includeDebugConfig: () =>
+        p.confirm({
+          message: 'Include VS Code debug configuration?',
+          initialValue: false,
+        }),
     },
     {
-      type: 'confirm',
-      name: 'discordRPC',
-      message: 'Include Discord RPC (activity status)?',
-      default: false,
-      when: answers => answers.template === 'discord-bot',
+      onCancel: () => {
+        p.cancel('Operation cancelled.')
+        process.exit(0)
+      },
     },
-    {
-      type: 'checkbox',
-      name: 'dependencies',
-      message: 'Which packages should be installed?',
-      choices: [
-        { name: 'express', value: { name: 'express', version: '^4.18.2' } },
-        { name: 'discord.js', value: { name: 'discord.js', version: '^14.14.1' } },
-        { name: 'axios', value: { name: 'axios', version: '^1.6.2' } },
-        { name: 'eslint', value: { name: 'eslint', version: '^8.56.0' } },
-        { name: 'dotenv', value: { name: 'dotenv', version: '^16.3.1' } },
-      ],
-    },
-    {
-      type: 'confirm',
-      name: 'initGit',
-      message: 'Initialize a Git repository?',
-      default: true,
-    },
-    {
-      type: 'confirm',
-      name: 'includeTestFramework',
-      message: 'Include a testing framework?',
-      default: false,
-    },
-    {
-      type: 'list',
-      name: 'testFramework',
-      message: 'Which testing framework?',
-      choices: ['Jest', 'Vitest', 'Mocha/Chai'],
-      when: answers => answers.includeTestFramework,
-    },
-    {
-      type: 'confirm',
-      name: 'includeTypeScript',
-      message: 'Include TypeScript?',
-      default: false,
-    },
-    {
-      type: 'confirm',
-      name: 'includeEslint',
-      message: 'Include ESLint for linting?',
-      default: false,
-    },
-    {
-      type: 'confirm',
-      name: 'includePrettier',
-      message: 'Include Prettier for code formatting?',
-      default: false,
-    },
-    {
-      type: 'confirm',
-      name: 'includeDocker',
-      message: 'Include Docker support?',
-      default: false,
-    },
-    {
-      type: 'confirm',
-      name: 'includeGithubActions',
-      message: 'Include GitHub Actions workflow?',
-      default: false,
-    },
-    {
-      type: 'confirm',
-      name: 'includeGitlabCi',
-      message: 'Include GitLab CI/CD pipeline?',
-      default: false,
-    },
-    {
-      type: 'confirm',
-      name: 'includeDebugConfig',
-      message: 'Include VS Code debug configuration?',
-      default: false,
-    },
-  ])
+  )
+
+  Object.assign(answers, customizationGroup)
 
   const projectDir = join(process.cwd(), answers.projectName)
   if (fs.existsSync(projectDir)) {
-    console.error('Error: Project folder already exists.')
+    p.cancel('Error: Project folder already exists.')
     process.exit(1)
   }
 
   fs.mkdirSync(projectDir, { recursive: true })
   process.chdir(projectDir)
 
-  const npmInitSpinner = ora('Initializing new project (npm init -y)...').start()
+  const spinner = p.spinner()
+
+  spinner.start('Initializing new project (npm init -y)...')
   await execa('npm', ['init', '-y'])
-  npmInitSpinner.succeed('Project initialized.')
+  spinner.stop('Project initialized.')
 
   await applyTemplate(answers.template, projectDir, answers)
 
   if (answers.includeTestFramework) {
-    const testSetupSpinner = ora(`Setting up ${answers.testFramework}...`).start()
+    spinner.start(`Setting up ${answers.testFramework}...`)
     try {
       process.chdir(projectDir) // Ensure we are in the project directory
       switch (answers.testFramework) {
@@ -239,9 +291,9 @@ export async function main(deps) {
           await setupMochaChai()
           break
       }
-      testSetupSpinner.succeed(`${answers.testFramework} setup complete!`)
+      spinner.stop(`${answers.testFramework} setup complete!`)
     } catch (error) {
-      testSetupSpinner.fail(`Failed to set up ${answers.testFramework}.`)
+      spinner.stop(`Failed to set up ${answers.testFramework}.`)
       console.error(error)
       process.exit(1)
     }
@@ -316,8 +368,8 @@ export async function main(deps) {
 
     let eslintConfigContent
     if (packageJson.type === 'module') {
-      eslintConfigContent = `import js from "@eslint/js";
-import globals from "globals";
+      eslintConfigContent = `import js from \"@eslint/js\";
+import globals from \"globals\";
 ${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier';\n" : ''}
 export default [
   {languageOptions: { globals: { ...globals.node, ...globals.browser } }},
@@ -498,38 +550,38 @@ test-job:
 
   if (allDependencies.length > 0) {
     debugDeps('Installing dependencies: %o', allDependencies)
-    const installSpinner = ora('Installing dependencies...').start()
+    spinner.start('Installing dependencies...')
     await execa('npm', ['install', ...allDependencies])
-    installSpinner.succeed('Dependencies installed.')
+    spinner.stop('Dependencies installed.')
     debugDeps('Dependencies installed successfully')
   }
   if (allDevDependencies.length > 0) {
     debugDeps('Installing dev dependencies: %o', allDevDependencies)
-    const devInstallSpinner = ora('Installing dev dependencies...').start()
+    spinner.start('Installing dev dependencies...')
     await execa('npm', ['install', '--save-dev', ...allDevDependencies])
-    devInstallSpinner.succeed('Dev dependencies installed.')
+    spinner.stop('Dev dependencies installed.')
     debugDeps('Dev dependencies installed successfully')
   }
 
   if (answers.initGit) {
     debugGit('Initializing Git repository')
-    const gitInitSpinner = ora('Initializing Git repository...').start()
+    spinner.start('Initializing Git repository...')
     await execa('git', ['init'])
-    gitInitSpinner.succeed('Git repository initialized.')
+    spinner.stop('Git repository initialized.')
     debugGit('Git repository initialized successfully')
 
-    const gitAddSpinner = ora('Staging files...').start()
+    spinner.start('Staging files...')
     await execa('git', ['add', '.'])
-    gitAddSpinner.succeed('Files staged.')
+    spinner.stop('Files staged.')
     debugGit('Files staged successfully')
 
-    const gitCommitSpinner = ora('Committing initial changes...').start()
+    spinner.start('Committing initial changes...')
     await execa('git', ['commit', '-m', 'Initial commit'])
-    gitCommitSpinner.succeed('Initial commit created.')
+    spinner.stop('Initial commit created.')
     debugGit('Initial commit created successfully')
   }
 
-  console.log('Project successfully created!')
+  p.outro('Project successfully created!')
   console.log('\nThank you for using @involvex/create-wizard!')
   console.log(
     'If you want to support the project, you can do so at https://buymeacoffee.com/involvex',

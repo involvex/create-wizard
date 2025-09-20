@@ -1,0 +1,8 @@
+# Normalize all text files to LF line endings
+* text=auto eol=lf
+
+# The following are binary files and should be treated as such.
+*.png binary
+*.jpg binary
+*.jar binary
+*.keystore binary

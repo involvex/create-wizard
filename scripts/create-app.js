@@ -512,6 +512,7 @@ import { env } from 'process'
 
 //This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  console.log('Entering main conditional block.');
   console.log('process.argv:', process.argv);
   // Check for flags
   const userArgs = process.argv.slice(2); // Get arguments passed by the user

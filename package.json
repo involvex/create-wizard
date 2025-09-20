@@ -42,7 +42,8 @@
     "docs:serve": "cd docs && npm run serve",
     "template:create": "node scripts/create-template.js",
     "release": "node scripts/release.js",
-    "debug": "cross-env DEBUG=TRUE && node scripts/create-app.js --debug=TRUE "
+    "debug": "cross-env DEBUG=TRUE && node scripts/create-app.js --debug=TRUE ",
+    "review": "node scripts/ai-review.js"
   },
   "dependencies": {
     "@mdx-js/react": "^3.0.0",
@@ -58,6 +59,9 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@azure-rest/ai-inference": "^1.0.0-beta.6",
+    "@azure/core-auth": "^1.10.1",
+    "@azure/core-sse": "^2.3.0",
     "@docusaurus/eslint-plugin": "^3.8.1",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^10.0.0",
@@ -67,6 +71,7 @@
     "cross-env": "^10.0.0",
     "ddc-copyright-head": "^1.4.0",
     "debug": "^4.4.3",
+    "dotenv": "^17.2.2",
     "esbuild": "0.25.9",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",

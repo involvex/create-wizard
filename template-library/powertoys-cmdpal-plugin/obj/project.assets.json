@@ -5,7 +5,9 @@
   },
   "libraries": {},
   "projectFileDependencyGroups": {
-    "net8.0-windows7.0": ["PowerToys.Plugin.Interfaces >= 0.82.0"]
+    "net8.0-windows7.0": [
+      "PowerToys.Plugin.Interfaces >= 0.82.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\lukas\\.nuget\\packages\\": {},
@@ -14,11 +16,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\repos\\create-universe\\template-library\\powertoys-cmdpal-plugin\\MyCmdPalPlugin.csproj",
+      "projectUniqueName": "D:\\repos\\create-wizard\\template-library\\powertoys-cmdpal-plugin\\MyCmdPalPlugin.csproj",
       "projectName": "MyCmdPalPlugin",
-      "projectPath": "D:\\repos\\create-universe\\template-library\\powertoys-cmdpal-plugin\\MyCmdPalPlugin.csproj",
+      "projectPath": "D:\\repos\\create-wizard\\template-library\\powertoys-cmdpal-plugin\\MyCmdPalPlugin.csproj",
       "packagesPath": "C:\\Users\\lukas\\.nuget\\packages\\",
-      "outputPath": "D:\\repos\\create-universe\\template-library\\powertoys-cmdpal-plugin\\obj\\",
+      "outputPath": "D:\\repos\\create-wizard\\template-library\\powertoys-cmdpal-plugin\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -28,7 +30,9 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
-      "originalTargetFrameworks": ["net8.0-windows"],
+      "originalTargetFrameworks": [
+        "net8.0-windows"
+      ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
@@ -42,7 +46,9 @@
         }
       },
       "warningProperties": {
-        "warnAsError": ["NU1605"]
+        "warnAsError": [
+          "NU1605"
+        ]
       },
       "restoreAuditProperties": {
         "enableAudit": "true",
@@ -60,7 +66,15 @@
             "version": "[0.82.0, )"
           }
         },
-        "imports": ["net461", "net462", "net47", "net471", "net472", "net48", "net481"],
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
@@ -81,7 +95,9 @@
       "level": "Error",
       "message": "Unable to resolve 'PowerToys.Plugin.Interfaces (>= 0.82.0)' for 'net8.0-windows7.0'. PackageSourceMapping is enabled, the following source(s) were not considered: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org, Paketquelle1.",
       "libraryId": "PowerToys.Plugin.Interfaces",
-      "targetGraphs": ["net8.0-windows7.0"]
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
     }
   ]
 }

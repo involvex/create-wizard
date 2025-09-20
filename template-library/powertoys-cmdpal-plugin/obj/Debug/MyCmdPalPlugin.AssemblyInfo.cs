@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyCmdPalPlugin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cfa737a21b0e63eac9abddd1de9c4481a825978")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+599f96cda366bf2b5153fe5294abc4532af531ac")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyCmdPalPlugin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyCmdPalPlugin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

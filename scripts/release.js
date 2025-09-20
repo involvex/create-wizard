@@ -49,6 +49,9 @@ async function main() {
       spinner.text = 'No new changelog entries. Skipping changelog commit.'
     }
 
+    spinner.text = 'Checking git status before versioning...'
+    await run('git', ['status'])
+
     spinner.text = 'Bumping version...'
     await run('npm', ['version', versionType, '-m', `chore(release): %s`])
 

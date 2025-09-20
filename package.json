@@ -19,6 +19,11 @@
   },
   "license": "ISC",
   "author": "Involvex",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "type": "module",
   "main": "dist/create-wizard.js",
   "bin": {

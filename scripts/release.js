@@ -37,7 +37,9 @@ async function main() {
     spinner.text = 'Checking git status...'
     const { stdout: gitStatus } = await execa('git', ['status', '--porcelain'])
     if (gitStatus) {
-      spinner.fail('Git working directory is not clean. Please commit or stash your changes before releasing.')
+      spinner.fail(
+        'Git working directory is not clean. Please commit or stash your changes before releasing.',
+      )
       return process.exit(1)
     }
 
@@ -52,7 +54,9 @@ async function main() {
     await run('git', ['fetch'])
     const { stdout: remoteStatus } = await execa('git', ['status', '-uno'])
     if (remoteStatus.includes('diverged') || remoteStatus.includes('behind')) {
-      spinner.fail('Your local branch has diverged from or is behind origin/main. Please pull or rebase the latest changes.')
+      spinner.fail(
+        'Your local branch has diverged from or is behind origin/main. Please pull or rebase the latest changes.',
+      )
       return process.exit(1)
     }
 

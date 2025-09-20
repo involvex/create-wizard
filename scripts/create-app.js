@@ -140,7 +140,7 @@ export async function main(deps) {
     }
   }
 
-  p.intro('Let\'s create a new project!')
+  p.intro("Let's create a new project!")
 
   const cliArgs = process.argv.slice(2).filter(arg => !arg.startsWith('--'))
   const projectNameFromArg = cliArgs[0]

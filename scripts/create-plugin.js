@@ -235,7 +235,8 @@ export default [
                 options: ['CommonJS', 'ESNext', 'NodeNext'],
                 initialValue: 'CommonJS',
               }),
-            strict: () => p.confirm({ message: 'Enable strict type-checking?', initialValue: true }),
+            strict: () =>
+              p.confirm({ message: 'Enable strict type-checking?', initialValue: true }),
             esModuleInterop: () =>
               p.confirm({ message: 'Enable esModuleInterop?', initialValue: true }),
           },
@@ -301,14 +302,7 @@ export default [
             templates: () =>
               p.multiselect({
                 message: 'Select .gitignore templates:',
-                options: [
-                  'node',
-                  'visualstudiocode',
-                  'windows',
-                  'macos',
-                  'linux',
-                  'jetbrain',
-                ],
+                options: ['node', 'visualstudiocode', 'windows', 'macos', 'linux', 'jetbrain'],
                 initialValue: ['node', 'visualstudiocode'],
               }),
           },

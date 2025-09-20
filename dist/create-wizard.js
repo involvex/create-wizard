@@ -7638,6 +7638,7 @@ var Ce = async (t, n2) => {
 
 // scripts/create-app.js
 import debug2 from "debug";
+import { createRequire } from "module";
 
 // scripts/create-plugin.js
 import { join } from "path";
@@ -7897,14 +7898,7 @@ export default [
           {
             templates: () => fe({
               message: "Select .gitignore templates:",
-              options: [
-                "node",
-                "visualstudiocode",
-                "windows",
-                "macos",
-                "linux",
-                "jetbrain"
-              ],
+              options: ["node", "visualstudiocode", "windows", "macos", "linux", "jetbrain"],
               initialValue: ["node", "visualstudiocode"]
             })
           },
@@ -10872,16 +10866,41 @@ describe('Example Test', () => {
 function updatePackageJsonScripts(newScripts) {
   const packageJsonPath = join3(process.cwd(), "package.json");
   if (fs.existsSync(packageJsonPath)) {
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-    packageJson.scripts = { ...packageJson.scripts, ...newScripts };
-    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+    const packageJson2 = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+    packageJson2.scripts = { ...packageJson2.scripts, ...newScripts };
+    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson2, null, 2));
   } else {
     console.error("package.json not found. Please run npm init first.");
   }
 }
 
 // scripts/create-app.js
+var require2 = createRequire(import.meta.url);
+var packageJson = require2("../package.json");
 var args = process.argv.slice(2);
+if (args.includes("-h") || args.includes("--help")) {
+  console.log(`
+    Usage: create-wizard [projectName] [options]
+
+    Initializes a new project using an interactive wizard.
+
+    Arguments:
+      projectName         The name of the project to create. If provided, the wizard will skip the project name prompt.
+
+    Options:
+      -v, --version         Output the current version and exit.
+      -h, --help            Display this help message and exit.
+      --plugin              Configure and install a new plugin (e.g., Prettier, ESLint).
+      --create-test         Set up a new test framework for the project.
+      --license             Generate a new LICENSE file.
+      --debug=TRUE          Enable debug logging.
+  `);
+  process.exit(0);
+}
+if (args.includes("-v") || args.includes("--version")) {
+  console.log(packageJson.version);
+  process.exit(0);
+}
 var debugFlag = args.find((arg) => arg.startsWith("--debug="));
 var isDebugEnabled = debugFlag === "--debug=TRUE" || process.env.DEBUG === "TRUE";
 if (isDebugEnabled) {
@@ -11122,21 +11141,21 @@ async function main4(deps) {
     }
   }
   const packageJsonPath = join4(projectDir, "package.json");
-  let packageJson = JSON.parse(fs2.readFileSync(packageJsonPath, "utf-8"));
+  let packageJson2 = JSON.parse(fs2.readFileSync(packageJsonPath, "utf-8"));
   const userDependencies = answers.dependencies.reduce((acc, dep) => {
     acc[dep.name] = dep.version;
     return acc;
   }, {});
-  packageJson.dependencies = {
-    ...packageJson.dependencies,
+  packageJson2.dependencies = {
+    ...packageJson2.dependencies,
     ...userDependencies
   };
-  packageJson.devDependencies = {
-    ...packageJson.devDependencies
+  packageJson2.devDependencies = {
+    ...packageJson2.devDependencies
   };
   if (answers.includeTypeScript) {
-    packageJson.devDependencies = {
-      ...packageJson.devDependencies,
+    packageJson2.devDependencies = {
+      ...packageJson2.devDependencies,
       typescript: "^5.3.3"
     };
     fs2.writeFileSync(
@@ -11158,13 +11177,13 @@ async function main4(deps) {
     );
   }
   if (answers.includeEslint) {
-    packageJson.devDependencies = {
-      ...packageJson.devDependencies,
+    packageJson2.devDependencies = {
+      ...packageJson2.devDependencies,
       eslint: "^8.56.0",
       globals: "^15.2.0"
     };
     if (answers.includePrettier) {
-      packageJson.devDependencies["eslint-config-prettier"] = "^9.1.0";
+      packageJson2.devDependencies["eslint-config-prettier"] = "^9.1.0";
     }
     const isESM = [
       "vite",
@@ -11176,10 +11195,10 @@ async function main4(deps) {
       "docusaurus-site"
     ].includes(answers.template);
     if (isESM) {
-      packageJson.type = "module";
+      packageJson2.type = "module";
     }
     let eslintConfigContent;
-    if (packageJson.type === "module") {
+    if (packageJson2.type === "module") {
       eslintConfigContent = `import js from "@eslint/js";
 import globals from "globals";
 ${answers.includePrettier ? "import prettierConfig from 'eslint-config-prettier';\n" : ""}
@@ -11201,15 +11220,15 @@ module.exports = [
 `;
     }
     fs2.writeFileSync(join4(projectDir, "eslint.config.js"), eslintConfigContent);
-    packageJson.scripts = {
-      ...packageJson.scripts,
+    packageJson2.scripts = {
+      ...packageJson2.scripts,
       lint: "eslint .",
       "lint:fix": "eslint . --fix"
     };
   }
   if (answers.includePrettier) {
-    packageJson.devDependencies = {
-      ...packageJson.devDependencies,
+    packageJson2.devDependencies = {
+      ...packageJson2.devDependencies,
       prettier: "^3.2.5"
     };
     fs2.writeFileSync(
@@ -11224,8 +11243,8 @@ module.exports = [
         2
       )
     );
-    packageJson.scripts = {
-      ...packageJson.scripts,
+    packageJson2.scripts = {
+      ...packageJson2.scripts,
       "format:check": "prettier --check .",
       format: "prettier --write ."
     };
@@ -11320,7 +11339,7 @@ test-job:
 `
     );
   }
-  fs2.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  fs2.writeFileSync(packageJsonPath, JSON.stringify(packageJson2, null, 2));
   if (answers.includeDebugConfig) {
     const vscodeDir = join4(projectDir, ".vscode");
     fs2.mkdirSync(vscodeDir, { recursive: true });
@@ -11344,10 +11363,10 @@ test-job:
       )
     );
   }
-  const allDependencies = Object.entries(packageJson.dependencies || {}).map(
+  const allDependencies = Object.entries(packageJson2.dependencies || {}).map(
     ([name, version]) => `${name}@${version}`
   );
-  const allDevDependencies = Object.entries(packageJson.devDependencies || {}).map(
+  const allDevDependencies = Object.entries(packageJson2.devDependencies || {}).map(
     ([name, version]) => `${name}@${version}`
   );
   if (allDependencies.length > 0) {

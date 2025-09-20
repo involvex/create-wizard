@@ -15,8 +15,19 @@ import { fileURLToPath } from 'url'
 import * as p from '@clack/prompts'
 import debug from 'debug'
 
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+const packageJson = require('../package.json')
+
 // Parse command line arguments for --debug flag
 const args = process.argv.slice(2)
+
+// Handle version flag
+if (args.includes('-v') || args.includes('--version')) {
+  console.log(packageJson.version)
+  process.exit(0)
+}
+
 const debugFlag = args.find(arg => arg.startsWith('--debug='))
 const isDebugEnabled = debugFlag === '--debug=TRUE' || process.env.DEBUG === 'TRUE'
 

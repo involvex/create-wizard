@@ -44,9 +44,7 @@
     "release": "node scripts/release.js",
     "debug": "cross-env DEBUG=TRUE && node scripts/create-app.js --debug=TRUE "
   },
-  "bin": {
-    "create-wizard": "scripts/create-app.js"
-  },
+
   "dependencies": {
     "@mdx-js/react": "^3.0.0",
     "cli-progress": "^3.12.0",

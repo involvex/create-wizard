@@ -137,7 +137,3 @@ function updatePackageJsonScripts(newScripts) {
   }
 }
 
-// This block allows the script to be run directly
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  main();
-}

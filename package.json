@@ -1,6 +1,6 @@
 {
   "name": "@involvex/create-wizard",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "create everything with ease interactive ",
   "keywords": [
     "cli",
@@ -44,7 +44,6 @@
     "release": "node scripts/release.js",
     "debug": "cross-env DEBUG=TRUE && node scripts/create-app.js --debug=TRUE "
   },
-
   "dependencies": {
     "@mdx-js/react": "^3.0.0",
     "cli-progress": "^3.12.0",

@@ -51,9 +51,10 @@ async function main() {
     spinner.text = 'Checking remote status...'
     await run('git', ['fetch'])
     const { stdout: remoteStatus } = await execa('git', ['status', '-uno'])
-    if (!remoteStatus.includes('Your branch is up to date')) {
-      spinner.fail('Your local branch is not up to date with origin/main. Please pull the latest changes.')
+    if (remoteStatus.includes('diverged') || remoteStatus.includes('behind')) {
+      spinner.fail('Your local branch has diverged from or is behind origin/main. Please pull or rebase the latest changes.')
       return process.exit(1)
+    }
     }
 
     spinner.text = `Creating a new ${versionType} release...`

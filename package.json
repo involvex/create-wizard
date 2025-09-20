@@ -35,7 +35,7 @@
     "lint:fix": "npx eslint . --config eslint.config.js --fix",
     "check": "npm run lint:fix && npm run format",
     "coverage": "vitest run --coverage",
-    "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --format=esm --external:yoctocolors-cjs --external:mute-stream --external:safer-buffer --external:iconv-lite --external:cross-spawn --external:graceful-fs --external:fs-extra --external:inquirer --external:cli-progress --outfile=dist/create-wizard.mjs",
+    "build": "npx esbuild scripts/create-app.js --bundle --platform=node --target=node22 --format=esm --external:yoctocolors-cjs --external:mute-stream --external:safer-buffer --external:iconv-lite --external:cross-spawn --external:graceful-fs --external:fs-extra --inject:./tty-shim.js --external:inquirer --external:cli-progress --outfile=dist/create-wizard.mjs",
     "start": "node scripts/create-app.js",
     "docs:start": "cd docs && npm start",
     "docs:build": "cd docs && npm run build",

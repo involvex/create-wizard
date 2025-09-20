@@ -37,22 +37,13 @@ async function main() {
     spinner.text = 'Generating changelog...'
     await run('npx', ['conventional-changelog', '-p', 'angular', '-i', 'CHANGELOG.md', '-s'])
 
-    spinner.text = 'Staging changelog...'
-    await run('git', ['add', 'CHANGELOG.md'])
-
-    // Check if CHANGELOG.md has actual changes before committing
-    const gitStatusOutput = await execa('git', ['status', '--porcelain', 'CHANGELOG.md'])
-    if (gitStatusOutput.stdout.trim().length > 0) {
-      spinner.text = 'Committing changelog...'
-      await run('git', ['commit', '-m', 'docs: Update CHANGELOG.md for release'])
-    } else {
-      spinner.text = 'No new changelog entries. Skipping changelog commit.'
-    }
+    spinner.text = 'Staging all changes...'
+    await run('git', ['add', '.'])
 
     spinner.text = 'Checking git status before versioning...'
     await run('git', ['status'])
 
-    spinner.text = 'Bumping version...'
+    spinner.text = 'Bumping version and creating release commit...'
     await run('npm', ['version', versionType, '-m', `chore(release): %s`])
 
     spinner.text = 'Pushing to remote...'

@@ -12,16 +12,16 @@
 
 ## Features
 
--   **Interactive Project Setup**: Guides you through project creation with prompts for project name, template selection, and additional dependencies.
--   **Remote Template Library**: Fetches templates from a centralized GitHub repository, ensuring you always have access to the latest versions.
--   **Interactive Plugin Configuration**: Use `create-wizard --plugin` to interactively configure and install plugins like Prettier, ESLint, and TypeScript.
--   **Explicit Dependency Versioning**: Allows specifying exact versions for dependencies, ensuring consistent project setups.
--   **TypeScript Support**: Option to initialize projects with TypeScript, including `tsconfig.json`.
--   **Linting & Formatting Integration**: Choose to include ESLint and Prettier for code quality and consistent formatting.
--   **Docker Support**: Option to generate a basic `Dockerfile` and `.dockerignore` for containerization.
--   **CI/CD Workflow Generation**: Generate basic GitHub Actions or GitLab CI/CD pipelines.
--   **Custom Template Creation**: Use `npm run template:create` to easily build and manage your own project templates.
--   **Git Initialization**: Option to initialize a Git repository and make an initial commit, setting up version control from the start.
+- **Interactive Project Setup**: Guides you through project creation with prompts for project name, template selection, and additional dependencies.
+- **Remote Template Library**: Fetches templates from a centralized GitHub repository, ensuring you always have access to the latest versions.
+- **Interactive Plugin Configuration**: Use `create-wizard --plugin` to interactively configure and install plugins like Prettier, ESLint, and TypeScript.
+- **Explicit Dependency Versioning**: Allows specifying exact versions for dependencies, ensuring consistent project setups.
+- **TypeScript Support**: Option to initialize projects with TypeScript, including `tsconfig.json`.
+- **Linting & Formatting Integration**: Choose to include ESLint and Prettier for code quality and consistent formatting.
+- **Docker Support**: Option to generate a basic `Dockerfile` and `.dockerignore` for containerization.
+- **CI/CD Workflow Generation**: Generate basic GitHub Actions or GitLab CI/CD pipelines.
+- **Custom Template Creation**: Use `npm run template:create` to easily build and manage your own project templates.
+- **Git Initialization**: Option to initialize a Git repository and make an initial commit, setting up version control from the start.
 
 ## Installation
 
@@ -36,7 +36,7 @@ npm install -g @involvex/create-wizard
 You can quickly create a new project using `npx` without global installation:
 
 ```bash
-npx @involvex/create-wizard
+npx @involvex/create-wizard@latest
 ```
 
 This command will execute the latest version of `@involvex/create-wizard` without download, guiding you through the project setup process.
@@ -55,12 +55,12 @@ The CLI will then guide you through the following steps:
 2.  **Template Selection**: Choose a template from the available options. Each template will set up a complete initial project structure, including its own `package.json` configurations (dependencies, scripts) and files.
 3.  **Additional Dependency Installation**: Select any _additional_ npm packages you want to install. Note that template-specific dependencies will be installed automatically.
 4.  **Optional Features**: Choose to include:
-    *   TypeScript support
-    *   ESLint for linting
-    *   Prettier for code formatting
-    *   Docker support (Dockerfile and .dockerignore)
-    *   GitHub Actions workflow
-    *   GitLab CI/CD pipeline
+    - TypeScript support
+    - ESLint for linting
+    - Prettier for code formatting
+    - Docker support (Dockerfile and .dockerignore)
+    - GitHub Actions workflow
+    - GitLab CI/CD pipeline
 5.  **Git Initialization**: Confirm if you want to initialize a Git repository for your project.
 
 ## Known Issues & Workarounds
@@ -100,15 +100,15 @@ This command will execute the CLI with the intended flow, allowing you to select
 
 ### Scripts
 
--   **Build**: `npm run build` - Compiles the CLI tool.
--   **Run**: `npm start` - Executes the compiled CLI tool.
--   **Lint**: `npm run lint` - Checks code for style and quality issues.
--   **Lint Fix**: `npm run lint:fix` - Fixes linting issues automatically.
--   **Format Check**: `npm run format:check` - Checks code formatting.
--   **Format**: `npm run format` - Formats code automatically.
--   **Check**: `npm run check` - Runs linting and formatting checks.
--   **Create Template**: `npm run template:create` - Interactively creates a new project template.
--   **Release**: `npm run release` - Automates versioning, tagging, and pushing.
+- **Build**: `npm run build` - Compiles the CLI tool.
+- **Run**: `npm start` - Executes the compiled CLI tool.
+- **Lint**: `npm run lint` - Checks code for style and quality issues.
+- **Lint Fix**: `npm run lint:fix` - Fixes linting issues automatically.
+- **Format Check**: `npm run format:check` - Checks code formatting.
+- **Format**: `npm run format` - Formats code automatically.
+- **Check**: `npm run check` - Runs linting and formatting checks.
+- **Create Template**: `npm run template:create` - Interactively creates a new project template.
+- **Release**: `npm run release` - Automates versioning, tagging, and pushing.
 
 ## Contributing
 

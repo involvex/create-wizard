@@ -138,3 +138,7 @@ out
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# .NET build artifacts
+[Oo]bj/
+[Bb]in/

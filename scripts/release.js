@@ -58,8 +58,8 @@ async function main() {
     spinner.text = 'Pushing to remote...'
     await run('git', ['push', '--follow-tags'])
 
-    spinner.text = 'Publishing to npm...'
-    await run('npm', ['publish'])
+    // spinner.text = 'Publishing to npm...'
+    // await run('npm', ['publish'])
 
     spinner.succeed(`Successfully released new ${versionType} version!`)
   } catch (error) {

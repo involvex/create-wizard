@@ -52,34 +52,7 @@ jobs:
 
       - run: npm test
 
-  release:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' # Only run on main branch
-    needs: test
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Required for versioning
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Run release script
-        run: node scripts/release.js
 
   publish:
     runs-on: ubuntu-latest

@@ -1,5 +1,6 @@
-import fs from 'fs-extra';
-import path from 'path';
+/** @format */
+
+import fs from 'fs-extra'
 
 export const fileManager = {
   name: 'fileManager',
@@ -17,16 +18,17 @@ export const fileManager = {
       },
       execute: async ({ filePath }) => {
         try {
-          const content = await fs.readFile(filePath, 'utf8');
-          return { success: true, content };
+          const content = await fs.readFile(filePath, 'utf8')
+          return { success: true, content }
         } catch (error) {
-          return { success: false, error: error.message };
+          return { success: false, error: error.message }
         }
       },
     },
     {
       name: 'write_file',
-      description: 'Writes content to a specified file. If the file exists, it will be overwritten.',
+      description:
+        'Writes content to a specified file. If the file exists, it will be overwritten.',
       parameters: {
         type: 'object',
         properties: {
@@ -37,16 +39,17 @@ export const fileManager = {
       },
       execute: async ({ filePath, content }) => {
         try {
-          await fs.outputFile(filePath, content);
-          return { success: true, message: `File ${filePath} written successfully.` };
+          await fs.outputFile(filePath, content)
+          return { success: true, message: `File ${filePath} written successfully.` }
         } catch (error) {
-          return { success: false, error: error.message };
+          return { success: false, error: error.message }
         }
       },
     },
     {
       name: 'list_directory',
-      description: 'Lists the names of files and subdirectories directly within a specified directory path.',
+      description:
+        'Lists the names of files and subdirectories directly within a specified directory path.',
       parameters: {
         type: 'object',
         properties: {
@@ -56,12 +59,12 @@ export const fileManager = {
       },
       execute: async ({ directoryPath }) => {
         try {
-          const files = await fs.readdir(directoryPath);
-          return { success: true, files };
+          const files = await fs.readdir(directoryPath)
+          return { success: true, files }
         } catch (error) {
-          return { success: false, error: error.message };
+          return { success: false, error: error.message }
         }
       },
     },
   ],
-};
+}

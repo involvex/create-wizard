@@ -1,30 +1,32 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import { sendMessageToGemini } from './geminiService.js';
+/** @format */
 
-dotenv.config();
+import express from 'express'
+import dotenv from 'dotenv'
+import { sendMessageToGemini } from './geminiService.js'
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+dotenv.config()
 
-app.use(express.json());
+const app = express()
+const PORT = process.env.PORT || 3000
+
+app.use(express.json())
 
 app.post('/chat', async (req, res) => {
-  const { message } = req.body;
+  const { message } = req.body
 
   if (!message) {
-    return res.status(400).json({ error: 'Message is required.' });
+    return res.status(400).json({ error: 'Message is required.' })
   }
 
   try {
-    const geminiResponse = await sendMessageToGemini(message);
-    res.json({ response: geminiResponse });
+    const geminiResponse = await sendMessageToGemini(message)
+    res.json({ response: geminiResponse })
   } catch (error) {
-    console.error('Error in chat endpoint:', error);
-    res.status(500).json({ error: 'Internal server error.' });
+    console.error('Error in chat endpoint:', error)
+    res.status(500).json({ error: 'Internal server error.' })
   }
-});
+})
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+  console.log(`Server is running on port ${PORT}`)
+})

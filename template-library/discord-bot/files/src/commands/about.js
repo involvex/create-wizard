@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+/** @format */
+
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -6,16 +8,18 @@ module.exports = {
     .setDescription('Displays information about this bot.'),
   async execute(interaction) {
     const embed = new EmbedBuilder()
-      .setColor(0x0099FF)
+      .setColor(0x0099ff)
       .setTitle('About Me')
-      .setDescription('I am a friendly Discord bot created using the `@involvex/create-wizard` template.')
+      .setDescription(
+        'I am a friendly Discord bot created using the `@involvex/create-wizard` template.',
+      )
       .addFields(
         { name: 'Version', value: '1.0.0', inline: true },
         { name: 'Author', value: 'Your Name', inline: true },
-        { name: 'GitHub', value: 'https://github.com/involvex/create-wizard' }
+        { name: 'GitHub', value: 'https://github.com/involvex/create-wizard' },
       )
-      .setTimestamp();
+      .setTimestamp()
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed] })
   },
-};
+}

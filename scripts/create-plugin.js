@@ -8,31 +8,32 @@
  * @format
  */
 
-import _inquirer from 'inquirer';
-import { execa as _execa } from 'execa';
-import { join } from 'path';
-import _fs from 'fs';
-import ora from 'ora';
+import _inquirer from 'inquirer'
+import { execa as _execa } from 'execa'
+import { join } from 'path'
+import _fs from 'fs'
+import ora from 'ora'
 
 export async function main(deps) {
   // Dependency injection for easier testing
-  const inquirer = deps.inquirer || _inquirer;
-  const execa = deps.execa || _execa;
-  const fs = deps.fs || _fs;
+  const inquirer = deps.inquirer || _inquirer
+  const execa = deps.execa || _execa
+  const fs = deps.fs || _fs
 
-  console.log('Interactive Plugin Setup Wizard');
+  console.log('Interactive Plugin Setup Wizard')
 
   const { targetDir } = await inquirer.prompt([
     {
       name: 'targetDir',
-      message: 'Enter the target directory for the configuration (leave empty for current directory):',
+      message:
+        'Enter the target directory for the configuration (leave empty for current directory):',
       default: '.',
     },
-  ]);
+  ])
 
-  const absoluteTargetDir = join(process.cwd(), targetDir);
+  const absoluteTargetDir = join(process.cwd(), targetDir)
   if (!fs.existsSync(absoluteTargetDir)) {
-    fs.mkdirSync(absoluteTargetDir, { recursive: true });
+    fs.mkdirSync(absoluteTargetDir, { recursive: true })
   }
 
   const { pluginType } = await inquirer.prompt([
@@ -42,15 +43,15 @@ export async function main(deps) {
       message: 'Which type of plugin do you want to configure?',
       choices: ['formatter', 'linter', 'typescript', 'gitignore'],
     },
-  ]);
+  ])
 
-  let configGenerated = false;
-  let depsInstalled = false;
+  let configGenerated = false
+  let depsInstalled = false
 
   switch (pluginType) {
     case 'formatter':
       {
-        console.log('Configuring Prettier...');
+        console.log('Configuring Prettier...')
         const answers = await inquirer.prompt([
           {
             type: 'confirm',
@@ -71,19 +72,19 @@ export async function main(deps) {
             choices: ['none', 'es5', 'all'],
             default: 'all',
           },
-        ]);
+        ])
 
         const prettierConfig = {
           semi: answers.semi,
           singleQuote: answers.singleQuote,
           trailingComma: answers.trailingComma,
-        };
+        }
 
         fs.writeFileSync(
           join(absoluteTargetDir, '.prettierrc'),
           JSON.stringify(prettierConfig, null, 2),
-        );
-        configGenerated = true;
+        )
+        configGenerated = true
 
         const { installDeps } = await inquirer.prompt([
           {
@@ -92,26 +93,26 @@ export async function main(deps) {
             message: 'Install Prettier dependency?',
             default: true,
           },
-        ]);
+        ])
 
         if (installDeps) {
-          const spinner = ora('Installing Prettier...').start();
+          const spinner = ora('Installing Prettier...').start()
           try {
             await execa('npm', ['install', '--save-dev', 'prettier'], {
               cwd: absoluteTargetDir,
-            });
-            spinner.succeed('Prettier installed.');
-            depsInstalled = true;
+            })
+            spinner.succeed('Prettier installed.')
+            depsInstalled = true
           } catch (error) {
-            spinner.fail('Failed to install Prettier.');
-            console.error(error);
+            spinner.fail('Failed to install Prettier.')
+            console.error(error)
           }
         }
       }
-      break;
+      break
     case 'linter':
       {
-        console.log('Configuring ESLint...');
+        console.log('Configuring ESLint...')
         const answers = await inquirer.prompt([
           {
             type: 'checkbox',
@@ -126,14 +127,14 @@ export async function main(deps) {
             message: 'Extend Prettier configuration (if you use Prettier)?',
             default: true,
           },
-        ]);
+        ])
 
-        const globals = {};
+        const globals = {}
         if (answers.env.includes('browser')) {
-          globals.browser = true;
+          globals.browser = true
         }
         if (answers.env.includes('node')) {
-          globals.node = true;
+          globals.node = true
         }
 
         const eslintConfig = `
@@ -146,13 +147,10 @@ export default [
   js.configs.recommended,
   ${answers.extendPrettier ? 'prettierConfig,' : ''}
 ];
-`;
+`
 
-        fs.writeFileSync(
-          join(absoluteTargetDir, 'eslint.config.js'),
-          eslintConfig.trim(),
-        );
-        configGenerated = true;
+        fs.writeFileSync(join(absoluteTargetDir, 'eslint.config.js'), eslintConfig.trim())
+        configGenerated = true
 
         const { installDeps } = await inquirer.prompt([
           {
@@ -161,30 +159,30 @@ export default [
             message: 'Install ESLint dependencies?',
             default: true,
           },
-        ]);
+        ])
 
         if (installDeps) {
-          const spinner = ora('Installing ESLint dependencies...').start();
-          const deps = ['eslint', '@eslint/js', 'globals'];
+          const spinner = ora('Installing ESLint dependencies...').start()
+          const deps = ['eslint', '@eslint/js', 'globals']
           if (answers.extendPrettier) {
-            deps.push('eslint-config-prettier');
+            deps.push('eslint-config-prettier')
           }
           try {
             await execa('npm', ['install', '--save-dev', ...deps], {
               cwd: absoluteTargetDir,
-            });
-            spinner.succeed('ESLint dependencies installed.');
-            depsInstalled = true;
+            })
+            spinner.succeed('ESLint dependencies installed.')
+            depsInstalled = true
           } catch (error) {
-            spinner.fail('Failed to install ESLint dependencies.');
-            console.error(error);
+            spinner.fail('Failed to install ESLint dependencies.')
+            console.error(error)
           }
         }
       }
-      break;
+      break
     case 'typescript':
       {
-        console.log('Configuring TypeScript...');
+        console.log('Configuring TypeScript...')
         const answers = await inquirer.prompt([
           {
             type: 'list',
@@ -212,7 +210,7 @@ export default [
             message: 'Enable esModuleInterop?',
             default: true,
           },
-        ]);
+        ])
 
         const tsConfig = {
           compilerOptions: {
@@ -223,13 +221,13 @@ export default [
             forceConsistentCasingInFileNames: true,
             skipLibCheck: true,
           },
-        };
+        }
 
         fs.writeFileSync(
           join(absoluteTargetDir, 'tsconfig.json'),
           JSON.stringify(tsConfig, null, 2),
-        );
-        configGenerated = true;
+        )
+        configGenerated = true
 
         const { installDeps } = await inquirer.prompt([
           {
@@ -238,67 +236,60 @@ export default [
             message: 'Install TypeScript dependency?',
             default: true,
           },
-        ]);
+        ])
 
         if (installDeps) {
-          const spinner = ora('Installing TypeScript...').start();
+          const spinner = ora('Installing TypeScript...').start()
           try {
             await execa('npm', ['install', '--save-dev', 'typescript'], {
               cwd: absoluteTargetDir,
-            });
-            spinner.succeed('TypeScript installed.');
-            depsInstalled = true;
+            })
+            spinner.succeed('TypeScript installed.')
+            depsInstalled = true
           } catch (error) {
-            spinner.fail('Failed to install TypeScript.');
-            console.error(error);
+            spinner.fail('Failed to install TypeScript.')
+            console.error(error)
           }
         }
       }
-      break;
+      break
     case 'gitignore':
       {
-        console.log('Configuring .gitignore...');
+        console.log('Configuring .gitignore...')
         const { templates } = await inquirer.prompt([
           {
             type: 'checkbox',
             name: 'templates',
             message: 'Select .gitignore templates:',
-            choices: [
-              'node',
-              'visualstudiocode',
-              'windows',
-              'macos',
-              'linux',
-              'jetbrain',
-            ],
+            choices: ['node', 'visualstudiocode', 'windows', 'macos', 'linux', 'jetbrain'],
             default: ['node', 'visualstudiocode'],
           },
-        ]);
+        ])
 
         if (templates.length > 0) {
-          const spinner = ora('Fetching .gitignore content...').start();
+          const spinner = ora('Fetching .gitignore content...').start()
           try {
-            const url = `https://www.toptal.com/developers/gitignore/api/${templates.join(',')}`;
+            const url = `https://www.toptal.com/developers/gitignore/api/${templates.join(',')}`
             // We need to use a dynamic import for node-fetch
-            const fetch = (await import('node-fetch')).default;
-            const response = await fetch(url);
-            const content = await response.text();
-            fs.writeFileSync(join(absoluteTargetDir, '.gitignore'), content);
-            spinner.succeed('.gitignore file created.');
-            configGenerated = true;
+            const fetch = (await import('node-fetch')).default
+            const response = await fetch(url)
+            const content = await response.text()
+            fs.writeFileSync(join(absoluteTargetDir, '.gitignore'), content)
+            spinner.succeed('.gitignore file created.')
+            configGenerated = true
           } catch (error) {
-            spinner.fail('Failed to fetch .gitignore templates.');
-            console.error(error);
+            spinner.fail('Failed to fetch .gitignore templates.')
+            console.error(error)
           }
         }
       }
-      break;
+      break
   }
 
   if (configGenerated) {
-    console.log('✔️ Configuration file generated successfully.');
+    console.log('✔️ Configuration file generated successfully.')
   }
   if (depsInstalled) {
-    console.log('✔️ Dependencies installed successfully.');
+    console.log('✔️ Dependencies installed successfully.')
   }
 }

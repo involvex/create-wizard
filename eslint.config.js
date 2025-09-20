@@ -50,7 +50,7 @@ export default [
       ...js.configs.recommended.rules,
       // "semi": "error",
       "no-undef": "error",
-      "no-unused-vars": "warn",
+      "no-unused-vars": ["warn", { "caughtErrors": "none" }],
       // 'license-header/header': ['error', './copyright.js'],
     },
   },
@@ -97,7 +97,7 @@ export default [
     },
   },
   {
-    files: ["templates/**/*.{js,jsx}"],
+    files: ["template-library/**/*.{js,jsx}"],
     languageOptions: {
       parserOptions: {
         ecmaFeatures: {
@@ -110,7 +110,7 @@ export default [
     },
     rules: {
       "no-undef": "off",
-      "no-unused-vars": ["warn", { "varsIgnorePattern": "^(Head|React|App)$" }],
+      "no-unused-vars": ["warn", { "varsIgnorePattern": "^(Head|React|App|Link|Layout|HomepageFeatures|HomepageHeader|Heading|Feature|Svg)$" }],
     },
   },
   prettierConfig,

@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # Create Wizard Template Library
 
 This directory contains the official templates for the `create-wizard` CLI tool.

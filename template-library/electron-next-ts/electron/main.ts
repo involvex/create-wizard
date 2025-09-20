@@ -1,9 +1,11 @@
-import { app, BrowserWindow } from 'electron';
-import { join } from 'path';
-import { format } from 'url';
+/** @format */
 
-const isDev = process.env.NODE_ENV === 'development';
-const port = 3000;
+import { app, BrowserWindow } from 'electron'
+import { join } from 'path'
+import { format } from 'url'
+
+const isDev = process.env.NODE_ENV === 'development'
+const port = 3000
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -14,11 +16,11 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
     },
-  });
+  })
 
   if (isDev) {
-    mainWindow.loadURL(`http://localhost:${port}`);
-    mainWindow.webContents.openDevTools();
+    mainWindow.loadURL(`http://localhost:${port}`)
+    mainWindow.webContents.openDevTools()
   } else {
     mainWindow.loadURL(
       format({
@@ -26,22 +28,22 @@ function createWindow() {
         protocol: 'file:',
         slashes: true,
       }),
-    );
+    )
   }
 }
 
 app.whenReady().then(() => {
-  createWindow();
+  createWindow()
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+      createWindow()
     }
-  });
-});
+  })
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.quit()
   }
-});
+})

@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # Docusaurus Site Template
 
 This template provides a standard setup for a Docusaurus v3 documentation website.

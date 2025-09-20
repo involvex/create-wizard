@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <h1>{{ msg }}</h1>
 </template>
@@ -7,7 +9,7 @@ export default {
   data() {
     return {
       msg: 'Hello from Vue!',
-    };
+    }
   },
-};
+}
 </script>

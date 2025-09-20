@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # VS Code Extension Template
 
 This template provides a basic structure for creating a Visual Studio Code extension using TypeScript.
@@ -11,7 +13,7 @@ This template provides a basic structure for creating a Visual Studio Code exten
 
 ## Structure
 
--   `package.json`: The extension manifest.
--   `src/extension.ts`: The main source code for the extension.
--   `tsconfig.json`: TypeScript configuration.
--   `.vscodeignore`: Specifies which files to exclude when packaging the extension.
+- `package.json`: The extension manifest.
+- `src/extension.ts`: The main source code for the extension.
+- `tsconfig.json`: TypeScript configuration.
+- `.vscodeignore`: Specifies which files to exclude when packaging the extension.

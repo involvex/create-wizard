@@ -1,4 +1,6 @@
-import mongoose from 'mongoose';
+/** @format */
+
+import mongoose from 'mongoose'
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -14,6 +16,6 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+})
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema)

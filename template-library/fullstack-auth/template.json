@@ -8,8 +8,5 @@
     "start": "concurrently \"npm run start --workspace=frontend\" \"npm run start --workspace=backend\"",
     "build": "npm run build --workspace=frontend && npm run build --workspace=backend"
   },
-  "workspaces": [
-    "frontend",
-    "backend"
-  ]
+  "workspaces": ["frontend", "backend"]
 }

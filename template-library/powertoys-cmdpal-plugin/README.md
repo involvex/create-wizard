@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # PowerToys Command Palette Plugin Template
 
 This template provides a basic structure for a command-palette style PowerToys Run plugin.

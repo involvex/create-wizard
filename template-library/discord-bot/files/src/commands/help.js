@@ -1,20 +1,20 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+/** @format */
+
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('help')
-    .setDescription('Lists all available commands.'),
+  data: new SlashCommandBuilder().setName('help').setDescription('Lists all available commands.'),
   async execute(interaction) {
-    const commands = interaction.client.commands;
+    const commands = interaction.client.commands
     const embed = new EmbedBuilder()
-      .setColor(0x0099FF)
+      .setColor(0x0099ff)
       .setTitle('Help')
-      .setDescription('Here is a list of all my commands:');
+      .setDescription('Here is a list of all my commands:')
 
     commands.forEach(command => {
-      embed.addFields({ name: `/${command.data.name}`, value: command.data.description });
-    });
+      embed.addFields({ name: `/${command.data.name}`, value: command.data.description })
+    })
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], ephemeral: true })
   },
-};
+}

@@ -1,11 +1,13 @@
+<!-- @format -->
+
 # GitHub CLI Plugin Template
 
 This template provides a basic structure for creating a new GitHub CLI plugin.
 
 ## Structure
 
--   `gh-my-plugin`: The main executable script for your plugin.
--   `template.json`: The metadata for the `create-wizard` tool.
+- `gh-my-plugin`: The main executable script for your plugin.
+- `template.json`: The metadata for the `create-wizard` tool.
 
 ## Installation
 

@@ -7,17 +7,17 @@
  * @property {object} options - The options provided by the user.
  */
 async function handleGreet(interaction) {
-  const user = interaction.options.getUser('user');
-  const message = interaction.options.getString('message');
+  const user = interaction.options.getUser('user')
+  const message = interaction.options.getString('message')
 
-  let response = `Hello, ${user.username}!`;
+  let response = `Hello, ${user.username}!`
   if (message) {
-    response += ` ${message}`;
+    response += ` ${message}`
   }
 
-  await interaction.reply(response);
+  await interaction.reply(response)
 }
 
 module.exports = {
   execute: handleGreet,
-};
+}

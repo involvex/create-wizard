@@ -508,12 +508,11 @@ import {
   setupVitest,
   setupMochaChai,
 } from './create-test-setup.js'
-import { env } from 'process'
 
 //This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   // Check for flags
-  const userArgs = process.argv.slice(2); // Get arguments passed by the user
+  const userArgs = process.argv.slice(2) // Get arguments passed by the user
 
   if (userArgs.includes('--plugin')) {
     createPlugin({

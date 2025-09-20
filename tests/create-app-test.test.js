@@ -1,5 +1,8 @@
-/** eslint-disable **/
-
+/**
+ * eslint-disable *
+ *
+ * @format
+ */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { main } from '../scripts/create-app.js'

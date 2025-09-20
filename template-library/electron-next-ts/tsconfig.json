@@ -1,7 +1,4 @@
 {
   "files": [],
-  "references": [
-    { "path": "./electron" },
-    { "path": "./renderer" }
-  ]
+  "references": [{ "path": "./electron" }, { "path": "./renderer" }]
 }

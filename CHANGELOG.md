@@ -1,3 +1,18 @@
+## [3.5.1](https://github.com/involvex/create-wizard/compare/v3.5.0...v3.5.1) (2025-09-20)
+
+
+### Bug Fixes
+
+* **ci:** add .gitattributes to prevent line ending issues ([eed9869](https://github.com/involvex/create-wizard/commit/eed9869de11011a67c4d25cef2af2afd2f6356e4))
+* **cli:** resolve multiple issues in create-app wizard ([013ee97](https://github.com/involvex/create-wizard/commit/013ee97cf971a00f4c37b0dfda4df48f12af63a1))
+
+
+### Features
+
+* **cli:** overhaul UI and add project name argument ([7f1031e](https://github.com/involvex/create-wizard/commit/7f1031ebfa1c643f1cfcd9f4f7b11c5ab19e902c))
+
+
+
 <!-- @format -->
 
 ## [3.2.11](https://github.com/involvex/create-wizard/compare/v3.2.10...v3.2.11) (2025-09-20)

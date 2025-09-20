@@ -20,7 +20,10 @@
   "license": "ISC",
   "author": "Involvex",
   "type": "module",
-  "main": "scripts/create-app.js",
+  "main": "dist/create-wizard.mjs",
+  "bin": {
+    "create-wizard": "dist/create-wizard.mjs"
+  },
   "engines": {
     "node": ">=22.0.0"
   },

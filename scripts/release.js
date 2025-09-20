@@ -55,7 +55,6 @@ async function main() {
       spinner.fail('Your local branch has diverged from or is behind origin/main. Please pull or rebase the latest changes.')
       return process.exit(1)
     }
-    }
 
     spinner.text = `Creating a new ${versionType} release...`
 

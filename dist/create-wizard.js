@@ -9668,10 +9668,7 @@ export default [
   ${answers.extendPrettier ? "prettierConfig," : ""}
 ];
 `;
-        fs2.writeFileSync(
-          join(absoluteTargetDir, "eslint.config.js"),
-          eslintConfig.trim()
-        );
+        fs2.writeFileSync(join(absoluteTargetDir, "eslint.config.js"), eslintConfig.trim());
         configGenerated = true;
         const { installDeps } = await inquirer2.prompt([
           {
@@ -9777,14 +9774,7 @@ export default [
             type: "checkbox",
             name: "templates",
             message: "Select .gitignore templates:",
-            choices: [
-              "node",
-              "visualstudiocode",
-              "windows",
-              "macos",
-              "linux",
-              "jetbrain"
-            ],
+            choices: ["node", "visualstudiocode", "windows", "macos", "linux", "jetbrain"],
             default: ["node", "visualstudiocode"]
           }
         ]);
@@ -9960,7 +9950,16 @@ describe('Example Test', () => {
   });
 }
 async function setupMochaChai() {
-  await execa("npm", ["install", "--save-dev", "mocha", "chai", "ts-node", "typescript", "@types/mocha", "@types/chai"]);
+  await execa("npm", [
+    "install",
+    "--save-dev",
+    "mocha",
+    "chai",
+    "ts-node",
+    "typescript",
+    "@types/mocha",
+    "@types/chai"
+  ]);
   const mochaConfigContent = `module.exports = {
   require: ['ts-node/register'],
   extension: ['ts', 'tsx'],

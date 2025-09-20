@@ -1,10 +1,6 @@
 {
   "name": "@involvex/create-wizard",
-<<<<<<< HEAD
   "version": "3.4.9",
-=======
-  "version": "3.4.8",
->>>>>>> f9269987e758d1af7676fbb04ff1a244a10030c1
   "description": "create everything with ease interactive ",
   "keywords": [
     "cli",

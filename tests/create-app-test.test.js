@@ -1,10 +1,9 @@
-/**
- * @format
- */
+/** eslint-disable **/
+
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { main } from '../scripts/create-app.js'
-import fs from 'fs'
+import fs, { rmSync, mkdirSync, writeFileSync, existsSync } from 'fs'
 import { join } from 'path'
 import { tmpdir } from 'os'
 
@@ -16,7 +15,7 @@ vi.mock('ora', () => {
     start: vi.fn().mockReturnThis(),
     succeed: vi.fn().mockReturnThis(),
     fail: vi.fn().mockReturnThis(),
-    set text(value) {},
+    set text(_value) {},
   }
   return {
     default: vi.fn(() => oraInstance),
@@ -34,8 +33,8 @@ describe('create-app', () => {
     inquirer = (await import('inquirer')).default
     execa = (await import('execa')).execa
 
-    fs.rmSync(tempDir, { recursive: true, force: true })
-    fs.mkdirSync(tempDir, { recursive: true })
+    rmSync(tempDir, { recursive: true, force: true })
+    mkdirSync(tempDir, { recursive: true })
     process.chdir(tempDir)
 
     global.fetch = vi.fn(url => {
@@ -51,7 +50,7 @@ describe('create-app', () => {
 
   afterEach(() => {
     process.chdir(originalCwd)
-    fs.rmSync(tempDir, { recursive: true, force: true })
+    rmSync(tempDir, { recursive: true, force: true })
     vi.clearAllMocks()
   })
 
@@ -75,14 +74,14 @@ describe('create-app', () => {
 
     execa.mockImplementation(async (command, args) => {
       if (command === 'npm' && args[0] === 'init') {
-        fs.writeFileSync(join(process.cwd(), 'package.json'), '{}')
+        writeFileSync(join(process.cwd(), 'package.json'), '{}')
       }
     })
 
     await main({ inquirer, execa, fs })
 
     const projectDir = join(tempDir, projectName)
-    expect(fs.existsSync(projectDir)).toBe(true)
+    expect(existsSync(projectDir)).toBe(true)
     expect(execa).toHaveBeenCalledWith('npm', ['init', '-y'])
     expect(execa).toHaveBeenCalledWith('git', ['init'])
   })

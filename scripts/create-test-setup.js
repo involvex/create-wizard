@@ -4,8 +4,13 @@ import fs from 'fs-extra';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import ora from 'ora';
+import debug from 'debug';
+
+// Setup debug logging for create-test-setup
+const debugTestSetup = debug('create-wizard:create-test-setup')
 
 export async function main() {
+  debugTestSetup('Starting create-test-setup main function')
   const answers = await inquirer.prompt([
     {
       type: 'list',
@@ -15,6 +20,7 @@ export async function main() {
     },
   ]);
 
+  debugTestSetup('Selected framework: %s', answers.framework)
   const spinner = ora(`Setting up ${answers.framework}...`).start();
 
   try {
@@ -30,7 +36,9 @@ export async function main() {
         break;
     }
     spinner.succeed(`${answers.framework} setup complete!`);
+    debugTestSetup('%s setup completed successfully', answers.framework)
   } catch (error) {
+    debugTestSetup('Failed to set up %s: %o', answers.framework, error)
     spinner.fail(`Failed to set up ${answers.framework}.`);
     console.error(error);
     process.exit(1);

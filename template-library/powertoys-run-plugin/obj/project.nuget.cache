@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "dgSpecHash": "OhRoUaFNBW4=",
+  "success": false,
+  "projectFilePath": "D:\\repos\\create-universe\\template-library\\powertoys-run-plugin\\MyPowerToysRunPlugin.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "Unable to resolve 'PowerToys.Plugin.Interfaces (>= 0.82.0)' for 'net8.0-windows7.0'. PackageSourceMapping is enabled, the following source(s) were not considered: C:\\Program Files\\dotnet\\library-packs, Microsoft Visual Studio Offline Packages, nuget.org, Paketquelle1.",
+      "projectPath": "D:\\repos\\create-universe\\template-library\\powertoys-run-plugin\\MyPowerToysRunPlugin.csproj",
+      "filePath": "D:\\repos\\create-universe\\template-library\\powertoys-run-plugin\\MyPowerToysRunPlugin.csproj",
+      "libraryId": "PowerToys.Plugin.Interfaces",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    }
+  ]
+}

@@ -48,7 +48,7 @@ export default [
     languageOptions: { globals: { ...globals.node } },
     rules: {
       ...js.configs.recommended.rules,
-      "semi": "error",
+      // "semi": "error",
       "no-undef": "error",
       "no-unused-vars": "warn",
       // 'license-header/header': ['error', './copyright.js'],

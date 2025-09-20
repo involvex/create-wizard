@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {"type":"node","request":"launch","name":"Run vitest","runtimeExecutable":"vitest","cwd":"${workspaceFolder}","args":["--inspect"]},
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            
+            "program": "${workspaceFolder}\\scripts\\create-app.js",
+        
+        }
+    ]
+}
+

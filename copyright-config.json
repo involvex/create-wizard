@@ -8,5 +8,5 @@
     "HTML": "html",
     "CSS": "css"
   },
-  "folderExcludeList": ["node_modules", "public", "coverage", ".git"]
+  "folderExcludeList": ["node_modules", "public", "coverage", ".git", "tests"]
 }

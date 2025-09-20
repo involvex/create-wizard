@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to the guild-specific settings file
-const settingsPath = path.join(__dirname, '..\..\guild-settings.json');
+const settingsPath = path.join(__dirname, '..\\..\\guild-settings.json');
 
 module.exports = {
   data: new SlashCommandBuilder()

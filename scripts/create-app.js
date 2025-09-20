@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * ********************************************
  * Copyright Involvex
@@ -15,77 +14,97 @@ import _fs from 'fs'
 import _fsExtra from 'fs-extra'
 import { fileURLToPath } from 'url'
 import ora from 'ora'
+import debug from 'debug'
 
+// Parse command line arguments for --debug flag
+const args = process.argv.slice(2)
+const debugFlag = args.find(arg => arg.startsWith('--debug='))
+const isDebugEnabled = debugFlag === '--debug=TRUE' || process.env.DEBUG === 'TRUE'
+
+// Enable debug logging BEFORE creating debug instances
+if (isDebugEnabled) {
+  debug.enable('create-wizard:*')
+  console.log('Debug logging enabled for create-wizard')
+}
+
+// Setup debug logging for create-app
+const debugLog = debug('create-wizard:create-app')
+const debugTemplates = debug('create-wizard:create-app:templates')
+const debugTemplatesApply = debug('create-wizard:create-app:apply')
+const debugDeps = debug('create-wizard:create-app:deps')
+const debugGit = debug('create-wizard:create-app:git')
+
+// Log that debug is enabled
+if (isDebugEnabled) {
+  debugLog('Debug logging enabled for create-wizard')
+}
 // Main function
 export async function main(deps) {
+  debugLog('Starting create-app main function')
   const inquirer = deps.inquirer || _inquirer
   const execa = deps.execa || _execa
   const fs = deps.fs || _fs
   const fsExtra = deps.fsExtra || _fsExtra
+
   async function getTemplates() {
-    const spinner = ora('Fetching templates...').start();
+    debugTemplates('Fetching available templates')
+    const spinner = ora('Fetching templates...').start()
     try {
-      const templatesPath = join(
-        dirname(fileURLToPath(import.meta.url)),
-        '..',
-        'template-library'
-      );
+      const templatesPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'template-library')
       const templates = fs.readdirSync(templatesPath).filter(file => {
-        const filePath = join(templatesPath, file);
-        return fs.statSync(filePath).isDirectory();
-      });
-      spinner.succeed('Templates fetched.');
-      return templates;
+        const filePath = join(templatesPath, file)
+        return fs.statSync(filePath).isDirectory()
+      })
+      debugTemplates('Found templates: %o', templates)
+      spinner.succeed('Templates fetched.')
+      return templates
     } catch (error) {
-      spinner.fail('Failed to fetch templates.');
-      console.error(error);
-      process.exit(1);
+      debugTemplates('Failed to fetch templates: %o', error)
+      spinner.fail('Failed to fetch templates.')
+      console.error(error)
+      process.exit(1)
     }
   }
 
   async function applyTemplate(templateName, projectDir, answers) {
-    const spinner = ora(`Applying template: ${templateName}...`).start();
+    debugTemplatesApply('Applying template: %s to project: %s', templateName, projectDir)
+    const spinner = ora(`Applying template: ${templateName}...`).start()
     try {
       const templateDir = join(
         dirname(fileURLToPath(import.meta.url)),
         '..',
         'template-library',
         templateName,
-        'files'
-      );
+        'files',
+      )
 
-      fsExtra.copySync(templateDir, projectDir);
+      debugTemplatesApply('Copying template files from: %s', templateDir)
+      fsExtra.copySync(templateDir, projectDir)
 
       // Conditionally copy feature files
       if (answers.discordFeatures) {
+        debugTemplatesApply('Applying Discord features: %o', answers.discordFeatures)
         if (answers.discordFeatures.includes('welcome')) {
-          fsExtra.copySync(
-            join(templateDir, '../features/welcome'),
-            projectDir
-          );
+          fsExtra.copySync(join(templateDir, '../features/welcome'), projectDir)
         }
         if (answers.discordFeatures.includes('logging')) {
-          fsExtra.copySync(
-            join(templateDir, '../features/logging'),
-            projectDir
-          );
+          fsExtra.copySync(join(templateDir, '../features/logging'), projectDir)
         }
         if (answers.discordFeatures.includes('moderation')) {
-          fsExtra.copySync(
-            join(templateDir, '../features/moderation'),
-            projectDir
-          );
+          fsExtra.copySync(join(templateDir, '../features/moderation'), projectDir)
         }
       }
       if (answers.discordRPC) {
-        fsExtra.copySync(join(templateDir, '../features/rpc'), projectDir);
+        debugTemplatesApply('Applying Discord RPC feature')
+        fsExtra.copySync(join(templateDir, '../features/rpc'), projectDir)
       }
 
-      spinner.succeed('Template applied.');
+      spinner.succeed('Template applied.')
     } catch (error) {
-      spinner.fail('Failed to apply template.');
-      console.error(error);
-      process.exit(1);
+      debugTemplatesApply('Failed to apply template: %o', error)
+      spinner.fail('Failed to apply template.')
+      console.error(error)
+      process.exit(1)
     }
   }
 
@@ -106,14 +125,14 @@ export async function main(deps) {
         { name: 'logging', message: 'Include message logging' },
         { name: 'moderation', message: 'Include moderation commands (kick/ban)' },
       ],
-      when: (answers) => answers.template === 'discord-bot',
+      when: answers => answers.template === 'discord-bot',
     },
     {
       type: 'confirm',
       name: 'discordRPC',
       message: 'Include Discord RPC (activity status)?',
       default: false,
-      when: (answers) => answers.template === 'discord-bot',
+      when: answers => answers.template === 'discord-bot',
     },
     {
       type: 'checkbox',
@@ -144,7 +163,7 @@ export async function main(deps) {
       name: 'testFramework',
       message: 'Which testing framework?',
       choices: ['Jest', 'Vitest', 'Mocha/Chai'],
-      when: (answers) => answers.includeTestFramework,
+      when: answers => answers.includeTestFramework,
     },
     {
       type: 'confirm',
@@ -205,25 +224,25 @@ export async function main(deps) {
   await applyTemplate(answers.template, projectDir, answers)
 
   if (answers.includeTestFramework) {
-    const testSetupSpinner = ora(`Setting up ${answers.testFramework}...`).start();
+    const testSetupSpinner = ora(`Setting up ${answers.testFramework}...`).start()
     try {
-      process.chdir(projectDir); // Ensure we are in the project directory
+      process.chdir(projectDir) // Ensure we are in the project directory
       switch (answers.testFramework) {
         case 'Jest':
-          await setupJest();
-          break;
+          await setupJest()
+          break
         case 'Vitest':
-          await setupVitest();
-          break;
+          await setupVitest()
+          break
         case 'Mocha/Chai':
-          await setupMochaChai();
-          break;
+          await setupMochaChai()
+          break
       }
-      testSetupSpinner.succeed(`${answers.testFramework} setup complete!`);
+      testSetupSpinner.succeed(`${answers.testFramework} setup complete!`)
     } catch (error) {
-      testSetupSpinner.fail(`Failed to set up ${answers.testFramework}.`);
-      console.error(error);
-      process.exit(1);
+      testSetupSpinner.fail(`Failed to set up ${answers.testFramework}.`)
+      console.error(error)
+      process.exit(1)
     }
   }
 
@@ -244,8 +263,6 @@ export async function main(deps) {
   packageJson.devDependencies = {
     ...packageJson.devDependencies,
   }
-
-
 
   if (answers.includeTypeScript) {
     packageJson.devDependencies = {
@@ -444,52 +461,71 @@ test-job:
   )
 
   if (allDependencies.length > 0) {
+    debugDeps('Installing dependencies: %o', allDependencies)
     const installSpinner = ora('Installing dependencies...').start()
     await execa('npm', ['install', ...allDependencies])
     installSpinner.succeed('Dependencies installed.')
+    debugDeps('Dependencies installed successfully')
   }
   if (allDevDependencies.length > 0) {
+    debugDeps('Installing dev dependencies: %o', allDevDependencies)
     const devInstallSpinner = ora('Installing dev dependencies...').start()
     await execa('npm', ['install', '--save-dev', ...allDevDependencies])
     devInstallSpinner.succeed('Dev dependencies installed.')
+    debugDeps('Dev dependencies installed successfully')
   }
 
   if (answers.initGit) {
+    debugGit('Initializing Git repository')
     const gitInitSpinner = ora('Initializing Git repository...').start()
     await execa('git', ['init'])
     gitInitSpinner.succeed('Git repository initialized.')
+    debugGit('Git repository initialized successfully')
 
     const gitAddSpinner = ora('Staging files...').start()
     await execa('git', ['add', '.'])
     gitAddSpinner.succeed('Files staged.')
+    debugGit('Files staged successfully')
 
     const gitCommitSpinner = ora('Committing initial changes...').start()
     await execa('git', ['commit', '-m', 'Initial commit'])
     gitCommitSpinner.succeed('Initial commit created.')
+    debugGit('Initial commit created successfully')
   }
 
   console.log('Project successfully created!')
-  console.log('\nThank you for using @involvex/create-wizard!');
-  console.log('If you want to support the project, you can do so at https://buymeacoffee.com/involvex');
+  console.log('\nThank you for using @involvex/create-wizard!')
+  console.log(
+    'If you want to support the project, you can do so at https://buymeacoffee.com/involvex',
+  )
 }
 
-import { main as createPlugin } from './create-plugin.js';
-import { main as generateLicense } from './generate-license.js';
-import { main as createTestSetup, setupJest, setupVitest, setupMochaChai } from './create-test-setup.js';
+import { main as createPlugin } from './create-plugin.js'
+import { main as generateLicense } from './generate-license.js'
+import {
+  main as createTestSetup,
+  setupJest,
+  setupVitest,
+  setupMochaChai,
+} from './create-test-setup.js'
+import { env } from 'process'
 
-// This block allows the script to be run directly
+//This block allows the script to be run directly
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   // Check for flags
   if (process.argv.includes('--plugin')) {
     createPlugin({
       /* dependencies */
-    });
+    })
   } else if (process.argv.includes('--license')) {
     generateLicense({
       /* dependencies */
-    });
-
+    })
+  } else if (process.argv.includes('--create-test')) {
+    createTestSetup({
+      /* dependencies */
+    })
   } else {
-    main({});
+    main({})
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@involvex/create-wizard",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "create everything with ease interactive ",
   "keywords": [
     "cli",
@@ -22,7 +22,7 @@
   "type": "module",
   "main": "dist/create-wizard.mjs",
   "bin": {
-    "create-wizard": "dist/create-wizard.mjs"
+    "create-wizard": "scripts/create-app.js"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -43,9 +43,6 @@
     "template:create": "node scripts/create-template.js",
     "release": "node scripts/release.js",
     "debug": "cross-env DEBUG=TRUE && node scripts/create-app.js --debug=TRUE "
-  },
-  "bin": {
-    "create-wizard": "scripts/create-app.js"
   },
   "dependencies": {
     "@mdx-js/react": "^3.0.0",

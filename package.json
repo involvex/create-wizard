@@ -22,7 +22,8 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "template-library"
   ],
   "type": "module",
   "main": "dist/create-wizard.js",

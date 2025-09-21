@@ -14,7 +14,7 @@
 
 - **Interactive Project Setup**: Guides you through project creation with prompts for project name, template selection, and additional dependencies.
 - **Modern, Animated UI**: A completely redesigned interactive experience using `@clack/prompts` for a more engaging and user-friendly setup.
-- **Remote Template Library**: Fetches templates from a centralized GitHub repository, ensuring you always have access to the latest versions.
+- **Extensive Template Library**: Choose from a wide variety of templates included with the CLI.
 - **Interactive Plugin Configuration**: Use `create-wizard --plugin` to interactively configure and install plugins like Prettier, ESLint, and TypeScript.
 - **Explicit Dependency Versioning**: Allows specifying exact versions for dependencies, ensuring consistent project setups.
 - **TypeScript Support**: Option to initialize projects with TypeScript, including `tsconfig.json`.

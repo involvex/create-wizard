@@ -314,13 +314,13 @@ export async function main(deps) {
       process.chdir(projectDir) // Ensure we are in the project directory
       switch (answers.testFramework) {
         case 'Jest':
-          await setupJest()
+          await setupJest(answers)
           break
         case 'Vitest':
-          await setupVitest()
+          await setupVitest(answers)
           break
         case 'Mocha/Chai':
-          await setupMochaChai()
+          await setupMochaChai(answers)
           break
       }
       spinner.stop(`${answers.testFramework} setup complete!`)

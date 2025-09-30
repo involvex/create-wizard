@@ -11084,45 +11084,25 @@ async function main4(deps) {
     answers.projectName = projectNameFromArg;
     M2.info(`Using project name from argument: ${projectNameFromArg}`);
   }
-  const group = await Ce(
-    {
-      ...!projectNameFromArg && {
-        projectName: () => he({
-          message: "Project name:",
-          placeholder: "my-awesome-project",
-          validate: (value) => {
-            if (!value) return "Please enter a project name.";
-          }
-        })
-      },
-      template: async () => ve({
-        message: "Select a project template:",
-        options: (await getTemplates()).map((t) => ({ value: t, label: t }))
-      })
-    },
-    {
-      onCancel: () => {
-        xe("Operation cancelled.");
-        process.exit(0);
-      }
-    }
-  );
-  Object.assign(answers, group);
-  if (answers.template === "discord-bot") {
-    const discordGroup = await Ce(
+  const answersArg = args.find((arg) => arg.startsWith("--answers="));
+  if (answersArg) {
+    const answersJSON = answersArg.split("=")[1];
+    Object.assign(answers, JSON.parse(answersJSON));
+  } else {
+    const group = await Ce(
       {
-        discordFeatures: () => fe({
-          message: "Select Discord bot features:",
-          options: [
-            { value: "welcome", label: "Include welcome messages for new users" },
-            { value: "logging", label: "Include message logging" },
-            { value: "moderation", label: "Include moderation commands (kick/ban)" }
-          ],
-          required: false
-        }),
-        discordRPC: () => ye({
-          message: "Include Discord RPC (activity status)?",
-          initialValue: false
+        ...!projectNameFromArg && {
+          projectName: () => he({
+            message: "Project name:",
+            placeholder: "my-awesome-project",
+            validate: (value) => {
+              if (!value) return "Please enter a project name.";
+            }
+          })
+        },
+        template: async () => ve({
+          message: "Select a project template:",
+          options: (await getTemplates()).map((t) => ({ value: t, label: t }))
         })
       },
       {
@@ -11132,113 +11112,139 @@ async function main4(deps) {
         }
       }
     );
-    Object.assign(answers, discordGroup);
-  }
-  if (answers.template === "vue-wizard") {
-    const vueWizardGroup = await Ce(
-      {
-        isPublic: () => ye({
-          message: "Make the repository public?",
-          initialValue: true
-        }),
-        addLicense: () => ye({
-          message: "Add a LICENSE file?",
-          initialValue: true
-        }),
-        addFunding: () => ye({
-          message: "Add a FUNDING.yml file?",
-          initialValue: false
-        }),
-        addDocs: () => ye({
-          message: "Set up a docs/ directory?",
-          initialValue: false
-        }),
-        useGhPages: () => ye({
-          message: "Set up a GitHub Pages deployment workflow?",
-          initialValue: false
-        })
-      },
-      {
-        onCancel: () => {
-          xe("Operation cancelled.");
-          process.exit(0);
-        }
-      }
-    );
-    Object.assign(answers, vueWizardGroup);
-  }
-  const customizationGroup = await Ce(
-    {
-      ...!answers.template.startsWith("vue-wizard") && {
-        dependencies: () => fe({
-          message: "Which packages should be installed?",
-          options: [
-            { value: { name: "express", version: "^4.18.2" }, label: "express" },
-            { value: { name: "discord.js", version: "^14.14.1" }, label: "discord.js" },
-            { value: { name: "axios", version: "^1.6.2" }, label: "axios" },
-            { value: { name: "eslint", version: "^8.56.0" }, label: "eslint" },
-            { value: { name: "dotenv", version: "^16.3.1" }, label: "dotenv" }
-          ],
-          required: false
-        })
-      },
-      initGit: () => ye({
-        message: "Initialize a Git repository?",
-        initialValue: true
-      }),
-      includeTestFramework: () => ye({
-        message: "Include a testing framework?",
-        initialValue: false
-      }),
-      testFramework: ({ results }) => {
-        if (results.includeTestFramework) {
-          return ve({
-            message: "Which testing framework?",
+    Object.assign(answers, group);
+    if (answers.template === "discord-bot") {
+      const discordGroup = await Ce(
+        {
+          discordFeatures: () => fe({
+            message: "Select Discord bot features:",
             options: [
-              { value: "Jest", label: "Jest" },
-              { value: "Vitest", label: "Vitest" },
-              { value: "Mocha/Chai", label: "Mocha/Chai" }
-            ]
-          });
+              { value: "welcome", label: "Include welcome messages for new users" },
+              { value: "logging", label: "Include message logging" },
+              { value: "moderation", label: "Include moderation commands (kick/ban)" }
+            ],
+            required: false
+          }),
+          discordRPC: () => ye({
+            message: "Include Discord RPC (activity status)?",
+            initialValue: false
+          })
+        },
+        {
+          onCancel: () => {
+            xe("Operation cancelled.");
+            process.exit(0);
+          }
         }
-      },
-      includeTypeScript: () => ye({
-        message: "Include TypeScript?",
-        initialValue: false
-      }),
-      includeEslint: () => ye({
-        message: "Include ESLint for linting?",
-        initialValue: false
-      }),
-      includePrettier: () => ye({
-        message: "Include Prettier for code formatting?",
-        initialValue: false
-      }),
-      includeDocker: () => ye({
-        message: "Include Docker support?",
-        initialValue: false
-      }),
-      includeGithubActions: () => ye({
-        message: "Include GitHub Actions workflow?",
-        initialValue: false
-      }),
-      includeGitlabCi: () => ye({
-        message: "Include GitLab CI/CD pipeline?",
-        initialValue: false
-      }),
-      includeDebugConfig: () => ye({
-        message: "Include VS Code debug configuration?",
-        initialValue: false
-      })
-    },
-    {
-      onCancel: () => {
-        xe("Operation cancelled.");
-        process.exit(0);
-      }
+      );
+      Object.assign(answers, discordGroup);
     }
-  );
-  Object.assign(answers, customizationGroup);
+    if (answers.template === "vue-wizard") {
+      const vueWizardGroup = await Ce(
+        {
+          isPublic: () => ye({
+            message: "Make the repository public?",
+            initialValue: true
+          }),
+          addLicense: () => ye({
+            message: "Add a LICENSE file?",
+            initialValue: true
+          }),
+          addFunding: () => ye({
+            message: "Add a FUNDING.yml file?",
+            initialValue: false
+          }),
+          addDocs: () => ye({
+            message: "Set up a docs/ directory?",
+            initialValue: false
+          }),
+          useGhPages: () => ye({
+            message: "Set up a GitHub Pages deployment workflow?",
+            initialValue: false
+          })
+        },
+        {
+          onCancel: () => {
+            xe("Operation cancelled.");
+            process.exit(0);
+          }
+        }
+      );
+      Object.assign(answers, vueWizardGroup);
+    }
+    const customizationGroup = await Ce(
+      {
+        ...!answers.template.startsWith("vue-wizard") && {
+          dependencies: () => fe({
+            message: "Which packages should be installed?",
+            options: [
+              { value: { name: "express", version: "^4.18.2" }, label: "express" },
+              { value: { name: "discord.js", version: "^14.14.1" }, label: "discord.js" },
+              { value: { name: "axios", version: "^1.6.2" }, label: "axios" },
+              { value: { name: "eslint", version: "^8.56.0" }, label: "eslint" },
+              { value: { name: "dotenv", version: "^16.3.1" }, label: "dotenv" }
+            ],
+            required: false
+          })
+        },
+        initGit: () => ye({
+          message: "Initialize a Git repository?",
+          initialValue: true
+        }),
+        includeTestFramework: () => ye({
+          message: "Include a testing framework?",
+          initialValue: false
+        }),
+        testFramework: ({ results }) => {
+          if (results.includeTestFramework) {
+            return ve({
+              message: "Which testing framework?",
+              options: [
+                { value: "Jest", label: "Jest" },
+                { value: "Vitest", label: "Vitest" },
+                { value: "Mocha/Chai", label: "Mocha/Chai" }
+              ]
+            });
+          }
+        },
+        includeTypeScript: () => ye({
+          message: "Include TypeScript?",
+          initialValue: false
+        }),
+        includeEslint: () => ye({
+          message: "Include ESLint for linting?",
+          initialValue: false
+        }),
+        includePrettier: () => ye({
+          message: "Include Prettier for code formatting?",
+          initialValue: false
+        }),
+        includeDocker: () => ye({
+          message: "Include Docker support?",
+          initialValue: false
+        }),
+        includeGithubActions: () => ye({
+          message: "Include GitHub Actions workflow?",
+          initialValue: false
+        }),
+        includeGitlabCi: () => ye({
+          message: "Include GitLab CI/CD pipeline?",
+          initialValue: false
+        }),
+        includeDebugConfig: () => ye({
+          message: "Include VS Code debug configuration?",
+          initialValue: false
+        })
+      },
+      {
+        onCancel: () => {
+          xe("Operation cancelled.");
+          process.exit(0);
+        }
+      }
+    );
+    Object.assign(answers, customizationGroup);
+  }
   const projectDir = join4(process.cwd(), answers.projectName);
   if (fs2.existsSync(projectDir)) {
     xe("Error: Project folder already exists.");
@@ -11275,6 +11281,9 @@ async function main4(deps) {
   }
   const packageJsonPath = join4(projectDir, "package.json");
   let packageJson2 = JSON.parse(fs2.readFileSync(packageJsonPath, "utf-8"));
+  if (!answers.dependencies) {
+    answers.dependencies = [];
+  }
   const userDependencies = answers.dependencies.reduce((acc, dep) => {
     acc[dep.name] = dep.version;
     return acc;

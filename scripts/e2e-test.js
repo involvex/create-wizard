@@ -1,17 +1,16 @@
 /** @format */
 
 import { execa } from 'execa'
-import { join } from 'path'
+import { resolve } from 'path'
 import fs from 'fs-extra'
 
 async function runE2ETest() {
+  const originalCwd = process.cwd()
   const projectName = 'e2e-test-project'
-  const projectPath = join(process.cwd(), '..', projectName)
+  const projectPath = resolve(originalCwd, '..', projectName)
 
-  // Cleanup previous test run
-  if (fs.existsSync(projectPath)) {
-    fs.removeSync(projectPath)
-  }
+  console.log(`Cleaning up test directory: ${projectPath}`)
+  fs.removeSync(projectPath)
 
   const answers = {
     projectName,
@@ -27,9 +26,14 @@ async function runE2ETest() {
 
   try {
     console.log(`Running create-wizard for project: ${projectName}`)
-    await execa('node', ['dist/create-wizard.js', projectName, `--answers=${answersJSON}`], {
-      stdio: 'inherit',
-    })
+    await execa(
+      'node',
+      [resolve(originalCwd, 'dist/create-wizard.js'), projectName, `--answers=${answersJSON}`],
+      {
+        cwd: resolve(originalCwd, '..'),
+        stdio: 'inherit',
+      },
+    )
 
     process.chdir(projectPath)
 
@@ -47,10 +51,9 @@ async function runE2ETest() {
     console.error('E2E test failed:', error)
     process.exit(1)
   } finally {
-    // Cleanup
-    if (fs.existsSync(projectPath)) {
-      fs.removeSync(projectPath)
-    }
+    console.log(`Cleaning up test directory: ${projectPath}`)
+    process.chdir(originalCwd)
+    fs.removeSync(projectPath)
   }
 }
 

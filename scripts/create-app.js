@@ -405,6 +405,11 @@ export async function main(deps) {
   const packageJsonPath = join(projectDir, 'package.json')
   let packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
 
+  // Ensure dependencies is an array even if no prompts were shown
+  if (!answers.dependencies) {
+    answers.dependencies = []
+  }
+
   // Process user-selected dependencies
   const userDependencies = answers.dependencies.reduce((acc, dep) => {
     acc[dep.name] = dep.version

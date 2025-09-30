@@ -131,6 +131,29 @@ export async function main(deps) {
         fsExtra.copySync(join(templateDir, '../features/rpc'), projectDir)
       }
 
+      if (answers.template === 'vue-wizard') {
+        const featuresDir = join(
+          dirname(fileURLToPath(import.meta.url)),
+          '..',
+          'template-library',
+          templateName,
+          'features',
+        )
+        if (answers.addLicense) {
+          fsExtra.copySync(join(featuresDir, 'license'), projectDir)
+        }
+        if (answers.addFunding) {
+          fsExtra.copySync(join(featuresDir, 'funding'), projectDir)
+        }
+        if (answers.addDocs) {
+          fsExtra.copySync(join(featuresDir, 'docs'), projectDir)
+        }
+        if (answers.useGhPages) {
+          fsExtra.copySync(join(featuresDir, 'gh-pages'), projectDir)
+        }
+        fsExtra.copySync(join(featuresDir, 'versioning'), projectDir)
+      }
+
       spinner.stop('Template applied.')
     } catch (error) {
       debugTemplatesApply('Failed to apply template: %o', error)
@@ -207,6 +230,45 @@ export async function main(deps) {
       },
     )
     Object.assign(answers, discordGroup)
+  }
+
+  if (answers.template === 'vue-wizard') {
+    const vueWizardGroup = await p.group(
+      {
+        isPublic: () =>
+          p.confirm({
+            message: 'Make the repository public?',
+            initialValue: true,
+          }),
+        addLicense: () =>
+          p.confirm({
+            message: 'Add a LICENSE file?',
+            initialValue: true,
+          }),
+        addFunding: () =>
+          p.confirm({
+            message: 'Add a FUNDING.yml file?',
+            initialValue: false,
+          }),
+        addDocs: () =>
+          p.confirm({
+            message: 'Set up a docs/ directory?',
+            initialValue: false,
+          }),
+        useGhPages: () =>
+          p.confirm({
+            message: 'Set up a GitHub Pages deployment workflow?',
+            initialValue: false,
+          }),
+      },
+      {
+        onCancel: () => {
+          p.cancel('Operation cancelled.')
+          process.exit(0)
+        },
+      },
+    )
+    Object.assign(answers, vueWizardGroup)
   }
 
   const customizationGroup = await p.group(

@@ -10760,6 +10760,12 @@ async function main3() {
       name: "framework",
       message: "Which testing framework would you like to set up?",
       choices: ["Jest", "Vitest", "Mocha/Chai"]
+    },
+    {
+      type: "confirm",
+      name: "includeTypeScript",
+      message: "Include TypeScript?",
+      default: false
     }
   ]);
   debugTestSetup("Selected framework: %s", answers.framework);
@@ -10767,13 +10773,13 @@ async function main3() {
   try {
     switch (answers.framework) {
       case "Jest":
-        await setupJest();
+        await setupJest(answers);
         break;
       case "Vitest":
-        await setupVitest();
+        await setupVitest(answers);
         break;
       case "Mocha/Chai":
-        await setupMochaChai();
+        await setupMochaChai(answers);
         break;
     }
     spinner.succeed(`${answers.framework} setup complete!`);
@@ -10785,30 +10791,57 @@ async function main3() {
     process.exit(1);
   }
 }
-async function setupJest() {
-  await execa("npm", ["install", "--save-dev", "jest", "ts-jest", "@types/jest"]);
-  const jestConfigContent = `/** @type {import('ts-jest').JestConfigWithTsJest} */
+async function setupJest(answers) {
+  const devDependencies = ["jest"];
+  let jestConfigContent;
+  let exampleTestContent;
+  let testFileExtension = ".js";
+  if (answers.includeTypeScript) {
+    devDependencies.push("ts-jest", "@types/jest");
+    jestConfigContent = `/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
 };
 `;
-  fs.writeFileSync(join3(process.cwd(), "jest.config.js"), jestConfigContent);
-  const exampleTestContent = `describe('Example Test', () => {
+    exampleTestContent = `describe('Example Test', () => {
   test('should pass', () => {
     expect(true).toBe(true);
   });
 });
 `;
+    testFileExtension = ".ts";
+  } else {
+    jestConfigContent = `module.exports = {
+  testEnvironment: 'node',
+};
+`;
+    exampleTestContent = `describe('Example Test', () => {
+  test('should pass', () => {
+    expect(true).toBe(true);
+  });
+});
+`;
+  }
+  await execa("npm", ["install", "--save-dev", ...devDependencies]);
+  fs.writeFileSync(join3(process.cwd(), "jest.config.js"), jestConfigContent);
   fs.mkdirSync(join3(process.cwd(), "__tests__"), { recursive: true });
-  fs.writeFileSync(join3(process.cwd(), "__tests__", "example.test.ts"), exampleTestContent);
+  fs.writeFileSync(
+    join3(process.cwd(), "__tests__", `example.test${testFileExtension}`),
+    exampleTestContent
+  );
   updatePackageJsonScripts({
     test: "jest"
   });
 }
-async function setupVitest() {
-  await execa("npm", ["install", "--save-dev", "vitest", "typescript"]);
-  const vitestConfigContent = `import { defineConfig } from 'vitest/config';
+async function setupVitest(answers) {
+  const devDependencies = ["vitest"];
+  let vitestConfigContent;
+  let testFileExtension = ".js";
+  let exampleTestContent;
+  if (answers.includeTypeScript) {
+    devDependencies.push("typescript");
+    vitestConfigContent = `import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -10816,8 +10849,8 @@ export default defineConfig({
   },
 });
 `;
-  fs.writeFileSync(join3(process.cwd(), "vitest.config.ts"), vitestConfigContent);
-  const exampleTestContent = `import { describe, it, expect } from 'vitest';
+    testFileExtension = ".ts";
+    exampleTestContent = `import { describe, it, expect } from 'vitest';
 
 describe('Example Test', () => {
   it('should pass', () => {
@@ -10825,31 +10858,55 @@ describe('Example Test', () => {
   });
 });
 `;
+  } else {
+    vitestConfigContent = `import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    environment: 'node',
+  },
+});
+`;
+    exampleTestContent = `import { describe, it, expect } from 'vitest';
+
+describe('Example Test', () => {
+  it('should pass', () => {
+    expect(true).toBe(true);
+  });
+});
+`;
+  }
+  await execa("npm", ["install", "--save-dev", ...devDependencies]);
+  fs.writeFileSync(
+    join3(process.cwd(), `vitest.config.${answers.includeTypeScript ? "ts" : "js"}`),
+    vitestConfigContent
+  );
   fs.mkdirSync(join3(process.cwd(), "src", "__tests__"), { recursive: true });
-  fs.writeFileSync(join3(process.cwd(), "src", "__tests__", "example.test.ts"), exampleTestContent);
+  fs.writeFileSync(
+    join3(process.cwd(), "src", "__tests__", `example.test${testFileExtension}`),
+    exampleTestContent
+  );
   updatePackageJsonScripts({
     test: "vitest"
   });
 }
-async function setupMochaChai() {
-  await execa("npm", [
-    "install",
-    "--save-dev",
-    "mocha",
-    "chai",
-    "ts-node",
-    "typescript",
-    "@types/mocha",
-    "@types/chai"
-  ]);
-  const mochaConfigContent = `module.exports = {
+async function setupMochaChai(answers) {
+  const devDependencies = ["mocha", "chai"];
+  if (answers.includeTypeScript) {
+    devDependencies.push("ts-node", "typescript", "@types/mocha", "@types/chai");
+  }
+  await execa("npm", ["install", "--save-dev", ...devDependencies]);
+  let mochaConfigContent;
+  let exampleTestContent;
+  let testFileExtension = ".js";
+  if (answers.includeTypeScript) {
+    mochaConfigContent = `module.exports = {
   require: ['ts-node/register'],
   extension: ['ts', 'tsx'],
   spec: ['./test/**/*.test.ts'],
 };
 `;
-  fs.writeFileSync(join3(process.cwd(), ".mocharc.js"), mochaConfigContent);
-  const exampleTestContent = `import { expect } from 'chai';
+    exampleTestContent = `import { expect } from 'chai';
 
 describe('Example Test', () => {
   it('should pass', () => {
@@ -10857,8 +10914,27 @@ describe('Example Test', () => {
   });
 });
 `;
+    testFileExtension = ".ts";
+  } else {
+    mochaConfigContent = `module.exports = {
+  spec: ['./test/**/*.test.js'],
+};
+`;
+    exampleTestContent = `const { expect } = require('chai');
+
+describe('Example Test', () => {
+  it('should pass', () => {
+    expect(true).to.be.true;
+  });
+});
+`;
+  }
+  fs.writeFileSync(join3(process.cwd(), ".mocharc.js"), mochaConfigContent);
   fs.mkdirSync(join3(process.cwd(), "test"), { recursive: true });
-  fs.writeFileSync(join3(process.cwd(), "test", "example.test.ts"), exampleTestContent);
+  fs.writeFileSync(
+    join3(process.cwd(), "test", `example.test${testFileExtension}`),
+    exampleTestContent
+  );
   updatePackageJsonScripts({
     test: "mocha"
   });
@@ -10970,6 +11046,28 @@ async function main4(deps) {
         debugTemplatesApply("Applying Discord RPC feature");
         fsExtra.copySync(join4(templateDir, "../features/rpc"), projectDir2);
       }
+      if (answers2.template === "vue-wizard") {
+        const featuresDir = join4(
+          dirname(fileURLToPath3(import.meta.url)),
+          "..",
+          "template-library",
+          templateName,
+          "features"
+        );
+        if (answers2.addLicense) {
+          fsExtra.copySync(join4(featuresDir, "license"), projectDir2);
+        }
+        if (answers2.addFunding) {
+          fsExtra.copySync(join4(featuresDir, "funding"), projectDir2);
+        }
+        if (answers2.addDocs) {
+          fsExtra.copySync(join4(featuresDir, "docs"), projectDir2);
+        }
+        if (answers2.useGhPages) {
+          fsExtra.copySync(join4(featuresDir, "gh-pages"), projectDir2);
+        }
+        fsExtra.copySync(join4(featuresDir, "versioning"), projectDir2);
+      }
       spinner2.stop("Template applied.");
     } catch (error2) {
       debugTemplatesApply("Failed to apply template: %o", error2);
@@ -11035,6 +11133,39 @@ async function main4(deps) {
       }
     );
     Object.assign(answers, discordGroup);
+  }
+  if (answers.template === "vue-wizard") {
+    const vueWizardGroup = await Ce(
+      {
+        isPublic: () => ye({
+          message: "Make the repository public?",
+          initialValue: true
+        }),
+        addLicense: () => ye({
+          message: "Add a LICENSE file?",
+          initialValue: true
+        }),
+        addFunding: () => ye({
+          message: "Add a FUNDING.yml file?",
+          initialValue: false
+        }),
+        addDocs: () => ye({
+          message: "Set up a docs/ directory?",
+          initialValue: false
+        }),
+        useGhPages: () => ye({
+          message: "Set up a GitHub Pages deployment workflow?",
+          initialValue: false
+        })
+      },
+      {
+        onCancel: () => {
+          xe("Operation cancelled.");
+          process.exit(0);
+        }
+      }
+    );
+    Object.assign(answers, vueWizardGroup);
   }
   const customizationGroup = await Ce(
     {
@@ -11124,13 +11255,13 @@ async function main4(deps) {
       process.chdir(projectDir);
       switch (answers.testFramework) {
         case "Jest":
-          await setupJest();
+          await setupJest(answers);
           break;
         case "Vitest":
-          await setupVitest();
+          await setupVitest(answers);
           break;
         case "Mocha/Chai":
-          await setupMochaChai();
+          await setupMochaChai(answers);
           break;
       }
       spinner.stop(`${answers.testFramework} setup complete!`);

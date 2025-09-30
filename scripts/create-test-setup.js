@@ -25,7 +25,7 @@ export async function main() {
       name: 'includeTypeScript',
       message: 'Include TypeScript?',
       default: false,
-    }
+    },
   ])
 
   debugTestSetup('Selected framework: %s', answers.framework)
@@ -54,59 +54,62 @@ export async function main() {
 }
 
 export async function setupJest(answers) {
-  const devDependencies = ['jest'];
-  let jestConfigContent;
-  let exampleTestContent;
-  let testFileExtension = '.js';
+  const devDependencies = ['jest']
+  let jestConfigContent
+  let exampleTestContent
+  let testFileExtension = '.js'
 
   if (answers.includeTypeScript) {
-    devDependencies.push('ts-jest', '@types/jest');
+    devDependencies.push('ts-jest', '@types/jest')
     jestConfigContent = `/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
 };
-`;
+`
     exampleTestContent = `describe('Example Test', () => {
   test('should pass', () => {
     expect(true).toBe(true);
   });
 });
-`;
-    testFileExtension = '.ts';
+`
+    testFileExtension = '.ts'
   } else {
     jestConfigContent = `module.exports = {
   testEnvironment: 'node',
 };
-`;
+`
     exampleTestContent = `describe('Example Test', () => {
   test('should pass', () => {
     expect(true).toBe(true);
   });
 });
-`;
+`
   }
 
-  await execa('npm', ['install', '--save-dev', ...devDependencies]);
+  await execa('npm', ['install', '--save-dev', ...devDependencies])
 
-  fs.writeFileSync(join(process.cwd(), 'jest.config.js'), jestConfigContent);
+  fs.writeFileSync(join(process.cwd(), 'jest.config.js'), jestConfigContent)
 
-  fs.mkdirSync(join(process.cwd(), '__tests__'), { recursive: true });
-  fs.writeFileSync(join(process.cwd(), '__tests__', `example.test${testFileExtension}`), exampleTestContent);
+  fs.mkdirSync(join(process.cwd(), '__tests__'), { recursive: true })
+  fs.writeFileSync(
+    join(process.cwd(), '__tests__', `example.test${testFileExtension}`),
+    exampleTestContent,
+  )
 
   updatePackageJsonScripts({
     test: 'jest',
-  });
+  })
 }
 
 export async function setupVitest(answers) {
-  const devDependencies = ['vitest'];
-  let vitestConfigContent;
-  let testFileExtension = '.js';
-  let exampleTestContent;
+  const devDependencies = ['vitest']
+  let vitestConfigContent
+  let testFileExtension = '.js'
+  let exampleTestContent
 
   if (answers.includeTypeScript) {
-    devDependencies.push('typescript');
+    devDependencies.push('typescript')
     vitestConfigContent = `import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -114,8 +117,8 @@ export default defineConfig({
     environment: 'node',
   },
 });
-`;
-    testFileExtension = '.ts';
+`
+    testFileExtension = '.ts'
     exampleTestContent = `import { describe, it, expect } from 'vitest';
 
 describe('Example Test', () => {
@@ -123,7 +126,7 @@ describe('Example Test', () => {
     expect(true).toBe(true);
   });
 });
-`;
+`
   } else {
     vitestConfigContent = `import { defineConfig } from 'vitest/config';
 
@@ -132,7 +135,7 @@ export default defineConfig({
     environment: 'node',
   },
 });
-`;
+`
     exampleTestContent = `import { describe, it, expect } from 'vitest';
 
 describe('Example Test', () => {
@@ -140,32 +143,38 @@ describe('Example Test', () => {
     expect(true).toBe(true);
   });
 });
-`;
+`
   }
 
-  await execa('npm', ['install', '--save-dev', ...devDependencies]);
+  await execa('npm', ['install', '--save-dev', ...devDependencies])
 
-  fs.writeFileSync(join(process.cwd(), `vitest.config.${answers.includeTypeScript ? 'ts' : 'js'}`), vitestConfigContent);
+  fs.writeFileSync(
+    join(process.cwd(), `vitest.config.${answers.includeTypeScript ? 'ts' : 'js'}`),
+    vitestConfigContent,
+  )
 
-  fs.mkdirSync(join(process.cwd(), 'src', '__tests__'), { recursive: true });
-  fs.writeFileSync(join(process.cwd(), 'src', '__tests__', `example.test${testFileExtension}`), exampleTestContent);
+  fs.mkdirSync(join(process.cwd(), 'src', '__tests__'), { recursive: true })
+  fs.writeFileSync(
+    join(process.cwd(), 'src', '__tests__', `example.test${testFileExtension}`),
+    exampleTestContent,
+  )
 
   updatePackageJsonScripts({
     test: 'vitest',
-  });
+  })
 }
 
 export async function setupMochaChai(answers) {
-  const devDependencies = ['mocha', 'chai'];
+  const devDependencies = ['mocha', 'chai']
   if (answers.includeTypeScript) {
-    devDependencies.push('ts-node', 'typescript', '@types/mocha', '@types/chai');
+    devDependencies.push('ts-node', 'typescript', '@types/mocha', '@types/chai')
   }
 
-  await execa('npm', ['install', '--save-dev', ...devDependencies]);
+  await execa('npm', ['install', '--save-dev', ...devDependencies])
 
-  let mochaConfigContent;
-  let exampleTestContent;
-  let testFileExtension = '.js';
+  let mochaConfigContent
+  let exampleTestContent
+  let testFileExtension = '.js'
 
   if (answers.includeTypeScript) {
     mochaConfigContent = `module.exports = {
@@ -173,7 +182,7 @@ export async function setupMochaChai(answers) {
   extension: ['ts', 'tsx'],
   spec: ['./test/**/*.test.ts'],
 };
-`;
+`
     exampleTestContent = `import { expect } from 'chai';
 
 describe('Example Test', () => {
@@ -181,13 +190,13 @@ describe('Example Test', () => {
     expect(true).to.be.true;
   });
 });
-`;
-    testFileExtension = '.ts';
+`
+    testFileExtension = '.ts'
   } else {
     mochaConfigContent = `module.exports = {
   spec: ['./test/**/*.test.js'],
 };
-`;
+`
     exampleTestContent = `const { expect } = require('chai');
 
 describe('Example Test', () => {
@@ -195,17 +204,20 @@ describe('Example Test', () => {
     expect(true).to.be.true;
   });
 });
-`;
+`
   }
 
-  fs.writeFileSync(join(process.cwd(), '.mocharc.js'), mochaConfigContent);
+  fs.writeFileSync(join(process.cwd(), '.mocharc.js'), mochaConfigContent)
 
-  fs.mkdirSync(join(process.cwd(), 'test'), { recursive: true });
-  fs.writeFileSync(join(process.cwd(), 'test', `example.test${testFileExtension}`), exampleTestContent);
+  fs.mkdirSync(join(process.cwd(), 'test'), { recursive: true })
+  fs.writeFileSync(
+    join(process.cwd(), 'test', `example.test${testFileExtension}`),
+    exampleTestContent,
+  )
 
   updatePackageJsonScripts({
     test: 'mocha',
-  });
+  })
 }
 
 function updatePackageJsonScripts(newScripts) {

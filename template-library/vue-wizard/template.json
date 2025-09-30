@@ -1,0 +1,32 @@
+{
+  "description": "A feature-rich Vue.js template with Vite, TypeScript, Pinia, Vue Router, and more.",
+  "dependencies": {
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "pinia": "^2.1.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.8",
+    "typescript": "^5.4.5",
+    "vue-tsc": "^2.0.13",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "vitest": "^1.5.0",
+    "@vue/test-utils": "^2.4.5",
+    "jsdom": "^24.0.0",
+    "semver": "^7.6.2"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier --write src/",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "version": "node scripts/version.js"
+  }
+}

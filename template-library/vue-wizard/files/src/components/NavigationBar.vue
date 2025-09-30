@@ -10,6 +10,7 @@ import ThemeSwitcher from './ThemeSwitcher.vue'
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/projects">Projects</RouterLink>
+        <RouterLink to="/api-example">API</RouterLink>
       </nav>
       <ThemeSwitcher />
     </div>

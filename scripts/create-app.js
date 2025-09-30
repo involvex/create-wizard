@@ -175,50 +175,179 @@ export async function main(deps) {
     p.log.info(`Using project name from argument: ${projectNameFromArg}`)
   }
 
-  const group = await p.group(
-    {
-      ...(!projectNameFromArg && {
-        projectName: () =>
-          p.text({
-            message: 'Project name:',
-            placeholder: 'my-awesome-project',
-            validate: value => {
-              if (!value) return 'Please enter a project name.'
-            },
-          }),
-      }),
-      template: async () =>
-        p.select({
-          message: 'Select a project template:',
-          options: (await getTemplates()).map(t => ({ value: t, label: t })),
-        }),
-    },
-    {
-      onCancel: () => {
-        p.cancel('Operation cancelled.')
-        process.exit(0)
-      },
-    },
-  )
-
-  Object.assign(answers, group)
-
-  if (answers.template === 'discord-bot') {
-    const discordGroup = await p.group(
+  const answersArg = args.find(arg => arg.startsWith('--answers='))
+  if (answersArg) {
+    const answersJSON = answersArg.split('=')[1]
+    Object.assign(answers, JSON.parse(answersJSON))
+  } else {
+    // Interactive mode
+    const group = await p.group(
       {
-        discordFeatures: () =>
-          p.multiselect({
-            message: 'Select Discord bot features:',
-            options: [
-              { value: 'welcome', label: 'Include welcome messages for new users' },
-              { value: 'logging', label: 'Include message logging' },
-              { value: 'moderation', label: 'Include moderation commands (kick/ban)' },
-            ],
-            required: false,
+        ...(!projectNameFromArg && {
+          projectName: () =>
+            p.text({
+              message: 'Project name:',
+              placeholder: 'my-awesome-project',
+              validate: value => {
+                if (!value) return 'Please enter a project name.'
+              },
+            }),
+        }),
+        template: async () =>
+          p.select({
+            message: 'Select a project template:',
+            options: (await getTemplates()).map(t => ({ value: t, label: t })),
           }),
-        discordRPC: () =>
+      },
+      {
+        onCancel: () => {
+          p.cancel('Operation cancelled.')
+          process.exit(0)
+        },
+      },
+    )
+
+    Object.assign(answers, group)
+
+    if (answers.template === 'discord-bot') {
+      const discordGroup = await p.group(
+        {
+          discordFeatures: () =>
+            p.multiselect({
+              message: 'Select Discord bot features:',
+              options: [
+                { value: 'welcome', label: 'Include welcome messages for new users' },
+                { value: 'logging', label: 'Include message logging' },
+                { value: 'moderation', label: 'Include moderation commands (kick/ban)' },
+              ],
+              required: false,
+            }),
+          discordRPC: () =>
+            p.confirm({
+              message: 'Include Discord RPC (activity status)?',
+              initialValue: false,
+            }),
+        },
+        {
+          onCancel: () => {
+            p.cancel('Operation cancelled.')
+            process.exit(0)
+          },
+        },
+      )
+      Object.assign(answers, discordGroup)
+    }
+
+    if (answers.template === 'vue-wizard') {
+      const vueWizardGroup = await p.group(
+        {
+          isPublic: () =>
+            p.confirm({
+              message: 'Make the repository public?',
+              initialValue: true,
+            }),
+          addLicense: () =>
+            p.confirm({
+              message: 'Add a LICENSE file?',
+              initialValue: true,
+            }),
+          addFunding: () =>
+            p.confirm({
+              message: 'Add a FUNDING.yml file?',
+              initialValue: false,
+            }),
+          addDocs: () =>
+            p.confirm({
+              message: 'Set up a docs/ directory?',
+              initialValue: false,
+            }),
+          useGhPages: () =>
+            p.confirm({
+              message: 'Set up a GitHub Pages deployment workflow?',
+              initialValue: false,
+            }),
+        },
+        {
+          onCancel: () => {
+            p.cancel('Operation cancelled.')
+            process.exit(0)
+          },
+        },
+      )
+      Object.assign(answers, vueWizardGroup)
+    }
+
+    const customizationGroup = await p.group(
+      {
+        ...(!answers.template.startsWith('vue-wizard') && {
+          dependencies: () =>
+            p.multiselect({
+              message: 'Which packages should be installed?',
+              options: [
+                { value: { name: 'express', version: '^4.18.2' }, label: 'express' },
+                { value: { name: 'discord.js', version: '^14.14.1' }, label: 'discord.js' },
+                { value: { name: 'axios', version: '^1.6.2' }, label: 'axios' },
+                { value: { name: 'eslint', version: '^8.56.0' }, label: 'eslint' },
+                { value: { name: 'dotenv', version: '^16.3.1' }, label: 'dotenv' },
+              ],
+              required: false,
+            }),
+        }),
+        initGit: () =>
           p.confirm({
-            message: 'Include Discord RPC (activity status)?',
+            message: 'Initialize a Git repository?',
+            initialValue: true,
+          }),
+        includeTestFramework: () =>
+          p.confirm({
+            message: 'Include a testing framework?',
+            initialValue: false,
+          }),
+        testFramework: ({ results }) => {
+          if (results.includeTestFramework) {
+            return p.select({
+              message: 'Which testing framework?',
+              options: [
+                { value: 'Jest', label: 'Jest' },
+                { value: 'Vitest', label: 'Vitest' },
+                { value: 'Mocha/Chai', label: 'Mocha/Chai' },
+              ],
+            })
+          }
+        },
+        includeTypeScript: () =>
+          p.confirm({
+            message: 'Include TypeScript?',
+            initialValue: false,
+          }),
+        includeEslint: () =>
+          p.confirm({
+            message: 'Include ESLint for linting?',
+            initialValue: false,
+          }),
+        includePrettier: () =>
+          p.confirm({
+            message: 'Include Prettier for code formatting?',
+            initialValue: false,
+          }),
+        includeDocker: () =>
+          p.confirm({
+            message: 'Include Docker support?',
+            initialValue: false,
+          }),
+        includeGithubActions: () =>
+          p.confirm({
+            message: 'Include GitHub Actions workflow?',
+            initialValue: false,
+          }),
+        includeGitlabCi: () =>
+          p.confirm({
+            message: 'Include GitLab CI/CD pipeline?',
+            initialValue: false,
+          }),
+        includeDebugConfig: () =>
+          p.confirm({
+            message: 'Include VS Code debug configuration?',
             initialValue: false,
           }),
       },
@@ -229,131 +358,9 @@ export async function main(deps) {
         },
       },
     )
-    Object.assign(answers, discordGroup)
+
+    Object.assign(answers, customizationGroup)
   }
-
-  if (answers.template === 'vue-wizard') {
-    const vueWizardGroup = await p.group(
-      {
-        isPublic: () =>
-          p.confirm({
-            message: 'Make the repository public?',
-            initialValue: true,
-          }),
-        addLicense: () =>
-          p.confirm({
-            message: 'Add a LICENSE file?',
-            initialValue: true,
-          }),
-        addFunding: () =>
-          p.confirm({
-            message: 'Add a FUNDING.yml file?',
-            initialValue: false,
-          }),
-        addDocs: () =>
-          p.confirm({
-            message: 'Set up a docs/ directory?',
-            initialValue: false,
-          }),
-        useGhPages: () =>
-          p.confirm({
-            message: 'Set up a GitHub Pages deployment workflow?',
-            initialValue: false,
-          }),
-      },
-      {
-        onCancel: () => {
-          p.cancel('Operation cancelled.')
-          process.exit(0)
-        },
-      },
-    )
-    Object.assign(answers, vueWizardGroup)
-  }
-
-  const customizationGroup = await p.group(
-    {
-      ...(!answers.template.startsWith('vue-wizard') && {
-        dependencies: () =>
-          p.multiselect({
-            message: 'Which packages should be installed?',
-            options: [
-              { value: { name: 'express', version: '^4.18.2' }, label: 'express' },
-              { value: { name: 'discord.js', version: '^14.14.1' }, label: 'discord.js' },
-              { value: { name: 'axios', version: '^1.6.2' }, label: 'axios' },
-              { value: { name: 'eslint', version: '^8.56.0' }, label: 'eslint' },
-              { value: { name: 'dotenv', version: '^16.3.1' }, label: 'dotenv' },
-            ],
-            required: false,
-          }),
-      }),
-      initGit: () =>
-        p.confirm({
-          message: 'Initialize a Git repository?',
-          initialValue: true,
-        }),
-      includeTestFramework: () =>
-        p.confirm({
-          message: 'Include a testing framework?',
-          initialValue: false,
-        }),
-      testFramework: ({ results }) => {
-        if (results.includeTestFramework) {
-          return p.select({
-            message: 'Which testing framework?',
-            options: [
-              { value: 'Jest', label: 'Jest' },
-              { value: 'Vitest', label: 'Vitest' },
-              { value: 'Mocha/Chai', label: 'Mocha/Chai' },
-            ],
-          })
-        }
-      },
-      includeTypeScript: () =>
-        p.confirm({
-          message: 'Include TypeScript?',
-          initialValue: false,
-        }),
-      includeEslint: () =>
-        p.confirm({
-          message: 'Include ESLint for linting?',
-          initialValue: false,
-        }),
-      includePrettier: () =>
-        p.confirm({
-          message: 'Include Prettier for code formatting?',
-          initialValue: false,
-        }),
-      includeDocker: () =>
-        p.confirm({
-          message: 'Include Docker support?',
-          initialValue: false,
-        }),
-      includeGithubActions: () =>
-        p.confirm({
-          message: 'Include GitHub Actions workflow?',
-          initialValue: false,
-        }),
-      includeGitlabCi: () =>
-        p.confirm({
-          message: 'Include GitLab CI/CD pipeline?',
-          initialValue: false,
-        }),
-      includeDebugConfig: () =>
-        p.confirm({
-          message: 'Include VS Code debug configuration?',
-          initialValue: false,
-        }),
-    },
-    {
-      onCancel: () => {
-        p.cancel('Operation cancelled.')
-        process.exit(0)
-      },
-    },
-  )
-
-  Object.assign(answers, customizationGroup)
 
   const projectDir = join(process.cwd(), answers.projectName)
   if (fs.existsSync(projectDir)) {

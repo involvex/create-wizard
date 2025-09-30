@@ -1,6 +1,6 @@
 {
   "name": "@involvex/create-wizard",
-  "version": "3.8.2",
+  "version": "3.9.0",
   "description": "create everything with ease interactive ",
   "keywords": [
     "cli",
@@ -34,7 +34,7 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "test": "npm run build && vitest --run --exclude \"template-library/react-native-app/files/__tests__/*\"",
+    "test": "npm run build && vitest --run --exclude \"template-library/**\"",
     "format:check": "npx prettier --check .",
     "format": "npx prettier --write .",
     "lint": "npx eslint . --config eslint.config.js",

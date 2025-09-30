@@ -273,18 +273,20 @@ export async function main(deps) {
 
   const customizationGroup = await p.group(
     {
-      dependencies: () =>
-        p.multiselect({
-          message: 'Which packages should be installed?',
-          options: [
-            { value: { name: 'express', version: '^4.18.2' }, label: 'express' },
-            { value: { name: 'discord.js', version: '^14.14.1' }, label: 'discord.js' },
-            { value: { name: 'axios', version: '^1.6.2' }, label: 'axios' },
-            { value: { name: 'eslint', version: '^8.56.0' }, label: 'eslint' },
-            { value: { name: 'dotenv', version: '^16.3.1' }, label: 'dotenv' },
-          ],
-          required: false,
-        }),
+      ...(!answers.template.startsWith('vue-wizard') && {
+        dependencies: () =>
+          p.multiselect({
+            message: 'Which packages should be installed?',
+            options: [
+              { value: { name: 'express', version: '^4.18.2' }, label: 'express' },
+              { value: { name: 'discord.js', version: '^14.14.1' }, label: 'discord.js' },
+              { value: { name: 'axios', version: '^1.6.2' }, label: 'axios' },
+              { value: { name: 'eslint', version: '^8.56.0' }, label: 'eslint' },
+              { value: { name: 'dotenv', version: '^16.3.1' }, label: 'dotenv' },
+            ],
+            required: false,
+          }),
+      }),
       initGit: () =>
         p.confirm({
           message: 'Initialize a Git repository?',

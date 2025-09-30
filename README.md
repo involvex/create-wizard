@@ -15,7 +15,7 @@
 
 - **Interactive Project Setup**: Guides you through project creation with prompts for project name, template selection, and additional dependencies.
 - **Modern, Animated UI**: A completely redesigned interactive experience using `@clack/prompts` for a more engaging and user-friendly setup.
-- **Extensive Template Library**: Choose from a wide variety of templates included with the CLI.
+- **Extensive Template Library**: Choose from a wide variety of templates, including the new `vue-wizard` for a complete Vue.js setup with GitHub integration.
 - **Interactive Plugin Configuration**: Use `create-wizard --plugin` to interactively configure and install plugins like Prettier, ESLint, and TypeScript.
 - **Explicit Dependency Versioning**: Allows specifying exact versions for dependencies, ensuring consistent project setups.
 - **TypeScript Support**: Option to initialize projects with TypeScript, including `tsconfig.json`.

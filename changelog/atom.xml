@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://involvex.github.io/create-wizard/changelog</id>
     <title>Create-Wizard Blog</title>
-    <updated>2025-10-01T18:17:45.000Z</updated>
+    <updated>2025-11-25T13:51:53.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://involvex.github.io/create-wizard/changelog"/>
     <subtitle>Create-Wizard Blog</subtitle>
@@ -11,40 +11,40 @@
         <title type="html"><![CDATA[Version 0.0.6 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v0.0.6</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v0.0.6"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <summary type="html"><![CDATA[0.0.6 (2025-09-17)]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="006-2025-09-17">0.0.6 (2025-09-17)<a href="https://involvex.github.io/create-wizard/changelog/v0.0.6#006-2025-09-17" class="hash-link" aria-label="Direct link to 0.0.6 (2025-09-17)" title="Direct link to 0.0.6 (2025-09-17)">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://involvex.github.io/create-wizard/changelog/v0.0.6#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="006-2025-09-17">0.0.6 (2025-09-17)<a href="https://involvex.github.io/create-wizard/changelog/v0.0.6#006-2025-09-17" class="hash-link" aria-label="Direct link to 0.0.6 (2025-09-17)" title="Direct link to 0.0.6 (2025-09-17)" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="features">Features<a href="https://involvex.github.io/create-wizard/changelog/v0.0.6#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features" translate="no">​</a></h3>
 <ul>
-<li><strong>CLI Enhancements:</strong>
+<li class=""><strong>CLI Enhancements:</strong>
 <ul>
-<li>Added explicit dependency versioning for common packages.</li>
-<li>Introduced TypeScript support with <code>tsconfig.json</code> generation.</li>
-<li>Implemented ESLint and Prettier integration with config file generation.</li>
-<li>Added Docker support with <code>Dockerfile</code> and <code>.dockerignore</code> generation.</li>
-<li>Included CI/CD workflow generation for GitHub Actions and GitLab CI/CD.</li>
+<li class="">Added explicit dependency versioning for common packages.</li>
+<li class="">Introduced TypeScript support with <code>tsconfig.json</code> generation.</li>
+<li class="">Implemented ESLint and Prettier integration with config file generation.</li>
+<li class="">Added Docker support with <code>Dockerfile</code> and <code>.dockerignore</code> generation.</li>
+<li class="">Included CI/CD workflow generation for GitHub Actions and GitLab CI/CD.</li>
 </ul>
 </li>
-<li><strong>Template Creation Script (<code>npm run template:create</code>):</strong>
+<li class=""><strong>Template Creation Script (<code>npm run template:create</code>):</strong>
 <ul>
-<li>Enhanced interactive package selection with NPM registry validation and latest version fetching.</li>
-<li>Improved script input with interactive name and command prompts.</li>
-<li>Added options to auto-generate <code>tsconfig.json</code>, <code>eslint.config.js</code>, and <code>.prettierrc</code> for new templates.</li>
+<li class="">Enhanced interactive package selection with NPM registry validation and latest version fetching.</li>
+<li class="">Improved script input with interactive name and command prompts.</li>
+<li class="">Added options to auto-generate <code>tsconfig.json</code>, <code>eslint.config.js</code>, and <code>.prettierrc</code> for new templates.</li>
 </ul>
 </li>
-<li><strong>Documentation Overhaul:</strong>
+<li class=""><strong>Documentation Overhaul:</strong>
 <ul>
-<li>Applied a new "hacker" themed dark color scheme with UI animations.</li>
-<li>Created detailed documentation for custom template creation.</li>
-<li>Provided comprehensive guides for all existing templates.</li>
-<li>Documented theme customization options.</li>
+<li class="">Applied a new "hacker" themed dark color scheme with UI animations.</li>
+<li class="">Created detailed documentation for custom template creation.</li>
+<li class="">Provided comprehensive guides for all existing templates.</li>
+<li class="">Documented theme customization options.</li>
 </ul>
 </li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://involvex.github.io/create-wizard/changelog/v0.0.6#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="https://involvex.github.io/create-wizard/changelog/v0.0.6#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h3>
 <ul>
-<li>Resolved <code>SyntaxError</code> in <code>scripts/create-template.js</code> due to a missing array bracket.</li>
-<li>Fixed various ESLint errors and warnings across the codebase, including JSX parsing and unused variable issues.</li>
+<li class="">Resolved <code>SyntaxError</code> in <code>scripts/create-template.js</code> due to a missing array bracket.</li>
+<li class="">Fixed various ESLint errors and warnings across the codebase, including JSX parsing and unused variable issues.</li>
 </ul>]]></content>
         <author>
             <name>Involvex</name>
@@ -56,7 +56,7 @@
         <title type="html"><![CDATA[Version 3.2.1 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.1</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.1"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <author>
             <name>Involvex</name>
             <uri>https://github.com/involvex</uri>
@@ -67,7 +67,7 @@
         <title type="html"><![CDATA[Version 3.2.10 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.10</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.10"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <author>
             <name>Involvex</name>
             <uri>https://github.com/involvex</uri>
@@ -78,7 +78,7 @@
         <title type="html"><![CDATA[Version 3.2.2 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.2</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.2"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <author>
             <name>Involvex</name>
             <uri>https://github.com/involvex</uri>
@@ -89,7 +89,7 @@
         <title type="html"><![CDATA[Version 3.2.3 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.3</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.3"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <author>
             <name>Involvex</name>
             <uri>https://github.com/involvex</uri>
@@ -100,7 +100,7 @@
         <title type="html"><![CDATA[Version 3.2.4 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.4</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.4"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <author>
             <name>Involvex</name>
             <uri>https://github.com/involvex</uri>
@@ -111,7 +111,7 @@
         <title type="html"><![CDATA[Version 3.2.5 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.5</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.5"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <author>
             <name>Involvex</name>
             <uri>https://github.com/involvex</uri>
@@ -122,7 +122,7 @@
         <title type="html"><![CDATA[Version 3.2.6 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.6</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.6"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <author>
             <name>Involvex</name>
             <uri>https://github.com/involvex</uri>
@@ -133,7 +133,7 @@
         <title type="html"><![CDATA[Version 3.2.7 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.7</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.7"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <author>
             <name>Involvex</name>
             <uri>https://github.com/involvex</uri>
@@ -144,7 +144,7 @@
         <title type="html"><![CDATA[v3.2.8]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.8</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.8"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <summary type="html"><![CDATA[---title [involvex]\ntags: [release]\n---]]></summary>
         <content type="html"><![CDATA[<p>---title: Version 3.2.8 Release\nauthors: [involvex]\ntags: [release]\n---</p>]]></content>
     </entry>
@@ -152,7 +152,7 @@
         <title type="html"><![CDATA[v3.2.9]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.2.9</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.2.9"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <summary type="html"><![CDATA[---title [involvex]\ntags: [release]\n---]]></summary>
         <content type="html"><![CDATA[<p>---title: Version 3.2.9 Release\nauthors: [involvex]\ntags: [release]\n---</p>]]></content>
     </entry>
@@ -160,13 +160,13 @@
         <title type="html"><![CDATA[Version 3.3.0 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.3.0</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.3.0"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <summary type="html"><![CDATA[3.3.0 (2025-09-20)]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="330-2025-09-20"><a href="https://github.com/involvex/create-wizard/compare/v3.2.11...v3.3.0" target="_blank" rel="noopener noreferrer">3.3.0</a> (2025-09-20)<a href="https://involvex.github.io/create-wizard/changelog/v3.3.0#330-2025-09-20" class="hash-link" aria-label="Direct link to 330-2025-09-20" title="Direct link to 330-2025-09-20">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://involvex.github.io/create-wizard/changelog/v3.3.0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="330-2025-09-20"><a href="https://github.com/involvex/create-wizard/compare/v3.2.11...v3.3.0" target="_blank" rel="noopener noreferrer" class="">3.3.0</a> (2025-09-20)<a href="https://involvex.github.io/create-wizard/changelog/v3.3.0#330-2025-09-20" class="hash-link" aria-label="Direct link to 330-2025-09-20" title="Direct link to 330-2025-09-20" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="features">Features<a href="https://involvex.github.io/create-wizard/changelog/v3.3.0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features" translate="no">​</a></h3>
 <ul>
-<li><strong>cli:</strong> overhaul CLI with modern, animated UI using @clack/prompts</li>
-<li><strong>cli:</strong> allow specifying project name as a command-line argument</li>
+<li class=""><strong>cli:</strong> overhaul CLI with modern, animated UI using @clack/prompts</li>
+<li class=""><strong>cli:</strong> allow specifying project name as a command-line argument</li>
 </ul>]]></content>
         <author>
             <name>Involvex</name>
@@ -178,26 +178,26 @@
         <title type="html"><![CDATA[Version 3.7.0 Release]]></title>
         <id>https://involvex.github.io/create-wizard/changelog/v3.7.0</id>
         <link href="https://involvex.github.io/create-wizard/changelog/v3.7.0"/>
-        <updated>2025-10-01T18:17:45.000Z</updated>
+        <updated>2025-11-25T13:51:53.000Z</updated>
         <summary type="html"><![CDATA[3.7.0 (2025-09-20)]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="370-2025-09-20"><a href="https://github.com/involvex/create-wizard/compare/v3.3.0...v3.7.0" target="_blank" rel="noopener noreferrer">3.7.0</a> (2025-09-20)<a href="https://involvex.github.io/create-wizard/changelog/v3.7.0#370-2025-09-20" class="hash-link" aria-label="Direct link to 370-2025-09-20" title="Direct link to 370-2025-09-20">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://involvex.github.io/create-wizard/changelog/v3.7.0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="370-2025-09-20"><a href="https://github.com/involvex/create-wizard/compare/v3.3.0...v3.7.0" target="_blank" rel="noopener noreferrer" class="">3.7.0</a> (2025-09-20)<a href="https://involvex.github.io/create-wizard/changelog/v3.7.0#370-2025-09-20" class="hash-link" aria-label="Direct link to 370-2025-09-20" title="Direct link to 370-2025-09-20" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="features">Features<a href="https://involvex.github.io/create-wizard/changelog/v3.7.0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features" translate="no">​</a></h3>
 <ul>
-<li><strong>cli:</strong> Overhauled the CLI with a modern, animated UI using <code>@clack/prompts</code>.</li>
-<li><strong>cli:</strong> Added a <code>-v</code> or <code>--version</code> flag to display the current version.</li>
-<li><strong>cli:</strong> The project name can now be provided as a command-line argument to skip the prompt.</li>
+<li class=""><strong>cli:</strong> Overhauled the CLI with a modern, animated UI using <code>@clack/prompts</code>.</li>
+<li class=""><strong>cli:</strong> Added a <code>-v</code> or <code>--version</code> flag to display the current version.</li>
+<li class=""><strong>cli:</strong> The project name can now be provided as a command-line argument to skip the prompt.</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://involvex.github.io/create-wizard/changelog/v3.7.0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="https://involvex.github.io/create-wizard/changelog/v3.7.0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h3>
 <ul>
-<li><strong>npm:</strong> Ensured <code>README.md</code> and <code>LICENSE</code> are included in the published npm package.</li>
-<li><strong>tests:</strong> Updated the entire test suite to mock <code>@clack/prompts</code>, fixing all timeout errors.</li>
+<li class=""><strong>npm:</strong> Ensured <code>README.md</code> and <code>LICENSE</code> are included in the published npm package.</li>
+<li class=""><strong>tests:</strong> Updated the entire test suite to mock <code>@clack/prompts</code>, fixing all timeout errors.</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="chore">Chore<a href="https://involvex.github.io/create-wizard/changelog/v3.7.0#chore" class="hash-link" aria-label="Direct link to Chore" title="Direct link to Chore">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="chore">Chore<a href="https://involvex.github.io/create-wizard/changelog/v3.7.0#chore" class="hash-link" aria-label="Direct link to Chore" title="Direct link to Chore" translate="no">​</a></h3>
 <ul>
-<li><strong>release:</strong> The release script is now handled by the developer locally, and the CI/CD pipeline is solely responsible for publishing to npm, preventing duplicate releases.</li>
-<li><strong>release:</strong> Added comprehensive safety checks to the release script to ensure a clean working directory, the correct branch, and synchronization with the remote repository.</li>
-<li><strong>templates:</strong> Refactored the PowerToys plugin templates to be more modular by giving each its own Visual Studio Solution file.</li>
-<li><strong>templates:</strong> Removed unnecessary <code>obj</code> and <code>bin</code> folders from the PowerToys plugin templates.</li>
+<li class=""><strong>release:</strong> The release script is now handled by the developer locally, and the CI/CD pipeline is solely responsible for publishing to npm, preventing duplicate releases.</li>
+<li class=""><strong>release:</strong> Added comprehensive safety checks to the release script to ensure a clean working directory, the correct branch, and synchronization with the remote repository.</li>
+<li class=""><strong>templates:</strong> Refactored the PowerToys plugin templates to be more modular by giving each its own Visual Studio Solution file.</li>
+<li class=""><strong>templates:</strong> Removed unnecessary <code>obj</code> and <code>bin</code> folders from the PowerToys plugin templates.</li>
 </ul>]]></content>
         <author>
             <name>Involvex</name>

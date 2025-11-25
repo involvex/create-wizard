@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkdocs=globalThis.webpackChunkdocs||[]).push([[1903],{1912:a=>{a.exports=JSON.parse('{"blogBasePath":"/create-wizard/changelog","blogTitle":"Changelog","authorsListPath":"/create-wizard/changelog/authors"}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkdocs=globalThis.webpackChunkdocs||[]).push([[8642],{728:e=>{e.exports=JSON.parse('{"tags":[{"label":"release","permalink":"/create-wizard/changelog/tags/release","count":11}]}')}}]);

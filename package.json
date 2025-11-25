@@ -34,7 +34,7 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "test": "npm run build && vitest --run --exclude \"template-library/**\"",
+    "test": "npm run build && vitest --run --exclude \"template-library/**\" --exclude \"e2e-test-project/**\"",
     "format:check": "npx prettier --check .",
     "format": "npx prettier --write .",
     "lint": "npx eslint . --config eslint.config.js",

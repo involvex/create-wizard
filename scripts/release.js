@@ -80,6 +80,7 @@ async function main() {
     spinner.succeed(`Successfully released new ${versionType} version!`)
   } catch (error) {
     spinner.fail('Release failed.')
+    console.error(error) // Added to use the 'error' variable
     process.exit(1)
   }
 }

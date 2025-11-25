@@ -24,6 +24,7 @@ export default function (req: AuthRequest, res: Response, next: NextFunction) {
     req.user = decoded.user
     next()
   } catch (err) {
+    console.error(err) // Added to use the 'err' variable
     res.status(401).json({ message: 'Token is not valid' })
   }
 }

@@ -19,7 +19,7 @@ export default function AuthPage() {
       setMessage(`${isLogin ? 'Logged in' : 'Registered'} successfully!`)
       // Redirect to dashboard or other protected page
       window.location.href = '/dashboard'
-    } catch (error: any) {
+    } catch (error) {
       setMessage(error.response?.data?.message || 'An error occurred')
     }
   }

@@ -4,10 +4,14 @@ import clsx from 'clsx'
 import Heading from '@theme/Heading'
 import styles from './styles.module.css'
 
+import SvgMountain from '@site/static/img/undraw_docusaurus_mountain.svg'
+import SvgTree from '@site/static/img/undraw_docusaurus_tree.svg'
+import SvgReact from '@site/static/img/undraw_docusaurus_react.svg'
+
 const FeatureList = [
   {
     title: 'Interactive Setup',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: SvgMountain,
     description: (
       <>
         Our CLI wizard guides you through an interactive setup process, making project
@@ -17,7 +21,7 @@ const FeatureList = [
   },
   {
     title: 'Template Variety',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    Svg: SvgTree,
     description: (
       <>
         Choose from a wide variety of templates for different types of projects, including React,
@@ -27,7 +31,7 @@ const FeatureList = [
   },
   {
     title: 'Customizable',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: SvgReact,
     description: (
       <>
         Easily customize your project with additional dependencies and optional features like Git

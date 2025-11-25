@@ -17,6 +17,8 @@ import url from 'node:url';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
+import tseslint from 'typescript-eslint';
+
 // --- ESM way to get __dirname ---
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,12 +41,13 @@ export default [
       'docs/.docusaurus/**',
     ],
   },
-  { 
+  ...tseslint.configs.recommended, // Spread recommended TypeScript config
+  {
     files: ["**/*.{js,mjs,cjs}"],
     plugins: {
       import: importPlugin,
       // vitest,
-    }, 
+    },
     languageOptions: { globals: { ...globals.node } },
     rules: {
       ...js.configs.recommended.rules,
@@ -55,24 +58,28 @@ export default [
     },
   },
   {
-    files: ["tests/**/*.js"], // Target test files
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        // project: true, // Removed as there is no root tsconfig.json
+        // tsconfigRootDir: import.meta.dirname, // Removed for flexibility
+      },
       globals: {
-        ...globals.jest, // Add Jest globals
-        ...globals.node, // Node.js globals are also relevant for tests
+        ...globals.browser,
       },
     },
     rules: {
-      // You might want to adjust rules specifically for test files
-      "no-undef": "off", // Turn off no-undef for test files as Jest globals are handled
-      "no-unused-vars": "off", // Often test files have unused vars for clarity
+      // Any specific TypeScript ESLint rules here
+      "no-unused-vars": "off",
     },
   },
   {
-    files: ["docs/**/*.{js,jsx}"],
+    files: ["docs/**/*.{js,jsx,ts,tsx}"], // Target docs files, including TypeScript
     plugins: {
       react,
       "react-hooks": reactHooks,
+      "@docusaurus": docusaurus, // Correctly register docusaurus plugin
     },
     settings: {
       react: {
@@ -92,6 +99,7 @@ export default [
     rules: {
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
+      ...docusaurus.configs.recommended.rules, // Extend docusaurus recommended rules
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
     },
@@ -111,6 +119,16 @@ export default [
     rules: {
       "no-undef": "off",
       "no-unused-vars": ["warn", { "varsIgnorePattern": "^(Head|React|App|Link|Layout|HomepageFeatures|HomepageHeader|Heading|Feature|Svg)$" }],
+    },
+  },
+  {
+    files: [
+      "**/*.cjs",
+      "scripts/**/*.js",
+      "template-library/**/*.js",
+    ],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
   prettierConfig,

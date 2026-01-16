@@ -240,7 +240,7 @@ var require_ponyfill_es2018 = __commonJS({
         return new originalPromise(executor);
       }
       function promiseResolvedWith(value) {
-        return newPromise((resolve) => resolve(value));
+        return newPromise((resolve2) => resolve2(value));
       }
       function promiseRejectedWith(reason) {
         return originalPromiseReject(reason);
@@ -375,11 +375,11 @@ var require_ponyfill_es2018 = __commonJS({
           return front._elements[cursor];
         }
       }
-      const AbortSteps = Symbol("[[AbortSteps]]");
-      const ErrorSteps = Symbol("[[ErrorSteps]]");
-      const CancelSteps = Symbol("[[CancelSteps]]");
-      const PullSteps = Symbol("[[PullSteps]]");
-      const ReleaseSteps = Symbol("[[ReleaseSteps]]");
+      const AbortSteps = /* @__PURE__ */ Symbol("[[AbortSteps]]");
+      const ErrorSteps = /* @__PURE__ */ Symbol("[[ErrorSteps]]");
+      const CancelSteps = /* @__PURE__ */ Symbol("[[CancelSteps]]");
+      const PullSteps = /* @__PURE__ */ Symbol("[[PullSteps]]");
+      const ReleaseSteps = /* @__PURE__ */ Symbol("[[ReleaseSteps]]");
       function ReadableStreamReaderGenericInitialize(reader, stream) {
         reader._ownerReadableStream = stream;
         stream._reader = reader;
@@ -410,8 +410,8 @@ var require_ponyfill_es2018 = __commonJS({
         return new TypeError("Cannot " + name + " a stream using a released reader");
       }
       function defaultReaderClosedPromiseInitialize(reader) {
-        reader._closedPromise = newPromise((resolve, reject) => {
-          reader._closedPromise_resolve = resolve;
+        reader._closedPromise = newPromise((resolve2, reject) => {
+          reader._closedPromise_resolve = resolve2;
           reader._closedPromise_reject = reject;
         });
       }
@@ -585,8 +585,8 @@ var require_ponyfill_es2018 = __commonJS({
           }
           let resolvePromise;
           let rejectPromise;
-          const promise = newPromise((resolve, reject) => {
-            resolvePromise = resolve;
+          const promise = newPromise((resolve2, reject) => {
+            resolvePromise = resolve2;
             rejectPromise = reject;
           });
           const readRequest = {
@@ -691,8 +691,8 @@ var require_ponyfill_es2018 = __commonJS({
           const reader = this._reader;
           let resolvePromise;
           let rejectPromise;
-          const promise = newPromise((resolve, reject) => {
-            resolvePromise = resolve;
+          const promise = newPromise((resolve2, reject) => {
+            resolvePromise = resolve2;
             rejectPromise = reject;
           });
           const readRequest = {
@@ -1711,8 +1711,8 @@ var require_ponyfill_es2018 = __commonJS({
           }
           let resolvePromise;
           let rejectPromise;
-          const promise = newPromise((resolve, reject) => {
-            resolvePromise = resolve;
+          const promise = newPromise((resolve2, reject) => {
+            resolvePromise = resolve2;
             rejectPromise = reject;
           });
           const readIntoRequest = {
@@ -2024,10 +2024,10 @@ var require_ponyfill_es2018 = __commonJS({
           wasAlreadyErroring = true;
           reason = void 0;
         }
-        const promise = newPromise((resolve, reject) => {
+        const promise = newPromise((resolve2, reject) => {
           stream._pendingAbortRequest = {
             _promise: void 0,
-            _resolve: resolve,
+            _resolve: resolve2,
             _reject: reject,
             _reason: reason,
             _wasAlreadyErroring: wasAlreadyErroring
@@ -2044,9 +2044,9 @@ var require_ponyfill_es2018 = __commonJS({
         if (state === "closed" || state === "errored") {
           return promiseRejectedWith(new TypeError(`The stream (in ${state} state) is not in the writable state and cannot be closed`));
         }
-        const promise = newPromise((resolve, reject) => {
+        const promise = newPromise((resolve2, reject) => {
           const closeRequest = {
-            _resolve: resolve,
+            _resolve: resolve2,
             _reject: reject
           };
           stream._closeRequest = closeRequest;
@@ -2059,9 +2059,9 @@ var require_ponyfill_es2018 = __commonJS({
         return promise;
       }
       function WritableStreamAddWriteRequest(stream) {
-        const promise = newPromise((resolve, reject) => {
+        const promise = newPromise((resolve2, reject) => {
           const writeRequest = {
-            _resolve: resolve,
+            _resolve: resolve2,
             _reject: reject
           };
           stream._writeRequests.push(writeRequest);
@@ -2677,8 +2677,8 @@ var require_ponyfill_es2018 = __commonJS({
         return new TypeError("Cannot " + name + " a stream using a released writer");
       }
       function defaultWriterClosedPromiseInitialize(writer) {
-        writer._closedPromise = newPromise((resolve, reject) => {
-          writer._closedPromise_resolve = resolve;
+        writer._closedPromise = newPromise((resolve2, reject) => {
+          writer._closedPromise_resolve = resolve2;
           writer._closedPromise_reject = reject;
           writer._closedPromiseState = "pending";
         });
@@ -2714,8 +2714,8 @@ var require_ponyfill_es2018 = __commonJS({
         writer._closedPromiseState = "resolved";
       }
       function defaultWriterReadyPromiseInitialize(writer) {
-        writer._readyPromise = newPromise((resolve, reject) => {
-          writer._readyPromise_resolve = resolve;
+        writer._readyPromise = newPromise((resolve2, reject) => {
+          writer._readyPromise_resolve = resolve2;
           writer._readyPromise_reject = reject;
         });
         writer._readyPromiseState = "pending";
@@ -2802,7 +2802,7 @@ var require_ponyfill_es2018 = __commonJS({
         source._disturbed = true;
         let shuttingDown = false;
         let currentWrite = promiseResolvedWith(void 0);
-        return newPromise((resolve, reject) => {
+        return newPromise((resolve2, reject) => {
           let abortAlgorithm;
           if (signal !== void 0) {
             abortAlgorithm = () => {
@@ -2947,7 +2947,7 @@ var require_ponyfill_es2018 = __commonJS({
             if (isError) {
               reject(error2);
             } else {
-              resolve(void 0);
+              resolve2(void 0);
             }
             return null;
           }
@@ -3228,8 +3228,8 @@ var require_ponyfill_es2018 = __commonJS({
         let branch1;
         let branch2;
         let resolveCancelPromise;
-        const cancelPromise = newPromise((resolve) => {
-          resolveCancelPromise = resolve;
+        const cancelPromise = newPromise((resolve2) => {
+          resolveCancelPromise = resolve2;
         });
         function pullAlgorithm() {
           if (reading) {
@@ -3320,8 +3320,8 @@ var require_ponyfill_es2018 = __commonJS({
         let branch1;
         let branch2;
         let resolveCancelPromise;
-        const cancelPromise = newPromise((resolve) => {
-          resolveCancelPromise = resolve;
+        const cancelPromise = newPromise((resolve2) => {
+          resolveCancelPromise = resolve2;
         });
         function forwardReaderError(thisReader) {
           uponRejection(thisReader._closedPromise, (r3) => {
@@ -4101,8 +4101,8 @@ var require_ponyfill_es2018 = __commonJS({
           const writableHighWaterMark = ExtractHighWaterMark(writableStrategy, 1);
           const writableSizeAlgorithm = ExtractSizeAlgorithm(writableStrategy);
           let startPromise_resolve;
-          const startPromise = newPromise((resolve) => {
-            startPromise_resolve = resolve;
+          const startPromise = newPromise((resolve2) => {
+            startPromise_resolve = resolve2;
           });
           InitializeTransformStream(this, startPromise, writableHighWaterMark, writableSizeAlgorithm, readableHighWaterMark, readableSizeAlgorithm);
           SetUpTransformStreamDefaultControllerFromTransformer(this, transformer);
@@ -4195,8 +4195,8 @@ var require_ponyfill_es2018 = __commonJS({
         if (stream._backpressureChangePromise !== void 0) {
           stream._backpressureChangePromise_resolve();
         }
-        stream._backpressureChangePromise = newPromise((resolve) => {
-          stream._backpressureChangePromise_resolve = resolve;
+        stream._backpressureChangePromise = newPromise((resolve2) => {
+          stream._backpressureChangePromise_resolve = resolve2;
         });
         stream._backpressure = backpressure;
       }
@@ -4364,8 +4364,8 @@ var require_ponyfill_es2018 = __commonJS({
           return controller._finishPromise;
         }
         const readable2 = stream._readable;
-        controller._finishPromise = newPromise((resolve, reject) => {
-          controller._finishPromise_resolve = resolve;
+        controller._finishPromise = newPromise((resolve2, reject) => {
+          controller._finishPromise_resolve = resolve2;
           controller._finishPromise_reject = reject;
         });
         const cancelPromise = controller._cancelAlgorithm(reason);
@@ -4391,8 +4391,8 @@ var require_ponyfill_es2018 = __commonJS({
           return controller._finishPromise;
         }
         const readable2 = stream._readable;
-        controller._finishPromise = newPromise((resolve, reject) => {
-          controller._finishPromise_resolve = resolve;
+        controller._finishPromise = newPromise((resolve2, reject) => {
+          controller._finishPromise_resolve = resolve2;
           controller._finishPromise_reject = reject;
         });
         const flushPromise = controller._flushAlgorithm();
@@ -4422,8 +4422,8 @@ var require_ponyfill_es2018 = __commonJS({
           return controller._finishPromise;
         }
         const writable2 = stream._writable;
-        controller._finishPromise = newPromise((resolve, reject) => {
-          controller._finishPromise_resolve = resolve;
+        controller._finishPromise = newPromise((resolve2, reject) => {
+          controller._finishPromise_resolve = resolve2;
           controller._finishPromise_reject = reject;
         });
         const cancelPromise = controller._cancelAlgorithm(reason);
@@ -5443,7 +5443,7 @@ var init_body = __esm({
     init_base();
     init_is();
     pipeline = promisify3(Stream.pipeline);
-    INTERNALS = Symbol("Body internals");
+    INTERNALS = /* @__PURE__ */ Symbol("Body internals");
     Body = class {
       constructor(body, {
         size = 0
@@ -5813,7 +5813,7 @@ var init_headers = __esm({
       /**
        * For better console.log(headers) and also to convert Headers into Node.js Request compatible format
        */
-      [Symbol.for("nodejs.util.inspect.custom")]() {
+      [/* @__PURE__ */ Symbol.for("nodejs.util.inspect.custom")]() {
         return [...this.keys()].reduce((result, key) => {
           const values = this.getAll(key);
           if (key === "host") {
@@ -5853,7 +5853,7 @@ var init_response = __esm({
     init_headers();
     init_body();
     init_is_redirect();
-    INTERNALS2 = Symbol("Response internals");
+    INTERNALS2 = /* @__PURE__ */ Symbol("Response internals");
     Response = class _Response extends Body {
       constructor(body = null, options = {}) {
         super(body, options);
@@ -6143,7 +6143,7 @@ var init_request = __esm({
     init_is();
     init_get_search();
     init_referrer();
-    INTERNALS3 = Symbol("Request internals");
+    INTERNALS3 = /* @__PURE__ */ Symbol("Request internals");
     isRequest = (object) => {
       return typeof object === "object" && typeof object[INTERNALS3] === "object";
     };
@@ -6324,7 +6324,7 @@ var init_request = __esm({
         path: parsedURL.pathname + search,
         // The following options are not expressed in the URL
         method: request.method,
-        headers: headers[Symbol.for("nodejs.util.inspect.custom")](),
+        headers: headers[/* @__PURE__ */ Symbol.for("nodejs.util.inspect.custom")](),
         insecureHTTPParser: request.insecureHTTPParser,
         agent
       };
@@ -6374,7 +6374,7 @@ import zlib from "node:zlib";
 import Stream2, { PassThrough as PassThrough3, pipeline as pump } from "node:stream";
 import { Buffer as Buffer6 } from "node:buffer";
 async function fetch(url, options_) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve2, reject) => {
     const request = new Request(url, options_);
     const { parsedURL, options } = getNodeRequestOptions(request);
     if (!supportedSchemas.has(parsedURL.protocol)) {
@@ -6383,7 +6383,7 @@ async function fetch(url, options_) {
     if (parsedURL.protocol === "data:") {
       const data = dist_default(request.url);
       const response2 = new Response(data, { headers: { "Content-Type": data.typeFull } });
-      resolve(response2);
+      resolve2(response2);
       return;
     }
     const send = (parsedURL.protocol === "https:" ? https : http2).request;
@@ -6505,7 +6505,7 @@ async function fetch(url, options_) {
             if (responseReferrerPolicy) {
               requestOptions.referrerPolicy = responseReferrerPolicy;
             }
-            resolve(fetch(new Request(locationURL, requestOptions)));
+            resolve2(fetch(new Request(locationURL, requestOptions)));
             finalize();
             return;
           }
@@ -6538,7 +6538,7 @@ async function fetch(url, options_) {
       const codings = headers.get("Content-Encoding");
       if (!request.compress || request.method === "HEAD" || codings === null || response_.statusCode === 204 || response_.statusCode === 304) {
         response = new Response(body, responseOptions);
-        resolve(response);
+        resolve2(response);
         return;
       }
       const zlibOptions = {
@@ -6552,7 +6552,7 @@ async function fetch(url, options_) {
           }
         });
         response = new Response(body, responseOptions);
-        resolve(response);
+        resolve2(response);
         return;
       }
       if (codings === "deflate" || codings === "x-deflate") {
@@ -6576,12 +6576,12 @@ async function fetch(url, options_) {
             });
           }
           response = new Response(body, responseOptions);
-          resolve(response);
+          resolve2(response);
         });
         raw.once("end", () => {
           if (!response) {
             response = new Response(body, responseOptions);
-            resolve(response);
+            resolve2(response);
           }
         });
         return;
@@ -6593,11 +6593,11 @@ async function fetch(url, options_) {
           }
         });
         response = new Response(body, responseOptions);
-        resolve(response);
+        resolve2(response);
         return;
       }
       response = new Response(body, responseOptions);
-      resolve(response);
+      resolve2(response);
     });
     writeToStream(request_, request).catch(reject);
   });
@@ -7608,7 +7608,7 @@ var setErrorName = (ErrorClass, value) => {
   });
 };
 var isExecaError = (error2) => isErrorInstance(error2) && execaErrorSymbol in error2;
-var execaErrorSymbol = Symbol("isExecaError");
+var execaErrorSymbol = /* @__PURE__ */ Symbol("isExecaError");
 var isErrorInstance = (value) => Object.prototype.toString.call(value) === "[object Error]";
 var ExecaError = class extends Error {
 };
@@ -8201,8 +8201,8 @@ var disconnect = (anyProcess) => {
 // node_modules/execa/lib/utils/deferred.js
 var createDeferred = () => {
   const methods = {};
-  const promise = new Promise((resolve, reject) => {
-    Object.assign(methods, { resolve, reject });
+  const promise = new Promise((resolve2, reject) => {
+    Object.assign(methods, { resolve: resolve2, reject });
   });
   return Object.assign(promise, methods);
 };
@@ -9046,7 +9046,7 @@ var c = class {
     };
   }
 };
-var n = Symbol();
+var n = /* @__PURE__ */ Symbol();
 function i() {
   return this[n].next();
 }
@@ -11568,7 +11568,7 @@ var MergedStream = class extends PassThroughStream {
   #ended = /* @__PURE__ */ new Set([]);
   #aborted = /* @__PURE__ */ new Set([]);
   #onFinished;
-  #unpipeEvent = Symbol("unpipe");
+  #unpipeEvent = /* @__PURE__ */ Symbol("unpipe");
   #streamPromises = /* @__PURE__ */ new WeakMap();
   add(stream) {
     validateStream(stream);
@@ -11869,7 +11869,7 @@ if (process.platform === "linux") {
 
 // node_modules/signal-exit/dist/mjs/index.js
 var processOk = (process15) => !!process15 && typeof process15 === "object" && typeof process15.removeListener === "function" && typeof process15.emit === "function" && typeof process15.reallyExit === "function" && typeof process15.listeners === "function" && typeof process15.kill === "function" && typeof process15.pid === "number" && typeof process15.on === "function";
-var kExitEmitter = Symbol.for("signal-exit emitter");
+var kExitEmitter = /* @__PURE__ */ Symbol.for("signal-exit emitter");
 var global2 = globalThis;
 var ObjectDefineProperty = Object.defineProperty.bind(Object);
 var Emitter = class {
@@ -12844,11 +12844,11 @@ var addConcurrentStream = (concurrentStreams, stream, waitName) => {
   const promises = weakMap.get(stream);
   const promise = createDeferred();
   promises.push(promise);
-  const resolve = promise.resolve.bind(promise);
-  return { resolve, promises };
+  const resolve2 = promise.resolve.bind(promise);
+  return { resolve: resolve2, promises };
 };
-var waitForConcurrentStreams = async ({ resolve, promises }, subprocess) => {
-  resolve();
+var waitForConcurrentStreams = async ({ resolve: resolve2, promises }, subprocess) => {
+  resolve2();
   const [isSubprocessExit] = await Promise.race([
     Promise.allSettled([true, subprocess]),
     Promise.all([false, ...promises])
@@ -13434,7 +13434,7 @@ var {
 } = getIpcExport();
 
 // scripts/create-app.js
-import { join as join4, dirname } from "path";
+import { join as join4, dirname, resolve } from "path";
 import _fs3 from "fs";
 import _fsExtra from "fs-extra";
 import { fileURLToPath as fileURLToPath3 } from "url";
@@ -13647,7 +13647,7 @@ function BD(e3, u3) {
   return s2;
 }
 var AD = globalThis.process.platform.startsWith("win");
-var S = Symbol("clack:cancel");
+var S = /* @__PURE__ */ Symbol("clack:cancel");
 function pD(e3) {
   return e3 === S;
 }
@@ -14791,9 +14791,9 @@ function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
 
 // node_modules/ora/node_modules/chalk/source/index.js
 var { stdout: stdoutColor, stderr: stderrColor } = supports_color_default;
-var GENERATOR = Symbol("GENERATOR");
-var STYLER = Symbol("STYLER");
-var IS_EMPTY = Symbol("IS_EMPTY");
+var GENERATOR = /* @__PURE__ */ Symbol("GENERATOR");
+var STYLER = /* @__PURE__ */ Symbol("STYLER");
+var IS_EMPTY = /* @__PURE__ */ Symbol("IS_EMPTY");
 var levelMapping = [
   "ansi",
   "ansi",
@@ -16723,6 +16723,38 @@ var spinners_default = {
       " \u2588\u2588\u2588\u2588\u2588\u2588\xA3\xA3\xA3  ",
       " \u2588\u2588\u2588\u2588\u2588\u2588\xA3\xA3\xA3  "
     ]
+  },
+  fish: {
+    interval: 80,
+    frames: [
+      "~~~~~~~~~~~~~~~~~~~~",
+      "> ~~~~~~~~~~~~~~~~~~",
+      "\xBA> ~~~~~~~~~~~~~~~~~",
+      "(\xBA> ~~~~~~~~~~~~~~~~",
+      "((\xBA> ~~~~~~~~~~~~~~~",
+      "<((\xBA> ~~~~~~~~~~~~~~",
+      "><((\xBA> ~~~~~~~~~~~~~",
+      " ><((\xBA> ~~~~~~~~~~~~",
+      "~ ><((\xBA> ~~~~~~~~~~~",
+      "~~ <>((\xBA> ~~~~~~~~~~",
+      "~~~ ><((\xBA> ~~~~~~~~~",
+      "~~~~ <>((\xBA> ~~~~~~~~",
+      "~~~~~ ><((\xBA> ~~~~~~~",
+      "~~~~~~ <>((\xBA> ~~~~~~",
+      "~~~~~~~ ><((\xBA> ~~~~~",
+      "~~~~~~~~ <>((\xBA> ~~~~",
+      "~~~~~~~~~ ><((\xBA> ~~~",
+      "~~~~~~~~~~ <>((\xBA> ~~",
+      "~~~~~~~~~~~ ><((\xBA> ~",
+      "~~~~~~~~~~~~ <>((\xBA> ",
+      "~~~~~~~~~~~~~ ><((\xBA>",
+      "~~~~~~~~~~~~~~ <>((\xBA",
+      "~~~~~~~~~~~~~~~ ><((",
+      "~~~~~~~~~~~~~~~~ <>(",
+      "~~~~~~~~~~~~~~~~~ ><",
+      "~~~~~~~~~~~~~~~~~~ <",
+      "~~~~~~~~~~~~~~~~~~~~"
+    ]
   }
 };
 
@@ -17809,23 +17841,25 @@ async function main4(deps) {
       ...packageJson2.devDependencies,
       typescript: "^5.3.3"
     };
-    fs3.writeFileSync(
-      join4(projectDir, "tsconfig.json"),
-      JSON.stringify(
-        {
-          compilerOptions: {
-            target: "es2016",
-            module: "commonjs",
-            esModuleInterop: true,
-            forceConsistentCasingInFileNames: true,
-            strict: true,
-            skipLibCheck: true
-          }
-        },
-        null,
-        2
-      )
-    );
+    if (!fs3.existsSync(join4(projectDir, "tsconfig.json"))) {
+      fs3.writeFileSync(
+        join4(projectDir, "tsconfig.json"),
+        JSON.stringify(
+          {
+            compilerOptions: {
+              target: "es2016",
+              module: "commonjs",
+              esModuleInterop: true,
+              forceConsistentCasingInFileNames: true,
+              strict: true,
+              skipLibCheck: true
+            }
+          },
+          null,
+          2
+        )
+      );
+    }
   }
   if (answers.includeEslint) {
     packageJson2.devDependencies = {
@@ -17870,7 +17904,9 @@ module.exports = [
 ];
 `;
     }
-    fs3.writeFileSync(join4(projectDir, "eslint.config.js"), eslintConfigContent);
+    if (!fs3.existsSync(join4(projectDir, "eslint.config.js"))) {
+      fs3.writeFileSync(join4(projectDir, "eslint.config.js"), eslintConfigContent);
+    }
     packageJson2.scripts = {
       ...packageJson2.scripts,
       lint: "eslint .",
@@ -17882,18 +17918,20 @@ module.exports = [
       ...packageJson2.devDependencies,
       prettier: "^3.2.5"
     };
-    fs3.writeFileSync(
-      join4(projectDir, ".prettierrc"),
-      JSON.stringify(
-        {
-          semi: false,
-          singleQuote: true,
-          trailingComma: "all"
-        },
-        null,
-        2
-      )
-    );
+    if (!fs3.existsSync(join4(projectDir, ".prettierrc"))) {
+      fs3.writeFileSync(
+        join4(projectDir, ".prettierrc"),
+        JSON.stringify(
+          {
+            semi: false,
+            singleQuote: true,
+            trailingComma: "all"
+          },
+          null,
+          2
+        )
+      );
+    }
     packageJson2.scripts = {
       ...packageJson2.scripts,
       "format:check": "prettier --check .",
@@ -18055,7 +18093,7 @@ test-job:
     "If you want to support the project, you can do so at https://buymeacoffee.com/involvex"
   );
 }
-if (process.argv[1] === fileURLToPath3(import.meta.url)) {
+if (resolve(process.argv[1]) === resolve(fileURLToPath3(import.meta.url))) {
   const userArgs = process.argv.slice(2);
   if (userArgs.includes("--plugin")) {
     main({

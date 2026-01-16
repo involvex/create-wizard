@@ -16,7 +16,7 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "@google/generative-ai": "^0.1.0",
-    "dotenv": "^16.3.1"
+    "@google/generative-ai": "^0.2.1",
+    "dotenv": "^16.4.5"
   }
 }

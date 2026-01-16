@@ -48,7 +48,15 @@ The project includes several npm scripts for common development tasks:
 -create Github pages and add a also a config to templates
 -add workflows to the project
 -add workflow creation to cli
--add more templates to the project
+-add more templates to the project (e.g. Angular, Svelte)
+
+## Recent Updates (v4.0.0)
+
+- Added `expo-app` template for React Native with Expo.
+- Added `ionic-app` template for Ionic React apps.
+- Updated all dependencies to latest versions.
+- Fixed `react-native-app` template build and TypeScript issues.
+- Fixed CLI launch issues with `npx` and global installation.
 
 ## NPM Publishing
 

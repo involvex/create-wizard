@@ -1,5 +1,24 @@
 <!-- @format -->
 
+## [4.0.0](https://github.com/involvex/create-wizard/compare/v3.9.4...v4.0.0) (2026-01-16)
+
+### Features
+
+- **templates:** Added new `expo-app` template for React Native development with Expo.
+- **templates:** Added new `ionic-app` template for cross-platform app development with Ionic React.
+- **templates:** Added `doctor` script to `react-native-app` template for easier troubleshooting.
+- **cli:** Improved entry point detection logic for better compatibility with `npx` and global installs.
+- **cli:** Added safeguards to prevent overwriting existing configuration files (`tsconfig.json`, `eslint.config.js`, `.prettierrc`) if provided by the template.
+
+### Bug Fixes
+
+- **cli:** Fixed issue where the wizard would not launch correctly when installed globally or run via `npx`.
+- **deps:** Updated root project dependencies to latest versions, including `inquirer`, `esbuild`, `vitest`, and `eslint`.
+- **deps:** Updated dependencies for all templates to their latest stable versions.
+- **templates:** Fixed build issues in `react-native-app` template by updating `react-native-screens`, `react-native-reanimated`, and `react-native-gesture-handler`.
+- **templates:** Fixed TypeScript errors in `react-native-app` template by adding `"jsx": "react-native"` to `tsconfig.json`.
+- **templates:** Resolved compatibility issues with `react-native-reanimated` in `react-native-app` template by adding `react-native-worklets-core` and configuring the Babel plugin.
+
 ## [3.5.1](https://github.com/involvex/create-wizard/compare/v3.5.0...v3.5.1) (2025-09-20)
 
 ### Bug Fixes

@@ -5,6 +5,15 @@
 "[javascript]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
 },
+"files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.hg/store/**": true,
+    "**/.dart_tool": true,
+    "**/node_modules/*/**": true,
+    "**/dist/**": true,
+    "**/docs/build/**": true
+}
 // create-prettier-config:end
 
 }

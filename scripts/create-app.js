@@ -8,7 +8,7 @@
  */
 
 import { execa as _execa } from 'execa'
-import { join, dirname } from 'path'
+import { join, dirname, resolve } from 'path'
 import _fs from 'fs'
 import _fsExtra from 'fs-extra'
 import { fileURLToPath } from 'url'
@@ -430,23 +430,25 @@ export async function main(deps) {
       ...packageJson.devDependencies,
       typescript: '^5.3.3',
     }
-    fs.writeFileSync(
-      join(projectDir, 'tsconfig.json'),
-      JSON.stringify(
-        {
-          compilerOptions: {
-            target: 'es2016',
-            module: 'commonjs',
-            esModuleInterop: true,
-            forceConsistentCasingInFileNames: true,
-            strict: true,
-            skipLibCheck: true,
+    if (!fs.existsSync(join(projectDir, 'tsconfig.json'))) {
+      fs.writeFileSync(
+        join(projectDir, 'tsconfig.json'),
+        JSON.stringify(
+          {
+            compilerOptions: {
+              target: 'es2016',
+              module: 'commonjs',
+              esModuleInterop: true,
+              forceConsistentCasingInFileNames: true,
+              strict: true,
+              skipLibCheck: true,
+            },
           },
-        },
-        null,
-        2,
-      ),
-    )
+          null,
+          2,
+        ),
+      )
+    }
   }
 
   if (answers.includeEslint) {
@@ -497,7 +499,9 @@ module.exports = [
 `
     }
 
-    fs.writeFileSync(join(projectDir, 'eslint.config.js'), eslintConfigContent)
+    if (!fs.existsSync(join(projectDir, 'eslint.config.js'))) {
+      fs.writeFileSync(join(projectDir, 'eslint.config.js'), eslintConfigContent)
+    }
 
     packageJson.scripts = {
       ...packageJson.scripts,
@@ -511,18 +515,20 @@ module.exports = [
       ...packageJson.devDependencies,
       prettier: '^3.2.5',
     }
-    fs.writeFileSync(
-      join(projectDir, '.prettierrc'),
-      JSON.stringify(
-        {
-          semi: false,
-          singleQuote: true,
-          trailingComma: 'all',
-        },
-        null,
-        2,
-      ),
-    )
+    if (!fs.existsSync(join(projectDir, '.prettierrc'))) {
+      fs.writeFileSync(
+        join(projectDir, '.prettierrc'),
+        JSON.stringify(
+          {
+            semi: false,
+            singleQuote: true,
+            trailingComma: 'all',
+          },
+          null,
+          2,
+        ),
+      )
+    }
     packageJson.scripts = {
       ...packageJson.scripts,
       'format:check': 'prettier --check .',
@@ -706,7 +712,7 @@ import {
 } from './create-test-setup.js'
 
 //This block allows the script to be run directly
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url))) {
   // Check for flags
   const userArgs = process.argv.slice(2) // Get arguments passed by the user
 

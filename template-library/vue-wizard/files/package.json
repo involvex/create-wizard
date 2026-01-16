@@ -1,6 +1,6 @@
 {
   "name": "vue-wizard-project",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -15,15 +15,15 @@
     "version": "node scripts/version.js"
   },
   "dependencies": {
-    "vue": "3.4.21",
-    "vue-router": "4.3.0",
+    "vue": "3.4.27",
+    "vue-router": "4.3.2",
     "pinia": "2.1.7"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "5.0.4",
-    "vite": "5.2.8",
+    "vite": "5.2.11",
     "typescript": "5.4.5",
-    "vue-tsc": "2.0.13",
+    "vue-tsc": "2.0.20",
     "eslint": "8.57.0",
     "prettier": "3.2.5",
     "@vue/eslint-config-typescript": "13.0.0",

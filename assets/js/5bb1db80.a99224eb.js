@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunkdocs=globalThis.webpackChunkdocs||[]).push([[9411],{7228:e=>{e.exports=JSON.parse('{"metadata":{"permalink":"/create-wizard/changelog/page/2","page":2,"postsPerPage":10,"totalPages":2,"totalCount":13,"previousPage":"/create-wizard/changelog","blogDescription":"Keep up with the latest changes to create-wizard!","blogTitle":"Changelog"}}')}}]);

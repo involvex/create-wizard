@@ -30,15 +30,17 @@ if (args.includes('-h') || args.includes('--help')) {
     Initializes a new project using an interactive wizard.
 
     Arguments:
-      projectName         The name of the project to create. If provided, the wizard will skip the project name prompt.
+      projectName           The name of the project to create. If provided, the wizard will skip the project name prompt.
 
     Options:
-      -v, --version         Output the current version and exit.
-      -h, --help            Display this help message and exit.
-      --plugin              Configure and install a new plugin (e.g., Prettier, ESLint).
-      --create-test         Set up a new test framework for the project.
-      --license             Generate a new LICENSE file.
-      --debug=TRUE          Enable debug logging.
+      -v, --version                     Output the current version and exit.
+      -h, --help                        Display this help message and exit.
+      --plugin                          Configure and install a new plugin (e.g., Prettier, ESLint).
+      --create-test                     Set up a new test framework for the project.
+      --license                         Generate a new LICENSE file.
+      --debug=TRUE                      Enable debug logging.
+      --list-templates                  List all available deployment templates.
+      --view-template <Template-Name>   View more information about a specific template by name.
   `)
   process.exit(0)
 }
@@ -728,6 +730,45 @@ if (resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url))) {
     createTestSetup({
       /* dependencies */
     })
+  } else if (userArgs.includes('--list-templates')) {
+    const templatesPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'template-library')
+    const templates = _fs.readdirSync(templatesPath).filter(file => {
+      const filePath = join(templatesPath, file)
+      return _fs.statSync(filePath).isDirectory()
+    })
+    console.log('Available Templates:')
+    templates.forEach(t => console.log(`- ${t}`))
+    process.exit(0)
+  } else if (userArgs.includes('--view-template')) {
+    const templateNameIndex = userArgs.indexOf('--view-template') + 1
+    const templateName = userArgs[templateNameIndex]
+
+    if (!templateName || templateName.startsWith('--')) {
+      console.error('Error: Please provide a template name.')
+      process.exit(1)
+    }
+
+    const templatesPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'template-library')
+    const templateDir = join(templatesPath, templateName)
+
+    if (!_fs.existsSync(templateDir)) {
+      console.error(`Error: Template '${templateName}' not found.`)
+      process.exit(1)
+    }
+
+    console.log(`Template: ${templateName}`)
+    const templateJsonPath = join(templateDir, 'template.json')
+    if (_fs.existsSync(templateJsonPath)) {
+      const templateJson = JSON.parse(_fs.readFileSync(templateJsonPath, 'utf-8'))
+      console.log('Configuration:', JSON.stringify(templateJson, null, 2))
+    }
+
+    const readmePath = join(templateDir, 'README.md')
+    if (_fs.existsSync(readmePath)) {
+      console.log('\n--- README ---')
+      console.log(_fs.readFileSync(readmePath, 'utf-8'))
+    }
+    process.exit(0)
   } else {
     // If no specific flags are provided by the user, run main
     main({})

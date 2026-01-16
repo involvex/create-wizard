@@ -17502,15 +17502,17 @@ if (args.includes("-h") || args.includes("--help")) {
     Initializes a new project using an interactive wizard.
 
     Arguments:
-      projectName         The name of the project to create. If provided, the wizard will skip the project name prompt.
+      projectName           The name of the project to create. If provided, the wizard will skip the project name prompt.
 
     Options:
-      -v, --version         Output the current version and exit.
-      -h, --help            Display this help message and exit.
-      --plugin              Configure and install a new plugin (e.g., Prettier, ESLint).
-      --create-test         Set up a new test framework for the project.
-      --license             Generate a new LICENSE file.
-      --debug=TRUE          Enable debug logging.
+      -v, --version                     Output the current version and exit.
+      -h, --help                        Display this help message and exit.
+      --plugin                          Configure and install a new plugin (e.g., Prettier, ESLint).
+      --create-test                     Set up a new test framework for the project.
+      --license                         Generate a new LICENSE file.
+      --debug=TRUE                      Enable debug logging.
+      --list-templates                  List all available deployment templates.
+      --view-template <Template-Name>   View more information about a specific template by name.
   `);
   process.exit(0);
 }
@@ -18107,6 +18109,40 @@ if (resolve(process.argv[1]) === resolve(fileURLToPath3(import.meta.url))) {
     main3({
       /* dependencies */
     });
+  } else if (userArgs.includes("--list-templates")) {
+    const templatesPath = join4(dirname(fileURLToPath3(import.meta.url)), "..", "template-library");
+    const templates = _fs3.readdirSync(templatesPath).filter((file) => {
+      const filePath = join4(templatesPath, file);
+      return _fs3.statSync(filePath).isDirectory();
+    });
+    console.log("Available Templates:");
+    templates.forEach((t2) => console.log(`- ${t2}`));
+    process.exit(0);
+  } else if (userArgs.includes("--view-template")) {
+    const templateNameIndex = userArgs.indexOf("--view-template") + 1;
+    const templateName = userArgs[templateNameIndex];
+    if (!templateName || templateName.startsWith("--")) {
+      console.error("Error: Please provide a template name.");
+      process.exit(1);
+    }
+    const templatesPath = join4(dirname(fileURLToPath3(import.meta.url)), "..", "template-library");
+    const templateDir = join4(templatesPath, templateName);
+    if (!_fs3.existsSync(templateDir)) {
+      console.error(`Error: Template '${templateName}' not found.`);
+      process.exit(1);
+    }
+    console.log(`Template: ${templateName}`);
+    const templateJsonPath = join4(templateDir, "template.json");
+    if (_fs3.existsSync(templateJsonPath)) {
+      const templateJson = JSON.parse(_fs3.readFileSync(templateJsonPath, "utf-8"));
+      console.log("Configuration:", JSON.stringify(templateJson, null, 2));
+    }
+    const readmePath = join4(templateDir, "README.md");
+    if (_fs3.existsSync(readmePath)) {
+      console.log("\n--- README ---");
+      console.log(_fs3.readFileSync(readmePath, "utf-8"));
+    }
+    process.exit(0);
   } else {
     main4({});
   }

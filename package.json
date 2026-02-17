@@ -76,9 +76,7 @@
     "@clack/prompts": "^1.0.1",
     "@docusaurus/eslint-plugin": "^3.9.2",
     "@eslint/eslintrc": "^3.3.3",
-    "@eslint/js": "^10.0.1",
-    "@typescript-eslint/eslint-plugin": "^8.56.0",
-    "@typescript-eslint/parser": "^8.56.0",
+    "@eslint/js": "^9.15.0",
     "@vitejs/plugin-react": "^5.1.4",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vitest/coverage-v8": "^4.0.18",
@@ -88,7 +86,7 @@
     "debug": "^4.4.3",
     "dotenv": "^17.3.1",
     "esbuild": "^0.27.3",
-    "eslint": "9.39.2",
+    "eslint": "^9.15.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-license-header": "^0.9.0",
@@ -102,5 +100,8 @@
     "typescript-eslint": "^8.56.0",
     "vitest": "^4.0.18",
     "vitest-preview": "^0.0.3"
+  },
+  "overrides": {
+    "@typescript-eslint/utils": "^8.0.0"
   }
 }

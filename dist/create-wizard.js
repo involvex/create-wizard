@@ -17116,7 +17116,7 @@ function eastAsianWidth(codePoint, { ambiguousAsWide = false } = {}) {
 
 // node_modules/ora/node_modules/string-width/index.js
 var segmenter = new Intl.Segmenter();
-var zeroWidthClusterRegex = new RegExp("^(?:\\p{Default_Ignorable_Code_Point}|\\p{Control}|\\p{Mark}|\\p{Surrogate})+$", "v");
+var zeroWidthClusterRegex = new RegExp("^(?:\\p{Default_Ignorable_Code_Point}|\\p{Control}|\\p{Format}|\\p{Mark}|\\p{Surrogate})+$", "v");
 var leadingNonPrintingRegex = new RegExp("^[\\p{Default_Ignorable_Code_Point}\\p{Control}\\p{Format}\\p{Mark}\\p{Surrogate}]+", "v");
 var rgiEmojiRegex = new RegExp("^\\p{RGI_Emoji}$", "v");
 function baseVisible(segment) {

@@ -5,11 +5,11 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __require = /* @__PURE__ */ ((x3) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x3, {
-  get: (a2, b3) => (typeof require !== "undefined" ? require : a2)[b3]
-}) : x3)(function(x3) {
+var __require = /* @__PURE__ */ ((x4) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x4, {
+  get: (a2, b) => (typeof require !== "undefined" ? require : a2)[b]
+}) : x4)(function(x4) {
   if (typeof require !== "undefined") return require.apply(this, arguments);
-  throw Error('Dynamic require of "' + x3 + '" is not supported');
+  throw Error('Dynamic require of "' + x4 + '" is not supported');
 });
 var __esm = (fn, res) => function __init() {
   return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
@@ -38,69 +38,13 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/sisteransi/src/index.js
-var require_src = __commonJS({
-  "node_modules/sisteransi/src/index.js"(exports, module) {
-    "use strict";
-    var ESC = "\x1B";
-    var CSI = `${ESC}[`;
-    var beep = "\x07";
-    var cursor = {
-      to(x3, y3) {
-        if (!y3) return `${CSI}${x3 + 1}G`;
-        return `${CSI}${y3 + 1};${x3 + 1}H`;
-      },
-      move(x3, y3) {
-        let ret = "";
-        if (x3 < 0) ret += `${CSI}${-x3}D`;
-        else if (x3 > 0) ret += `${CSI}${x3}C`;
-        if (y3 < 0) ret += `${CSI}${-y3}A`;
-        else if (y3 > 0) ret += `${CSI}${y3}B`;
-        return ret;
-      },
-      up: (count2 = 1) => `${CSI}${count2}A`,
-      down: (count2 = 1) => `${CSI}${count2}B`,
-      forward: (count2 = 1) => `${CSI}${count2}C`,
-      backward: (count2 = 1) => `${CSI}${count2}D`,
-      nextLine: (count2 = 1) => `${CSI}E`.repeat(count2),
-      prevLine: (count2 = 1) => `${CSI}F`.repeat(count2),
-      left: `${CSI}G`,
-      hide: `${CSI}?25l`,
-      show: `${CSI}?25h`,
-      save: `${ESC}7`,
-      restore: `${ESC}8`
-    };
-    var scroll = {
-      up: (count2 = 1) => `${CSI}S`.repeat(count2),
-      down: (count2 = 1) => `${CSI}T`.repeat(count2)
-    };
-    var erase = {
-      screen: `${CSI}2J`,
-      up: (count2 = 1) => `${CSI}1J`.repeat(count2),
-      down: (count2 = 1) => `${CSI}J`.repeat(count2),
-      line: `${CSI}2K`,
-      lineEnd: `${CSI}K`,
-      lineStart: `${CSI}1K`,
-      lines(count2) {
-        let clear = "";
-        for (let i3 = 0; i3 < count2; i3++)
-          clear += this.line + (i3 < count2 - 1 ? cursor.up() : "");
-        if (count2)
-          clear += cursor.left;
-        return clear;
-      }
-    };
-    module.exports = { cursor, scroll, erase, beep };
-  }
-});
-
 // node_modules/picocolors/picocolors.js
 var require_picocolors = __commonJS({
   "node_modules/picocolors/picocolors.js"(exports, module) {
-    var p2 = process || {};
-    var argv = p2.argv || [];
-    var env2 = p2.env || {};
-    var isColorSupported = !(!!env2.NO_COLOR || argv.includes("--no-color")) && (!!env2.FORCE_COLOR || argv.includes("--color") || p2.platform === "win32" || (p2.stdout || {}).isTTY && env2.TERM !== "dumb" || !!env2.CI);
+    var p = process || {};
+    var argv = p.argv || [];
+    var env2 = p.env || {};
+    var isColorSupported = !(!!env2.NO_COLOR || argv.includes("--no-color")) && (!!env2.FORCE_COLOR || argv.includes("--color") || p.platform === "win32" || (p.stdout || {}).isTTY && env2.TERM !== "dumb" || !!env2.CI);
     var formatter = (open, close, replace = open) => (input) => {
       let string = "" + input, index = string.indexOf(close, open.length);
       return ~index ? open + replaceClose(string, close, replace, index) + close : open + string + close;
@@ -166,6 +110,62 @@ var require_picocolors = __commonJS({
   }
 });
 
+// node_modules/sisteransi/src/index.js
+var require_src = __commonJS({
+  "node_modules/sisteransi/src/index.js"(exports, module) {
+    "use strict";
+    var ESC = "\x1B";
+    var CSI = `${ESC}[`;
+    var beep = "\x07";
+    var cursor = {
+      to(x4, y2) {
+        if (!y2) return `${CSI}${x4 + 1}G`;
+        return `${CSI}${y2 + 1};${x4 + 1}H`;
+      },
+      move(x4, y2) {
+        let ret = "";
+        if (x4 < 0) ret += `${CSI}${-x4}D`;
+        else if (x4 > 0) ret += `${CSI}${x4}C`;
+        if (y2 < 0) ret += `${CSI}${-y2}A`;
+        else if (y2 > 0) ret += `${CSI}${y2}B`;
+        return ret;
+      },
+      up: (count2 = 1) => `${CSI}${count2}A`,
+      down: (count2 = 1) => `${CSI}${count2}B`,
+      forward: (count2 = 1) => `${CSI}${count2}C`,
+      backward: (count2 = 1) => `${CSI}${count2}D`,
+      nextLine: (count2 = 1) => `${CSI}E`.repeat(count2),
+      prevLine: (count2 = 1) => `${CSI}F`.repeat(count2),
+      left: `${CSI}G`,
+      hide: `${CSI}?25l`,
+      show: `${CSI}?25h`,
+      save: `${ESC}7`,
+      restore: `${ESC}8`
+    };
+    var scroll = {
+      up: (count2 = 1) => `${CSI}S`.repeat(count2),
+      down: (count2 = 1) => `${CSI}T`.repeat(count2)
+    };
+    var erase = {
+      screen: `${CSI}2J`,
+      up: (count2 = 1) => `${CSI}1J`.repeat(count2),
+      down: (count2 = 1) => `${CSI}J`.repeat(count2),
+      line: `${CSI}2K`,
+      lineEnd: `${CSI}K`,
+      lineStart: `${CSI}1K`,
+      lines(count2) {
+        let clear = "";
+        for (let i3 = 0; i3 < count2; i3++)
+          clear += this.line + (i3 < count2 - 1 ? cursor.up() : "");
+        if (count2)
+          clear += cursor.left;
+        return clear;
+      }
+    };
+    module.exports = { cursor, scroll, erase, beep };
+  }
+});
+
 // node_modules/data-uri-to-buffer/dist/index.js
 function dataUriToBuffer(uri) {
   if (!/^data:/i.test(uri)) {
@@ -220,8 +220,8 @@ var require_ponyfill_es2018 = __commonJS({
       function noop4() {
         return void 0;
       }
-      function typeIsObject(x3) {
-        return typeof x3 === "object" && x3 !== null || typeof x3 === "function";
+      function typeIsObject(x4) {
+        return typeof x4 === "object" && x4 !== null || typeof x4 === "function";
       }
       const rethrowAssertionErrorRejection = noop4;
       function setFunctionName(fn, name) {
@@ -272,15 +272,15 @@ var require_ponyfill_es2018 = __commonJS({
         }
         return _queueMicrotask(callback);
       };
-      function reflectCall(F3, V3, args2) {
-        if (typeof F3 !== "function") {
+      function reflectCall(F2, V2, args2) {
+        if (typeof F2 !== "function") {
           throw new TypeError("Argument is not a function");
         }
-        return Function.prototype.apply.call(F3, V3, args2);
+        return Function.prototype.apply.call(F2, V2, args2);
       }
-      function promiseCall(F3, V3, args2) {
+      function promiseCall(F2, V2, args2) {
         try {
-          return promiseResolvedWith(reflectCall(F3, V3, args2));
+          return promiseResolvedWith(reflectCall(F2, V2, args2));
         } catch (value) {
           return promiseRejectedWith(value);
         }
@@ -443,71 +443,71 @@ var require_ponyfill_es2018 = __commonJS({
         reader._closedPromise_resolve = void 0;
         reader._closedPromise_reject = void 0;
       }
-      const NumberIsFinite = Number.isFinite || function(x3) {
-        return typeof x3 === "number" && isFinite(x3);
+      const NumberIsFinite = Number.isFinite || function(x4) {
+        return typeof x4 === "number" && isFinite(x4);
       };
-      const MathTrunc = Math.trunc || function(v2) {
-        return v2 < 0 ? Math.ceil(v2) : Math.floor(v2);
+      const MathTrunc = Math.trunc || function(v) {
+        return v < 0 ? Math.ceil(v) : Math.floor(v);
       };
-      function isDictionary(x3) {
-        return typeof x3 === "object" || typeof x3 === "function";
+      function isDictionary(x4) {
+        return typeof x4 === "object" || typeof x4 === "function";
       }
       function assertDictionary(obj, context) {
         if (obj !== void 0 && !isDictionary(obj)) {
           throw new TypeError(`${context} is not an object.`);
         }
       }
-      function assertFunction(x3, context) {
-        if (typeof x3 !== "function") {
+      function assertFunction(x4, context) {
+        if (typeof x4 !== "function") {
           throw new TypeError(`${context} is not a function.`);
         }
       }
-      function isObject2(x3) {
-        return typeof x3 === "object" && x3 !== null || typeof x3 === "function";
+      function isObject2(x4) {
+        return typeof x4 === "object" && x4 !== null || typeof x4 === "function";
       }
-      function assertObject(x3, context) {
-        if (!isObject2(x3)) {
+      function assertObject(x4, context) {
+        if (!isObject2(x4)) {
           throw new TypeError(`${context} is not an object.`);
         }
       }
-      function assertRequiredArgument(x3, position, context) {
-        if (x3 === void 0) {
+      function assertRequiredArgument(x4, position, context) {
+        if (x4 === void 0) {
           throw new TypeError(`Parameter ${position} is required in '${context}'.`);
         }
       }
-      function assertRequiredField(x3, field, context) {
-        if (x3 === void 0) {
+      function assertRequiredField(x4, field, context) {
+        if (x4 === void 0) {
           throw new TypeError(`${field} is required in '${context}'.`);
         }
       }
       function convertUnrestrictedDouble(value) {
         return Number(value);
       }
-      function censorNegativeZero(x3) {
-        return x3 === 0 ? 0 : x3;
+      function censorNegativeZero(x4) {
+        return x4 === 0 ? 0 : x4;
       }
-      function integerPart(x3) {
-        return censorNegativeZero(MathTrunc(x3));
+      function integerPart(x4) {
+        return censorNegativeZero(MathTrunc(x4));
       }
       function convertUnsignedLongLongWithEnforceRange(value, context) {
         const lowerBound = 0;
         const upperBound = Number.MAX_SAFE_INTEGER;
-        let x3 = Number(value);
-        x3 = censorNegativeZero(x3);
-        if (!NumberIsFinite(x3)) {
+        let x4 = Number(value);
+        x4 = censorNegativeZero(x4);
+        if (!NumberIsFinite(x4)) {
           throw new TypeError(`${context} is not a finite number`);
         }
-        x3 = integerPart(x3);
-        if (x3 < lowerBound || x3 > upperBound) {
+        x4 = integerPart(x4);
+        if (x4 < lowerBound || x4 > upperBound) {
           throw new TypeError(`${context} is outside the accepted range of ${lowerBound} to ${upperBound}, inclusive`);
         }
-        if (!NumberIsFinite(x3) || x3 === 0) {
+        if (!NumberIsFinite(x4) || x4 === 0) {
           return 0;
         }
-        return x3;
+        return x4;
       }
-      function assertReadableStream(x3, context) {
-        if (!IsReadableStream(x3)) {
+      function assertReadableStream(x4, context) {
+        if (!IsReadableStream(x4)) {
           throw new TypeError(`${context} is not a ReadableStream.`);
         }
       }
@@ -631,14 +631,14 @@ var require_ponyfill_es2018 = __commonJS({
           configurable: true
         });
       }
-      function IsReadableStreamDefaultReader(x3) {
-        if (!typeIsObject(x3)) {
+      function IsReadableStreamDefaultReader(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_readRequests")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_readRequests")) {
           return false;
         }
-        return x3 instanceof ReadableStreamDefaultReader;
+        return x4 instanceof ReadableStreamDefaultReader;
       }
       function ReadableStreamDefaultReaderRead(reader, readRequest) {
         const stream = reader._ownerReadableStream;
@@ -753,15 +753,15 @@ var require_ponyfill_es2018 = __commonJS({
         iterator._asyncIteratorImpl = impl;
         return iterator;
       }
-      function IsReadableStreamAsyncIterator(x3) {
-        if (!typeIsObject(x3)) {
+      function IsReadableStreamAsyncIterator(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_asyncIteratorImpl")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_asyncIteratorImpl")) {
           return false;
         }
         try {
-          return x3._asyncIteratorImpl instanceof ReadableStreamAsyncIteratorImpl;
+          return x4._asyncIteratorImpl instanceof ReadableStreamAsyncIteratorImpl;
         } catch (_a2) {
           return false;
         }
@@ -769,8 +769,8 @@ var require_ponyfill_es2018 = __commonJS({
       function streamAsyncIteratorBrandCheckException(name) {
         return new TypeError(`ReadableStreamAsyncIterator.${name} can only be used on a ReadableSteamAsyncIterator`);
       }
-      const NumberIsNaN = Number.isNaN || function(x3) {
-        return x3 !== x3;
+      const NumberIsNaN = Number.isNaN || function(x4) {
+        return x4 !== x4;
       };
       var _a, _b, _c;
       function CreateArrayFromList(elements) {
@@ -863,14 +863,14 @@ var require_ponyfill_es2018 = __commonJS({
       function IteratorValue(iterResult) {
         return iterResult.value;
       }
-      function IsNonNegativeNumber(v2) {
-        if (typeof v2 !== "number") {
+      function IsNonNegativeNumber(v) {
+        if (typeof v !== "number") {
           return false;
         }
-        if (NumberIsNaN(v2)) {
+        if (NumberIsNaN(v)) {
           return false;
         }
-        if (v2 < 0) {
+        if (v < 0) {
           return false;
         }
         return true;
@@ -1109,23 +1109,23 @@ var require_ponyfill_es2018 = __commonJS({
           configurable: true
         });
       }
-      function IsReadableByteStreamController(x3) {
-        if (!typeIsObject(x3)) {
+      function IsReadableByteStreamController(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_controlledReadableByteStream")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_controlledReadableByteStream")) {
           return false;
         }
-        return x3 instanceof ReadableByteStreamController;
+        return x4 instanceof ReadableByteStreamController;
       }
-      function IsReadableStreamBYOBRequest(x3) {
-        if (!typeIsObject(x3)) {
+      function IsReadableStreamBYOBRequest(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_associatedReadableByteStreamController")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_associatedReadableByteStreamController")) {
           return false;
         }
-        return x3 instanceof ReadableStreamBYOBRequest;
+        return x4 instanceof ReadableStreamBYOBRequest;
       }
       function ReadableByteStreamControllerCallPullIfNeeded(controller) {
         const shouldPull = ReadableByteStreamControllerShouldCallPull(controller);
@@ -1547,8 +1547,8 @@ var require_ponyfill_es2018 = __commonJS({
           controller._started = true;
           ReadableByteStreamControllerCallPullIfNeeded(controller);
           return null;
-        }, (r3) => {
-          ReadableByteStreamControllerError(controller, r3);
+        }, (r2) => {
+          ReadableByteStreamControllerError(controller, r2);
           return null;
         });
       }
@@ -1757,14 +1757,14 @@ var require_ponyfill_es2018 = __commonJS({
           configurable: true
         });
       }
-      function IsReadableStreamBYOBReader(x3) {
-        if (!typeIsObject(x3)) {
+      function IsReadableStreamBYOBReader(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_readIntoRequests")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_readIntoRequests")) {
           return false;
         }
-        return x3 instanceof ReadableStreamBYOBReader;
+        return x4 instanceof ReadableStreamBYOBReader;
       }
       function ReadableStreamBYOBReaderRead(reader, view, min, readIntoRequest) {
         const stream = reader._ownerReadableStream;
@@ -1851,8 +1851,8 @@ var require_ponyfill_es2018 = __commonJS({
         assertFunction(fn, context);
         return (chunk, controller) => promiseCall(fn, original, [chunk, controller]);
       }
-      function assertWritableStream(x3, context) {
-        if (!IsWritableStream(x3)) {
+      function assertWritableStream(x4, context) {
+        if (!IsWritableStream(x4)) {
           throw new TypeError(`${context} is not a WritableStream.`);
         }
       }
@@ -1990,14 +1990,14 @@ var require_ponyfill_es2018 = __commonJS({
         stream._pendingAbortRequest = void 0;
         stream._backpressure = false;
       }
-      function IsWritableStream(x3) {
-        if (!typeIsObject(x3)) {
+      function IsWritableStream(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_writableStreamController")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_writableStreamController")) {
           return false;
         }
-        return x3 instanceof WritableStream;
+        return x4 instanceof WritableStream;
       }
       function IsWritableStreamLocked(stream) {
         if (stream._writer === void 0) {
@@ -2340,14 +2340,14 @@ var require_ponyfill_es2018 = __commonJS({
           configurable: true
         });
       }
-      function IsWritableStreamDefaultWriter(x3) {
-        if (!typeIsObject(x3)) {
+      function IsWritableStreamDefaultWriter(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_ownerWritableStream")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_ownerWritableStream")) {
           return false;
         }
-        return x3 instanceof WritableStreamDefaultWriter;
+        return x4 instanceof WritableStreamDefaultWriter;
       }
       function WritableStreamDefaultWriterAbort(writer, reason) {
         const stream = writer._ownerWritableStream;
@@ -2491,14 +2491,14 @@ var require_ponyfill_es2018 = __commonJS({
           configurable: true
         });
       }
-      function IsWritableStreamDefaultController(x3) {
-        if (!typeIsObject(x3)) {
+      function IsWritableStreamDefaultController(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_controlledWritableStream")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_controlledWritableStream")) {
           return false;
         }
-        return x3 instanceof WritableStreamDefaultController;
+        return x4 instanceof WritableStreamDefaultController;
       }
       function SetUpWritableStreamDefaultController(stream, controller, startAlgorithm, writeAlgorithm, closeAlgorithm, abortAlgorithm, highWaterMark, sizeAlgorithm) {
         controller._controlledWritableStream = stream;
@@ -2522,9 +2522,9 @@ var require_ponyfill_es2018 = __commonJS({
           controller._started = true;
           WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller);
           return null;
-        }, (r3) => {
+        }, (r2) => {
           controller._started = true;
-          WritableStreamDealWithRejection(stream, r3);
+          WritableStreamDealWithRejection(stream, r2);
           return null;
         });
       }
@@ -3041,14 +3041,14 @@ var require_ponyfill_es2018 = __commonJS({
           configurable: true
         });
       }
-      function IsReadableStreamDefaultController(x3) {
-        if (!typeIsObject(x3)) {
+      function IsReadableStreamDefaultController(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_controlledReadableStream")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_controlledReadableStream")) {
           return false;
         }
-        return x3 instanceof ReadableStreamDefaultController;
+        return x4 instanceof ReadableStreamDefaultController;
       }
       function ReadableStreamDefaultControllerCallPullIfNeeded(controller) {
         const shouldPull = ReadableStreamDefaultControllerShouldCallPull(controller);
@@ -3181,8 +3181,8 @@ var require_ponyfill_es2018 = __commonJS({
           controller._started = true;
           ReadableStreamDefaultControllerCallPullIfNeeded(controller);
           return null;
-        }, (r3) => {
-          ReadableStreamDefaultControllerError(controller, r3);
+        }, (r2) => {
+          ReadableStreamDefaultControllerError(controller, r2);
           return null;
         });
       }
@@ -3298,9 +3298,9 @@ var require_ponyfill_es2018 = __commonJS({
         }
         branch1 = CreateReadableStream(startAlgorithm, pullAlgorithm, cancel1Algorithm);
         branch2 = CreateReadableStream(startAlgorithm, pullAlgorithm, cancel2Algorithm);
-        uponRejection(reader._closedPromise, (r3) => {
-          ReadableStreamDefaultControllerError(branch1._readableStreamController, r3);
-          ReadableStreamDefaultControllerError(branch2._readableStreamController, r3);
+        uponRejection(reader._closedPromise, (r2) => {
+          ReadableStreamDefaultControllerError(branch1._readableStreamController, r2);
+          ReadableStreamDefaultControllerError(branch2._readableStreamController, r2);
           if (!canceled1 || !canceled2) {
             resolveCancelPromise(void 0);
           }
@@ -3324,12 +3324,12 @@ var require_ponyfill_es2018 = __commonJS({
           resolveCancelPromise = resolve2;
         });
         function forwardReaderError(thisReader) {
-          uponRejection(thisReader._closedPromise, (r3) => {
+          uponRejection(thisReader._closedPromise, (r2) => {
             if (thisReader !== reader) {
               return null;
             }
-            ReadableByteStreamControllerError(branch1._readableStreamController, r3);
-            ReadableByteStreamControllerError(branch2._readableStreamController, r3);
+            ReadableByteStreamControllerError(branch1._readableStreamController, r2);
+            ReadableByteStreamControllerError(branch2._readableStreamController, r2);
             if (!canceled1 || !canceled2) {
               resolveCancelPromise(void 0);
             }
@@ -3871,14 +3871,14 @@ var require_ponyfill_es2018 = __commonJS({
         stream._storedError = void 0;
         stream._disturbed = false;
       }
-      function IsReadableStream(x3) {
-        if (!typeIsObject(x3)) {
+      function IsReadableStream(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_readableStreamController")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_readableStreamController")) {
           return false;
         }
-        return x3 instanceof ReadableStream2;
+        return x4 instanceof ReadableStream2;
       }
       function IsReadableStreamLocked(stream) {
         if (stream._reader === void 0) {
@@ -3988,14 +3988,14 @@ var require_ponyfill_es2018 = __commonJS({
       function byteLengthBrandCheckException(name) {
         return new TypeError(`ByteLengthQueuingStrategy.prototype.${name} can only be used on a ByteLengthQueuingStrategy`);
       }
-      function IsByteLengthQueuingStrategy(x3) {
-        if (!typeIsObject(x3)) {
+      function IsByteLengthQueuingStrategy(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_byteLengthQueuingStrategyHighWaterMark")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_byteLengthQueuingStrategyHighWaterMark")) {
           return false;
         }
-        return x3 instanceof ByteLengthQueuingStrategy;
+        return x4 instanceof ByteLengthQueuingStrategy;
       }
       const countSizeFunction = () => {
         return 1;
@@ -4040,14 +4040,14 @@ var require_ponyfill_es2018 = __commonJS({
       function countBrandCheckException(name) {
         return new TypeError(`CountQueuingStrategy.prototype.${name} can only be used on a CountQueuingStrategy`);
       }
-      function IsCountQueuingStrategy(x3) {
-        if (!typeIsObject(x3)) {
+      function IsCountQueuingStrategy(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_countQueuingStrategyHighWaterMark")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_countQueuingStrategyHighWaterMark")) {
           return false;
         }
-        return x3 instanceof CountQueuingStrategy2;
+        return x4 instanceof CountQueuingStrategy2;
       }
       function convertTransformer(original, context) {
         assertDictionary(original, context);
@@ -4168,14 +4168,14 @@ var require_ponyfill_es2018 = __commonJS({
         TransformStreamSetBackpressure(stream, true);
         stream._transformStreamController = void 0;
       }
-      function IsTransformStream(x3) {
-        if (!typeIsObject(x3)) {
+      function IsTransformStream(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_transformStreamController")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_transformStreamController")) {
           return false;
         }
-        return x3 instanceof TransformStream;
+        return x4 instanceof TransformStream;
       }
       function TransformStreamError(stream, e3) {
         ReadableStreamDefaultControllerError(stream._readable._readableStreamController, e3);
@@ -4256,14 +4256,14 @@ var require_ponyfill_es2018 = __commonJS({
           configurable: true
         });
       }
-      function IsTransformStreamDefaultController(x3) {
-        if (!typeIsObject(x3)) {
+      function IsTransformStreamDefaultController(x4) {
+        if (!typeIsObject(x4)) {
           return false;
         }
-        if (!Object.prototype.hasOwnProperty.call(x3, "_controlledTransformStream")) {
+        if (!Object.prototype.hasOwnProperty.call(x4, "_controlledTransformStream")) {
           return false;
         }
-        return x3 instanceof TransformStreamDefaultController;
+        return x4 instanceof TransformStreamDefaultController;
       }
       function SetUpTransformStreamDefaultController(stream, controller, transformAlgorithm, flushAlgorithm, cancelAlgorithm) {
         controller._controlledTransformStream = stream;
@@ -4331,9 +4331,9 @@ var require_ponyfill_es2018 = __commonJS({
       }
       function TransformStreamDefaultControllerPerformTransform(controller, chunk) {
         const transformPromise = controller._transformAlgorithm(chunk);
-        return transformPromiseWith(transformPromise, void 0, (r3) => {
-          TransformStreamError(controller._controlledTransformStream, r3);
-          throw r3;
+        return transformPromiseWith(transformPromise, void 0, (r2) => {
+          TransformStreamError(controller._controlledTransformStream, r2);
+          throw r2;
         });
       }
       function TransformStreamDefaultControllerTerminate(controller) {
@@ -4378,9 +4378,9 @@ var require_ponyfill_es2018 = __commonJS({
             defaultControllerFinishPromiseResolve(controller);
           }
           return null;
-        }, (r3) => {
-          ReadableStreamDefaultControllerError(readable2._readableStreamController, r3);
-          defaultControllerFinishPromiseReject(controller, r3);
+        }, (r2) => {
+          ReadableStreamDefaultControllerError(readable2._readableStreamController, r2);
+          defaultControllerFinishPromiseReject(controller, r2);
           return null;
         });
         return controller._finishPromise;
@@ -4405,9 +4405,9 @@ var require_ponyfill_es2018 = __commonJS({
             defaultControllerFinishPromiseResolve(controller);
           }
           return null;
-        }, (r3) => {
-          ReadableStreamDefaultControllerError(readable2._readableStreamController, r3);
-          defaultControllerFinishPromiseReject(controller, r3);
+        }, (r2) => {
+          ReadableStreamDefaultControllerError(readable2._readableStreamController, r2);
+          defaultControllerFinishPromiseReject(controller, r2);
           return null;
         });
         return controller._finishPromise;
@@ -4437,10 +4437,10 @@ var require_ponyfill_es2018 = __commonJS({
             defaultControllerFinishPromiseResolve(controller);
           }
           return null;
-        }, (r3) => {
-          WritableStreamDefaultControllerErrorIfNeeded(writable2._writableStreamController, r3);
+        }, (r2) => {
+          WritableStreamDefaultControllerErrorIfNeeded(writable2._writableStreamController, r2);
           TransformStreamUnblockWrite(stream);
-          defaultControllerFinishPromiseReject(controller, r3);
+          defaultControllerFinishPromiseReject(controller, r2);
           return null;
         });
         return controller._finishPromise;
@@ -4553,12 +4553,12 @@ async function* toIterator(parts, clone2 = true) {
         yield part;
       }
     } else {
-      let position = 0, b3 = (
+      let position = 0, b = (
         /** @type {Blob} */
         part
       );
-      while (position !== b3.size) {
-        const chunk = b3.slice(position, Math.min(b3.size, position + POOL_SIZE));
+      while (position !== b.size) {
+        const chunk = b.slice(position, Math.min(b.size, position + POOL_SIZE));
         const buffer = await chunk.arrayBuffer();
         position += buffer.byteLength;
         yield new Uint8Array(buffer);
@@ -4661,16 +4661,16 @@ var init_fetch_blob = __esm({
         return data.buffer;
       }
       stream() {
-        const it = toIterator(this.#parts, true);
+        const it3 = toIterator(this.#parts, true);
         return new globalThis.ReadableStream({
           // @ts-ignore
           type: "bytes",
           async pull(ctrl) {
-            const chunk = await it.next();
+            const chunk = await it3.next();
             chunk.done ? ctrl.close() : ctrl.enqueue(chunk.value);
           },
           async cancel() {
-            await it.return();
+            await it3.return();
           }
         });
       }
@@ -4780,30 +4780,30 @@ var init_file = __esm({
 });
 
 // node_modules/formdata-polyfill/esm.min.js
-function formDataToBlob(F3, B2 = fetch_blob_default) {
-  var b3 = `${r2()}${r2()}`.replace(/\./g, "").slice(-28).padStart(32, "-"), c3 = [], p2 = `--${b3}\r
+function formDataToBlob(F2, B2 = fetch_blob_default) {
+  var b = `${r()}${r()}`.replace(/\./g, "").slice(-28).padStart(32, "-"), c3 = [], p = `--${b}\r
 Content-Disposition: form-data; name="`;
-  F3.forEach((v2, n2) => typeof v2 == "string" ? c3.push(p2 + e2(n2) + `"\r
+  F2.forEach((v, n2) => typeof v == "string" ? c3.push(p + e2(n2) + `"\r
 \r
-${v2.replace(/\r(?!\n)|(?<!\r)\n/g, "\r\n")}\r
-`) : c3.push(p2 + e2(n2) + `"; filename="${e2(v2.name, 1)}"\r
-Content-Type: ${v2.type || "application/octet-stream"}\r
+${v.replace(/\r(?!\n)|(?<!\r)\n/g, "\r\n")}\r
+`) : c3.push(p + e2(n2) + `"; filename="${e2(v.name, 1)}"\r
+Content-Type: ${v.type || "application/octet-stream"}\r
 \r
-`, v2, "\r\n"));
-  c3.push(`--${b3}--`);
-  return new B2(c3, { type: "multipart/form-data; boundary=" + b3 });
+`, v, "\r\n"));
+  c3.push(`--${b}--`);
+  return new B2(c3, { type: "multipart/form-data; boundary=" + b });
 }
-var t, i2, h3, r2, m2, f, e2, x2, FormData;
+var t, i2, h2, r, m, f, e2, x3, FormData;
 var init_esm_min = __esm({
   "node_modules/formdata-polyfill/esm.min.js"() {
     init_fetch_blob();
     init_file();
-    ({ toStringTag: t, iterator: i2, hasInstance: h3 } = Symbol);
-    r2 = Math.random;
-    m2 = "append,set,get,getAll,delete,keys,values,entries,forEach,constructor".split(",");
-    f = (a2, b3, c3) => (a2 += "", /^(Blob|File)$/.test(b3 && b3[t]) ? [(c3 = c3 !== void 0 ? c3 + "" : b3[t] == "File" ? b3.name : "blob", a2), b3.name !== c3 || b3[t] == "blob" ? new file_default([b3], c3, b3) : b3] : [a2, b3 + ""]);
+    ({ toStringTag: t, iterator: i2, hasInstance: h2 } = Symbol);
+    r = Math.random;
+    m = "append,set,get,getAll,delete,keys,values,entries,forEach,constructor".split(",");
+    f = (a2, b, c3) => (a2 += "", /^(Blob|File)$/.test(b && b[t]) ? [(c3 = c3 !== void 0 ? c3 + "" : b[t] == "File" ? b.name : "blob", a2), b.name !== c3 || b[t] == "blob" ? new file_default([b], c3, b) : b] : [a2, b + ""]);
     e2 = (c3, f3) => (f3 ? c3 : c3.replace(/\r?\n|\r/g, "\r\n")).replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
-    x2 = (n2, a2, e3) => {
+    x3 = (n2, a2, e3) => {
       if (a2.length < e3) {
         throw new TypeError(`Failed to execute '${n2}' on 'FormData': ${e3} arguments required, but only ${a2.length} present.`);
       }
@@ -4819,49 +4819,49 @@ var init_esm_min = __esm({
       [i2]() {
         return this.entries();
       }
-      static [h3](o3) {
-        return o3 && typeof o3 === "object" && o3[t] === "FormData" && !m2.some((m3) => typeof o3[m3] != "function");
+      static [h2](o2) {
+        return o2 && typeof o2 === "object" && o2[t] === "FormData" && !m.some((m2) => typeof o2[m2] != "function");
       }
       append(...a2) {
-        x2("append", arguments, 2);
+        x3("append", arguments, 2);
         this.#d.push(f(...a2));
       }
       delete(a2) {
-        x2("delete", arguments, 1);
+        x3("delete", arguments, 1);
         a2 += "";
-        this.#d = this.#d.filter(([b3]) => b3 !== a2);
+        this.#d = this.#d.filter(([b]) => b !== a2);
       }
       get(a2) {
-        x2("get", arguments, 1);
+        x3("get", arguments, 1);
         a2 += "";
-        for (var b3 = this.#d, l2 = b3.length, c3 = 0; c3 < l2; c3++) if (b3[c3][0] === a2) return b3[c3][1];
+        for (var b = this.#d, l = b.length, c3 = 0; c3 < l; c3++) if (b[c3][0] === a2) return b[c3][1];
         return null;
       }
-      getAll(a2, b3) {
-        x2("getAll", arguments, 1);
-        b3 = [];
+      getAll(a2, b) {
+        x3("getAll", arguments, 1);
+        b = [];
         a2 += "";
-        this.#d.forEach((c3) => c3[0] === a2 && b3.push(c3[1]));
-        return b3;
+        this.#d.forEach((c3) => c3[0] === a2 && b.push(c3[1]));
+        return b;
       }
       has(a2) {
-        x2("has", arguments, 1);
+        x3("has", arguments, 1);
         a2 += "";
-        return this.#d.some((b3) => b3[0] === a2);
+        return this.#d.some((b) => b[0] === a2);
       }
-      forEach(a2, b3) {
-        x2("forEach", arguments, 1);
-        for (var [c3, d3] of this) a2.call(b3, d3, c3, this);
+      forEach(a2, b) {
+        x3("forEach", arguments, 1);
+        for (var [c3, d2] of this) a2.call(b, d2, c3, this);
       }
       set(...a2) {
-        x2("set", arguments, 2);
-        var b3 = [], c3 = true;
+        x3("set", arguments, 2);
+        var b = [], c3 = true;
         a2 = f(...a2);
-        this.#d.forEach((d3) => {
-          d3[0] === a2[0] ? c3 && (c3 = !b3.push(a2)) : b3.push(d3);
+        this.#d.forEach((d2) => {
+          d2[0] === a2[0] ? c3 && (c3 = !b.push(a2)) : b.push(d2);
         });
-        c3 && b3.push(a2);
-        this.#d = b3;
+        c3 && b.push(a2);
+        this.#d = b;
       }
       *entries() {
         yield* this.#d;
@@ -5030,27 +5030,27 @@ __export(multipart_parser_exports, {
   toFormData: () => toFormData
 });
 function _fileName(headerValue) {
-  const m3 = headerValue.match(/\bfilename=("(.*?)"|([^()<>@,;:\\"/[\]?={}\s\t]+))($|;\s)/i);
-  if (!m3) {
+  const m2 = headerValue.match(/\bfilename=("(.*?)"|([^()<>@,;:\\"/[\]?={}\s\t]+))($|;\s)/i);
+  if (!m2) {
     return;
   }
-  const match = m3[2] || m3[3] || "";
+  const match = m2[2] || m2[3] || "";
   let filename = match.slice(match.lastIndexOf("\\") + 1);
   filename = filename.replace(/%22/g, '"');
-  filename = filename.replace(/&#(\d{4});/g, (m4, code) => {
+  filename = filename.replace(/&#(\d{4});/g, (m3, code) => {
     return String.fromCharCode(code);
   });
   return filename;
 }
-async function toFormData(Body2, ct) {
-  if (!/multipart/i.test(ct)) {
+async function toFormData(Body2, ct3) {
+  if (!/multipart/i.test(ct3)) {
     throw new TypeError("Failed to fetch");
   }
-  const m3 = ct.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
-  if (!m3) {
+  const m2 = ct3.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+  if (!m2) {
     throw new TypeError("no or bad content-type header, no multipart boundary");
   }
-  const parser = new MultipartParser(m3[1] || m3[2]);
+  const parser = new MultipartParser(m2[1] || m2[2]);
   let headerField;
   let headerValue;
   let entryValue;
@@ -5095,9 +5095,9 @@ async function toFormData(Body2, ct) {
     headerValue += decoder.decode();
     headerField = headerField.toLowerCase();
     if (headerField === "content-disposition") {
-      const m4 = headerValue.match(/\bname=("([^"]*)"|([^()<>@,;:\\"/[\]?={}\s\t]+))/i);
-      if (m4) {
-        entryName = m4[2] || m4[3] || "";
+      const m3 = headerValue.match(/\bname=("([^"]*)"|([^()<>@,;:\\"/[\]?={}\s\t]+))/i);
+      if (m3) {
+        entryName = m3[2] || m3[3] || "";
       }
       filename = _fileName(headerValue);
       if (filename) {
@@ -5116,7 +5116,7 @@ async function toFormData(Body2, ct) {
   parser.end();
   return formData;
 }
-var s, S2, f2, F2, LF2, CR2, SPACE, HYPHEN, COLON, A3, Z, lower, noop3, MultipartParser;
+var s, S2, f2, F, LF2, CR2, SPACE, HYPHEN, COLON, A, Z3, lower, noop3, MultipartParser;
 var init_multipart_parser = __esm({
   "node_modules/node-fetch/src/utils/multipart-parser.js"() {
     init_from();
@@ -5135,7 +5135,7 @@ var init_multipart_parser = __esm({
       END: s++
     };
     f2 = 1;
-    F2 = {
+    F = {
       PART_BOUNDARY: f2,
       LAST_BOUNDARY: f2 *= 2
     };
@@ -5144,8 +5144,8 @@ var init_multipart_parser = __esm({
     SPACE = 32;
     HYPHEN = 45;
     COLON = 58;
-    A3 = 97;
-    Z = 122;
+    A = 97;
+    Z3 = 122;
     lower = (c3) => c3 | 32;
     noop3 = () => {
     };
@@ -5217,17 +5217,17 @@ var init_multipart_parser = __esm({
             case S2.START_BOUNDARY:
               if (index === boundary.length - 2) {
                 if (c3 === HYPHEN) {
-                  flags |= F2.LAST_BOUNDARY;
+                  flags |= F.LAST_BOUNDARY;
                 } else if (c3 !== CR2) {
                   return;
                 }
                 index++;
                 break;
               } else if (index - 1 === boundary.length - 2) {
-                if (flags & F2.LAST_BOUNDARY && c3 === HYPHEN) {
+                if (flags & F.LAST_BOUNDARY && c3 === HYPHEN) {
                   state = S2.END;
                   flags = 0;
-                } else if (!(flags & F2.LAST_BOUNDARY) && c3 === LF2) {
+                } else if (!(flags & F.LAST_BOUNDARY) && c3 === LF2) {
                   index = 0;
                   callback("onPartBegin");
                   state = S2.HEADER_FIELD_START;
@@ -5267,7 +5267,7 @@ var init_multipart_parser = __esm({
                 break;
               }
               cl = lower(c3);
-              if (cl < A3 || cl > Z) {
+              if (cl < A || cl > Z3) {
                 return;
               }
               break;
@@ -5324,23 +5324,23 @@ var init_multipart_parser = __esm({
               } else if (index === boundary.length) {
                 index++;
                 if (c3 === CR2) {
-                  flags |= F2.PART_BOUNDARY;
+                  flags |= F.PART_BOUNDARY;
                 } else if (c3 === HYPHEN) {
-                  flags |= F2.LAST_BOUNDARY;
+                  flags |= F.LAST_BOUNDARY;
                 } else {
                   index = 0;
                 }
               } else if (index - 1 === boundary.length) {
-                if (flags & F2.PART_BOUNDARY) {
+                if (flags & F.PART_BOUNDARY) {
                   index = 0;
                   if (c3 === LF2) {
-                    flags &= ~F2.PART_BOUNDARY;
+                    flags &= ~F.PART_BOUNDARY;
                     callback("onPartEnd");
                     callback("onPartBegin");
                     state = S2.HEADER_FIELD_START;
                     break;
                   }
-                } else if (flags & F2.LAST_BOUNDARY) {
+                } else if (flags & F.LAST_BOUNDARY) {
                   if (c3 === HYPHEN) {
                     callback("onPartEnd");
                     state = S2.END;
@@ -5503,8 +5503,8 @@ var init_body = __esm({
         return buffer.slice(byteOffset, byteOffset + byteLength);
       }
       async formData() {
-        const ct = this.headers.get("content-type");
-        if (ct.startsWith("application/x-www-form-urlencoded")) {
+        const ct3 = this.headers.get("content-type");
+        if (ct3.startsWith("application/x-www-form-urlencoded")) {
           const formData = new FormData();
           const parameters = new URLSearchParams(await this.text());
           for (const [name, value] of parameters) {
@@ -5513,7 +5513,7 @@ var init_body = __esm({
           return formData;
         }
         const { toFormData: toFormData2 } = await Promise.resolve().then(() => (init_multipart_parser(), multipart_parser_exports));
-        return toFormData2(this.body, ct);
+        return toFormData2(this.body, ct3);
       }
       /**
        * Return raw response as Blob
@@ -5521,10 +5521,10 @@ var init_body = __esm({
        * @return Promise
        */
       async blob() {
-        const ct = this.headers && this.headers.get("content-type") || this[INTERNALS].body && this[INTERNALS].body.type || "";
+        const ct3 = this.headers && this.headers.get("content-type") || this[INTERNALS].body && this[INTERNALS].body.type || "";
         const buf = await this.arrayBuffer();
         return new fetch_blob_default([buf], {
-          type: ct
+          type: ct3
         });
       }
       /**
@@ -5727,14 +5727,14 @@ var init_headers = __esm({
         }) : void 0;
         super(result);
         return new Proxy(this, {
-          get(target, p2, receiver) {
-            switch (p2) {
+          get(target, p, receiver) {
+            switch (p) {
               case "append":
               case "set":
                 return (name, value) => {
                   validateHeaderName(name);
                   validateHeaderValue(name, String(value));
-                  return URLSearchParams.prototype[p2].call(
+                  return URLSearchParams.prototype[p].call(
                     target,
                     String(name).toLowerCase(),
                     String(value)
@@ -5745,7 +5745,7 @@ var init_headers = __esm({
               case "getAll":
                 return (name) => {
                   validateHeaderName(name);
-                  return URLSearchParams.prototype[p2].call(
+                  return URLSearchParams.prototype[p].call(
                     target,
                     String(name).toLowerCase()
                   );
@@ -5756,7 +5756,7 @@ var init_headers = __esm({
                   return new Set(URLSearchParams.prototype.keys.call(target)).keys();
                 };
               default:
-                return Reflect.get(target, p2, receiver);
+                return Reflect.get(target, p, receiver);
             }
           }
         });
@@ -7583,7 +7583,7 @@ var npmRunPathEnv = ({ env: env2 = process4.env, ...options } = {}) => {
 };
 
 // node_modules/execa/lib/terminate/kill.js
-import { setTimeout } from "node:timers/promises";
+import { setTimeout as setTimeout2 } from "node:timers/promises";
 
 // node_modules/execa/lib/return/final-error.js
 var getFinalError = (originalError, message, isSync) => {
@@ -8090,7 +8090,7 @@ var killOnTimeout = async ({ kill, forceKillAfterDelay, context, controllerSigna
     return;
   }
   try {
-    await setTimeout(forceKillAfterDelay, void 0, { signal: controllerSignal });
+    await setTimeout2(forceKillAfterDelay, void 0, { signal: controllerSignal });
     if (kill("SIGKILL")) {
       context.isForcefullyTerminated ??= true;
     }
@@ -8708,7 +8708,7 @@ var getReason = ({ reason }) => {
 };
 
 // node_modules/execa/lib/terminate/timeout.js
-import { setTimeout as setTimeout2 } from "node:timers/promises";
+import { setTimeout as setTimeout3 } from "node:timers/promises";
 var validateTimeout = ({ timeout }) => {
   if (timeout !== void 0 && (!Number.isFinite(timeout) || timeout < 0)) {
     throw new TypeError(`Expected the \`timeout\` option to be a non-negative integer, got \`${timeout}\` (${typeof timeout})`);
@@ -8716,7 +8716,7 @@ var validateTimeout = ({ timeout }) => {
 };
 var throwOnTimeout = (subprocess, timeout, context, controller) => timeout === 0 || timeout === void 0 ? [] : [killAfterTimeout(subprocess, timeout, context, controller)];
 var killAfterTimeout = async (subprocess, timeout, context, { signal }) => {
-  await setTimeout2(timeout, void 0, { signal });
+  await setTimeout3(timeout, void 0, { signal });
   context.terminationReason ??= "timeout";
   subprocess.kill();
   throw new DiscardedError();
@@ -9051,8 +9051,8 @@ function i() {
   return this[n].next();
 }
 Object.defineProperty(i, "name", { value: "next" });
-function o(r3) {
-  return this[n].return(r3);
+function o(r2) {
+  return this[n].return(r2);
 }
 Object.defineProperty(o, "name", { value: "return" });
 var u = Object.create(a, {
@@ -9069,10 +9069,10 @@ var u = Object.create(a, {
     value: o
   }
 });
-function h({ preventCancel: r3 = false } = {}) {
+function h({ preventCancel: r2 = false } = {}) {
   const e3 = this.getReader(), t2 = new c(
     e3,
-    r3
+    r2
   ), s2 = Object.create(u);
   return s2[n] = t2, s2;
 }
@@ -10183,7 +10183,7 @@ var getStdioArray = (stdio, options) => {
     throw new TypeError(`Expected \`stdio\` to be of type \`string\` or \`Array\`, got \`${typeof stdio}\``);
   }
   const length = Math.max(stdio.length, STANDARD_STREAMS_ALIASES.length);
-  return Array.from({ length }, (_3, fdNumber) => stdio[fdNumber]);
+  return Array.from({ length }, (_2, fdNumber) => stdio[fdNumber]);
 };
 var hasAlias = (options) => STANDARD_STREAMS_ALIASES.some((alias) => options[alias] !== void 0);
 var addDefaultValue2 = (stdioOption, fdNumber) => {
@@ -11969,9 +11969,9 @@ var SignalExit = class extends SignalExitBase {
       this.#sigListeners[sig] = () => {
         const listeners = this.#process.listeners(sig);
         let { count: count2 } = this.#emitter;
-        const p2 = process15;
-        if (typeof p2.__signal_exit_emitter__ === "object" && typeof p2.__signal_exit_emitter__.count === "number") {
-          count2 += p2.__signal_exit_emitter__.count;
+        const p = process15;
+        if (typeof p.__signal_exit_emitter__ === "object" && typeof p.__signal_exit_emitter__.count === "number") {
+          count2 += p.__signal_exit_emitter__.count;
         }
         if (listeners.length === count2) {
           this.unload();
@@ -12013,7 +12013,7 @@ var SignalExit = class extends SignalExitBase {
         const fn = this.#sigListeners[sig];
         if (fn)
           this.#process.on(sig, fn);
-      } catch (_3) {
+      } catch (_2) {
       }
     }
     this.#process.emit = (ev, ...a2) => {
@@ -12035,7 +12035,7 @@ var SignalExit = class extends SignalExitBase {
       }
       try {
         this.#process.removeListener(sig, listener);
-      } catch (_3) {
+      } catch (_2) {
       }
     });
     this.#process.emit = this.#originalProcessEmit;
@@ -13440,370 +13440,413 @@ import _fsExtra from "fs-extra";
 import { fileURLToPath as fileURLToPath3 } from "url";
 
 // node_modules/@clack/core/dist/index.mjs
-var import_sisteransi = __toESM(require_src(), 1);
 var import_picocolors = __toESM(require_picocolors(), 1);
-import { stdin as j, stdout as M } from "node:process";
-import * as g from "node:readline";
-import O from "node:readline";
-import { Writable as X } from "node:stream";
-function DD({ onlyFirst: e3 = false } = {}) {
-  const t2 = ["[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?(?:\\u0007|\\u001B\\u005C|\\u009C))", "(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))"].join("|");
-  return new RegExp(t2, e3 ? void 0 : "g");
+var import_sisteransi = __toESM(require_src(), 1);
+import { stdout as R, stdin as q } from "node:process";
+import * as k from "node:readline";
+import ot from "node:readline";
+import { ReadStream as J } from "node:tty";
+function B(t2, e3, s2) {
+  if (!s2.some((u2) => !u2.disabled)) return t2;
+  const i3 = t2 + e3, r2 = Math.max(s2.length - 1, 0), n2 = i3 < 0 ? r2 : i3 > r2 ? 0 : i3;
+  return s2[n2].disabled ? B(n2, e3 < 0 ? -1 : 1, s2) : n2;
 }
-var uD = DD();
-function P(e3) {
-  if (typeof e3 != "string") throw new TypeError(`Expected a \`string\`, got \`${typeof e3}\``);
-  return e3.replace(uD, "");
-}
-function L(e3) {
-  return e3 && e3.__esModule && Object.prototype.hasOwnProperty.call(e3, "default") ? e3.default : e3;
-}
-var W = { exports: {} };
-(function(e3) {
-  var u3 = {};
-  e3.exports = u3, u3.eastAsianWidth = function(F3) {
-    var s2 = F3.charCodeAt(0), i3 = F3.length == 2 ? F3.charCodeAt(1) : 0, D2 = s2;
-    return 55296 <= s2 && s2 <= 56319 && 56320 <= i3 && i3 <= 57343 && (s2 &= 1023, i3 &= 1023, D2 = s2 << 10 | i3, D2 += 65536), D2 == 12288 || 65281 <= D2 && D2 <= 65376 || 65504 <= D2 && D2 <= 65510 ? "F" : D2 == 8361 || 65377 <= D2 && D2 <= 65470 || 65474 <= D2 && D2 <= 65479 || 65482 <= D2 && D2 <= 65487 || 65490 <= D2 && D2 <= 65495 || 65498 <= D2 && D2 <= 65500 || 65512 <= D2 && D2 <= 65518 ? "H" : 4352 <= D2 && D2 <= 4447 || 4515 <= D2 && D2 <= 4519 || 4602 <= D2 && D2 <= 4607 || 9001 <= D2 && D2 <= 9002 || 11904 <= D2 && D2 <= 11929 || 11931 <= D2 && D2 <= 12019 || 12032 <= D2 && D2 <= 12245 || 12272 <= D2 && D2 <= 12283 || 12289 <= D2 && D2 <= 12350 || 12353 <= D2 && D2 <= 12438 || 12441 <= D2 && D2 <= 12543 || 12549 <= D2 && D2 <= 12589 || 12593 <= D2 && D2 <= 12686 || 12688 <= D2 && D2 <= 12730 || 12736 <= D2 && D2 <= 12771 || 12784 <= D2 && D2 <= 12830 || 12832 <= D2 && D2 <= 12871 || 12880 <= D2 && D2 <= 13054 || 13056 <= D2 && D2 <= 19903 || 19968 <= D2 && D2 <= 42124 || 42128 <= D2 && D2 <= 42182 || 43360 <= D2 && D2 <= 43388 || 44032 <= D2 && D2 <= 55203 || 55216 <= D2 && D2 <= 55238 || 55243 <= D2 && D2 <= 55291 || 63744 <= D2 && D2 <= 64255 || 65040 <= D2 && D2 <= 65049 || 65072 <= D2 && D2 <= 65106 || 65108 <= D2 && D2 <= 65126 || 65128 <= D2 && D2 <= 65131 || 110592 <= D2 && D2 <= 110593 || 127488 <= D2 && D2 <= 127490 || 127504 <= D2 && D2 <= 127546 || 127552 <= D2 && D2 <= 127560 || 127568 <= D2 && D2 <= 127569 || 131072 <= D2 && D2 <= 194367 || 177984 <= D2 && D2 <= 196605 || 196608 <= D2 && D2 <= 262141 ? "W" : 32 <= D2 && D2 <= 126 || 162 <= D2 && D2 <= 163 || 165 <= D2 && D2 <= 166 || D2 == 172 || D2 == 175 || 10214 <= D2 && D2 <= 10221 || 10629 <= D2 && D2 <= 10630 ? "Na" : D2 == 161 || D2 == 164 || 167 <= D2 && D2 <= 168 || D2 == 170 || 173 <= D2 && D2 <= 174 || 176 <= D2 && D2 <= 180 || 182 <= D2 && D2 <= 186 || 188 <= D2 && D2 <= 191 || D2 == 198 || D2 == 208 || 215 <= D2 && D2 <= 216 || 222 <= D2 && D2 <= 225 || D2 == 230 || 232 <= D2 && D2 <= 234 || 236 <= D2 && D2 <= 237 || D2 == 240 || 242 <= D2 && D2 <= 243 || 247 <= D2 && D2 <= 250 || D2 == 252 || D2 == 254 || D2 == 257 || D2 == 273 || D2 == 275 || D2 == 283 || 294 <= D2 && D2 <= 295 || D2 == 299 || 305 <= D2 && D2 <= 307 || D2 == 312 || 319 <= D2 && D2 <= 322 || D2 == 324 || 328 <= D2 && D2 <= 331 || D2 == 333 || 338 <= D2 && D2 <= 339 || 358 <= D2 && D2 <= 359 || D2 == 363 || D2 == 462 || D2 == 464 || D2 == 466 || D2 == 468 || D2 == 470 || D2 == 472 || D2 == 474 || D2 == 476 || D2 == 593 || D2 == 609 || D2 == 708 || D2 == 711 || 713 <= D2 && D2 <= 715 || D2 == 717 || D2 == 720 || 728 <= D2 && D2 <= 731 || D2 == 733 || D2 == 735 || 768 <= D2 && D2 <= 879 || 913 <= D2 && D2 <= 929 || 931 <= D2 && D2 <= 937 || 945 <= D2 && D2 <= 961 || 963 <= D2 && D2 <= 969 || D2 == 1025 || 1040 <= D2 && D2 <= 1103 || D2 == 1105 || D2 == 8208 || 8211 <= D2 && D2 <= 8214 || 8216 <= D2 && D2 <= 8217 || 8220 <= D2 && D2 <= 8221 || 8224 <= D2 && D2 <= 8226 || 8228 <= D2 && D2 <= 8231 || D2 == 8240 || 8242 <= D2 && D2 <= 8243 || D2 == 8245 || D2 == 8251 || D2 == 8254 || D2 == 8308 || D2 == 8319 || 8321 <= D2 && D2 <= 8324 || D2 == 8364 || D2 == 8451 || D2 == 8453 || D2 == 8457 || D2 == 8467 || D2 == 8470 || 8481 <= D2 && D2 <= 8482 || D2 == 8486 || D2 == 8491 || 8531 <= D2 && D2 <= 8532 || 8539 <= D2 && D2 <= 8542 || 8544 <= D2 && D2 <= 8555 || 8560 <= D2 && D2 <= 8569 || D2 == 8585 || 8592 <= D2 && D2 <= 8601 || 8632 <= D2 && D2 <= 8633 || D2 == 8658 || D2 == 8660 || D2 == 8679 || D2 == 8704 || 8706 <= D2 && D2 <= 8707 || 8711 <= D2 && D2 <= 8712 || D2 == 8715 || D2 == 8719 || D2 == 8721 || D2 == 8725 || D2 == 8730 || 8733 <= D2 && D2 <= 8736 || D2 == 8739 || D2 == 8741 || 8743 <= D2 && D2 <= 8748 || D2 == 8750 || 8756 <= D2 && D2 <= 8759 || 8764 <= D2 && D2 <= 8765 || D2 == 8776 || D2 == 8780 || D2 == 8786 || 8800 <= D2 && D2 <= 8801 || 8804 <= D2 && D2 <= 8807 || 8810 <= D2 && D2 <= 8811 || 8814 <= D2 && D2 <= 8815 || 8834 <= D2 && D2 <= 8835 || 8838 <= D2 && D2 <= 8839 || D2 == 8853 || D2 == 8857 || D2 == 8869 || D2 == 8895 || D2 == 8978 || 9312 <= D2 && D2 <= 9449 || 9451 <= D2 && D2 <= 9547 || 9552 <= D2 && D2 <= 9587 || 9600 <= D2 && D2 <= 9615 || 9618 <= D2 && D2 <= 9621 || 9632 <= D2 && D2 <= 9633 || 9635 <= D2 && D2 <= 9641 || 9650 <= D2 && D2 <= 9651 || 9654 <= D2 && D2 <= 9655 || 9660 <= D2 && D2 <= 9661 || 9664 <= D2 && D2 <= 9665 || 9670 <= D2 && D2 <= 9672 || D2 == 9675 || 9678 <= D2 && D2 <= 9681 || 9698 <= D2 && D2 <= 9701 || D2 == 9711 || 9733 <= D2 && D2 <= 9734 || D2 == 9737 || 9742 <= D2 && D2 <= 9743 || 9748 <= D2 && D2 <= 9749 || D2 == 9756 || D2 == 9758 || D2 == 9792 || D2 == 9794 || 9824 <= D2 && D2 <= 9825 || 9827 <= D2 && D2 <= 9829 || 9831 <= D2 && D2 <= 9834 || 9836 <= D2 && D2 <= 9837 || D2 == 9839 || 9886 <= D2 && D2 <= 9887 || 9918 <= D2 && D2 <= 9919 || 9924 <= D2 && D2 <= 9933 || 9935 <= D2 && D2 <= 9953 || D2 == 9955 || 9960 <= D2 && D2 <= 9983 || D2 == 10045 || D2 == 10071 || 10102 <= D2 && D2 <= 10111 || 11093 <= D2 && D2 <= 11097 || 12872 <= D2 && D2 <= 12879 || 57344 <= D2 && D2 <= 63743 || 65024 <= D2 && D2 <= 65039 || D2 == 65533 || 127232 <= D2 && D2 <= 127242 || 127248 <= D2 && D2 <= 127277 || 127280 <= D2 && D2 <= 127337 || 127344 <= D2 && D2 <= 127386 || 917760 <= D2 && D2 <= 917999 || 983040 <= D2 && D2 <= 1048573 || 1048576 <= D2 && D2 <= 1114109 ? "A" : "N";
-  }, u3.characterLength = function(F3) {
-    var s2 = this.eastAsianWidth(F3);
-    return s2 == "F" || s2 == "W" || s2 == "A" ? 2 : 1;
-  };
-  function t2(F3) {
-    return F3.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|[^\uD800-\uDFFF]/g) || [];
-  }
-  u3.length = function(F3) {
-    for (var s2 = t2(F3), i3 = 0, D2 = 0; D2 < s2.length; D2++) i3 = i3 + this.characterLength(s2[D2]);
-    return i3;
-  }, u3.slice = function(F3, s2, i3) {
-    textLen = u3.length(F3), s2 = s2 || 0, i3 = i3 || 1, s2 < 0 && (s2 = textLen + s2), i3 < 0 && (i3 = textLen + i3);
-    for (var D2 = "", C2 = 0, n2 = t2(F3), E = 0; E < n2.length; E++) {
-      var a2 = n2[E], o3 = u3.length(a2);
-      if (C2 >= s2 - (o3 == 2 ? 1 : 0)) if (C2 + o3 <= i3) D2 += a2;
-      else break;
-      C2 += o3;
+var at = (t2) => t2 === 161 || t2 === 164 || t2 === 167 || t2 === 168 || t2 === 170 || t2 === 173 || t2 === 174 || t2 >= 176 && t2 <= 180 || t2 >= 182 && t2 <= 186 || t2 >= 188 && t2 <= 191 || t2 === 198 || t2 === 208 || t2 === 215 || t2 === 216 || t2 >= 222 && t2 <= 225 || t2 === 230 || t2 >= 232 && t2 <= 234 || t2 === 236 || t2 === 237 || t2 === 240 || t2 === 242 || t2 === 243 || t2 >= 247 && t2 <= 250 || t2 === 252 || t2 === 254 || t2 === 257 || t2 === 273 || t2 === 275 || t2 === 283 || t2 === 294 || t2 === 295 || t2 === 299 || t2 >= 305 && t2 <= 307 || t2 === 312 || t2 >= 319 && t2 <= 322 || t2 === 324 || t2 >= 328 && t2 <= 331 || t2 === 333 || t2 === 338 || t2 === 339 || t2 === 358 || t2 === 359 || t2 === 363 || t2 === 462 || t2 === 464 || t2 === 466 || t2 === 468 || t2 === 470 || t2 === 472 || t2 === 474 || t2 === 476 || t2 === 593 || t2 === 609 || t2 === 708 || t2 === 711 || t2 >= 713 && t2 <= 715 || t2 === 717 || t2 === 720 || t2 >= 728 && t2 <= 731 || t2 === 733 || t2 === 735 || t2 >= 768 && t2 <= 879 || t2 >= 913 && t2 <= 929 || t2 >= 931 && t2 <= 937 || t2 >= 945 && t2 <= 961 || t2 >= 963 && t2 <= 969 || t2 === 1025 || t2 >= 1040 && t2 <= 1103 || t2 === 1105 || t2 === 8208 || t2 >= 8211 && t2 <= 8214 || t2 === 8216 || t2 === 8217 || t2 === 8220 || t2 === 8221 || t2 >= 8224 && t2 <= 8226 || t2 >= 8228 && t2 <= 8231 || t2 === 8240 || t2 === 8242 || t2 === 8243 || t2 === 8245 || t2 === 8251 || t2 === 8254 || t2 === 8308 || t2 === 8319 || t2 >= 8321 && t2 <= 8324 || t2 === 8364 || t2 === 8451 || t2 === 8453 || t2 === 8457 || t2 === 8467 || t2 === 8470 || t2 === 8481 || t2 === 8482 || t2 === 8486 || t2 === 8491 || t2 === 8531 || t2 === 8532 || t2 >= 8539 && t2 <= 8542 || t2 >= 8544 && t2 <= 8555 || t2 >= 8560 && t2 <= 8569 || t2 === 8585 || t2 >= 8592 && t2 <= 8601 || t2 === 8632 || t2 === 8633 || t2 === 8658 || t2 === 8660 || t2 === 8679 || t2 === 8704 || t2 === 8706 || t2 === 8707 || t2 === 8711 || t2 === 8712 || t2 === 8715 || t2 === 8719 || t2 === 8721 || t2 === 8725 || t2 === 8730 || t2 >= 8733 && t2 <= 8736 || t2 === 8739 || t2 === 8741 || t2 >= 8743 && t2 <= 8748 || t2 === 8750 || t2 >= 8756 && t2 <= 8759 || t2 === 8764 || t2 === 8765 || t2 === 8776 || t2 === 8780 || t2 === 8786 || t2 === 8800 || t2 === 8801 || t2 >= 8804 && t2 <= 8807 || t2 === 8810 || t2 === 8811 || t2 === 8814 || t2 === 8815 || t2 === 8834 || t2 === 8835 || t2 === 8838 || t2 === 8839 || t2 === 8853 || t2 === 8857 || t2 === 8869 || t2 === 8895 || t2 === 8978 || t2 >= 9312 && t2 <= 9449 || t2 >= 9451 && t2 <= 9547 || t2 >= 9552 && t2 <= 9587 || t2 >= 9600 && t2 <= 9615 || t2 >= 9618 && t2 <= 9621 || t2 === 9632 || t2 === 9633 || t2 >= 9635 && t2 <= 9641 || t2 === 9650 || t2 === 9651 || t2 === 9654 || t2 === 9655 || t2 === 9660 || t2 === 9661 || t2 === 9664 || t2 === 9665 || t2 >= 9670 && t2 <= 9672 || t2 === 9675 || t2 >= 9678 && t2 <= 9681 || t2 >= 9698 && t2 <= 9701 || t2 === 9711 || t2 === 9733 || t2 === 9734 || t2 === 9737 || t2 === 9742 || t2 === 9743 || t2 === 9756 || t2 === 9758 || t2 === 9792 || t2 === 9794 || t2 === 9824 || t2 === 9825 || t2 >= 9827 && t2 <= 9829 || t2 >= 9831 && t2 <= 9834 || t2 === 9836 || t2 === 9837 || t2 === 9839 || t2 === 9886 || t2 === 9887 || t2 === 9919 || t2 >= 9926 && t2 <= 9933 || t2 >= 9935 && t2 <= 9939 || t2 >= 9941 && t2 <= 9953 || t2 === 9955 || t2 === 9960 || t2 === 9961 || t2 >= 9963 && t2 <= 9969 || t2 === 9972 || t2 >= 9974 && t2 <= 9977 || t2 === 9979 || t2 === 9980 || t2 === 9982 || t2 === 9983 || t2 === 10045 || t2 >= 10102 && t2 <= 10111 || t2 >= 11094 && t2 <= 11097 || t2 >= 12872 && t2 <= 12879 || t2 >= 57344 && t2 <= 63743 || t2 >= 65024 && t2 <= 65039 || t2 === 65533 || t2 >= 127232 && t2 <= 127242 || t2 >= 127248 && t2 <= 127277 || t2 >= 127280 && t2 <= 127337 || t2 >= 127344 && t2 <= 127373 || t2 === 127375 || t2 === 127376 || t2 >= 127387 && t2 <= 127404 || t2 >= 917760 && t2 <= 917999 || t2 >= 983040 && t2 <= 1048573 || t2 >= 1048576 && t2 <= 1114109;
+var lt = (t2) => t2 === 12288 || t2 >= 65281 && t2 <= 65376 || t2 >= 65504 && t2 <= 65510;
+var ht = (t2) => t2 >= 4352 && t2 <= 4447 || t2 === 8986 || t2 === 8987 || t2 === 9001 || t2 === 9002 || t2 >= 9193 && t2 <= 9196 || t2 === 9200 || t2 === 9203 || t2 === 9725 || t2 === 9726 || t2 === 9748 || t2 === 9749 || t2 >= 9800 && t2 <= 9811 || t2 === 9855 || t2 === 9875 || t2 === 9889 || t2 === 9898 || t2 === 9899 || t2 === 9917 || t2 === 9918 || t2 === 9924 || t2 === 9925 || t2 === 9934 || t2 === 9940 || t2 === 9962 || t2 === 9970 || t2 === 9971 || t2 === 9973 || t2 === 9978 || t2 === 9981 || t2 === 9989 || t2 === 9994 || t2 === 9995 || t2 === 10024 || t2 === 10060 || t2 === 10062 || t2 >= 10067 && t2 <= 10069 || t2 === 10071 || t2 >= 10133 && t2 <= 10135 || t2 === 10160 || t2 === 10175 || t2 === 11035 || t2 === 11036 || t2 === 11088 || t2 === 11093 || t2 >= 11904 && t2 <= 11929 || t2 >= 11931 && t2 <= 12019 || t2 >= 12032 && t2 <= 12245 || t2 >= 12272 && t2 <= 12287 || t2 >= 12289 && t2 <= 12350 || t2 >= 12353 && t2 <= 12438 || t2 >= 12441 && t2 <= 12543 || t2 >= 12549 && t2 <= 12591 || t2 >= 12593 && t2 <= 12686 || t2 >= 12688 && t2 <= 12771 || t2 >= 12783 && t2 <= 12830 || t2 >= 12832 && t2 <= 12871 || t2 >= 12880 && t2 <= 19903 || t2 >= 19968 && t2 <= 42124 || t2 >= 42128 && t2 <= 42182 || t2 >= 43360 && t2 <= 43388 || t2 >= 44032 && t2 <= 55203 || t2 >= 63744 && t2 <= 64255 || t2 >= 65040 && t2 <= 65049 || t2 >= 65072 && t2 <= 65106 || t2 >= 65108 && t2 <= 65126 || t2 >= 65128 && t2 <= 65131 || t2 >= 94176 && t2 <= 94180 || t2 === 94192 || t2 === 94193 || t2 >= 94208 && t2 <= 100343 || t2 >= 100352 && t2 <= 101589 || t2 >= 101632 && t2 <= 101640 || t2 >= 110576 && t2 <= 110579 || t2 >= 110581 && t2 <= 110587 || t2 === 110589 || t2 === 110590 || t2 >= 110592 && t2 <= 110882 || t2 === 110898 || t2 >= 110928 && t2 <= 110930 || t2 === 110933 || t2 >= 110948 && t2 <= 110951 || t2 >= 110960 && t2 <= 111355 || t2 === 126980 || t2 === 127183 || t2 === 127374 || t2 >= 127377 && t2 <= 127386 || t2 >= 127488 && t2 <= 127490 || t2 >= 127504 && t2 <= 127547 || t2 >= 127552 && t2 <= 127560 || t2 === 127568 || t2 === 127569 || t2 >= 127584 && t2 <= 127589 || t2 >= 127744 && t2 <= 127776 || t2 >= 127789 && t2 <= 127797 || t2 >= 127799 && t2 <= 127868 || t2 >= 127870 && t2 <= 127891 || t2 >= 127904 && t2 <= 127946 || t2 >= 127951 && t2 <= 127955 || t2 >= 127968 && t2 <= 127984 || t2 === 127988 || t2 >= 127992 && t2 <= 128062 || t2 === 128064 || t2 >= 128066 && t2 <= 128252 || t2 >= 128255 && t2 <= 128317 || t2 >= 128331 && t2 <= 128334 || t2 >= 128336 && t2 <= 128359 || t2 === 128378 || t2 === 128405 || t2 === 128406 || t2 === 128420 || t2 >= 128507 && t2 <= 128591 || t2 >= 128640 && t2 <= 128709 || t2 === 128716 || t2 >= 128720 && t2 <= 128722 || t2 >= 128725 && t2 <= 128727 || t2 >= 128732 && t2 <= 128735 || t2 === 128747 || t2 === 128748 || t2 >= 128756 && t2 <= 128764 || t2 >= 128992 && t2 <= 129003 || t2 === 129008 || t2 >= 129292 && t2 <= 129338 || t2 >= 129340 && t2 <= 129349 || t2 >= 129351 && t2 <= 129535 || t2 >= 129648 && t2 <= 129660 || t2 >= 129664 && t2 <= 129672 || t2 >= 129680 && t2 <= 129725 || t2 >= 129727 && t2 <= 129733 || t2 >= 129742 && t2 <= 129755 || t2 >= 129760 && t2 <= 129768 || t2 >= 129776 && t2 <= 129784 || t2 >= 131072 && t2 <= 196605 || t2 >= 196608 && t2 <= 262141;
+var O = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/y;
+var y = /[\x00-\x08\x0A-\x1F\x7F-\x9F]{1,1000}/y;
+var L = /\t{1,1000}/y;
+var P = new RegExp("[\\u{1F1E6}-\\u{1F1FF}]{2}|\\u{1F3F4}[\\u{E0061}-\\u{E007A}]{2}[\\u{E0030}-\\u{E0039}\\u{E0061}-\\u{E007A}]{1,3}\\u{E007F}|(?:\\p{Emoji}\\uFE0F\\u20E3?|\\p{Emoji_Modifier_Base}\\p{Emoji_Modifier}?|\\p{Emoji_Presentation})(?:\\u200D(?:\\p{Emoji_Modifier_Base}\\p{Emoji_Modifier}?|\\p{Emoji_Presentation}|\\p{Emoji}\\uFE0F\\u20E3?))*", "yu");
+var M = /(?:[\x20-\x7E\xA0-\xFF](?!\uFE0F)){1,1000}/y;
+var ct = new RegExp("\\p{M}+", "gu");
+var ft = { limit: 1 / 0, ellipsis: "" };
+var X = (t2, e3 = {}, s2 = {}) => {
+  const i3 = e3.limit ?? 1 / 0, r2 = e3.ellipsis ?? "", n2 = e3?.ellipsisWidth ?? (r2 ? X(r2, ft, s2).width : 0), u2 = s2.ansiWidth ?? 0, a2 = s2.controlWidth ?? 0, l = s2.tabWidth ?? 8, E = s2.ambiguousWidth ?? 1, g = s2.emojiWidth ?? 2, m2 = s2.fullWidthWidth ?? 2, A2 = s2.regularWidth ?? 1, V2 = s2.wideWidth ?? 2;
+  let h3 = 0, o2 = 0, p = t2.length, v = 0, F2 = false, d2 = p, b = Math.max(0, i3 - n2), C2 = 0, w = 0, c3 = 0, f3 = 0;
+  t: for (; ; ) {
+    if (w > C2 || o2 >= p && o2 > h3) {
+      const ut = t2.slice(C2, w) || t2.slice(h3, o2);
+      v = 0;
+      for (const Y of ut.replaceAll(ct, "")) {
+        const $2 = Y.codePointAt(0) || 0;
+        if (lt($2) ? f3 = m2 : ht($2) ? f3 = V2 : E !== A2 && at($2) ? f3 = E : f3 = A2, c3 + f3 > b && (d2 = Math.min(d2, Math.max(C2, h3) + v)), c3 + f3 > i3) {
+          F2 = true;
+          break t;
+        }
+        v += Y.length, c3 += f3;
+      }
+      C2 = w = 0;
     }
-    return D2;
-  };
-})(W);
-var tD = W.exports;
-var eD = L(tD);
-var FD = function() {
-  return /\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62(?:\uDB40\uDC77\uDB40\uDC6C\uDB40\uDC73|\uDB40\uDC73\uDB40\uDC63\uDB40\uDC74|\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67)\uDB40\uDC7F|(?:\uD83E\uDDD1\uD83C\uDFFF\u200D\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFF\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69]))(?:\uD83C[\uDFFB-\uDFFE])|(?:\uD83E\uDDD1\uD83C\uDFFE\u200D\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFE\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69]))(?:\uD83C[\uDFFB-\uDFFD\uDFFF])|(?:\uD83E\uDDD1\uD83C\uDFFD\u200D\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFD\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69]))(?:\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|(?:\uD83E\uDDD1\uD83C\uDFFC\u200D\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFC\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69]))(?:\uD83C[\uDFFB\uDFFD-\uDFFF])|(?:\uD83E\uDDD1\uD83C\uDFFB\u200D\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83E\uDDD1|\uD83D\uDC69\uD83C\uDFFB\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69]))(?:\uD83C[\uDFFC-\uDFFF])|\uD83D\uDC68(?:\uD83C\uDFFB(?:\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFF])|\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFF]))|\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFC-\uDFFF])|[\u2695\u2696\u2708]\uFE0F|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD]))?|(?:\uD83C[\uDFFC-\uDFFF])\u200D\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFF])|\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFF]))|\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83D\uDC68|(?:\uD83D[\uDC68\uDC69])\u200D(?:\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67]))|\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFF\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFE])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFE\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFD\uDFFF])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFC\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFD-\uDFFF])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|(?:\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708]|\u200D[\u2695\u2696\u2708])\uFE0F|\u200D(?:(?:\uD83D[\uDC68\uDC69])\u200D(?:\uD83D[\uDC66\uDC67])|\uD83D[\uDC66\uDC67])|\uD83C\uDFFF|\uD83C\uDFFE|\uD83C\uDFFD|\uD83C\uDFFC)?|(?:\uD83D\uDC69(?:\uD83C\uDFFB\u200D\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D(?:\uD83D[\uDC68\uDC69])|\uD83D[\uDC68\uDC69])|(?:\uD83C[\uDFFC-\uDFFF])\u200D\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D(?:\uD83D[\uDC68\uDC69])|\uD83D[\uDC68\uDC69]))|\uD83E\uDDD1(?:\uD83C[\uDFFB-\uDFFF])\u200D\uD83E\uDD1D\u200D\uD83E\uDDD1)(?:\uD83C[\uDFFB-\uDFFF])|\uD83D\uDC69\u200D\uD83D\uDC69\u200D(?:\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67]))|\uD83D\uDC69(?:\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D(?:\uD83D[\uDC68\uDC69])|\uD83D[\uDC68\uDC69])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFF\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFE\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFC\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFB\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD]))|\uD83E\uDDD1(?:\u200D(?:\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFF\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFE\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFC\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFB\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD]))|\uD83D\uDC69\u200D\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC69\u200D\uD83D\uDC69\u200D(?:\uD83D[\uDC66\uDC67])|\uD83D\uDC69\u200D\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67])|(?:\uD83D\uDC41\uFE0F\u200D\uD83D\uDDE8|\uD83E\uDDD1(?:\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708]|\uD83C\uDFFB\u200D[\u2695\u2696\u2708]|\u200D[\u2695\u2696\u2708])|\uD83D\uDC69(?:\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708]|\uD83C\uDFFB\u200D[\u2695\u2696\u2708]|\u200D[\u2695\u2696\u2708])|\uD83D\uDE36\u200D\uD83C\uDF2B|\uD83C\uDFF3\uFE0F\u200D\u26A7|\uD83D\uDC3B\u200D\u2744|(?:(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC70\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD35\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD4\uDDD6-\uDDDD])(?:\uD83C[\uDFFB-\uDFFF])|\uD83D\uDC6F|\uD83E[\uDD3C\uDDDE\uDDDF])\u200D[\u2640\u2642]|(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)(?:\uFE0F|\uD83C[\uDFFB-\uDFFF])\u200D[\u2640\u2642]|\uD83C\uDFF4\u200D\u2620|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC70\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD35\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD4\uDDD6-\uDDDD])\u200D[\u2640\u2642]|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u2328\u23CF\u23ED-\u23EF\u23F1\u23F2\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB\u25FC\u2600-\u2604\u260E\u2611\u2618\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2640\u2642\u265F\u2660\u2663\u2665\u2666\u2668\u267B\u267E\u2692\u2694-\u2697\u2699\u269B\u269C\u26A0\u26A7\u26B0\u26B1\u26C8\u26CF\u26D1\u26D3\u26E9\u26F0\u26F1\u26F4\u26F7\u26F8\u2702\u2708\u2709\u270F\u2712\u2714\u2716\u271D\u2721\u2733\u2734\u2744\u2747\u2763\u27A1\u2934\u2935\u2B05-\u2B07\u3030\u303D\u3297\u3299]|\uD83C[\uDD70\uDD71\uDD7E\uDD7F\uDE02\uDE37\uDF21\uDF24-\uDF2C\uDF36\uDF7D\uDF96\uDF97\uDF99-\uDF9B\uDF9E\uDF9F\uDFCD\uDFCE\uDFD4-\uDFDF\uDFF5\uDFF7]|\uD83D[\uDC3F\uDCFD\uDD49\uDD4A\uDD6F\uDD70\uDD73\uDD76-\uDD79\uDD87\uDD8A-\uDD8D\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDE8\uDDEF\uDDF3\uDDFA\uDECB\uDECD-\uDECF\uDEE0-\uDEE5\uDEE9\uDEF0\uDEF3])\uFE0F|\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08|\uD83D\uDC69\u200D\uD83D\uDC67|\uD83D\uDC69\u200D\uD83D\uDC66|\uD83D\uDE35\u200D\uD83D\uDCAB|\uD83D\uDE2E\u200D\uD83D\uDCA8|\uD83D\uDC15\u200D\uD83E\uDDBA|\uD83E\uDDD1(?:\uD83C\uDFFF|\uD83C\uDFFE|\uD83C\uDFFD|\uD83C\uDFFC|\uD83C\uDFFB)?|\uD83D\uDC69(?:\uD83C\uDFFF|\uD83C\uDFFE|\uD83C\uDFFD|\uD83C\uDFFC|\uD83C\uDFFB)?|\uD83C\uDDFD\uD83C\uDDF0|\uD83C\uDDF6\uD83C\uDDE6|\uD83C\uDDF4\uD83C\uDDF2|\uD83D\uDC08\u200D\u2B1B|\u2764\uFE0F\u200D(?:\uD83D\uDD25|\uD83E\uDE79)|\uD83D\uDC41\uFE0F|\uD83C\uDFF3\uFE0F|\uD83C\uDDFF(?:\uD83C[\uDDE6\uDDF2\uDDFC])|\uD83C\uDDFE(?:\uD83C[\uDDEA\uDDF9])|\uD83C\uDDFC(?:\uD83C[\uDDEB\uDDF8])|\uD83C\uDDFB(?:\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDEE\uDDF3\uDDFA])|\uD83C\uDDFA(?:\uD83C[\uDDE6\uDDEC\uDDF2\uDDF3\uDDF8\uDDFE\uDDFF])|\uD83C\uDDF9(?:\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDED\uDDEF-\uDDF4\uDDF7\uDDF9\uDDFB\uDDFC\uDDFF])|\uD83C\uDDF8(?:\uD83C[\uDDE6-\uDDEA\uDDEC-\uDDF4\uDDF7-\uDDF9\uDDFB\uDDFD-\uDDFF])|\uD83C\uDDF7(?:\uD83C[\uDDEA\uDDF4\uDDF8\uDDFA\uDDFC])|\uD83C\uDDF5(?:\uD83C[\uDDE6\uDDEA-\uDDED\uDDF0-\uDDF3\uDDF7-\uDDF9\uDDFC\uDDFE])|\uD83C\uDDF3(?:\uD83C[\uDDE6\uDDE8\uDDEA-\uDDEC\uDDEE\uDDF1\uDDF4\uDDF5\uDDF7\uDDFA\uDDFF])|\uD83C\uDDF2(?:\uD83C[\uDDE6\uDDE8-\uDDED\uDDF0-\uDDFF])|\uD83C\uDDF1(?:\uD83C[\uDDE6-\uDDE8\uDDEE\uDDF0\uDDF7-\uDDFB\uDDFE])|\uD83C\uDDF0(?:\uD83C[\uDDEA\uDDEC-\uDDEE\uDDF2\uDDF3\uDDF5\uDDF7\uDDFC\uDDFE\uDDFF])|\uD83C\uDDEF(?:\uD83C[\uDDEA\uDDF2\uDDF4\uDDF5])|\uD83C\uDDEE(?:\uD83C[\uDDE8-\uDDEA\uDDF1-\uDDF4\uDDF6-\uDDF9])|\uD83C\uDDED(?:\uD83C[\uDDF0\uDDF2\uDDF3\uDDF7\uDDF9\uDDFA])|\uD83C\uDDEC(?:\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEE\uDDF1-\uDDF3\uDDF5-\uDDFA\uDDFC\uDDFE])|\uD83C\uDDEB(?:\uD83C[\uDDEE-\uDDF0\uDDF2\uDDF4\uDDF7])|\uD83C\uDDEA(?:\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDED\uDDF7-\uDDFA])|\uD83C\uDDE9(?:\uD83C[\uDDEA\uDDEC\uDDEF\uDDF0\uDDF2\uDDF4\uDDFF])|\uD83C\uDDE8(?:\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDEE\uDDF0-\uDDF5\uDDF7\uDDFA-\uDDFF])|\uD83C\uDDE7(?:\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEF\uDDF1-\uDDF4\uDDF6-\uDDF9\uDDFB\uDDFC\uDDFE\uDDFF])|\uD83C\uDDE6(?:\uD83C[\uDDE8-\uDDEC\uDDEE\uDDF1\uDDF2\uDDF4\uDDF6-\uDDFA\uDDFC\uDDFD\uDDFF])|[#\*0-9]\uFE0F\u20E3|\u2764\uFE0F|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC70\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD35\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD4\uDDD6-\uDDDD])(?:\uD83C[\uDFFB-\uDFFF])|(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)(?:\uFE0F|\uD83C[\uDFFB-\uDFFF])|\uD83C\uDFF4|(?:[\u270A\u270B]|\uD83C[\uDF85\uDFC2\uDFC7]|\uD83D[\uDC42\uDC43\uDC46-\uDC50\uDC66\uDC67\uDC6B-\uDC6D\uDC72\uDC74-\uDC76\uDC78\uDC7C\uDC83\uDC85\uDC8F\uDC91\uDCAA\uDD7A\uDD95\uDD96\uDE4C\uDE4F\uDEC0\uDECC]|\uD83E[\uDD0C\uDD0F\uDD18-\uDD1C\uDD1E\uDD1F\uDD30-\uDD34\uDD36\uDD77\uDDB5\uDDB6\uDDBB\uDDD2\uDDD3\uDDD5])(?:\uD83C[\uDFFB-\uDFFF])|(?:[\u261D\u270C\u270D]|\uD83D[\uDD74\uDD90])(?:\uFE0F|\uD83C[\uDFFB-\uDFFF])|[\u270A\u270B]|\uD83C[\uDF85\uDFC2\uDFC7]|\uD83D[\uDC08\uDC15\uDC3B\uDC42\uDC43\uDC46-\uDC50\uDC66\uDC67\uDC6B-\uDC6D\uDC72\uDC74-\uDC76\uDC78\uDC7C\uDC83\uDC85\uDC8F\uDC91\uDCAA\uDD7A\uDD95\uDD96\uDE2E\uDE35\uDE36\uDE4C\uDE4F\uDEC0\uDECC]|\uD83E[\uDD0C\uDD0F\uDD18-\uDD1C\uDD1E\uDD1F\uDD30-\uDD34\uDD36\uDD77\uDDB5\uDDB6\uDDBB\uDDD2\uDDD3\uDDD5]|\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC70\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD35\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD4\uDDD6-\uDDDD]|\uD83D\uDC6F|\uD83E[\uDD3C\uDDDE\uDDDF]|[\u231A\u231B\u23E9-\u23EC\u23F0\u23F3\u25FD\u25FE\u2614\u2615\u2648-\u2653\u267F\u2693\u26A1\u26AA\u26AB\u26BD\u26BE\u26C4\u26C5\u26CE\u26D4\u26EA\u26F2\u26F3\u26F5\u26FA\u26FD\u2705\u2728\u274C\u274E\u2753-\u2755\u2757\u2795-\u2797\u27B0\u27BF\u2B1B\u2B1C\u2B50\u2B55]|\uD83C[\uDC04\uDCCF\uDD8E\uDD91-\uDD9A\uDE01\uDE1A\uDE2F\uDE32-\uDE36\uDE38-\uDE3A\uDE50\uDE51\uDF00-\uDF20\uDF2D-\uDF35\uDF37-\uDF7C\uDF7E-\uDF84\uDF86-\uDF93\uDFA0-\uDFC1\uDFC5\uDFC6\uDFC8\uDFC9\uDFCF-\uDFD3\uDFE0-\uDFF0\uDFF8-\uDFFF]|\uD83D[\uDC00-\uDC07\uDC09-\uDC14\uDC16-\uDC3A\uDC3C-\uDC3E\uDC40\uDC44\uDC45\uDC51-\uDC65\uDC6A\uDC79-\uDC7B\uDC7D-\uDC80\uDC84\uDC88-\uDC8E\uDC90\uDC92-\uDCA9\uDCAB-\uDCFC\uDCFF-\uDD3D\uDD4B-\uDD4E\uDD50-\uDD67\uDDA4\uDDFB-\uDE2D\uDE2F-\uDE34\uDE37-\uDE44\uDE48-\uDE4A\uDE80-\uDEA2\uDEA4-\uDEB3\uDEB7-\uDEBF\uDEC1-\uDEC5\uDED0-\uDED2\uDED5-\uDED7\uDEEB\uDEEC\uDEF4-\uDEFC\uDFE0-\uDFEB]|\uD83E[\uDD0D\uDD0E\uDD10-\uDD17\uDD1D\uDD20-\uDD25\uDD27-\uDD2F\uDD3A\uDD3F-\uDD45\uDD47-\uDD76\uDD78\uDD7A-\uDDB4\uDDB7\uDDBA\uDDBC-\uDDCB\uDDD0\uDDE0-\uDDFF\uDE70-\uDE74\uDE78-\uDE7A\uDE80-\uDE86\uDE90-\uDEA8\uDEB0-\uDEB6\uDEC0-\uDEC2\uDED0-\uDED6]|(?:[\u231A\u231B\u23E9-\u23EC\u23F0\u23F3\u25FD\u25FE\u2614\u2615\u2648-\u2653\u267F\u2693\u26A1\u26AA\u26AB\u26BD\u26BE\u26C4\u26C5\u26CE\u26D4\u26EA\u26F2\u26F3\u26F5\u26FA\u26FD\u2705\u270A\u270B\u2728\u274C\u274E\u2753-\u2755\u2757\u2795-\u2797\u27B0\u27BF\u2B1B\u2B1C\u2B50\u2B55]|\uD83C[\uDC04\uDCCF\uDD8E\uDD91-\uDD9A\uDDE6-\uDDFF\uDE01\uDE1A\uDE2F\uDE32-\uDE36\uDE38-\uDE3A\uDE50\uDE51\uDF00-\uDF20\uDF2D-\uDF35\uDF37-\uDF7C\uDF7E-\uDF93\uDFA0-\uDFCA\uDFCF-\uDFD3\uDFE0-\uDFF0\uDFF4\uDFF8-\uDFFF]|\uD83D[\uDC00-\uDC3E\uDC40\uDC42-\uDCFC\uDCFF-\uDD3D\uDD4B-\uDD4E\uDD50-\uDD67\uDD7A\uDD95\uDD96\uDDA4\uDDFB-\uDE4F\uDE80-\uDEC5\uDECC\uDED0-\uDED2\uDED5-\uDED7\uDEEB\uDEEC\uDEF4-\uDEFC\uDFE0-\uDFEB]|\uD83E[\uDD0C-\uDD3A\uDD3C-\uDD45\uDD47-\uDD78\uDD7A-\uDDCB\uDDCD-\uDDFF\uDE70-\uDE74\uDE78-\uDE7A\uDE80-\uDE86\uDE90-\uDEA8\uDEB0-\uDEB6\uDEC0-\uDEC2\uDED0-\uDED6])|(?:[#\*0-9\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2640\u2642\u2648-\u2653\u265F\u2660\u2663\u2665\u2666\u2668\u267B\u267E\u267F\u2692-\u2697\u2699\u269B\u269C\u26A0\u26A1\u26A7\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDDE6-\uDDFF\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD7A\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA4\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDE8\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED2\uDED5-\uDED7\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3-\uDEFC\uDFE0-\uDFEB]|\uD83E[\uDD0C-\uDD3A\uDD3C-\uDD45\uDD47-\uDD78\uDD7A-\uDDCB\uDDCD-\uDDFF\uDE70-\uDE74\uDE78-\uDE7A\uDE80-\uDE86\uDE90-\uDEA8\uDEB0-\uDEB6\uDEC0-\uDEC2\uDED0-\uDED6])\uFE0F|(?:[\u261D\u26F9\u270A-\u270D]|\uD83C[\uDF85\uDFC2-\uDFC4\uDFC7\uDFCA-\uDFCC]|\uD83D[\uDC42\uDC43\uDC46-\uDC50\uDC66-\uDC78\uDC7C\uDC81-\uDC83\uDC85-\uDC87\uDC8F\uDC91\uDCAA\uDD74\uDD75\uDD7A\uDD90\uDD95\uDD96\uDE45-\uDE47\uDE4B-\uDE4F\uDEA3\uDEB4-\uDEB6\uDEC0\uDECC]|\uD83E[\uDD0C\uDD0F\uDD18-\uDD1F\uDD26\uDD30-\uDD39\uDD3C-\uDD3E\uDD77\uDDB5\uDDB6\uDDB8\uDDB9\uDDBB\uDDCD-\uDDCF\uDDD1-\uDDDD])/g;
-};
-var sD = L(FD);
-function p(e3, u3 = {}) {
-  if (typeof e3 != "string" || e3.length === 0 || (u3 = { ambiguousIsNarrow: true, ...u3 }, e3 = P(e3), e3.length === 0)) return 0;
-  e3 = e3.replace(sD(), "  ");
-  const t2 = u3.ambiguousIsNarrow ? 1 : 2;
-  let F3 = 0;
-  for (const s2 of e3) {
-    const i3 = s2.codePointAt(0);
-    if (i3 <= 31 || i3 >= 127 && i3 <= 159 || i3 >= 768 && i3 <= 879) continue;
-    switch (eD.eastAsianWidth(s2)) {
-      case "F":
-      case "W":
-        F3 += 2;
+    if (o2 >= p) break;
+    if (M.lastIndex = o2, M.test(t2)) {
+      if (v = M.lastIndex - o2, f3 = v * A2, c3 + f3 > b && (d2 = Math.min(d2, o2 + Math.floor((b - c3) / A2))), c3 + f3 > i3) {
+        F2 = true;
         break;
-      case "A":
-        F3 += t2;
-        break;
-      default:
-        F3 += 1;
-    }
-  }
-  return F3;
-}
-var w = 10;
-var N = (e3 = 0) => (u3) => `\x1B[${u3 + e3}m`;
-var I = (e3 = 0) => (u3) => `\x1B[${38 + e3};5;${u3}m`;
-var R = (e3 = 0) => (u3, t2, F3) => `\x1B[${38 + e3};2;${u3};${t2};${F3}m`;
-var r = { modifier: { reset: [0, 0], bold: [1, 22], dim: [2, 22], italic: [3, 23], underline: [4, 24], overline: [53, 55], inverse: [7, 27], hidden: [8, 28], strikethrough: [9, 29] }, color: { black: [30, 39], red: [31, 39], green: [32, 39], yellow: [33, 39], blue: [34, 39], magenta: [35, 39], cyan: [36, 39], white: [37, 39], blackBright: [90, 39], gray: [90, 39], grey: [90, 39], redBright: [91, 39], greenBright: [92, 39], yellowBright: [93, 39], blueBright: [94, 39], magentaBright: [95, 39], cyanBright: [96, 39], whiteBright: [97, 39] }, bgColor: { bgBlack: [40, 49], bgRed: [41, 49], bgGreen: [42, 49], bgYellow: [43, 49], bgBlue: [44, 49], bgMagenta: [45, 49], bgCyan: [46, 49], bgWhite: [47, 49], bgBlackBright: [100, 49], bgGray: [100, 49], bgGrey: [100, 49], bgRedBright: [101, 49], bgGreenBright: [102, 49], bgYellowBright: [103, 49], bgBlueBright: [104, 49], bgMagentaBright: [105, 49], bgCyanBright: [106, 49], bgWhiteBright: [107, 49] } };
-Object.keys(r.modifier);
-var iD = Object.keys(r.color);
-var CD = Object.keys(r.bgColor);
-[...iD, ...CD];
-function rD() {
-  const e3 = /* @__PURE__ */ new Map();
-  for (const [u3, t2] of Object.entries(r)) {
-    for (const [F3, s2] of Object.entries(t2)) r[F3] = { open: `\x1B[${s2[0]}m`, close: `\x1B[${s2[1]}m` }, t2[F3] = r[F3], e3.set(s2[0], s2[1]);
-    Object.defineProperty(r, u3, { value: t2, enumerable: false });
-  }
-  return Object.defineProperty(r, "codes", { value: e3, enumerable: false }), r.color.close = "\x1B[39m", r.bgColor.close = "\x1B[49m", r.color.ansi = N(), r.color.ansi256 = I(), r.color.ansi16m = R(), r.bgColor.ansi = N(w), r.bgColor.ansi256 = I(w), r.bgColor.ansi16m = R(w), Object.defineProperties(r, { rgbToAnsi256: { value: (u3, t2, F3) => u3 === t2 && t2 === F3 ? u3 < 8 ? 16 : u3 > 248 ? 231 : Math.round((u3 - 8) / 247 * 24) + 232 : 16 + 36 * Math.round(u3 / 255 * 5) + 6 * Math.round(t2 / 255 * 5) + Math.round(F3 / 255 * 5), enumerable: false }, hexToRgb: { value: (u3) => {
-    const t2 = /[a-f\d]{6}|[a-f\d]{3}/i.exec(u3.toString(16));
-    if (!t2) return [0, 0, 0];
-    let [F3] = t2;
-    F3.length === 3 && (F3 = [...F3].map((i3) => i3 + i3).join(""));
-    const s2 = Number.parseInt(F3, 16);
-    return [s2 >> 16 & 255, s2 >> 8 & 255, s2 & 255];
-  }, enumerable: false }, hexToAnsi256: { value: (u3) => r.rgbToAnsi256(...r.hexToRgb(u3)), enumerable: false }, ansi256ToAnsi: { value: (u3) => {
-    if (u3 < 8) return 30 + u3;
-    if (u3 < 16) return 90 + (u3 - 8);
-    let t2, F3, s2;
-    if (u3 >= 232) t2 = ((u3 - 232) * 10 + 8) / 255, F3 = t2, s2 = t2;
-    else {
-      u3 -= 16;
-      const C2 = u3 % 36;
-      t2 = Math.floor(u3 / 36) / 5, F3 = Math.floor(C2 / 6) / 5, s2 = C2 % 6 / 5;
-    }
-    const i3 = Math.max(t2, F3, s2) * 2;
-    if (i3 === 0) return 30;
-    let D2 = 30 + (Math.round(s2) << 2 | Math.round(F3) << 1 | Math.round(t2));
-    return i3 === 2 && (D2 += 60), D2;
-  }, enumerable: false }, rgbToAnsi: { value: (u3, t2, F3) => r.ansi256ToAnsi(r.rgbToAnsi256(u3, t2, F3)), enumerable: false }, hexToAnsi: { value: (u3) => r.ansi256ToAnsi(r.hexToAnsi256(u3)), enumerable: false } }), r;
-}
-var ED = rD();
-var d = /* @__PURE__ */ new Set(["\x1B", "\x9B"]);
-var oD = 39;
-var y = "\x07";
-var V = "[";
-var nD = "]";
-var G = "m";
-var _ = `${nD}8;;`;
-var z = (e3) => `${d.values().next().value}${V}${e3}${G}`;
-var K = (e3) => `${d.values().next().value}${_}${e3}${y}`;
-var aD = (e3) => e3.split(" ").map((u3) => p(u3));
-var k = (e3, u3, t2) => {
-  const F3 = [...u3];
-  let s2 = false, i3 = false, D2 = p(P(e3[e3.length - 1]));
-  for (const [C2, n2] of F3.entries()) {
-    const E = p(n2);
-    if (D2 + E <= t2 ? e3[e3.length - 1] += n2 : (e3.push(n2), D2 = 0), d.has(n2) && (s2 = true, i3 = F3.slice(C2 + 1).join("").startsWith(_)), s2) {
-      i3 ? n2 === y && (s2 = false, i3 = false) : n2 === G && (s2 = false);
+      }
+      c3 += f3, C2 = h3, w = o2, o2 = h3 = M.lastIndex;
       continue;
     }
-    D2 += E, D2 === t2 && C2 < F3.length - 1 && (e3.push(""), D2 = 0);
-  }
-  !D2 && e3[e3.length - 1].length > 0 && e3.length > 1 && (e3[e3.length - 2] += e3.pop());
-};
-var hD = (e3) => {
-  const u3 = e3.split(" ");
-  let t2 = u3.length;
-  for (; t2 > 0 && !(p(u3[t2 - 1]) > 0); ) t2--;
-  return t2 === u3.length ? e3 : u3.slice(0, t2).join(" ") + u3.slice(t2).join("");
-};
-var lD = (e3, u3, t2 = {}) => {
-  if (t2.trim !== false && e3.trim() === "") return "";
-  let F3 = "", s2, i3;
-  const D2 = aD(e3);
-  let C2 = [""];
-  for (const [E, a2] of e3.split(" ").entries()) {
-    t2.trim !== false && (C2[C2.length - 1] = C2[C2.length - 1].trimStart());
-    let o3 = p(C2[C2.length - 1]);
-    if (E !== 0 && (o3 >= u3 && (t2.wordWrap === false || t2.trim === false) && (C2.push(""), o3 = 0), (o3 > 0 || t2.trim === false) && (C2[C2.length - 1] += " ", o3++)), t2.hard && D2[E] > u3) {
-      const c3 = u3 - o3, f3 = 1 + Math.floor((D2[E] - c3 - 1) / u3);
-      Math.floor((D2[E] - 1) / u3) < f3 && C2.push(""), k(C2, a2, u3);
+    if (O.lastIndex = o2, O.test(t2)) {
+      if (c3 + u2 > b && (d2 = Math.min(d2, o2)), c3 + u2 > i3) {
+        F2 = true;
+        break;
+      }
+      c3 += u2, C2 = h3, w = o2, o2 = h3 = O.lastIndex;
       continue;
     }
-    if (o3 + D2[E] > u3 && o3 > 0 && D2[E] > 0) {
-      if (t2.wordWrap === false && o3 < u3) {
-        k(C2, a2, u3);
+    if (y.lastIndex = o2, y.test(t2)) {
+      if (v = y.lastIndex - o2, f3 = v * a2, c3 + f3 > b && (d2 = Math.min(d2, o2 + Math.floor((b - c3) / a2))), c3 + f3 > i3) {
+        F2 = true;
+        break;
+      }
+      c3 += f3, C2 = h3, w = o2, o2 = h3 = y.lastIndex;
+      continue;
+    }
+    if (L.lastIndex = o2, L.test(t2)) {
+      if (v = L.lastIndex - o2, f3 = v * l, c3 + f3 > b && (d2 = Math.min(d2, o2 + Math.floor((b - c3) / l))), c3 + f3 > i3) {
+        F2 = true;
+        break;
+      }
+      c3 += f3, C2 = h3, w = o2, o2 = h3 = L.lastIndex;
+      continue;
+    }
+    if (P.lastIndex = o2, P.test(t2)) {
+      if (c3 + g > b && (d2 = Math.min(d2, o2)), c3 + g > i3) {
+        F2 = true;
+        break;
+      }
+      c3 += g, C2 = h3, w = o2, o2 = h3 = P.lastIndex;
+      continue;
+    }
+    o2 += 1;
+  }
+  return { width: F2 ? b : c3, index: F2 ? d2 : p, truncated: F2, ellipsed: F2 && i3 >= n2 };
+};
+var pt = { limit: 1 / 0, ellipsis: "", ellipsisWidth: 0 };
+var S = (t2, e3 = {}) => X(t2, pt, e3).width;
+var W = "\x1B";
+var Z = "\x9B";
+var Ft = 39;
+var j = "\x07";
+var Q = "[";
+var dt = "]";
+var tt = "m";
+var U = `${dt}8;;`;
+var et = new RegExp(`(?:\\${Q}(?<code>\\d+)m|\\${U}(?<uri>.*)${j})`, "y");
+var mt = (t2) => {
+  if (t2 >= 30 && t2 <= 37 || t2 >= 90 && t2 <= 97) return 39;
+  if (t2 >= 40 && t2 <= 47 || t2 >= 100 && t2 <= 107) return 49;
+  if (t2 === 1 || t2 === 2) return 22;
+  if (t2 === 3) return 23;
+  if (t2 === 4) return 24;
+  if (t2 === 7) return 27;
+  if (t2 === 8) return 28;
+  if (t2 === 9) return 29;
+  if (t2 === 0) return 0;
+};
+var st = (t2) => `${W}${Q}${t2}${tt}`;
+var it = (t2) => `${W}${U}${t2}${j}`;
+var gt = (t2) => t2.map((e3) => S(e3));
+var G = (t2, e3, s2) => {
+  const i3 = e3[Symbol.iterator]();
+  let r2 = false, n2 = false, u2 = t2.at(-1), a2 = u2 === void 0 ? 0 : S(u2), l = i3.next(), E = i3.next(), g = 0;
+  for (; !l.done; ) {
+    const m2 = l.value, A2 = S(m2);
+    a2 + A2 <= s2 ? t2[t2.length - 1] += m2 : (t2.push(m2), a2 = 0), (m2 === W || m2 === Z) && (r2 = true, n2 = e3.startsWith(U, g + 1)), r2 ? n2 ? m2 === j && (r2 = false, n2 = false) : m2 === tt && (r2 = false) : (a2 += A2, a2 === s2 && !E.done && (t2.push(""), a2 = 0)), l = E, E = i3.next(), g += m2.length;
+  }
+  u2 = t2.at(-1), !a2 && u2 !== void 0 && u2.length > 0 && t2.length > 1 && (t2[t2.length - 2] += t2.pop());
+};
+var vt = (t2) => {
+  const e3 = t2.split(" ");
+  let s2 = e3.length;
+  for (; s2 > 0 && !(S(e3[s2 - 1]) > 0); ) s2--;
+  return s2 === e3.length ? t2 : e3.slice(0, s2).join(" ") + e3.slice(s2).join("");
+};
+var Et = (t2, e3, s2 = {}) => {
+  if (s2.trim !== false && t2.trim() === "") return "";
+  let i3 = "", r2, n2;
+  const u2 = t2.split(" "), a2 = gt(u2);
+  let l = [""];
+  for (const [h3, o2] of u2.entries()) {
+    s2.trim !== false && (l[l.length - 1] = (l.at(-1) ?? "").trimStart());
+    let p = S(l.at(-1) ?? "");
+    if (h3 !== 0 && (p >= e3 && (s2.wordWrap === false || s2.trim === false) && (l.push(""), p = 0), (p > 0 || s2.trim === false) && (l[l.length - 1] += " ", p++)), s2.hard && a2[h3] > e3) {
+      const v = e3 - p, F2 = 1 + Math.floor((a2[h3] - v - 1) / e3);
+      Math.floor((a2[h3] - 1) / e3) < F2 && l.push(""), G(l, o2, e3);
+      continue;
+    }
+    if (p + a2[h3] > e3 && p > 0 && a2[h3] > 0) {
+      if (s2.wordWrap === false && p < e3) {
+        G(l, o2, e3);
         continue;
       }
-      C2.push("");
+      l.push("");
     }
-    if (o3 + D2[E] > u3 && t2.wordWrap === false) {
-      k(C2, a2, u3);
+    if (p + a2[h3] > e3 && s2.wordWrap === false) {
+      G(l, o2, e3);
       continue;
     }
-    C2[C2.length - 1] += a2;
+    l[l.length - 1] += o2;
   }
-  t2.trim !== false && (C2 = C2.map((E) => hD(E)));
-  const n2 = [...C2.join(`
-`)];
-  for (const [E, a2] of n2.entries()) {
-    if (F3 += a2, d.has(a2)) {
-      const { groups: c3 } = new RegExp(`(?:\\${V}(?<code>\\d+)m|\\${_}(?<uri>.*)${y})`).exec(n2.slice(E).join("")) || { groups: {} };
-      if (c3.code !== void 0) {
-        const f3 = Number.parseFloat(c3.code);
-        s2 = f3 === oD ? void 0 : f3;
-      } else c3.uri !== void 0 && (i3 = c3.uri.length === 0 ? void 0 : c3.uri);
+  s2.trim !== false && (l = l.map((h3) => vt(h3)));
+  const E = l.join(`
+`), g = E[Symbol.iterator]();
+  let m2 = g.next(), A2 = g.next(), V2 = 0;
+  for (; !m2.done; ) {
+    const h3 = m2.value, o2 = A2.value;
+    if (i3 += h3, h3 === W || h3 === Z) {
+      et.lastIndex = V2 + 1;
+      const F2 = et.exec(E)?.groups;
+      if (F2?.code !== void 0) {
+        const d2 = Number.parseFloat(F2.code);
+        r2 = d2 === Ft ? void 0 : d2;
+      } else F2?.uri !== void 0 && (n2 = F2.uri.length === 0 ? void 0 : F2.uri);
     }
-    const o3 = ED.codes.get(Number(s2));
-    n2[E + 1] === `
-` ? (i3 && (F3 += K("")), s2 && o3 && (F3 += z(o3))) : a2 === `
-` && (s2 && o3 && (F3 += z(s2)), i3 && (F3 += K(i3)));
+    const p = r2 ? mt(r2) : void 0;
+    o2 === `
+` ? (n2 && (i3 += it("")), r2 && p && (i3 += st(p))) : h3 === `
+` && (r2 && p && (i3 += st(r2)), n2 && (i3 += it(n2))), V2 += h3.length, m2 = A2, A2 = g.next();
   }
-  return F3;
+  return i3;
 };
-function Y(e3, u3, t2) {
-  return String(e3).normalize().replace(/\r\n/g, `
+function K(t2, e3, s2) {
+  return String(t2).normalize().replaceAll(`\r
+`, `
 `).split(`
-`).map((F3) => lD(F3, u3, t2)).join(`
+`).map((i3) => Et(i3, e3, s2)).join(`
 `);
 }
-var xD = ["up", "down", "left", "right", "space", "enter", "cancel"];
-var B = { actions: new Set(xD), aliases: /* @__PURE__ */ new Map([["k", "up"], ["j", "down"], ["h", "left"], ["l", "right"], ["", "cancel"], ["escape", "cancel"]]) };
-function $2(e3, u3) {
-  if (typeof e3 == "string") return B.aliases.get(e3) === u3;
-  for (const t2 of e3) if (t2 !== void 0 && $2(t2, u3)) return true;
+var At = ["up", "down", "left", "right", "space", "enter", "cancel"];
+var _ = { actions: new Set(At), aliases: /* @__PURE__ */ new Map([["k", "up"], ["j", "down"], ["h", "left"], ["l", "right"], ["", "cancel"], ["escape", "cancel"]]), messages: { cancel: "Canceled", error: "Something went wrong" }, withGuide: true };
+function H(t2, e3) {
+  if (typeof t2 == "string") return _.aliases.get(t2) === e3;
+  for (const s2 of t2) if (s2 !== void 0 && H(s2, e3)) return true;
   return false;
 }
-function BD(e3, u3) {
-  if (e3 === u3) return;
-  const t2 = e3.split(`
-`), F3 = u3.split(`
-`), s2 = [];
-  for (let i3 = 0; i3 < Math.max(t2.length, F3.length); i3++) t2[i3] !== F3[i3] && s2.push(i3);
-  return s2;
+function _t(t2, e3) {
+  if (t2 === e3) return;
+  const s2 = t2.split(`
+`), i3 = e3.split(`
+`), r2 = Math.max(s2.length, i3.length), n2 = [];
+  for (let u2 = 0; u2 < r2; u2++) s2[u2] !== i3[u2] && n2.push(u2);
+  return { lines: n2, numLinesBefore: s2.length, numLinesAfter: i3.length, numLines: r2 };
 }
-var AD = globalThis.process.platform.startsWith("win");
-var S = /* @__PURE__ */ Symbol("clack:cancel");
-function pD(e3) {
-  return e3 === S;
+var bt = globalThis.process.platform.startsWith("win");
+var z = /* @__PURE__ */ Symbol("clack:cancel");
+function Ct(t2) {
+  return t2 === z;
 }
-function m(e3, u3) {
-  const t2 = e3;
-  t2.isTTY && t2.setRawMode(u3);
+function T(t2, e3) {
+  const s2 = t2;
+  s2.isTTY && s2.setRawMode(e3);
 }
-function fD({ input: e3 = j, output: u3 = M, overwrite: t2 = true, hideCursor: F3 = true } = {}) {
-  const s2 = g.createInterface({ input: e3, output: u3, prompt: "", tabSize: 1 });
-  g.emitKeypressEvents(e3, s2), e3.isTTY && e3.setRawMode(true);
-  const i3 = (D2, { name: C2, sequence: n2 }) => {
-    const E = String(D2);
-    if ($2([E, C2, n2], "cancel")) {
-      F3 && u3.write(import_sisteransi.cursor.show), process.exit(0);
+function Bt({ input: t2 = q, output: e3 = R, overwrite: s2 = true, hideCursor: i3 = true } = {}) {
+  const r2 = k.createInterface({ input: t2, output: e3, prompt: "", tabSize: 1 });
+  k.emitKeypressEvents(t2, r2), t2 instanceof J && t2.isTTY && t2.setRawMode(true);
+  const n2 = (u2, { name: a2, sequence: l }) => {
+    const E = String(u2);
+    if (H([E, a2, l], "cancel")) {
+      i3 && e3.write(import_sisteransi.cursor.show), process.exit(0);
       return;
     }
-    if (!t2) return;
-    const a2 = C2 === "return" ? 0 : -1, o3 = C2 === "return" ? -1 : 0;
-    g.moveCursor(u3, a2, o3, () => {
-      g.clearLine(u3, 1, () => {
-        e3.once("keypress", i3);
+    if (!s2) return;
+    const g = a2 === "return" ? 0 : -1, m2 = a2 === "return" ? -1 : 0;
+    k.moveCursor(e3, g, m2, () => {
+      k.clearLine(e3, 1, () => {
+        t2.once("keypress", n2);
       });
     });
   };
-  return F3 && u3.write(import_sisteransi.cursor.hide), e3.once("keypress", i3), () => {
-    e3.off("keypress", i3), F3 && u3.write(import_sisteransi.cursor.show), e3.isTTY && !AD && e3.setRawMode(false), s2.terminal = false, s2.close();
+  return i3 && e3.write(import_sisteransi.cursor.hide), t2.once("keypress", n2), () => {
+    t2.off("keypress", n2), i3 && e3.write(import_sisteransi.cursor.show), t2 instanceof J && t2.isTTY && !bt && t2.setRawMode(false), r2.terminal = false, r2.close();
   };
 }
-var gD = Object.defineProperty;
-var vD = (e3, u3, t2) => u3 in e3 ? gD(e3, u3, { enumerable: true, configurable: true, writable: true, value: t2 }) : e3[u3] = t2;
-var h2 = (e3, u3, t2) => (vD(e3, typeof u3 != "symbol" ? u3 + "" : u3, t2), t2);
+var rt = (t2) => "columns" in t2 && typeof t2.columns == "number" ? t2.columns : 80;
+var nt = (t2) => "rows" in t2 && typeof t2.rows == "number" ? t2.rows : 20;
+function xt(t2, e3, s2, i3 = s2) {
+  const r2 = rt(t2 ?? R);
+  return K(e3, r2 - s2.length, { hard: true, trim: false }).split(`
+`).map((n2, u2) => `${u2 === 0 ? i3 : s2}${n2}`).join(`
+`);
+}
 var x = class {
-  constructor(u3, t2 = true) {
-    h2(this, "input"), h2(this, "output"), h2(this, "_abortSignal"), h2(this, "rl"), h2(this, "opts"), h2(this, "_render"), h2(this, "_track", false), h2(this, "_prevFrame", ""), h2(this, "_subscribers", /* @__PURE__ */ new Map()), h2(this, "_cursor", 0), h2(this, "state", "initial"), h2(this, "error", ""), h2(this, "value");
-    const { input: F3 = j, output: s2 = M, render: i3, signal: D2, ...C2 } = u3;
-    this.opts = C2, this.onKeypress = this.onKeypress.bind(this), this.close = this.close.bind(this), this.render = this.render.bind(this), this._render = i3.bind(this), this._track = t2, this._abortSignal = D2, this.input = F3, this.output = s2;
+  input;
+  output;
+  _abortSignal;
+  rl;
+  opts;
+  _render;
+  _track = false;
+  _prevFrame = "";
+  _subscribers = /* @__PURE__ */ new Map();
+  _cursor = 0;
+  state = "initial";
+  error = "";
+  value;
+  userInput = "";
+  constructor(e3, s2 = true) {
+    const { input: i3 = q, output: r2 = R, render: n2, signal: u2, ...a2 } = e3;
+    this.opts = a2, this.onKeypress = this.onKeypress.bind(this), this.close = this.close.bind(this), this.render = this.render.bind(this), this._render = n2.bind(this), this._track = s2, this._abortSignal = u2, this.input = i3, this.output = r2;
   }
   unsubscribe() {
     this._subscribers.clear();
   }
-  setSubscriber(u3, t2) {
-    const F3 = this._subscribers.get(u3) ?? [];
-    F3.push(t2), this._subscribers.set(u3, F3);
+  setSubscriber(e3, s2) {
+    const i3 = this._subscribers.get(e3) ?? [];
+    i3.push(s2), this._subscribers.set(e3, i3);
   }
-  on(u3, t2) {
-    this.setSubscriber(u3, { cb: t2 });
+  on(e3, s2) {
+    this.setSubscriber(e3, { cb: s2 });
   }
-  once(u3, t2) {
-    this.setSubscriber(u3, { cb: t2, once: true });
+  once(e3, s2) {
+    this.setSubscriber(e3, { cb: s2, once: true });
   }
-  emit(u3, ...t2) {
-    const F3 = this._subscribers.get(u3) ?? [], s2 = [];
-    for (const i3 of F3) i3.cb(...t2), i3.once && s2.push(() => F3.splice(F3.indexOf(i3), 1));
-    for (const i3 of s2) i3();
+  emit(e3, ...s2) {
+    const i3 = this._subscribers.get(e3) ?? [], r2 = [];
+    for (const n2 of i3) n2.cb(...s2), n2.once && r2.push(() => i3.splice(i3.indexOf(n2), 1));
+    for (const n2 of r2) n2();
   }
   prompt() {
-    return new Promise((u3, t2) => {
+    return new Promise((e3) => {
       if (this._abortSignal) {
-        if (this._abortSignal.aborted) return this.state = "cancel", this.close(), u3(S);
+        if (this._abortSignal.aborted) return this.state = "cancel", this.close(), e3(z);
         this._abortSignal.addEventListener("abort", () => {
           this.state = "cancel", this.close();
         }, { once: true });
       }
-      const F3 = new X();
-      F3._write = (s2, i3, D2) => {
-        this._track && (this.value = this.rl?.line.replace(/\t/g, ""), this._cursor = this.rl?.cursor ?? 0, this.emit("value", this.value)), D2();
-      }, this.input.pipe(F3), this.rl = O.createInterface({ input: this.input, output: F3, tabSize: 2, prompt: "", escapeCodeTimeout: 50, terminal: true }), O.emitKeypressEvents(this.input, this.rl), this.rl.prompt(), this.opts.initialValue !== void 0 && this._track && this.rl.write(this.opts.initialValue), this.input.on("keypress", this.onKeypress), m(this.input, true), this.output.on("resize", this.render), this.render(), this.once("submit", () => {
-        this.output.write(import_sisteransi.cursor.show), this.output.off("resize", this.render), m(this.input, false), u3(this.value);
+      this.rl = ot.createInterface({ input: this.input, tabSize: 2, prompt: "", escapeCodeTimeout: 50, terminal: true }), this.rl.prompt(), this.opts.initialUserInput !== void 0 && this._setUserInput(this.opts.initialUserInput, true), this.input.on("keypress", this.onKeypress), T(this.input, true), this.output.on("resize", this.render), this.render(), this.once("submit", () => {
+        this.output.write(import_sisteransi.cursor.show), this.output.off("resize", this.render), T(this.input, false), e3(this.value);
       }), this.once("cancel", () => {
-        this.output.write(import_sisteransi.cursor.show), this.output.off("resize", this.render), m(this.input, false), u3(S);
+        this.output.write(import_sisteransi.cursor.show), this.output.off("resize", this.render), T(this.input, false), e3(z);
       });
     });
   }
-  onKeypress(u3, t2) {
-    if (this.state === "error" && (this.state = "active"), t2?.name && (!this._track && B.aliases.has(t2.name) && this.emit("cursor", B.aliases.get(t2.name)), B.actions.has(t2.name) && this.emit("cursor", t2.name)), u3 && (u3.toLowerCase() === "y" || u3.toLowerCase() === "n") && this.emit("confirm", u3.toLowerCase() === "y"), u3 === "	" && this.opts.placeholder && (this.value || (this.rl?.write(this.opts.placeholder), this.emit("value", this.opts.placeholder))), u3 && this.emit("key", u3.toLowerCase()), t2?.name === "return") {
+  _isActionKey(e3, s2) {
+    return e3 === "	";
+  }
+  _setValue(e3) {
+    this.value = e3, this.emit("value", this.value);
+  }
+  _setUserInput(e3, s2) {
+    this.userInput = e3 ?? "", this.emit("userInput", this.userInput), s2 && this._track && this.rl && (this.rl.write(this.userInput), this._cursor = this.rl.cursor);
+  }
+  _clearUserInput() {
+    this.rl?.write(null, { ctrl: true, name: "u" }), this._setUserInput("");
+  }
+  onKeypress(e3, s2) {
+    if (this._track && s2.name !== "return" && (s2.name && this._isActionKey(e3, s2) && this.rl?.write(null, { ctrl: true, name: "h" }), this._cursor = this.rl?.cursor ?? 0, this._setUserInput(this.rl?.line)), this.state === "error" && (this.state = "active"), s2?.name && (!this._track && _.aliases.has(s2.name) && this.emit("cursor", _.aliases.get(s2.name)), _.actions.has(s2.name) && this.emit("cursor", s2.name)), e3 && (e3.toLowerCase() === "y" || e3.toLowerCase() === "n") && this.emit("confirm", e3.toLowerCase() === "y"), this.emit("key", e3?.toLowerCase(), s2), s2?.name === "return") {
       if (this.opts.validate) {
-        const F3 = this.opts.validate(this.value);
-        F3 && (this.error = F3 instanceof Error ? F3.message : F3, this.state = "error", this.rl?.write(this.value));
+        const i3 = this.opts.validate(this.value);
+        i3 && (this.error = i3 instanceof Error ? i3.message : i3, this.state = "error", this.rl?.write(this.userInput));
       }
       this.state !== "error" && (this.state = "submit");
     }
-    $2([u3, t2?.name, t2?.sequence], "cancel") && (this.state = "cancel"), (this.state === "submit" || this.state === "cancel") && this.emit("finalize"), this.render(), (this.state === "submit" || this.state === "cancel") && this.close();
+    H([e3, s2?.name, s2?.sequence], "cancel") && (this.state = "cancel"), (this.state === "submit" || this.state === "cancel") && this.emit("finalize"), this.render(), (this.state === "submit" || this.state === "cancel") && this.close();
   }
   close() {
     this.input.unpipe(), this.input.removeListener("keypress", this.onKeypress), this.output.write(`
-`), m(this.input, false), this.rl?.close(), this.rl = void 0, this.emit(`${this.state}`, this.value), this.unsubscribe();
+`), T(this.input, false), this.rl?.close(), this.rl = void 0, this.emit(`${this.state}`, this.value), this.unsubscribe();
   }
   restoreCursor() {
-    const u3 = Y(this._prevFrame, process.stdout.columns, { hard: true }).split(`
+    const e3 = K(this._prevFrame, process.stdout.columns, { hard: true, trim: false }).split(`
 `).length - 1;
-    this.output.write(import_sisteransi.cursor.move(-999, u3 * -1));
+    this.output.write(import_sisteransi.cursor.move(-999, e3 * -1));
   }
   render() {
-    const u3 = Y(this._render(this) ?? "", process.stdout.columns, { hard: true });
-    if (u3 !== this._prevFrame) {
+    const e3 = K(this._render(this) ?? "", process.stdout.columns, { hard: true, trim: false });
+    if (e3 !== this._prevFrame) {
       if (this.state === "initial") this.output.write(import_sisteransi.cursor.hide);
       else {
-        const t2 = BD(this._prevFrame, u3);
-        if (this.restoreCursor(), t2 && t2?.length === 1) {
-          const F3 = t2[0];
-          this.output.write(import_sisteransi.cursor.move(0, F3)), this.output.write(import_sisteransi.erase.lines(1));
-          const s2 = u3.split(`
+        const s2 = _t(this._prevFrame, e3), i3 = nt(this.output);
+        if (this.restoreCursor(), s2) {
+          const r2 = Math.max(0, s2.numLinesAfter - i3), n2 = Math.max(0, s2.numLinesBefore - i3);
+          let u2 = s2.lines.find((a2) => a2 >= r2);
+          if (u2 === void 0) {
+            this._prevFrame = e3;
+            return;
+          }
+          if (s2.lines.length === 1) {
+            this.output.write(import_sisteransi.cursor.move(0, u2 - n2)), this.output.write(import_sisteransi.erase.lines(1));
+            const a2 = e3.split(`
 `);
-          this.output.write(s2[F3]), this._prevFrame = u3, this.output.write(import_sisteransi.cursor.move(0, s2.length - F3 - 1));
-          return;
-        }
-        if (t2 && t2?.length > 1) {
-          const F3 = t2[0];
-          this.output.write(import_sisteransi.cursor.move(0, F3)), this.output.write(import_sisteransi.erase.down());
-          const s2 = u3.split(`
-`).slice(F3);
-          this.output.write(s2.join(`
-`)), this._prevFrame = u3;
-          return;
+            this.output.write(a2[u2]), this._prevFrame = e3, this.output.write(import_sisteransi.cursor.move(0, a2.length - u2 - 1));
+            return;
+          } else if (s2.lines.length > 1) {
+            if (r2 < n2) u2 = r2;
+            else {
+              const l = u2 - n2;
+              l > 0 && this.output.write(import_sisteransi.cursor.move(0, l));
+            }
+            this.output.write(import_sisteransi.erase.down());
+            const a2 = e3.split(`
+`).slice(u2);
+            this.output.write(a2.join(`
+`)), this._prevFrame = e3;
+            return;
+          }
         }
         this.output.write(import_sisteransi.erase.down());
       }
-      this.output.write(u3), this.state === "initial" && (this.state = "active"), this._prevFrame = u3;
+      this.output.write(e3), this.state === "initial" && (this.state = "active"), this._prevFrame = e3;
     }
   }
 };
-var dD = class extends x {
+var kt = class extends x {
   get cursor() {
     return this.value ? 0 : 1;
   }
   get _value() {
     return this.cursor === 0;
   }
-  constructor(u3) {
-    super(u3, false), this.value = !!u3.initialValue, this.on("value", () => {
+  constructor(e3) {
+    super(e3, false), this.value = !!e3.initialValue, this.on("userInput", () => {
       this.value = this._value;
-    }), this.on("confirm", (t2) => {
-      this.output.write(import_sisteransi.cursor.move(0, -1)), this.value = t2, this.state = "submit", this.close();
+    }), this.on("confirm", (s2) => {
+      this.output.write(import_sisteransi.cursor.move(0, -1)), this.value = s2, this.state = "submit", this.close();
     }), this.on("cursor", () => {
       this.value = !this.value;
     });
   }
 };
-var A;
-A = /* @__PURE__ */ new WeakMap();
-var kD = Object.defineProperty;
-var $D = (e3, u3, t2) => u3 in e3 ? kD(e3, u3, { enumerable: true, configurable: true, writable: true, value: t2 }) : e3[u3] = t2;
-var H = (e3, u3, t2) => ($D(e3, typeof u3 != "symbol" ? u3 + "" : u3, t2), t2);
-var SD = class extends x {
-  constructor(u3) {
-    super(u3, false), H(this, "options"), H(this, "cursor", 0), this.options = u3.options, this.value = [...u3.initialValues ?? []], this.cursor = Math.max(this.options.findIndex(({ value: t2 }) => t2 === u3.cursorAt), 0), this.on("key", (t2) => {
-      t2 === "a" && this.toggleAll();
-    }), this.on("cursor", (t2) => {
-      switch (t2) {
+var Lt = class extends x {
+  options;
+  cursor = 0;
+  get _value() {
+    return this.options[this.cursor].value;
+  }
+  get _enabledOptions() {
+    return this.options.filter((e3) => e3.disabled !== true);
+  }
+  toggleAll() {
+    const e3 = this._enabledOptions, s2 = this.value !== void 0 && this.value.length === e3.length;
+    this.value = s2 ? [] : e3.map((i3) => i3.value);
+  }
+  toggleInvert() {
+    const e3 = this.value;
+    if (!e3) return;
+    const s2 = this._enabledOptions.filter((i3) => !e3.includes(i3.value));
+    this.value = s2.map((i3) => i3.value);
+  }
+  toggleValue() {
+    this.value === void 0 && (this.value = []);
+    const e3 = this.value.includes(this._value);
+    this.value = e3 ? this.value.filter((s2) => s2 !== this._value) : [...this.value, this._value];
+  }
+  constructor(e3) {
+    super(e3, false), this.options = e3.options, this.value = [...e3.initialValues ?? []];
+    const s2 = Math.max(this.options.findIndex(({ value: i3 }) => i3 === e3.cursorAt), 0);
+    this.cursor = this.options[s2].disabled ? B(s2, 1, this.options) : s2, this.on("key", (i3) => {
+      i3 === "a" && this.toggleAll(), i3 === "i" && this.toggleInvert();
+    }), this.on("cursor", (i3) => {
+      switch (i3) {
         case "left":
         case "up":
-          this.cursor = this.cursor === 0 ? this.options.length - 1 : this.cursor - 1;
+          this.cursor = B(this.cursor, -1, this.options);
           break;
         case "down":
         case "right":
-          this.cursor = this.cursor === this.options.length - 1 ? 0 : this.cursor + 1;
+          this.cursor = B(this.cursor, 1, this.options);
           break;
         case "space":
           this.toggleValue();
@@ -13811,326 +13854,577 @@ var SD = class extends x {
       }
     });
   }
-  get _value() {
-    return this.options[this.cursor].value;
-  }
-  toggleAll() {
-    const u3 = this.value.length === this.options.length;
-    this.value = u3 ? [] : this.options.map((t2) => t2.value);
-  }
-  toggleValue() {
-    const u3 = this.value.includes(this._value);
-    this.value = u3 ? this.value.filter((t2) => t2 !== this._value) : [...this.value, this._value];
-  }
 };
-var OD = Object.defineProperty;
-var PD = (e3, u3, t2) => u3 in e3 ? OD(e3, u3, { enumerable: true, configurable: true, writable: true, value: t2 }) : e3[u3] = t2;
-var J = (e3, u3, t2) => (PD(e3, typeof u3 != "symbol" ? u3 + "" : u3, t2), t2);
-var LD = class extends x {
-  constructor(u3) {
-    super(u3, false), J(this, "options"), J(this, "cursor", 0), this.options = u3.options, this.cursor = this.options.findIndex(({ value: t2 }) => t2 === u3.initialValue), this.cursor === -1 && (this.cursor = 0), this.changeValue(), this.on("cursor", (t2) => {
-      switch (t2) {
+var Wt = class extends x {
+  options;
+  cursor = 0;
+  get _selectedValue() {
+    return this.options[this.cursor];
+  }
+  changeValue() {
+    this.value = this._selectedValue.value;
+  }
+  constructor(e3) {
+    super(e3, false), this.options = e3.options;
+    const s2 = this.options.findIndex(({ value: r2 }) => r2 === e3.initialValue), i3 = s2 === -1 ? 0 : s2;
+    this.cursor = this.options[i3].disabled ? B(i3, 1, this.options) : i3, this.changeValue(), this.on("cursor", (r2) => {
+      switch (r2) {
         case "left":
         case "up":
-          this.cursor = this.cursor === 0 ? this.options.length - 1 : this.cursor - 1;
+          this.cursor = B(this.cursor, -1, this.options);
           break;
         case "down":
         case "right":
-          this.cursor = this.cursor === this.options.length - 1 ? 0 : this.cursor + 1;
+          this.cursor = B(this.cursor, 1, this.options);
           break;
       }
       this.changeValue();
     });
   }
-  get _value() {
-    return this.options[this.cursor];
-  }
-  changeValue() {
-    this.value = this._value.value;
-  }
 };
-var RD = class extends x {
-  get valueWithCursor() {
-    if (this.state === "submit") return this.value;
-    if (this.cursor >= this.value.length) return `${this.value}\u2588`;
-    const u3 = this.value.slice(0, this.cursor), [t2, ...F3] = this.value.slice(this.cursor);
-    return `${u3}${import_picocolors.default.inverse(t2)}${F3.join("")}`;
+var $t = class extends x {
+  get userInputWithCursor() {
+    if (this.state === "submit") return this.userInput;
+    const e3 = this.userInput;
+    if (this.cursor >= e3.length) return `${this.userInput}\u2588`;
+    const s2 = e3.slice(0, this.cursor), [i3, ...r2] = e3.slice(this.cursor);
+    return `${s2}${import_picocolors.default.inverse(i3)}${r2.join("")}`;
   }
   get cursor() {
     return this._cursor;
   }
-  constructor(u3) {
-    super(u3), this.on("finalize", () => {
-      this.value || (this.value = u3.defaultValue);
+  constructor(e3) {
+    super({ ...e3, initialUserInput: e3.initialUserInput ?? e3.initialValue }), this.on("userInput", (s2) => {
+      this._setValue(s2);
+    }), this.on("finalize", () => {
+      this.value || (this.value = e3.defaultValue), this.value === void 0 && (this.value = "");
     });
   }
 };
 
 // node_modules/@clack/prompts/dist/index.mjs
 var import_picocolors2 = __toESM(require_picocolors(), 1);
+import N2 from "node:process";
 var import_sisteransi2 = __toESM(require_src(), 1);
-import y2 from "node:process";
-function ce() {
-  return y2.platform !== "win32" ? y2.env.TERM !== "linux" : !!y2.env.CI || !!y2.env.WT_SESSION || !!y2.env.TERMINUS_SUBLIME || y2.env.ConEmuTask === "{cmd::Cmder}" || y2.env.TERM_PROGRAM === "Terminus-Sublime" || y2.env.TERM_PROGRAM === "vscode" || y2.env.TERM === "xterm-256color" || y2.env.TERM === "alacritty" || y2.env.TERMINAL_EMULATOR === "JetBrains-JediTerm";
+function me() {
+  return N2.platform !== "win32" ? N2.env.TERM !== "linux" : !!N2.env.CI || !!N2.env.WT_SESSION || !!N2.env.TERMINUS_SUBLIME || N2.env.ConEmuTask === "{cmd::Cmder}" || N2.env.TERM_PROGRAM === "Terminus-Sublime" || N2.env.TERM_PROGRAM === "vscode" || N2.env.TERM === "xterm-256color" || N2.env.TERM === "alacritty" || N2.env.TERMINAL_EMULATOR === "JetBrains-JediTerm";
 }
-var V2 = ce();
-var u2 = (t2, n2) => V2 ? t2 : n2;
-var le = u2("\u25C6", "*");
-var L2 = u2("\u25A0", "x");
-var W2 = u2("\u25B2", "x");
-var C = u2("\u25C7", "o");
-var ue = u2("\u250C", "T");
-var o2 = u2("\u2502", "|");
-var d2 = u2("\u2514", "\u2014");
-var k2 = u2("\u25CF", ">");
-var P2 = u2("\u25CB", " ");
-var A2 = u2("\u25FB", "[\u2022]");
-var T = u2("\u25FC", "[+]");
-var F = u2("\u25FB", "[ ]");
-var $e = u2("\u25AA", "\u2022");
-var _2 = u2("\u2500", "-");
-var me = u2("\u256E", "+");
-var de = u2("\u251C", "+");
-var pe = u2("\u256F", "+");
-var q = u2("\u25CF", "\u2022");
-var D = u2("\u25C6", "*");
-var U = u2("\u25B2", "!");
-var K2 = u2("\u25A0", "x");
-var b2 = (t2) => {
+var et2 = me();
+var ct2 = () => process.env.CI === "true";
+var C = (t2, r2) => et2 ? t2 : r2;
+var Rt = C("\u25C6", "*");
+var dt2 = C("\u25A0", "x");
+var $t2 = C("\u25B2", "x");
+var V = C("\u25C7", "o");
+var ht2 = C("\u250C", "T");
+var d = C("\u2502", "|");
+var x2 = C("\u2514", "\u2014");
+var Ot = C("\u2510", "T");
+var Pt = C("\u2518", "\u2014");
+var Q2 = C("\u25CF", ">");
+var H2 = C("\u25CB", " ");
+var st2 = C("\u25FB", "[\u2022]");
+var U2 = C("\u25FC", "[+]");
+var q2 = C("\u25FB", "[ ]");
+var Nt = C("\u25AA", "\u2022");
+var rt2 = C("\u2500", "-");
+var mt2 = C("\u256E", "+");
+var Wt2 = C("\u251C", "+");
+var pt2 = C("\u256F", "+");
+var gt2 = C("\u2570", "+");
+var Lt2 = C("\u256D", "+");
+var ft2 = C("\u25CF", "\u2022");
+var Ft2 = C("\u25C6", "*");
+var yt2 = C("\u25B2", "!");
+var Et2 = C("\u25A0", "x");
+var W2 = (t2) => {
   switch (t2) {
     case "initial":
     case "active":
-      return import_picocolors2.default.cyan(le);
+      return import_picocolors2.default.cyan(Rt);
     case "cancel":
-      return import_picocolors2.default.red(L2);
+      return import_picocolors2.default.red(dt2);
     case "error":
-      return import_picocolors2.default.yellow(W2);
+      return import_picocolors2.default.yellow($t2);
     case "submit":
-      return import_picocolors2.default.green(C);
+      return import_picocolors2.default.green(V);
   }
 };
-var G2 = (t2) => {
-  const { cursor: n2, options: r3, style: i3 } = t2, s2 = t2.maxItems ?? Number.POSITIVE_INFINITY, c3 = Math.max(process.stdout.rows - 4, 0), a2 = Math.min(c3, Math.max(s2, 5));
-  let l2 = 0;
-  n2 >= l2 + a2 - 3 ? l2 = Math.max(Math.min(n2 - a2 + 3, r3.length - a2), 0) : n2 < l2 + 2 && (l2 = Math.max(n2 - 2, 0));
-  const $3 = a2 < r3.length && l2 > 0, g2 = a2 < r3.length && l2 + a2 < r3.length;
-  return r3.slice(l2, l2 + a2).map((p2, v2, f3) => {
-    const j2 = v2 === 0 && $3, E = v2 === f3.length - 1 && g2;
-    return j2 || E ? import_picocolors2.default.dim("...") : i3(p2, v2 + l2 === n2);
-  });
-};
-var he = (t2) => new RD({ validate: t2.validate, placeholder: t2.placeholder, defaultValue: t2.defaultValue, initialValue: t2.initialValue, render() {
-  const n2 = `${import_picocolors2.default.gray(o2)}
-${b2(this.state)}  ${t2.message}
-`, r3 = t2.placeholder ? import_picocolors2.default.inverse(t2.placeholder[0]) + import_picocolors2.default.dim(t2.placeholder.slice(1)) : import_picocolors2.default.inverse(import_picocolors2.default.hidden("_")), i3 = this.value ? this.valueWithCursor : r3;
-  switch (this.state) {
-    case "error":
-      return `${n2.trim()}
-${import_picocolors2.default.yellow(o2)}  ${i3}
-${import_picocolors2.default.yellow(d2)}  ${import_picocolors2.default.yellow(this.error)}
-`;
-    case "submit":
-      return `${n2}${import_picocolors2.default.gray(o2)}  ${import_picocolors2.default.dim(this.value || t2.placeholder)}`;
+var vt2 = (t2) => {
+  switch (t2) {
+    case "initial":
+    case "active":
+      return import_picocolors2.default.cyan(d);
     case "cancel":
-      return `${n2}${import_picocolors2.default.gray(o2)}  ${import_picocolors2.default.strikethrough(import_picocolors2.default.dim(this.value ?? ""))}${this.value?.trim() ? `
-${import_picocolors2.default.gray(o2)}` : ""}`;
-    default:
-      return `${n2}${import_picocolors2.default.cyan(o2)}  ${i3}
-${import_picocolors2.default.cyan(d2)}
-`;
+      return import_picocolors2.default.red(d);
+    case "error":
+      return import_picocolors2.default.yellow(d);
+    case "submit":
+      return import_picocolors2.default.green(d);
   }
-} }).prompt();
-var ye = (t2) => {
-  const n2 = t2.active ?? "Yes", r3 = t2.inactive ?? "No";
-  return new dD({ active: n2, inactive: r3, initialValue: t2.initialValue ?? true, render() {
-    const i3 = `${import_picocolors2.default.gray(o2)}
-${b2(this.state)}  ${t2.message}
-`, s2 = this.value ? n2 : r3;
-    switch (this.state) {
-      case "submit":
-        return `${i3}${import_picocolors2.default.gray(o2)}  ${import_picocolors2.default.dim(s2)}`;
-      case "cancel":
-        return `${i3}${import_picocolors2.default.gray(o2)}  ${import_picocolors2.default.strikethrough(import_picocolors2.default.dim(s2))}
-${import_picocolors2.default.gray(o2)}`;
-      default:
-        return `${i3}${import_picocolors2.default.cyan(o2)}  ${this.value ? `${import_picocolors2.default.green(k2)} ${n2}` : `${import_picocolors2.default.dim(P2)} ${import_picocolors2.default.dim(n2)}`} ${import_picocolors2.default.dim("/")} ${this.value ? `${import_picocolors2.default.dim(P2)} ${import_picocolors2.default.dim(r3)}` : `${import_picocolors2.default.green(k2)} ${r3}`}
-${import_picocolors2.default.cyan(d2)}
-`;
-    }
-  } }).prompt();
 };
-var ve = (t2) => {
-  const n2 = (r3, i3) => {
-    const s2 = r3.label ?? String(r3.value);
-    switch (i3) {
-      case "selected":
-        return `${import_picocolors2.default.dim(s2)}`;
-      case "active":
-        return `${import_picocolors2.default.green(k2)} ${s2} ${r3.hint ? import_picocolors2.default.dim(`(${r3.hint})`) : ""}`;
-      case "cancelled":
-        return `${import_picocolors2.default.strikethrough(import_picocolors2.default.dim(s2))}`;
-      default:
-        return `${import_picocolors2.default.dim(P2)} ${import_picocolors2.default.dim(s2)}`;
-    }
-  };
-  return new LD({ options: t2.options, initialValue: t2.initialValue, render() {
-    const r3 = `${import_picocolors2.default.gray(o2)}
-${b2(this.state)}  ${t2.message}
-`;
-    switch (this.state) {
-      case "submit":
-        return `${r3}${import_picocolors2.default.gray(o2)}  ${n2(this.options[this.cursor], "selected")}`;
-      case "cancel":
-        return `${r3}${import_picocolors2.default.gray(o2)}  ${n2(this.options[this.cursor], "cancelled")}
-${import_picocolors2.default.gray(o2)}`;
-      default:
-        return `${r3}${import_picocolors2.default.cyan(o2)}  ${G2({ cursor: this.cursor, options: this.options, maxItems: t2.maxItems, style: (i3, s2) => n2(i3, s2 ? "active" : "inactive") }).join(`
-${import_picocolors2.default.cyan(o2)}  `)}
-${import_picocolors2.default.cyan(d2)}
-`;
-    }
-  } }).prompt();
-};
-var fe = (t2) => {
-  const n2 = (r3, i3) => {
-    const s2 = r3.label ?? String(r3.value);
-    return i3 === "active" ? `${import_picocolors2.default.cyan(A2)} ${s2} ${r3.hint ? import_picocolors2.default.dim(`(${r3.hint})`) : ""}` : i3 === "selected" ? `${import_picocolors2.default.green(T)} ${import_picocolors2.default.dim(s2)} ${r3.hint ? import_picocolors2.default.dim(`(${r3.hint})`) : ""}` : i3 === "cancelled" ? `${import_picocolors2.default.strikethrough(import_picocolors2.default.dim(s2))}` : i3 === "active-selected" ? `${import_picocolors2.default.green(T)} ${s2} ${r3.hint ? import_picocolors2.default.dim(`(${r3.hint})`) : ""}` : i3 === "submitted" ? `${import_picocolors2.default.dim(s2)}` : `${import_picocolors2.default.dim(F)} ${import_picocolors2.default.dim(s2)}`;
-  };
-  return new SD({ options: t2.options, initialValues: t2.initialValues, required: t2.required ?? true, cursorAt: t2.cursorAt, validate(r3) {
-    if (this.required && r3.length === 0) return `Please select at least one option.
-${import_picocolors2.default.reset(import_picocolors2.default.dim(`Press ${import_picocolors2.default.gray(import_picocolors2.default.bgWhite(import_picocolors2.default.inverse(" space ")))} to select, ${import_picocolors2.default.gray(import_picocolors2.default.bgWhite(import_picocolors2.default.inverse(" enter ")))} to submit`))}`;
-  }, render() {
-    const r3 = `${import_picocolors2.default.gray(o2)}
-${b2(this.state)}  ${t2.message}
-`, i3 = (s2, c3) => {
-      const a2 = this.value.includes(s2.value);
-      return c3 && a2 ? n2(s2, "active-selected") : a2 ? n2(s2, "selected") : n2(s2, c3 ? "active" : "inactive");
-    };
-    switch (this.state) {
-      case "submit":
-        return `${r3}${import_picocolors2.default.gray(o2)}  ${this.options.filter(({ value: s2 }) => this.value.includes(s2)).map((s2) => n2(s2, "submitted")).join(import_picocolors2.default.dim(", ")) || import_picocolors2.default.dim("none")}`;
-      case "cancel": {
-        const s2 = this.options.filter(({ value: c3 }) => this.value.includes(c3)).map((c3) => n2(c3, "cancelled")).join(import_picocolors2.default.dim(", "));
-        return `${r3}${import_picocolors2.default.gray(o2)}  ${s2.trim() ? `${s2}
-${import_picocolors2.default.gray(o2)}` : ""}`;
+var pe = (t2) => t2 === 161 || t2 === 164 || t2 === 167 || t2 === 168 || t2 === 170 || t2 === 173 || t2 === 174 || t2 >= 176 && t2 <= 180 || t2 >= 182 && t2 <= 186 || t2 >= 188 && t2 <= 191 || t2 === 198 || t2 === 208 || t2 === 215 || t2 === 216 || t2 >= 222 && t2 <= 225 || t2 === 230 || t2 >= 232 && t2 <= 234 || t2 === 236 || t2 === 237 || t2 === 240 || t2 === 242 || t2 === 243 || t2 >= 247 && t2 <= 250 || t2 === 252 || t2 === 254 || t2 === 257 || t2 === 273 || t2 === 275 || t2 === 283 || t2 === 294 || t2 === 295 || t2 === 299 || t2 >= 305 && t2 <= 307 || t2 === 312 || t2 >= 319 && t2 <= 322 || t2 === 324 || t2 >= 328 && t2 <= 331 || t2 === 333 || t2 === 338 || t2 === 339 || t2 === 358 || t2 === 359 || t2 === 363 || t2 === 462 || t2 === 464 || t2 === 466 || t2 === 468 || t2 === 470 || t2 === 472 || t2 === 474 || t2 === 476 || t2 === 593 || t2 === 609 || t2 === 708 || t2 === 711 || t2 >= 713 && t2 <= 715 || t2 === 717 || t2 === 720 || t2 >= 728 && t2 <= 731 || t2 === 733 || t2 === 735 || t2 >= 768 && t2 <= 879 || t2 >= 913 && t2 <= 929 || t2 >= 931 && t2 <= 937 || t2 >= 945 && t2 <= 961 || t2 >= 963 && t2 <= 969 || t2 === 1025 || t2 >= 1040 && t2 <= 1103 || t2 === 1105 || t2 === 8208 || t2 >= 8211 && t2 <= 8214 || t2 === 8216 || t2 === 8217 || t2 === 8220 || t2 === 8221 || t2 >= 8224 && t2 <= 8226 || t2 >= 8228 && t2 <= 8231 || t2 === 8240 || t2 === 8242 || t2 === 8243 || t2 === 8245 || t2 === 8251 || t2 === 8254 || t2 === 8308 || t2 === 8319 || t2 >= 8321 && t2 <= 8324 || t2 === 8364 || t2 === 8451 || t2 === 8453 || t2 === 8457 || t2 === 8467 || t2 === 8470 || t2 === 8481 || t2 === 8482 || t2 === 8486 || t2 === 8491 || t2 === 8531 || t2 === 8532 || t2 >= 8539 && t2 <= 8542 || t2 >= 8544 && t2 <= 8555 || t2 >= 8560 && t2 <= 8569 || t2 === 8585 || t2 >= 8592 && t2 <= 8601 || t2 === 8632 || t2 === 8633 || t2 === 8658 || t2 === 8660 || t2 === 8679 || t2 === 8704 || t2 === 8706 || t2 === 8707 || t2 === 8711 || t2 === 8712 || t2 === 8715 || t2 === 8719 || t2 === 8721 || t2 === 8725 || t2 === 8730 || t2 >= 8733 && t2 <= 8736 || t2 === 8739 || t2 === 8741 || t2 >= 8743 && t2 <= 8748 || t2 === 8750 || t2 >= 8756 && t2 <= 8759 || t2 === 8764 || t2 === 8765 || t2 === 8776 || t2 === 8780 || t2 === 8786 || t2 === 8800 || t2 === 8801 || t2 >= 8804 && t2 <= 8807 || t2 === 8810 || t2 === 8811 || t2 === 8814 || t2 === 8815 || t2 === 8834 || t2 === 8835 || t2 === 8838 || t2 === 8839 || t2 === 8853 || t2 === 8857 || t2 === 8869 || t2 === 8895 || t2 === 8978 || t2 >= 9312 && t2 <= 9449 || t2 >= 9451 && t2 <= 9547 || t2 >= 9552 && t2 <= 9587 || t2 >= 9600 && t2 <= 9615 || t2 >= 9618 && t2 <= 9621 || t2 === 9632 || t2 === 9633 || t2 >= 9635 && t2 <= 9641 || t2 === 9650 || t2 === 9651 || t2 === 9654 || t2 === 9655 || t2 === 9660 || t2 === 9661 || t2 === 9664 || t2 === 9665 || t2 >= 9670 && t2 <= 9672 || t2 === 9675 || t2 >= 9678 && t2 <= 9681 || t2 >= 9698 && t2 <= 9701 || t2 === 9711 || t2 === 9733 || t2 === 9734 || t2 === 9737 || t2 === 9742 || t2 === 9743 || t2 === 9756 || t2 === 9758 || t2 === 9792 || t2 === 9794 || t2 === 9824 || t2 === 9825 || t2 >= 9827 && t2 <= 9829 || t2 >= 9831 && t2 <= 9834 || t2 === 9836 || t2 === 9837 || t2 === 9839 || t2 === 9886 || t2 === 9887 || t2 === 9919 || t2 >= 9926 && t2 <= 9933 || t2 >= 9935 && t2 <= 9939 || t2 >= 9941 && t2 <= 9953 || t2 === 9955 || t2 === 9960 || t2 === 9961 || t2 >= 9963 && t2 <= 9969 || t2 === 9972 || t2 >= 9974 && t2 <= 9977 || t2 === 9979 || t2 === 9980 || t2 === 9982 || t2 === 9983 || t2 === 10045 || t2 >= 10102 && t2 <= 10111 || t2 >= 11094 && t2 <= 11097 || t2 >= 12872 && t2 <= 12879 || t2 >= 57344 && t2 <= 63743 || t2 >= 65024 && t2 <= 65039 || t2 === 65533 || t2 >= 127232 && t2 <= 127242 || t2 >= 127248 && t2 <= 127277 || t2 >= 127280 && t2 <= 127337 || t2 >= 127344 && t2 <= 127373 || t2 === 127375 || t2 === 127376 || t2 >= 127387 && t2 <= 127404 || t2 >= 917760 && t2 <= 917999 || t2 >= 983040 && t2 <= 1048573 || t2 >= 1048576 && t2 <= 1114109;
+var ge = (t2) => t2 === 12288 || t2 >= 65281 && t2 <= 65376 || t2 >= 65504 && t2 <= 65510;
+var fe = (t2) => t2 >= 4352 && t2 <= 4447 || t2 === 8986 || t2 === 8987 || t2 === 9001 || t2 === 9002 || t2 >= 9193 && t2 <= 9196 || t2 === 9200 || t2 === 9203 || t2 === 9725 || t2 === 9726 || t2 === 9748 || t2 === 9749 || t2 >= 9800 && t2 <= 9811 || t2 === 9855 || t2 === 9875 || t2 === 9889 || t2 === 9898 || t2 === 9899 || t2 === 9917 || t2 === 9918 || t2 === 9924 || t2 === 9925 || t2 === 9934 || t2 === 9940 || t2 === 9962 || t2 === 9970 || t2 === 9971 || t2 === 9973 || t2 === 9978 || t2 === 9981 || t2 === 9989 || t2 === 9994 || t2 === 9995 || t2 === 10024 || t2 === 10060 || t2 === 10062 || t2 >= 10067 && t2 <= 10069 || t2 === 10071 || t2 >= 10133 && t2 <= 10135 || t2 === 10160 || t2 === 10175 || t2 === 11035 || t2 === 11036 || t2 === 11088 || t2 === 11093 || t2 >= 11904 && t2 <= 11929 || t2 >= 11931 && t2 <= 12019 || t2 >= 12032 && t2 <= 12245 || t2 >= 12272 && t2 <= 12287 || t2 >= 12289 && t2 <= 12350 || t2 >= 12353 && t2 <= 12438 || t2 >= 12441 && t2 <= 12543 || t2 >= 12549 && t2 <= 12591 || t2 >= 12593 && t2 <= 12686 || t2 >= 12688 && t2 <= 12771 || t2 >= 12783 && t2 <= 12830 || t2 >= 12832 && t2 <= 12871 || t2 >= 12880 && t2 <= 19903 || t2 >= 19968 && t2 <= 42124 || t2 >= 42128 && t2 <= 42182 || t2 >= 43360 && t2 <= 43388 || t2 >= 44032 && t2 <= 55203 || t2 >= 63744 && t2 <= 64255 || t2 >= 65040 && t2 <= 65049 || t2 >= 65072 && t2 <= 65106 || t2 >= 65108 && t2 <= 65126 || t2 >= 65128 && t2 <= 65131 || t2 >= 94176 && t2 <= 94180 || t2 === 94192 || t2 === 94193 || t2 >= 94208 && t2 <= 100343 || t2 >= 100352 && t2 <= 101589 || t2 >= 101632 && t2 <= 101640 || t2 >= 110576 && t2 <= 110579 || t2 >= 110581 && t2 <= 110587 || t2 === 110589 || t2 === 110590 || t2 >= 110592 && t2 <= 110882 || t2 === 110898 || t2 >= 110928 && t2 <= 110930 || t2 === 110933 || t2 >= 110948 && t2 <= 110951 || t2 >= 110960 && t2 <= 111355 || t2 === 126980 || t2 === 127183 || t2 === 127374 || t2 >= 127377 && t2 <= 127386 || t2 >= 127488 && t2 <= 127490 || t2 >= 127504 && t2 <= 127547 || t2 >= 127552 && t2 <= 127560 || t2 === 127568 || t2 === 127569 || t2 >= 127584 && t2 <= 127589 || t2 >= 127744 && t2 <= 127776 || t2 >= 127789 && t2 <= 127797 || t2 >= 127799 && t2 <= 127868 || t2 >= 127870 && t2 <= 127891 || t2 >= 127904 && t2 <= 127946 || t2 >= 127951 && t2 <= 127955 || t2 >= 127968 && t2 <= 127984 || t2 === 127988 || t2 >= 127992 && t2 <= 128062 || t2 === 128064 || t2 >= 128066 && t2 <= 128252 || t2 >= 128255 && t2 <= 128317 || t2 >= 128331 && t2 <= 128334 || t2 >= 128336 && t2 <= 128359 || t2 === 128378 || t2 === 128405 || t2 === 128406 || t2 === 128420 || t2 >= 128507 && t2 <= 128591 || t2 >= 128640 && t2 <= 128709 || t2 === 128716 || t2 >= 128720 && t2 <= 128722 || t2 >= 128725 && t2 <= 128727 || t2 >= 128732 && t2 <= 128735 || t2 === 128747 || t2 === 128748 || t2 >= 128756 && t2 <= 128764 || t2 >= 128992 && t2 <= 129003 || t2 === 129008 || t2 >= 129292 && t2 <= 129338 || t2 >= 129340 && t2 <= 129349 || t2 >= 129351 && t2 <= 129535 || t2 >= 129648 && t2 <= 129660 || t2 >= 129664 && t2 <= 129672 || t2 >= 129680 && t2 <= 129725 || t2 >= 129727 && t2 <= 129733 || t2 >= 129742 && t2 <= 129755 || t2 >= 129760 && t2 <= 129768 || t2 >= 129776 && t2 <= 129784 || t2 >= 131072 && t2 <= 196605 || t2 >= 196608 && t2 <= 262141;
+var At2 = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/y;
+var it2 = /[\x00-\x08\x0A-\x1F\x7F-\x9F]{1,1000}/y;
+var nt2 = /\t{1,1000}/y;
+var wt = new RegExp("[\\u{1F1E6}-\\u{1F1FF}]{2}|\\u{1F3F4}[\\u{E0061}-\\u{E007A}]{2}[\\u{E0030}-\\u{E0039}\\u{E0061}-\\u{E007A}]{1,3}\\u{E007F}|(?:\\p{Emoji}\\uFE0F\\u20E3?|\\p{Emoji_Modifier_Base}\\p{Emoji_Modifier}?|\\p{Emoji_Presentation})(?:\\u200D(?:\\p{Emoji_Modifier_Base}\\p{Emoji_Modifier}?|\\p{Emoji_Presentation}|\\p{Emoji}\\uFE0F\\u20E3?))*", "yu");
+var at2 = /(?:[\x20-\x7E\xA0-\xFF](?!\uFE0F)){1,1000}/y;
+var Fe = new RegExp("\\p{M}+", "gu");
+var ye = { limit: 1 / 0, ellipsis: "" };
+var jt = (t2, r2 = {}, s2 = {}) => {
+  const i3 = r2.limit ?? 1 / 0, a2 = r2.ellipsis ?? "", o2 = r2?.ellipsisWidth ?? (a2 ? jt(a2, ye, s2).width : 0), u2 = s2.ansiWidth ?? 0, l = s2.controlWidth ?? 0, n2 = s2.tabWidth ?? 8, c3 = s2.ambiguousWidth ?? 1, g = s2.emojiWidth ?? 2, F2 = s2.fullWidthWidth ?? 2, p = s2.regularWidth ?? 1, E = s2.wideWidth ?? 2;
+  let $2 = 0, m2 = 0, h3 = t2.length, y2 = 0, f3 = false, v = h3, S3 = Math.max(0, i3 - o2), I2 = 0, B2 = 0, A2 = 0, w = 0;
+  t: for (; ; ) {
+    if (B2 > I2 || m2 >= h3 && m2 > $2) {
+      const _2 = t2.slice(I2, B2) || t2.slice($2, m2);
+      y2 = 0;
+      for (const D2 of _2.replaceAll(Fe, "")) {
+        const T2 = D2.codePointAt(0) || 0;
+        if (ge(T2) ? w = F2 : fe(T2) ? w = E : c3 !== p && pe(T2) ? w = c3 : w = p, A2 + w > S3 && (v = Math.min(v, Math.max(I2, $2) + y2)), A2 + w > i3) {
+          f3 = true;
+          break t;
+        }
+        y2 += D2.length, A2 += w;
       }
-      case "error": {
-        const s2 = this.error.split(`
-`).map((c3, a2) => a2 === 0 ? `${import_picocolors2.default.yellow(d2)}  ${import_picocolors2.default.yellow(c3)}` : `   ${c3}`).join(`
-`);
-        return `${r3 + import_picocolors2.default.yellow(o2)}  ${G2({ options: this.options, cursor: this.cursor, maxItems: t2.maxItems, style: i3 }).join(`
-${import_picocolors2.default.yellow(o2)}  `)}
-${s2}
-`;
-      }
-      default:
-        return `${r3}${import_picocolors2.default.cyan(o2)}  ${G2({ options: this.options, cursor: this.cursor, maxItems: t2.maxItems, style: i3 }).join(`
-${import_picocolors2.default.cyan(o2)}  `)}
-${import_picocolors2.default.cyan(d2)}
-`;
+      I2 = B2 = 0;
     }
-  } }).prompt();
-};
-var xe = (t2 = "") => {
-  process.stdout.write(`${import_picocolors2.default.gray(d2)}  ${import_picocolors2.default.red(t2)}
-
-`);
-};
-var Ie = (t2 = "") => {
-  process.stdout.write(`${import_picocolors2.default.gray(ue)}  ${t2}
-`);
-};
-var Se = (t2 = "") => {
-  process.stdout.write(`${import_picocolors2.default.gray(o2)}
-${import_picocolors2.default.gray(d2)}  ${t2}
-
-`);
-};
-var M2 = { message: (t2 = "", { symbol: n2 = import_picocolors2.default.gray(o2) } = {}) => {
-  const r3 = [`${import_picocolors2.default.gray(o2)}`];
-  if (t2) {
-    const [i3, ...s2] = t2.split(`
-`);
-    r3.push(`${n2}  ${i3}`, ...s2.map((c3) => `${import_picocolors2.default.gray(o2)}  ${c3}`));
-  }
-  process.stdout.write(`${r3.join(`
-`)}
-`);
-}, info: (t2) => {
-  M2.message(t2, { symbol: import_picocolors2.default.blue(q) });
-}, success: (t2) => {
-  M2.message(t2, { symbol: import_picocolors2.default.green(D) });
-}, step: (t2) => {
-  M2.message(t2, { symbol: import_picocolors2.default.green(C) });
-}, warn: (t2) => {
-  M2.message(t2, { symbol: import_picocolors2.default.yellow(U) });
-}, warning: (t2) => {
-  M2.warn(t2);
-}, error: (t2) => {
-  M2.message(t2, { symbol: import_picocolors2.default.red(K2) });
-} };
-var J2 = `${import_picocolors2.default.gray(o2)}  `;
-var Y2 = ({ indicator: t2 = "dots" } = {}) => {
-  const n2 = V2 ? ["\u25D2", "\u25D0", "\u25D3", "\u25D1"] : ["\u2022", "o", "O", "0"], r3 = V2 ? 80 : 120, i3 = process.env.CI === "true";
-  let s2, c3, a2 = false, l2 = "", $3, g2 = performance.now();
-  const p2 = (m3) => {
-    const h4 = m3 > 1 ? "Something went wrong" : "Canceled";
-    a2 && N2(h4, m3);
-  }, v2 = () => p2(2), f3 = () => p2(1), j2 = () => {
-    process.on("uncaughtExceptionMonitor", v2), process.on("unhandledRejection", v2), process.on("SIGINT", f3), process.on("SIGTERM", f3), process.on("exit", p2);
-  }, E = () => {
-    process.removeListener("uncaughtExceptionMonitor", v2), process.removeListener("unhandledRejection", v2), process.removeListener("SIGINT", f3), process.removeListener("SIGTERM", f3), process.removeListener("exit", p2);
-  }, B2 = () => {
-    if ($3 === void 0) return;
-    i3 && process.stdout.write(`
-`);
-    const m3 = $3.split(`
-`);
-    process.stdout.write(import_sisteransi2.cursor.move(-999, m3.length - 1)), process.stdout.write(import_sisteransi2.erase.down(m3.length));
-  }, R2 = (m3) => m3.replace(/\.+$/, ""), O2 = (m3) => {
-    const h4 = (performance.now() - m3) / 1e3, w2 = Math.floor(h4 / 60), I2 = Math.floor(h4 % 60);
-    return w2 > 0 ? `[${w2}m ${I2}s]` : `[${I2}s]`;
-  }, H2 = (m3 = "") => {
-    a2 = true, s2 = fD(), l2 = R2(m3), g2 = performance.now(), process.stdout.write(`${import_picocolors2.default.gray(o2)}
-`);
-    let h4 = 0, w2 = 0;
-    j2(), c3 = setInterval(() => {
-      if (i3 && l2 === $3) return;
-      B2(), $3 = l2;
-      const I2 = import_picocolors2.default.magenta(n2[h4]);
-      if (i3) process.stdout.write(`${I2}  ${l2}...`);
-      else if (t2 === "timer") process.stdout.write(`${I2}  ${l2} ${O2(g2)}`);
-      else {
-        const z2 = ".".repeat(Math.floor(w2)).slice(0, 3);
-        process.stdout.write(`${I2}  ${l2}${z2}`);
+    if (m2 >= h3) break;
+    if (at2.lastIndex = m2, at2.test(t2)) {
+      if (y2 = at2.lastIndex - m2, w = y2 * p, A2 + w > S3 && (v = Math.min(v, m2 + Math.floor((S3 - A2) / p))), A2 + w > i3) {
+        f3 = true;
+        break;
       }
-      h4 = h4 + 1 < n2.length ? h4 + 1 : 0, w2 = w2 < n2.length ? w2 + 0.125 : 0;
-    }, r3);
-  }, N2 = (m3 = "", h4 = 0) => {
-    a2 = false, clearInterval(c3), B2();
-    const w2 = h4 === 0 ? import_picocolors2.default.green(C) : h4 === 1 ? import_picocolors2.default.red(L2) : import_picocolors2.default.red(W2);
-    l2 = R2(m3 ?? l2), t2 === "timer" ? process.stdout.write(`${w2}  ${l2} ${O2(g2)}
-`) : process.stdout.write(`${w2}  ${l2}
-`), E(), s2();
-  };
-  return { start: H2, stop: N2, message: (m3 = "") => {
-    l2 = R2(m3 ?? l2);
-  } };
-};
-var Ce = async (t2, n2) => {
-  const r3 = {}, i3 = Object.keys(t2);
-  for (const s2 of i3) {
-    const c3 = t2[s2], a2 = await c3({ results: r3 })?.catch((l2) => {
-      throw l2;
-    });
-    if (typeof n2?.onCancel == "function" && pD(a2)) {
-      r3[s2] = "canceled", n2.onCancel({ results: r3 });
+      A2 += w, I2 = $2, B2 = m2, m2 = $2 = at2.lastIndex;
       continue;
     }
-    r3[s2] = a2;
+    if (At2.lastIndex = m2, At2.test(t2)) {
+      if (A2 + u2 > S3 && (v = Math.min(v, m2)), A2 + u2 > i3) {
+        f3 = true;
+        break;
+      }
+      A2 += u2, I2 = $2, B2 = m2, m2 = $2 = At2.lastIndex;
+      continue;
+    }
+    if (it2.lastIndex = m2, it2.test(t2)) {
+      if (y2 = it2.lastIndex - m2, w = y2 * l, A2 + w > S3 && (v = Math.min(v, m2 + Math.floor((S3 - A2) / l))), A2 + w > i3) {
+        f3 = true;
+        break;
+      }
+      A2 += w, I2 = $2, B2 = m2, m2 = $2 = it2.lastIndex;
+      continue;
+    }
+    if (nt2.lastIndex = m2, nt2.test(t2)) {
+      if (y2 = nt2.lastIndex - m2, w = y2 * n2, A2 + w > S3 && (v = Math.min(v, m2 + Math.floor((S3 - A2) / n2))), A2 + w > i3) {
+        f3 = true;
+        break;
+      }
+      A2 += w, I2 = $2, B2 = m2, m2 = $2 = nt2.lastIndex;
+      continue;
+    }
+    if (wt.lastIndex = m2, wt.test(t2)) {
+      if (A2 + g > S3 && (v = Math.min(v, m2)), A2 + g > i3) {
+        f3 = true;
+        break;
+      }
+      A2 += g, I2 = $2, B2 = m2, m2 = $2 = wt.lastIndex;
+      continue;
+    }
+    m2 += 1;
   }
-  return r3;
+  return { width: f3 ? S3 : A2, index: f3 ? v : h3, truncated: f3, ellipsed: f3 && i3 >= o2 };
 };
+var Ee = { limit: 1 / 0, ellipsis: "", ellipsisWidth: 0 };
+var M2 = (t2, r2 = {}) => jt(t2, Ee, r2).width;
+var ot2 = "\x1B";
+var Gt = "\x9B";
+var ve = 39;
+var Ct2 = "\x07";
+var kt2 = "[";
+var Ae = "]";
+var Vt2 = "m";
+var St = `${Ae}8;;`;
+var Ht = new RegExp(`(?:\\${kt2}(?<code>\\d+)m|\\${St}(?<uri>.*)${Ct2})`, "y");
+var we = (t2) => {
+  if (t2 >= 30 && t2 <= 37 || t2 >= 90 && t2 <= 97) return 39;
+  if (t2 >= 40 && t2 <= 47 || t2 >= 100 && t2 <= 107) return 49;
+  if (t2 === 1 || t2 === 2) return 22;
+  if (t2 === 3) return 23;
+  if (t2 === 4) return 24;
+  if (t2 === 7) return 27;
+  if (t2 === 8) return 28;
+  if (t2 === 9) return 29;
+  if (t2 === 0) return 0;
+};
+var Ut = (t2) => `${ot2}${kt2}${t2}${Vt2}`;
+var Kt = (t2) => `${ot2}${St}${t2}${Ct2}`;
+var Ce = (t2) => t2.map((r2) => M2(r2));
+var It2 = (t2, r2, s2) => {
+  const i3 = r2[Symbol.iterator]();
+  let a2 = false, o2 = false, u2 = t2.at(-1), l = u2 === void 0 ? 0 : M2(u2), n2 = i3.next(), c3 = i3.next(), g = 0;
+  for (; !n2.done; ) {
+    const F2 = n2.value, p = M2(F2);
+    l + p <= s2 ? t2[t2.length - 1] += F2 : (t2.push(F2), l = 0), (F2 === ot2 || F2 === Gt) && (a2 = true, o2 = r2.startsWith(St, g + 1)), a2 ? o2 ? F2 === Ct2 && (a2 = false, o2 = false) : F2 === Vt2 && (a2 = false) : (l += p, l === s2 && !c3.done && (t2.push(""), l = 0)), n2 = c3, c3 = i3.next(), g += F2.length;
+  }
+  u2 = t2.at(-1), !l && u2 !== void 0 && u2.length > 0 && t2.length > 1 && (t2[t2.length - 2] += t2.pop());
+};
+var Se = (t2) => {
+  const r2 = t2.split(" ");
+  let s2 = r2.length;
+  for (; s2 > 0 && !(M2(r2[s2 - 1]) > 0); ) s2--;
+  return s2 === r2.length ? t2 : r2.slice(0, s2).join(" ") + r2.slice(s2).join("");
+};
+var Ie = (t2, r2, s2 = {}) => {
+  if (s2.trim !== false && t2.trim() === "") return "";
+  let i3 = "", a2, o2;
+  const u2 = t2.split(" "), l = Ce(u2);
+  let n2 = [""];
+  for (const [$2, m2] of u2.entries()) {
+    s2.trim !== false && (n2[n2.length - 1] = (n2.at(-1) ?? "").trimStart());
+    let h3 = M2(n2.at(-1) ?? "");
+    if ($2 !== 0 && (h3 >= r2 && (s2.wordWrap === false || s2.trim === false) && (n2.push(""), h3 = 0), (h3 > 0 || s2.trim === false) && (n2[n2.length - 1] += " ", h3++)), s2.hard && l[$2] > r2) {
+      const y2 = r2 - h3, f3 = 1 + Math.floor((l[$2] - y2 - 1) / r2);
+      Math.floor((l[$2] - 1) / r2) < f3 && n2.push(""), It2(n2, m2, r2);
+      continue;
+    }
+    if (h3 + l[$2] > r2 && h3 > 0 && l[$2] > 0) {
+      if (s2.wordWrap === false && h3 < r2) {
+        It2(n2, m2, r2);
+        continue;
+      }
+      n2.push("");
+    }
+    if (h3 + l[$2] > r2 && s2.wordWrap === false) {
+      It2(n2, m2, r2);
+      continue;
+    }
+    n2[n2.length - 1] += m2;
+  }
+  s2.trim !== false && (n2 = n2.map(($2) => Se($2)));
+  const c3 = n2.join(`
+`), g = c3[Symbol.iterator]();
+  let F2 = g.next(), p = g.next(), E = 0;
+  for (; !F2.done; ) {
+    const $2 = F2.value, m2 = p.value;
+    if (i3 += $2, $2 === ot2 || $2 === Gt) {
+      Ht.lastIndex = E + 1;
+      const f3 = Ht.exec(c3)?.groups;
+      if (f3?.code !== void 0) {
+        const v = Number.parseFloat(f3.code);
+        a2 = v === ve ? void 0 : v;
+      } else f3?.uri !== void 0 && (o2 = f3.uri.length === 0 ? void 0 : f3.uri);
+    }
+    const h3 = a2 ? we(a2) : void 0;
+    m2 === `
+` ? (o2 && (i3 += Kt("")), a2 && h3 && (i3 += Ut(h3))) : $2 === `
+` && (a2 && h3 && (i3 += Ut(a2)), o2 && (i3 += Kt(o2))), E += $2.length, F2 = p, p = g.next();
+  }
+  return i3;
+};
+function J2(t2, r2, s2) {
+  return String(t2).normalize().replaceAll(`\r
+`, `
+`).split(`
+`).map((i3) => Ie(i3, r2, s2)).join(`
+`);
+}
+var be = (t2, r2, s2, i3, a2) => {
+  let o2 = r2, u2 = 0;
+  for (let l = s2; l < i3; l++) {
+    const n2 = t2[l];
+    if (o2 = o2 - n2.length, u2++, o2 <= a2) break;
+  }
+  return { lineCount: o2, removals: u2 };
+};
+var X2 = (t2) => {
+  const { cursor: r2, options: s2, style: i3 } = t2, a2 = t2.output ?? process.stdout, o2 = rt(a2), u2 = t2.columnPadding ?? 0, l = t2.rowPadding ?? 4, n2 = o2 - u2, c3 = nt(a2), g = import_picocolors2.default.dim("..."), F2 = t2.maxItems ?? Number.POSITIVE_INFINITY, p = Math.max(c3 - l, 0), E = Math.max(Math.min(F2, p), 5);
+  let $2 = 0;
+  r2 >= E - 3 && ($2 = Math.max(Math.min(r2 - E + 3, s2.length - E), 0));
+  let m2 = E < s2.length && $2 > 0, h3 = E < s2.length && $2 + E < s2.length;
+  const y2 = Math.min($2 + E, s2.length), f3 = [];
+  let v = 0;
+  m2 && v++, h3 && v++;
+  const S3 = $2 + (m2 ? 1 : 0), I2 = y2 - (h3 ? 1 : 0);
+  for (let A2 = S3; A2 < I2; A2++) {
+    const w = J2(i3(s2[A2], A2 === r2), n2, { hard: true, trim: false }).split(`
+`);
+    f3.push(w), v += w.length;
+  }
+  if (v > p) {
+    let A2 = 0, w = 0, _2 = v;
+    const D2 = r2 - S3, T2 = (Y, L2) => be(f3, _2, Y, L2, p);
+    m2 ? ({ lineCount: _2, removals: A2 } = T2(0, D2), _2 > p && ({ lineCount: _2, removals: w } = T2(D2 + 1, f3.length))) : ({ lineCount: _2, removals: w } = T2(D2 + 1, f3.length), _2 > p && ({ lineCount: _2, removals: A2 } = T2(0, D2))), A2 > 0 && (m2 = true, f3.splice(0, A2)), w > 0 && (h3 = true, f3.splice(f3.length - w, w));
+  }
+  const B2 = [];
+  m2 && B2.push(g);
+  for (const A2 of f3) for (const w of A2) B2.push(w);
+  return h3 && B2.push(g), B2;
+};
+var Re = (t2) => {
+  const r2 = t2.active ?? "Yes", s2 = t2.inactive ?? "No";
+  return new kt({ active: r2, inactive: s2, signal: t2.signal, input: t2.input, output: t2.output, initialValue: t2.initialValue ?? true, render() {
+    const i3 = t2.withGuide ?? _.withGuide, a2 = `${i3 ? `${import_picocolors2.default.gray(d)}
+` : ""}${W2(this.state)}  ${t2.message}
+`, o2 = this.value ? r2 : s2;
+    switch (this.state) {
+      case "submit": {
+        const u2 = i3 ? `${import_picocolors2.default.gray(d)}  ` : "";
+        return `${a2}${u2}${import_picocolors2.default.dim(o2)}`;
+      }
+      case "cancel": {
+        const u2 = i3 ? `${import_picocolors2.default.gray(d)}  ` : "";
+        return `${a2}${u2}${import_picocolors2.default.strikethrough(import_picocolors2.default.dim(o2))}${i3 ? `
+${import_picocolors2.default.gray(d)}` : ""}`;
+      }
+      default: {
+        const u2 = i3 ? `${import_picocolors2.default.cyan(d)}  ` : "", l = i3 ? import_picocolors2.default.cyan(x2) : "";
+        return `${a2}${u2}${this.value ? `${import_picocolors2.default.green(Q2)} ${r2}` : `${import_picocolors2.default.dim(H2)} ${import_picocolors2.default.dim(r2)}`}${t2.vertical ? i3 ? `
+${import_picocolors2.default.cyan(d)}  ` : `
+` : ` ${import_picocolors2.default.dim("/")} `}${this.value ? `${import_picocolors2.default.dim(H2)} ${import_picocolors2.default.dim(s2)}` : `${import_picocolors2.default.green(Q2)} ${s2}`}
+${l}
+`;
+      }
+    }
+  } }).prompt();
+};
+var Oe = async (t2, r2) => {
+  const s2 = {}, i3 = Object.keys(t2);
+  for (const a2 of i3) {
+    const o2 = t2[a2], u2 = await o2({ results: s2 })?.catch((l) => {
+      throw l;
+    });
+    if (typeof r2?.onCancel == "function" && Ct(u2)) {
+      s2[a2] = "canceled", r2.onCancel({ results: s2 });
+      continue;
+    }
+    s2[a2] = u2;
+  }
+  return s2;
+};
+var R2 = { message: (t2 = [], { symbol: r2 = import_picocolors2.default.gray(d), secondarySymbol: s2 = import_picocolors2.default.gray(d), output: i3 = process.stdout, spacing: a2 = 1, withGuide: o2 } = {}) => {
+  const u2 = [], l = o2 ?? _.withGuide, n2 = l ? s2 : "", c3 = l ? `${r2}  ` : "", g = l ? `${s2}  ` : "";
+  for (let p = 0; p < a2; p++) u2.push(n2);
+  const F2 = Array.isArray(t2) ? t2 : t2.split(`
+`);
+  if (F2.length > 0) {
+    const [p, ...E] = F2;
+    p.length > 0 ? u2.push(`${c3}${p}`) : u2.push(l ? r2 : "");
+    for (const $2 of E) $2.length > 0 ? u2.push(`${g}${$2}`) : u2.push(l ? s2 : "");
+  }
+  i3.write(`${u2.join(`
+`)}
+`);
+}, info: (t2, r2) => {
+  R2.message(t2, { ...r2, symbol: import_picocolors2.default.blue(ft2) });
+}, success: (t2, r2) => {
+  R2.message(t2, { ...r2, symbol: import_picocolors2.default.green(Ft2) });
+}, step: (t2, r2) => {
+  R2.message(t2, { ...r2, symbol: import_picocolors2.default.green(V) });
+}, warn: (t2, r2) => {
+  R2.message(t2, { ...r2, symbol: import_picocolors2.default.yellow(yt2) });
+}, warning: (t2, r2) => {
+  R2.warn(t2, r2);
+}, error: (t2, r2) => {
+  R2.message(t2, { ...r2, symbol: import_picocolors2.default.red(Et2) });
+} };
+var Ne = (t2 = "", r2) => {
+  (r2?.output ?? process.stdout).write(`${import_picocolors2.default.gray(x2)}  ${import_picocolors2.default.red(t2)}
+
+`);
+};
+var We = (t2 = "", r2) => {
+  (r2?.output ?? process.stdout).write(`${import_picocolors2.default.gray(ht2)}  ${t2}
+`);
+};
+var Le = (t2 = "", r2) => {
+  (r2?.output ?? process.stdout).write(`${import_picocolors2.default.gray(d)}
+${import_picocolors2.default.gray(x2)}  ${t2}
+
+`);
+};
+var Z2 = (t2, r2) => t2.split(`
+`).map((s2) => r2(s2)).join(`
+`);
+var je = (t2) => {
+  const r2 = (i3, a2) => {
+    const o2 = i3.label ?? String(i3.value);
+    return a2 === "disabled" ? `${import_picocolors2.default.gray(q2)} ${Z2(o2, (u2) => import_picocolors2.default.strikethrough(import_picocolors2.default.gray(u2)))}${i3.hint ? ` ${import_picocolors2.default.dim(`(${i3.hint ?? "disabled"})`)}` : ""}` : a2 === "active" ? `${import_picocolors2.default.cyan(st2)} ${o2}${i3.hint ? ` ${import_picocolors2.default.dim(`(${i3.hint})`)}` : ""}` : a2 === "selected" ? `${import_picocolors2.default.green(U2)} ${Z2(o2, import_picocolors2.default.dim)}${i3.hint ? ` ${import_picocolors2.default.dim(`(${i3.hint})`)}` : ""}` : a2 === "cancelled" ? `${Z2(o2, (u2) => import_picocolors2.default.strikethrough(import_picocolors2.default.dim(u2)))}` : a2 === "active-selected" ? `${import_picocolors2.default.green(U2)} ${o2}${i3.hint ? ` ${import_picocolors2.default.dim(`(${i3.hint})`)}` : ""}` : a2 === "submitted" ? `${Z2(o2, import_picocolors2.default.dim)}` : `${import_picocolors2.default.dim(q2)} ${Z2(o2, import_picocolors2.default.dim)}`;
+  }, s2 = t2.required ?? true;
+  return new Lt({ options: t2.options, signal: t2.signal, input: t2.input, output: t2.output, initialValues: t2.initialValues, required: s2, cursorAt: t2.cursorAt, validate(i3) {
+    if (s2 && (i3 === void 0 || i3.length === 0)) return `Please select at least one option.
+${import_picocolors2.default.reset(import_picocolors2.default.dim(`Press ${import_picocolors2.default.gray(import_picocolors2.default.bgWhite(import_picocolors2.default.inverse(" space ")))} to select, ${import_picocolors2.default.gray(import_picocolors2.default.bgWhite(import_picocolors2.default.inverse(" enter ")))} to submit`))}`;
+  }, render() {
+    const i3 = xt(t2.output, t2.message, `${vt2(this.state)}  `, `${W2(this.state)}  `), a2 = `${import_picocolors2.default.gray(d)}
+${i3}
+`, o2 = this.value ?? [], u2 = (l, n2) => {
+      if (l.disabled) return r2(l, "disabled");
+      const c3 = o2.includes(l.value);
+      return n2 && c3 ? r2(l, "active-selected") : c3 ? r2(l, "selected") : r2(l, n2 ? "active" : "inactive");
+    };
+    switch (this.state) {
+      case "submit": {
+        const l = this.options.filter(({ value: c3 }) => o2.includes(c3)).map((c3) => r2(c3, "submitted")).join(import_picocolors2.default.dim(", ")) || import_picocolors2.default.dim("none"), n2 = xt(t2.output, l, `${import_picocolors2.default.gray(d)}  `);
+        return `${a2}${n2}`;
+      }
+      case "cancel": {
+        const l = this.options.filter(({ value: c3 }) => o2.includes(c3)).map((c3) => r2(c3, "cancelled")).join(import_picocolors2.default.dim(", "));
+        if (l.trim() === "") return `${a2}${import_picocolors2.default.gray(d)}`;
+        const n2 = xt(t2.output, l, `${import_picocolors2.default.gray(d)}  `);
+        return `${a2}${n2}
+${import_picocolors2.default.gray(d)}`;
+      }
+      case "error": {
+        const l = `${import_picocolors2.default.yellow(d)}  `, n2 = this.error.split(`
+`).map((F2, p) => p === 0 ? `${import_picocolors2.default.yellow(x2)}  ${import_picocolors2.default.yellow(F2)}` : `   ${F2}`).join(`
+`), c3 = a2.split(`
+`).length, g = n2.split(`
+`).length + 1;
+        return `${a2}${l}${X2({ output: t2.output, options: this.options, cursor: this.cursor, maxItems: t2.maxItems, columnPadding: l.length, rowPadding: c3 + g, style: u2 }).join(`
+${l}`)}
+${n2}
+`;
+      }
+      default: {
+        const l = `${import_picocolors2.default.cyan(d)}  `, n2 = a2.split(`
+`).length;
+        return `${a2}${l}${X2({ output: t2.output, options: this.options, cursor: this.cursor, maxItems: t2.maxItems, columnPadding: l.length, rowPadding: n2 + 2, style: u2 }).join(`
+${l}`)}
+${import_picocolors2.default.cyan(x2)}
+`;
+      }
+    }
+  } }).prompt();
+};
+var Ke = import_picocolors2.default.magenta;
+var bt2 = ({ indicator: t2 = "dots", onCancel: r2, output: s2 = process.stdout, cancelMessage: i3, errorMessage: a2, frames: o2 = et2 ? ["\u25D2", "\u25D0", "\u25D3", "\u25D1"] : ["\u2022", "o", "O", "0"], delay: u2 = et2 ? 80 : 120, signal: l, ...n2 } = {}) => {
+  const c3 = ct2();
+  let g, F2, p = false, E = false, $2 = "", m2, h3 = performance.now();
+  const y2 = rt(s2), f3 = n2?.styleFrame ?? Ke, v = (b) => {
+    const O2 = b > 1 ? a2 ?? _.messages.error : i3 ?? _.messages.cancel;
+    E = b === 1, p && (L2(O2, b), E && typeof r2 == "function" && r2());
+  }, S3 = () => v(2), I2 = () => v(1), B2 = () => {
+    process.on("uncaughtExceptionMonitor", S3), process.on("unhandledRejection", S3), process.on("SIGINT", I2), process.on("SIGTERM", I2), process.on("exit", v), l && l.addEventListener("abort", I2);
+  }, A2 = () => {
+    process.removeListener("uncaughtExceptionMonitor", S3), process.removeListener("unhandledRejection", S3), process.removeListener("SIGINT", I2), process.removeListener("SIGTERM", I2), process.removeListener("exit", v), l && l.removeEventListener("abort", I2);
+  }, w = () => {
+    if (m2 === void 0) return;
+    c3 && s2.write(`
+`);
+    const b = J2(m2, y2, { hard: true, trim: false }).split(`
+`);
+    b.length > 1 && s2.write(import_sisteransi2.cursor.up(b.length - 1)), s2.write(import_sisteransi2.cursor.to(0)), s2.write(import_sisteransi2.erase.down());
+  }, _2 = (b) => b.replace(/\.+$/, ""), D2 = (b) => {
+    const O2 = (performance.now() - b) / 1e3, j2 = Math.floor(O2 / 60), G2 = Math.floor(O2 % 60);
+    return j2 > 0 ? `[${j2}m ${G2}s]` : `[${G2}s]`;
+  }, T2 = n2.withGuide ?? _.withGuide, Y = (b = "") => {
+    p = true, g = Bt({ output: s2 }), $2 = _2(b), h3 = performance.now(), T2 && s2.write(`${import_picocolors2.default.gray(d)}
+`);
+    let O2 = 0, j2 = 0;
+    B2(), F2 = setInterval(() => {
+      if (c3 && $2 === m2) return;
+      w(), m2 = $2;
+      const G2 = f3(o2[O2]);
+      let tt2;
+      if (c3) tt2 = `${G2}  ${$2}...`;
+      else if (t2 === "timer") tt2 = `${G2}  ${$2} ${D2(h3)}`;
+      else {
+        const te = ".".repeat(Math.floor(j2)).slice(0, 3);
+        tt2 = `${G2}  ${$2}${te}`;
+      }
+      const Zt = J2(tt2, y2, { hard: true, trim: false });
+      s2.write(Zt), O2 = O2 + 1 < o2.length ? O2 + 1 : 0, j2 = j2 < 4 ? j2 + 0.125 : 0;
+    }, u2);
+  }, L2 = (b = "", O2 = 0, j2 = false) => {
+    if (!p) return;
+    p = false, clearInterval(F2), w();
+    const G2 = O2 === 0 ? import_picocolors2.default.green(V) : O2 === 1 ? import_picocolors2.default.red(dt2) : import_picocolors2.default.red($t2);
+    $2 = b ?? $2, j2 || (t2 === "timer" ? s2.write(`${G2}  ${$2} ${D2(h3)}
+`) : s2.write(`${G2}  ${$2}
+`)), A2(), g();
+  };
+  return { start: Y, stop: (b = "") => L2(b, 0), message: (b = "") => {
+    $2 = _2(b ?? $2);
+  }, cancel: (b = "") => L2(b, 1), error: (b = "") => L2(b, 2), clear: () => L2("", 0, true), get isCancelled() {
+    return E;
+  } };
+};
+var zt = { light: C("\u2500", "-"), heavy: C("\u2501", "="), block: C("\u2588", "#") };
+var lt2 = (t2, r2) => t2.includes(`
+`) ? t2.split(`
+`).map((s2) => r2(s2)).join(`
+`) : r2(t2);
+var Je = (t2) => {
+  const r2 = (s2, i3) => {
+    const a2 = s2.label ?? String(s2.value);
+    switch (i3) {
+      case "disabled":
+        return `${import_picocolors2.default.gray(H2)} ${lt2(a2, import_picocolors2.default.gray)}${s2.hint ? ` ${import_picocolors2.default.dim(`(${s2.hint ?? "disabled"})`)}` : ""}`;
+      case "selected":
+        return `${lt2(a2, import_picocolors2.default.dim)}`;
+      case "active":
+        return `${import_picocolors2.default.green(Q2)} ${a2}${s2.hint ? ` ${import_picocolors2.default.dim(`(${s2.hint})`)}` : ""}`;
+      case "cancelled":
+        return `${lt2(a2, (o2) => import_picocolors2.default.strikethrough(import_picocolors2.default.dim(o2)))}`;
+      default:
+        return `${import_picocolors2.default.dim(H2)} ${lt2(a2, import_picocolors2.default.dim)}`;
+    }
+  };
+  return new Wt({ options: t2.options, signal: t2.signal, input: t2.input, output: t2.output, initialValue: t2.initialValue, render() {
+    const s2 = t2.withGuide ?? _.withGuide, i3 = `${W2(this.state)}  `, a2 = `${vt2(this.state)}  `, o2 = xt(t2.output, t2.message, a2, i3), u2 = `${s2 ? `${import_picocolors2.default.gray(d)}
+` : ""}${o2}
+`;
+    switch (this.state) {
+      case "submit": {
+        const l = s2 ? `${import_picocolors2.default.gray(d)}  ` : "", n2 = xt(t2.output, r2(this.options[this.cursor], "selected"), l);
+        return `${u2}${n2}`;
+      }
+      case "cancel": {
+        const l = s2 ? `${import_picocolors2.default.gray(d)}  ` : "", n2 = xt(t2.output, r2(this.options[this.cursor], "cancelled"), l);
+        return `${u2}${n2}${s2 ? `
+${import_picocolors2.default.gray(d)}` : ""}`;
+      }
+      default: {
+        const l = s2 ? `${import_picocolors2.default.cyan(d)}  ` : "", n2 = s2 ? import_picocolors2.default.cyan(x2) : "", c3 = u2.split(`
+`).length, g = s2 ? 2 : 1;
+        return `${u2}${l}${X2({ output: t2.output, cursor: this.cursor, options: this.options, maxItems: t2.maxItems, columnPadding: l.length, rowPadding: c3 + g, style: (F2, p) => r2(F2, F2.disabled ? "disabled" : p ? "active" : "inactive") }).join(`
+${l}`)}
+${n2}
+`;
+      }
+    }
+  } }).prompt();
+};
+var Qt = `${import_picocolors2.default.gray(d)}  `;
+var Ze = (t2) => new $t({ validate: t2.validate, placeholder: t2.placeholder, defaultValue: t2.defaultValue, initialValue: t2.initialValue, output: t2.output, signal: t2.signal, input: t2.input, render() {
+  const r2 = t2?.withGuide ?? _.withGuide, s2 = `${`${r2 ? `${import_picocolors2.default.gray(d)}
+` : ""}${W2(this.state)}  `}${t2.message}
+`, i3 = t2.placeholder ? import_picocolors2.default.inverse(t2.placeholder[0]) + import_picocolors2.default.dim(t2.placeholder.slice(1)) : import_picocolors2.default.inverse(import_picocolors2.default.hidden("_")), a2 = this.userInput ? this.userInputWithCursor : i3, o2 = this.value ?? "";
+  switch (this.state) {
+    case "error": {
+      const u2 = this.error ? `  ${import_picocolors2.default.yellow(this.error)}` : "", l = r2 ? `${import_picocolors2.default.yellow(d)}  ` : "", n2 = r2 ? import_picocolors2.default.yellow(x2) : "";
+      return `${s2.trim()}
+${l}${a2}
+${n2}${u2}
+`;
+    }
+    case "submit": {
+      const u2 = o2 ? `  ${import_picocolors2.default.dim(o2)}` : "", l = r2 ? import_picocolors2.default.gray(d) : "";
+      return `${s2}${l}${u2}`;
+    }
+    case "cancel": {
+      const u2 = o2 ? `  ${import_picocolors2.default.strikethrough(import_picocolors2.default.dim(o2))}` : "", l = r2 ? import_picocolors2.default.gray(d) : "";
+      return `${s2}${l}${u2}${o2.trim() ? `
+${l}` : ""}`;
+    }
+    default: {
+      const u2 = r2 ? `${import_picocolors2.default.cyan(d)}  ` : "", l = r2 ? import_picocolors2.default.cyan(x2) : "";
+      return `${s2}${u2}${a2}
+${l}
+`;
+    }
+  }
+} }).prompt();
 
 // scripts/create-app.js
 import debug2 from "debug";
@@ -14142,17 +14436,17 @@ import _fs from "fs";
 async function main(deps) {
   const execa2 = deps.execa || execa;
   const fs3 = deps.fs || _fs;
-  Ie("Interactive Plugin Setup Wizard");
-  const { targetDir } = await Ce(
+  We("Interactive Plugin Setup Wizard");
+  const { targetDir } = await Oe(
     {
-      targetDir: () => he({
+      targetDir: () => Ze({
         message: "Enter the target directory for the configuration (leave empty for current directory):",
         initialValue: "."
       })
     },
     {
       onCancel: () => {
-        xe("Operation cancelled.");
+        Ne("Operation cancelled.");
         process.exit(0);
       }
     }
@@ -14161,9 +14455,9 @@ async function main(deps) {
   if (!fs3.existsSync(absoluteTargetDir)) {
     fs3.mkdirSync(absoluteTargetDir, { recursive: true });
   }
-  const { pluginType } = await Ce(
+  const { pluginType } = await Oe(
     {
-      pluginType: () => ve({
+      pluginType: () => Je({
         message: "Which type of plugin do you want to configure?",
         options: [
           { value: "formatter", label: "formatter" },
@@ -14175,7 +14469,7 @@ async function main(deps) {
     },
     {
       onCancel: () => {
-        xe("Operation cancelled.");
+        Ne("Operation cancelled.");
         process.exit(0);
       }
     }
@@ -14185,12 +14479,12 @@ async function main(deps) {
   switch (pluginType) {
     case "formatter":
       {
-        M2.step("Configuring Prettier...");
-        const answers = await Ce(
+        R2.step("Configuring Prettier...");
+        const answers = await Oe(
           {
-            semi: () => ye({ message: "Use semicolons?", initialValue: false }),
-            singleQuote: () => ye({ message: "Use single quotes?", initialValue: true }),
-            trailingComma: () => ve({
+            semi: () => Re({ message: "Use semicolons?", initialValue: false }),
+            singleQuote: () => Re({ message: "Use single quotes?", initialValue: true }),
+            trailingComma: () => Je({
               message: "Use trailing commas?",
               options: [
                 { value: "none", label: "none" },
@@ -14202,7 +14496,7 @@ async function main(deps) {
           },
           {
             onCancel: () => {
-              xe("Operation cancelled.");
+              Ne("Operation cancelled.");
               process.exit(0);
             }
           }
@@ -14217,19 +14511,19 @@ async function main(deps) {
           JSON.stringify(prettierConfig, null, 2)
         );
         configGenerated = true;
-        const { installDeps } = await Ce(
+        const { installDeps } = await Oe(
           {
-            installDeps: () => ye({ message: "Install Prettier dependency?", initialValue: true })
+            installDeps: () => Re({ message: "Install Prettier dependency?", initialValue: true })
           },
           {
             onCancel: () => {
-              xe("Operation cancelled.");
+              Ne("Operation cancelled.");
               process.exit(0);
             }
           }
         );
         if (installDeps) {
-          const spinner = Y2();
+          const spinner = bt2();
           spinner.start("Installing Prettier...");
           try {
             await execa2("npm", ["install", "--save-dev", "prettier"], {
@@ -14239,17 +14533,17 @@ async function main(deps) {
             depsInstalled = true;
           } catch (error2) {
             spinner.stop("Failed to install Prettier.");
-            M2.error(error2);
+            R2.error(error2);
           }
         }
       }
       break;
     case "linter":
       {
-        M2.step("Configuring ESLint...");
-        const answers = await Ce(
+        R2.step("Configuring ESLint...");
+        const answers = await Oe(
           {
-            env: () => fe({
+            env: () => je({
               message: "Select the environments your code will run in:",
               options: [
                 { value: "browser", label: "browser" },
@@ -14257,14 +14551,14 @@ async function main(deps) {
               ],
               initialValue: ["browser", "node"]
             }),
-            extendPrettier: () => ye({
+            extendPrettier: () => Re({
               message: "Extend Prettier configuration (if you use Prettier)?",
               initialValue: true
             })
           },
           {
             onCancel: () => {
-              xe("Operation cancelled.");
+              Ne("Operation cancelled.");
               process.exit(0);
             }
           }
@@ -14289,19 +14583,19 @@ export default [
 `;
         fs3.writeFileSync(join(absoluteTargetDir, "eslint.config.js"), eslintConfig.trim());
         configGenerated = true;
-        const { installDeps } = await Ce(
+        const { installDeps } = await Oe(
           {
-            installDeps: () => ye({ message: "Install ESLint dependencies?", initialValue: true })
+            installDeps: () => Re({ message: "Install ESLint dependencies?", initialValue: true })
           },
           {
             onCancel: () => {
-              xe("Operation cancelled.");
+              Ne("Operation cancelled.");
               process.exit(0);
             }
           }
         );
         if (installDeps) {
-          const spinner = Y2();
+          const spinner = bt2();
           spinner.start("Installing ESLint dependencies...");
           const deps2 = ["eslint", "@eslint/js", "globals"];
           if (answers.extendPrettier) {
@@ -14315,32 +14609,32 @@ export default [
             depsInstalled = true;
           } catch (error2) {
             spinner.stop("Failed to install ESLint dependencies.");
-            M2.error(error2);
+            R2.error(error2);
           }
         }
       }
       break;
     case "typescript":
       {
-        M2.step("Configuring TypeScript...");
-        const answers = await Ce(
+        R2.step("Configuring TypeScript...");
+        const answers = await Oe(
           {
-            target: () => ve({
+            target: () => Je({
               message: "Select the ECMAScript target version:",
               options: ["ES5", "ES6", "ES2020", "ES2021", "ESNext"],
               initialValue: "ES6"
             }),
-            module: () => ve({
+            module: () => Je({
               message: "Select the module system:",
               options: ["CommonJS", "ESNext", "NodeNext"],
               initialValue: "CommonJS"
             }),
-            strict: () => ye({ message: "Enable strict type-checking?", initialValue: true }),
-            esModuleInterop: () => ye({ message: "Enable esModuleInterop?", initialValue: true })
+            strict: () => Re({ message: "Enable strict type-checking?", initialValue: true }),
+            esModuleInterop: () => Re({ message: "Enable esModuleInterop?", initialValue: true })
           },
           {
             onCancel: () => {
-              xe("Operation cancelled.");
+              Ne("Operation cancelled.");
               process.exit(0);
             }
           }
@@ -14360,19 +14654,19 @@ export default [
           JSON.stringify(tsConfig, null, 2)
         );
         configGenerated = true;
-        const { installDeps } = await Ce(
+        const { installDeps } = await Oe(
           {
-            installDeps: () => ye({ message: "Install TypeScript dependency?", initialValue: true })
+            installDeps: () => Re({ message: "Install TypeScript dependency?", initialValue: true })
           },
           {
             onCancel: () => {
-              xe("Operation cancelled.");
+              Ne("Operation cancelled.");
               process.exit(0);
             }
           }
         );
         if (installDeps) {
-          const spinner = Y2();
+          const spinner = bt2();
           spinner.start("Installing TypeScript...");
           try {
             await execa2("npm", ["install", "--save-dev", "typescript"], {
@@ -14382,17 +14676,17 @@ export default [
             depsInstalled = true;
           } catch (error2) {
             spinner.stop("Failed to install TypeScript.");
-            M2.error(error2);
+            R2.error(error2);
           }
         }
       }
       break;
     case "gitignore":
       {
-        M2.step("Configuring .gitignore...");
-        const { templates } = await Ce(
+        R2.step("Configuring .gitignore...");
+        const { templates } = await Oe(
           {
-            templates: () => fe({
+            templates: () => je({
               message: "Select .gitignore templates:",
               options: ["node", "visualstudiocode", "windows", "macos", "linux", "jetbrain"],
               initialValue: ["node", "visualstudiocode"]
@@ -14400,13 +14694,13 @@ export default [
           },
           {
             onCancel: () => {
-              xe("Operation cancelled.");
+              Ne("Operation cancelled.");
               process.exit(0);
             }
           }
         );
         if (templates.length > 0) {
-          const spinner = Y2();
+          const spinner = bt2();
           spinner.start("Fetching .gitignore content...");
           try {
             const url = `https://www.toptal.com/developers/gitignore/api/${templates.join(",")}`;
@@ -14418,19 +14712,19 @@ export default [
             configGenerated = true;
           } catch (error2) {
             spinner.stop("Failed to fetch .gitignore templates.");
-            M2.error(error2);
+            R2.error(error2);
           }
         }
       }
       break;
   }
   if (configGenerated) {
-    M2.success("Configuration file generated successfully.");
+    R2.success("Configuration file generated successfully.");
   }
   if (depsInstalled) {
-    M2.success("Dependencies installed successfully.");
+    R2.success("Dependencies installed successfully.");
   }
-  Se("Done!");
+  Le("Done!");
 }
 
 // scripts/generate-license.js
@@ -14440,6 +14734,7 @@ import { join as join2 } from "path";
 
 // node_modules/ora/index.js
 import process14 from "node:process";
+import { stripVTControlCharacters as stripVTControlCharacters2 } from "node:util";
 
 // node_modules/ora/node_modules/chalk/source/vendor/ansi-styles/index.js
 var ANSI_BACKGROUND_OFFSET = 10;
@@ -16776,7 +17071,7 @@ var success = green(_isUnicodeSupported ? "\u2714" : "\u221A");
 var warning = yellow(_isUnicodeSupported ? "\u26A0" : "\u203C");
 var error = red(_isUnicodeSupported ? "\u2716" : "\xD7");
 
-// node_modules/ansi-regex/index.js
+// node_modules/ora/node_modules/string-width/node_modules/strip-ansi/node_modules/ansi-regex/index.js
 function ansiRegex({ onlyFirst = false } = {}) {
   const ST = "(?:\\u0007|\\u001B\\u005C|\\u009C)";
   const osc = `(?:\\u001B\\][\\s\\S]*?${ST})`;
@@ -16785,7 +17080,7 @@ function ansiRegex({ onlyFirst = false } = {}) {
   return new RegExp(pattern, onlyFirst ? void 0 : "g");
 }
 
-// node_modules/strip-ansi/index.js
+// node_modules/ora/node_modules/string-width/node_modules/strip-ansi/index.js
 var regex = ansiRegex();
 function stripAnsi(string) {
   if (typeof string !== "string") {
@@ -16795,14 +17090,14 @@ function stripAnsi(string) {
 }
 
 // node_modules/get-east-asian-width/lookup.js
-function isAmbiguous(x3) {
-  return x3 === 161 || x3 === 164 || x3 === 167 || x3 === 168 || x3 === 170 || x3 === 173 || x3 === 174 || x3 >= 176 && x3 <= 180 || x3 >= 182 && x3 <= 186 || x3 >= 188 && x3 <= 191 || x3 === 198 || x3 === 208 || x3 === 215 || x3 === 216 || x3 >= 222 && x3 <= 225 || x3 === 230 || x3 >= 232 && x3 <= 234 || x3 === 236 || x3 === 237 || x3 === 240 || x3 === 242 || x3 === 243 || x3 >= 247 && x3 <= 250 || x3 === 252 || x3 === 254 || x3 === 257 || x3 === 273 || x3 === 275 || x3 === 283 || x3 === 294 || x3 === 295 || x3 === 299 || x3 >= 305 && x3 <= 307 || x3 === 312 || x3 >= 319 && x3 <= 322 || x3 === 324 || x3 >= 328 && x3 <= 331 || x3 === 333 || x3 === 338 || x3 === 339 || x3 === 358 || x3 === 359 || x3 === 363 || x3 === 462 || x3 === 464 || x3 === 466 || x3 === 468 || x3 === 470 || x3 === 472 || x3 === 474 || x3 === 476 || x3 === 593 || x3 === 609 || x3 === 708 || x3 === 711 || x3 >= 713 && x3 <= 715 || x3 === 717 || x3 === 720 || x3 >= 728 && x3 <= 731 || x3 === 733 || x3 === 735 || x3 >= 768 && x3 <= 879 || x3 >= 913 && x3 <= 929 || x3 >= 931 && x3 <= 937 || x3 >= 945 && x3 <= 961 || x3 >= 963 && x3 <= 969 || x3 === 1025 || x3 >= 1040 && x3 <= 1103 || x3 === 1105 || x3 === 8208 || x3 >= 8211 && x3 <= 8214 || x3 === 8216 || x3 === 8217 || x3 === 8220 || x3 === 8221 || x3 >= 8224 && x3 <= 8226 || x3 >= 8228 && x3 <= 8231 || x3 === 8240 || x3 === 8242 || x3 === 8243 || x3 === 8245 || x3 === 8251 || x3 === 8254 || x3 === 8308 || x3 === 8319 || x3 >= 8321 && x3 <= 8324 || x3 === 8364 || x3 === 8451 || x3 === 8453 || x3 === 8457 || x3 === 8467 || x3 === 8470 || x3 === 8481 || x3 === 8482 || x3 === 8486 || x3 === 8491 || x3 === 8531 || x3 === 8532 || x3 >= 8539 && x3 <= 8542 || x3 >= 8544 && x3 <= 8555 || x3 >= 8560 && x3 <= 8569 || x3 === 8585 || x3 >= 8592 && x3 <= 8601 || x3 === 8632 || x3 === 8633 || x3 === 8658 || x3 === 8660 || x3 === 8679 || x3 === 8704 || x3 === 8706 || x3 === 8707 || x3 === 8711 || x3 === 8712 || x3 === 8715 || x3 === 8719 || x3 === 8721 || x3 === 8725 || x3 === 8730 || x3 >= 8733 && x3 <= 8736 || x3 === 8739 || x3 === 8741 || x3 >= 8743 && x3 <= 8748 || x3 === 8750 || x3 >= 8756 && x3 <= 8759 || x3 === 8764 || x3 === 8765 || x3 === 8776 || x3 === 8780 || x3 === 8786 || x3 === 8800 || x3 === 8801 || x3 >= 8804 && x3 <= 8807 || x3 === 8810 || x3 === 8811 || x3 === 8814 || x3 === 8815 || x3 === 8834 || x3 === 8835 || x3 === 8838 || x3 === 8839 || x3 === 8853 || x3 === 8857 || x3 === 8869 || x3 === 8895 || x3 === 8978 || x3 >= 9312 && x3 <= 9449 || x3 >= 9451 && x3 <= 9547 || x3 >= 9552 && x3 <= 9587 || x3 >= 9600 && x3 <= 9615 || x3 >= 9618 && x3 <= 9621 || x3 === 9632 || x3 === 9633 || x3 >= 9635 && x3 <= 9641 || x3 === 9650 || x3 === 9651 || x3 === 9654 || x3 === 9655 || x3 === 9660 || x3 === 9661 || x3 === 9664 || x3 === 9665 || x3 >= 9670 && x3 <= 9672 || x3 === 9675 || x3 >= 9678 && x3 <= 9681 || x3 >= 9698 && x3 <= 9701 || x3 === 9711 || x3 === 9733 || x3 === 9734 || x3 === 9737 || x3 === 9742 || x3 === 9743 || x3 === 9756 || x3 === 9758 || x3 === 9792 || x3 === 9794 || x3 === 9824 || x3 === 9825 || x3 >= 9827 && x3 <= 9829 || x3 >= 9831 && x3 <= 9834 || x3 === 9836 || x3 === 9837 || x3 === 9839 || x3 === 9886 || x3 === 9887 || x3 === 9919 || x3 >= 9926 && x3 <= 9933 || x3 >= 9935 && x3 <= 9939 || x3 >= 9941 && x3 <= 9953 || x3 === 9955 || x3 === 9960 || x3 === 9961 || x3 >= 9963 && x3 <= 9969 || x3 === 9972 || x3 >= 9974 && x3 <= 9977 || x3 === 9979 || x3 === 9980 || x3 === 9982 || x3 === 9983 || x3 === 10045 || x3 >= 10102 && x3 <= 10111 || x3 >= 11094 && x3 <= 11097 || x3 >= 12872 && x3 <= 12879 || x3 >= 57344 && x3 <= 63743 || x3 >= 65024 && x3 <= 65039 || x3 === 65533 || x3 >= 127232 && x3 <= 127242 || x3 >= 127248 && x3 <= 127277 || x3 >= 127280 && x3 <= 127337 || x3 >= 127344 && x3 <= 127373 || x3 === 127375 || x3 === 127376 || x3 >= 127387 && x3 <= 127404 || x3 >= 917760 && x3 <= 917999 || x3 >= 983040 && x3 <= 1048573 || x3 >= 1048576 && x3 <= 1114109;
+function isAmbiguous(x4) {
+  return x4 === 161 || x4 === 164 || x4 === 167 || x4 === 168 || x4 === 170 || x4 === 173 || x4 === 174 || x4 >= 176 && x4 <= 180 || x4 >= 182 && x4 <= 186 || x4 >= 188 && x4 <= 191 || x4 === 198 || x4 === 208 || x4 === 215 || x4 === 216 || x4 >= 222 && x4 <= 225 || x4 === 230 || x4 >= 232 && x4 <= 234 || x4 === 236 || x4 === 237 || x4 === 240 || x4 === 242 || x4 === 243 || x4 >= 247 && x4 <= 250 || x4 === 252 || x4 === 254 || x4 === 257 || x4 === 273 || x4 === 275 || x4 === 283 || x4 === 294 || x4 === 295 || x4 === 299 || x4 >= 305 && x4 <= 307 || x4 === 312 || x4 >= 319 && x4 <= 322 || x4 === 324 || x4 >= 328 && x4 <= 331 || x4 === 333 || x4 === 338 || x4 === 339 || x4 === 358 || x4 === 359 || x4 === 363 || x4 === 462 || x4 === 464 || x4 === 466 || x4 === 468 || x4 === 470 || x4 === 472 || x4 === 474 || x4 === 476 || x4 === 593 || x4 === 609 || x4 === 708 || x4 === 711 || x4 >= 713 && x4 <= 715 || x4 === 717 || x4 === 720 || x4 >= 728 && x4 <= 731 || x4 === 733 || x4 === 735 || x4 >= 768 && x4 <= 879 || x4 >= 913 && x4 <= 929 || x4 >= 931 && x4 <= 937 || x4 >= 945 && x4 <= 961 || x4 >= 963 && x4 <= 969 || x4 === 1025 || x4 >= 1040 && x4 <= 1103 || x4 === 1105 || x4 === 8208 || x4 >= 8211 && x4 <= 8214 || x4 === 8216 || x4 === 8217 || x4 === 8220 || x4 === 8221 || x4 >= 8224 && x4 <= 8226 || x4 >= 8228 && x4 <= 8231 || x4 === 8240 || x4 === 8242 || x4 === 8243 || x4 === 8245 || x4 === 8251 || x4 === 8254 || x4 === 8308 || x4 === 8319 || x4 >= 8321 && x4 <= 8324 || x4 === 8364 || x4 === 8451 || x4 === 8453 || x4 === 8457 || x4 === 8467 || x4 === 8470 || x4 === 8481 || x4 === 8482 || x4 === 8486 || x4 === 8491 || x4 === 8531 || x4 === 8532 || x4 >= 8539 && x4 <= 8542 || x4 >= 8544 && x4 <= 8555 || x4 >= 8560 && x4 <= 8569 || x4 === 8585 || x4 >= 8592 && x4 <= 8601 || x4 === 8632 || x4 === 8633 || x4 === 8658 || x4 === 8660 || x4 === 8679 || x4 === 8704 || x4 === 8706 || x4 === 8707 || x4 === 8711 || x4 === 8712 || x4 === 8715 || x4 === 8719 || x4 === 8721 || x4 === 8725 || x4 === 8730 || x4 >= 8733 && x4 <= 8736 || x4 === 8739 || x4 === 8741 || x4 >= 8743 && x4 <= 8748 || x4 === 8750 || x4 >= 8756 && x4 <= 8759 || x4 === 8764 || x4 === 8765 || x4 === 8776 || x4 === 8780 || x4 === 8786 || x4 === 8800 || x4 === 8801 || x4 >= 8804 && x4 <= 8807 || x4 === 8810 || x4 === 8811 || x4 === 8814 || x4 === 8815 || x4 === 8834 || x4 === 8835 || x4 === 8838 || x4 === 8839 || x4 === 8853 || x4 === 8857 || x4 === 8869 || x4 === 8895 || x4 === 8978 || x4 >= 9312 && x4 <= 9449 || x4 >= 9451 && x4 <= 9547 || x4 >= 9552 && x4 <= 9587 || x4 >= 9600 && x4 <= 9615 || x4 >= 9618 && x4 <= 9621 || x4 === 9632 || x4 === 9633 || x4 >= 9635 && x4 <= 9641 || x4 === 9650 || x4 === 9651 || x4 === 9654 || x4 === 9655 || x4 === 9660 || x4 === 9661 || x4 === 9664 || x4 === 9665 || x4 >= 9670 && x4 <= 9672 || x4 === 9675 || x4 >= 9678 && x4 <= 9681 || x4 >= 9698 && x4 <= 9701 || x4 === 9711 || x4 === 9733 || x4 === 9734 || x4 === 9737 || x4 === 9742 || x4 === 9743 || x4 === 9756 || x4 === 9758 || x4 === 9792 || x4 === 9794 || x4 === 9824 || x4 === 9825 || x4 >= 9827 && x4 <= 9829 || x4 >= 9831 && x4 <= 9834 || x4 === 9836 || x4 === 9837 || x4 === 9839 || x4 === 9886 || x4 === 9887 || x4 === 9919 || x4 >= 9926 && x4 <= 9933 || x4 >= 9935 && x4 <= 9939 || x4 >= 9941 && x4 <= 9953 || x4 === 9955 || x4 === 9960 || x4 === 9961 || x4 >= 9963 && x4 <= 9969 || x4 === 9972 || x4 >= 9974 && x4 <= 9977 || x4 === 9979 || x4 === 9980 || x4 === 9982 || x4 === 9983 || x4 === 10045 || x4 >= 10102 && x4 <= 10111 || x4 >= 11094 && x4 <= 11097 || x4 >= 12872 && x4 <= 12879 || x4 >= 57344 && x4 <= 63743 || x4 >= 65024 && x4 <= 65039 || x4 === 65533 || x4 >= 127232 && x4 <= 127242 || x4 >= 127248 && x4 <= 127277 || x4 >= 127280 && x4 <= 127337 || x4 >= 127344 && x4 <= 127373 || x4 === 127375 || x4 === 127376 || x4 >= 127387 && x4 <= 127404 || x4 >= 917760 && x4 <= 917999 || x4 >= 983040 && x4 <= 1048573 || x4 >= 1048576 && x4 <= 1114109;
 }
-function isFullWidth(x3) {
-  return x3 === 12288 || x3 >= 65281 && x3 <= 65376 || x3 >= 65504 && x3 <= 65510;
+function isFullWidth(x4) {
+  return x4 === 12288 || x4 >= 65281 && x4 <= 65376 || x4 >= 65504 && x4 <= 65510;
 }
-function isWide(x3) {
-  return x3 >= 4352 && x3 <= 4447 || x3 === 8986 || x3 === 8987 || x3 === 9001 || x3 === 9002 || x3 >= 9193 && x3 <= 9196 || x3 === 9200 || x3 === 9203 || x3 === 9725 || x3 === 9726 || x3 === 9748 || x3 === 9749 || x3 >= 9776 && x3 <= 9783 || x3 >= 9800 && x3 <= 9811 || x3 === 9855 || x3 >= 9866 && x3 <= 9871 || x3 === 9875 || x3 === 9889 || x3 === 9898 || x3 === 9899 || x3 === 9917 || x3 === 9918 || x3 === 9924 || x3 === 9925 || x3 === 9934 || x3 === 9940 || x3 === 9962 || x3 === 9970 || x3 === 9971 || x3 === 9973 || x3 === 9978 || x3 === 9981 || x3 === 9989 || x3 === 9994 || x3 === 9995 || x3 === 10024 || x3 === 10060 || x3 === 10062 || x3 >= 10067 && x3 <= 10069 || x3 === 10071 || x3 >= 10133 && x3 <= 10135 || x3 === 10160 || x3 === 10175 || x3 === 11035 || x3 === 11036 || x3 === 11088 || x3 === 11093 || x3 >= 11904 && x3 <= 11929 || x3 >= 11931 && x3 <= 12019 || x3 >= 12032 && x3 <= 12245 || x3 >= 12272 && x3 <= 12287 || x3 >= 12289 && x3 <= 12350 || x3 >= 12353 && x3 <= 12438 || x3 >= 12441 && x3 <= 12543 || x3 >= 12549 && x3 <= 12591 || x3 >= 12593 && x3 <= 12686 || x3 >= 12688 && x3 <= 12773 || x3 >= 12783 && x3 <= 12830 || x3 >= 12832 && x3 <= 12871 || x3 >= 12880 && x3 <= 42124 || x3 >= 42128 && x3 <= 42182 || x3 >= 43360 && x3 <= 43388 || x3 >= 44032 && x3 <= 55203 || x3 >= 63744 && x3 <= 64255 || x3 >= 65040 && x3 <= 65049 || x3 >= 65072 && x3 <= 65106 || x3 >= 65108 && x3 <= 65126 || x3 >= 65128 && x3 <= 65131 || x3 >= 94176 && x3 <= 94180 || x3 >= 94192 && x3 <= 94198 || x3 >= 94208 && x3 <= 101589 || x3 >= 101631 && x3 <= 101662 || x3 >= 101760 && x3 <= 101874 || x3 >= 110576 && x3 <= 110579 || x3 >= 110581 && x3 <= 110587 || x3 === 110589 || x3 === 110590 || x3 >= 110592 && x3 <= 110882 || x3 === 110898 || x3 >= 110928 && x3 <= 110930 || x3 === 110933 || x3 >= 110948 && x3 <= 110951 || x3 >= 110960 && x3 <= 111355 || x3 >= 119552 && x3 <= 119638 || x3 >= 119648 && x3 <= 119670 || x3 === 126980 || x3 === 127183 || x3 === 127374 || x3 >= 127377 && x3 <= 127386 || x3 >= 127488 && x3 <= 127490 || x3 >= 127504 && x3 <= 127547 || x3 >= 127552 && x3 <= 127560 || x3 === 127568 || x3 === 127569 || x3 >= 127584 && x3 <= 127589 || x3 >= 127744 && x3 <= 127776 || x3 >= 127789 && x3 <= 127797 || x3 >= 127799 && x3 <= 127868 || x3 >= 127870 && x3 <= 127891 || x3 >= 127904 && x3 <= 127946 || x3 >= 127951 && x3 <= 127955 || x3 >= 127968 && x3 <= 127984 || x3 === 127988 || x3 >= 127992 && x3 <= 128062 || x3 === 128064 || x3 >= 128066 && x3 <= 128252 || x3 >= 128255 && x3 <= 128317 || x3 >= 128331 && x3 <= 128334 || x3 >= 128336 && x3 <= 128359 || x3 === 128378 || x3 === 128405 || x3 === 128406 || x3 === 128420 || x3 >= 128507 && x3 <= 128591 || x3 >= 128640 && x3 <= 128709 || x3 === 128716 || x3 >= 128720 && x3 <= 128722 || x3 >= 128725 && x3 <= 128728 || x3 >= 128732 && x3 <= 128735 || x3 === 128747 || x3 === 128748 || x3 >= 128756 && x3 <= 128764 || x3 >= 128992 && x3 <= 129003 || x3 === 129008 || x3 >= 129292 && x3 <= 129338 || x3 >= 129340 && x3 <= 129349 || x3 >= 129351 && x3 <= 129535 || x3 >= 129648 && x3 <= 129660 || x3 >= 129664 && x3 <= 129674 || x3 >= 129678 && x3 <= 129734 || x3 === 129736 || x3 >= 129741 && x3 <= 129756 || x3 >= 129759 && x3 <= 129770 || x3 >= 129775 && x3 <= 129784 || x3 >= 131072 && x3 <= 196605 || x3 >= 196608 && x3 <= 262141;
+function isWide(x4) {
+  return x4 >= 4352 && x4 <= 4447 || x4 === 8986 || x4 === 8987 || x4 === 9001 || x4 === 9002 || x4 >= 9193 && x4 <= 9196 || x4 === 9200 || x4 === 9203 || x4 === 9725 || x4 === 9726 || x4 === 9748 || x4 === 9749 || x4 >= 9776 && x4 <= 9783 || x4 >= 9800 && x4 <= 9811 || x4 === 9855 || x4 >= 9866 && x4 <= 9871 || x4 === 9875 || x4 === 9889 || x4 === 9898 || x4 === 9899 || x4 === 9917 || x4 === 9918 || x4 === 9924 || x4 === 9925 || x4 === 9934 || x4 === 9940 || x4 === 9962 || x4 === 9970 || x4 === 9971 || x4 === 9973 || x4 === 9978 || x4 === 9981 || x4 === 9989 || x4 === 9994 || x4 === 9995 || x4 === 10024 || x4 === 10060 || x4 === 10062 || x4 >= 10067 && x4 <= 10069 || x4 === 10071 || x4 >= 10133 && x4 <= 10135 || x4 === 10160 || x4 === 10175 || x4 === 11035 || x4 === 11036 || x4 === 11088 || x4 === 11093 || x4 >= 11904 && x4 <= 11929 || x4 >= 11931 && x4 <= 12019 || x4 >= 12032 && x4 <= 12245 || x4 >= 12272 && x4 <= 12287 || x4 >= 12289 && x4 <= 12350 || x4 >= 12353 && x4 <= 12438 || x4 >= 12441 && x4 <= 12543 || x4 >= 12549 && x4 <= 12591 || x4 >= 12593 && x4 <= 12686 || x4 >= 12688 && x4 <= 12773 || x4 >= 12783 && x4 <= 12830 || x4 >= 12832 && x4 <= 12871 || x4 >= 12880 && x4 <= 42124 || x4 >= 42128 && x4 <= 42182 || x4 >= 43360 && x4 <= 43388 || x4 >= 44032 && x4 <= 55203 || x4 >= 63744 && x4 <= 64255 || x4 >= 65040 && x4 <= 65049 || x4 >= 65072 && x4 <= 65106 || x4 >= 65108 && x4 <= 65126 || x4 >= 65128 && x4 <= 65131 || x4 >= 94176 && x4 <= 94180 || x4 >= 94192 && x4 <= 94198 || x4 >= 94208 && x4 <= 101589 || x4 >= 101631 && x4 <= 101662 || x4 >= 101760 && x4 <= 101874 || x4 >= 110576 && x4 <= 110579 || x4 >= 110581 && x4 <= 110587 || x4 === 110589 || x4 === 110590 || x4 >= 110592 && x4 <= 110882 || x4 === 110898 || x4 >= 110928 && x4 <= 110930 || x4 === 110933 || x4 >= 110948 && x4 <= 110951 || x4 >= 110960 && x4 <= 111355 || x4 >= 119552 && x4 <= 119638 || x4 >= 119648 && x4 <= 119670 || x4 === 126980 || x4 === 127183 || x4 === 127374 || x4 >= 127377 && x4 <= 127386 || x4 >= 127488 && x4 <= 127490 || x4 >= 127504 && x4 <= 127547 || x4 >= 127552 && x4 <= 127560 || x4 === 127568 || x4 === 127569 || x4 >= 127584 && x4 <= 127589 || x4 >= 127744 && x4 <= 127776 || x4 >= 127789 && x4 <= 127797 || x4 >= 127799 && x4 <= 127868 || x4 >= 127870 && x4 <= 127891 || x4 >= 127904 && x4 <= 127946 || x4 >= 127951 && x4 <= 127955 || x4 >= 127968 && x4 <= 127984 || x4 === 127988 || x4 >= 127992 && x4 <= 128062 || x4 === 128064 || x4 >= 128066 && x4 <= 128252 || x4 >= 128255 && x4 <= 128317 || x4 >= 128331 && x4 <= 128334 || x4 >= 128336 && x4 <= 128359 || x4 === 128378 || x4 === 128405 || x4 === 128406 || x4 === 128420 || x4 >= 128507 && x4 <= 128591 || x4 >= 128640 && x4 <= 128709 || x4 === 128716 || x4 >= 128720 && x4 <= 128722 || x4 >= 128725 && x4 <= 128728 || x4 >= 128732 && x4 <= 128735 || x4 === 128747 || x4 === 128748 || x4 >= 128756 && x4 <= 128764 || x4 >= 128992 && x4 <= 129003 || x4 === 129008 || x4 >= 129292 && x4 <= 129338 || x4 >= 129340 && x4 <= 129349 || x4 >= 129351 && x4 <= 129535 || x4 >= 129648 && x4 <= 129660 || x4 >= 129664 && x4 <= 129674 || x4 >= 129678 && x4 <= 129734 || x4 === 129736 || x4 >= 129741 && x4 <= 129756 || x4 >= 129759 && x4 <= 129770 || x4 >= 129775 && x4 <= 129784 || x4 >= 131072 && x4 <= 196605 || x4 >= 196608 && x4 <= 262141;
 }
 
 // node_modules/get-east-asian-width/index.js
@@ -16885,6 +17180,22 @@ import process13 from "node:process";
 var ASCII_ETX_CODE = 3;
 var StdinDiscarder = class {
   #activeCount = 0;
+  #stdin;
+  #stdinWasPaused = false;
+  #stdinWasRaw = false;
+  #handleInputBound = (chunk) => {
+    if (!chunk?.length) {
+      return;
+    }
+    const code = typeof chunk === "string" ? chunk.codePointAt(0) : chunk[0];
+    if (code === ASCII_ETX_CODE) {
+      if (process13.listenerCount("SIGINT") > 0) {
+        process13.emit("SIGINT");
+      } else {
+        process13.kill(process13.pid, "SIGINT");
+      }
+    }
+  };
   start() {
     this.#activeCount++;
     if (this.#activeCount === 1) {
@@ -16892,59 +17203,130 @@ var StdinDiscarder = class {
     }
   }
   stop() {
-    if (this.#activeCount <= 0) {
-      throw new Error("`stop` called more times than `start`");
-    }
-    this.#activeCount--;
     if (this.#activeCount === 0) {
+      return;
+    }
+    if (--this.#activeCount === 0) {
       this.#realStop();
     }
   }
   #realStart() {
-    if (process13.platform === "win32" || !process13.stdin.isTTY) {
+    const { stdin } = process13;
+    if (process13.platform === "win32" || !stdin?.isTTY || typeof stdin.setRawMode !== "function") {
+      this.#stdin = void 0;
       return;
     }
-    process13.stdin.setRawMode(true);
-    process13.stdin.on("data", this.#handleInput);
-    process13.stdin.resume();
+    this.#stdin = stdin;
+    this.#stdinWasPaused = stdin.isPaused();
+    this.#stdinWasRaw = Boolean(stdin.isRaw);
+    stdin.setRawMode(true);
+    stdin.prependListener("data", this.#handleInputBound);
+    if (this.#stdinWasPaused) {
+      stdin.resume();
+    }
   }
   #realStop() {
-    if (!process13.stdin.isTTY) {
+    if (!this.#stdin) {
       return;
     }
-    process13.stdin.off("data", this.#handleInput);
-    process13.stdin.pause();
-    process13.stdin.setRawMode(false);
-  }
-  #handleInput(chunk) {
-    if (chunk[0] === ASCII_ETX_CODE) {
-      process13.emit("SIGINT");
+    const stdin = this.#stdin;
+    stdin.off("data", this.#handleInputBound);
+    if (stdin.isTTY) {
+      stdin.setRawMode?.(this.#stdinWasRaw);
     }
+    if (this.#stdinWasPaused) {
+      stdin.pause();
+    }
+    this.#stdin = void 0;
+    this.#stdinWasPaused = false;
+    this.#stdinWasRaw = false;
   }
 };
 var stdinDiscarder = new StdinDiscarder();
-var stdin_discarder_default = stdinDiscarder;
+var stdin_discarder_default = Object.freeze(stdinDiscarder);
 
 // node_modules/ora/index.js
+var RENDER_DEFERRAL_TIMEOUT = 200;
+var SYNCHRONIZED_OUTPUT_ENABLE = "\x1B[?2026h";
+var SYNCHRONIZED_OUTPUT_DISABLE = "\x1B[?2026l";
+var activeHooksPerStream = /* @__PURE__ */ new Map();
 var Ora = class {
   #linesToClear = 0;
-  #isDiscardingStdin = false;
-  #lineCount = 0;
   #frameIndex = -1;
-  #lastSpinnerFrameTime = 0;
-  #lastIndent = 0;
+  #lastFrameTime = 0;
   #options;
   #spinner;
   #stream;
   #id;
-  #initialInterval;
-  #isEnabled;
-  #isSilent;
-  #indent;
-  #text;
-  #prefixText;
-  #suffixText;
+  #hookedStreams = /* @__PURE__ */ new Map();
+  #isInternalWrite = false;
+  #drainHandler;
+  #deferRenderTimer;
+  #isDiscardingStdin = false;
   color;
+  // Helper to execute writes while preventing hook recursion
+  #internalWrite(fn) {
+    this.#isInternalWrite = true;
+    try {
+      return fn();
+    } finally {
+      this.#isInternalWrite = false;
+    }
+  }
+  // Helper to render if still spinning
+  #tryRender() {
+    if (this.isSpinning) {
+      this.render();
+    }
+  }
+  #stringifyChunk(chunk, encoding) {
+    if (chunk === void 0 || chunk === null) {
+      return "";
+    }
+    if (typeof chunk === "string") {
+      return chunk;
+    }
+    if (Buffer.isBuffer(chunk) || ArrayBuffer.isView(chunk)) {
+      const normalizedEncoding = typeof encoding === "string" && encoding && encoding !== "buffer" ? encoding : "utf8";
+      return Buffer.from(chunk).toString(normalizedEncoding);
+    }
+    return String(chunk);
+  }
+  #chunkTerminatesLine(chunkString) {
+    if (!chunkString) {
+      return false;
+    }
+    const lastCharacter = chunkString.at(-1);
+    return lastCharacter === "\n" || lastCharacter === "\r";
+  }
+  #scheduleRenderDeferral() {
+    if (this.#deferRenderTimer) {
+      return;
+    }
+    this.#deferRenderTimer = setTimeout(() => {
+      this.#deferRenderTimer = void 0;
+      if (this.isSpinning) {
+        this.#tryRender();
+      }
+    }, RENDER_DEFERRAL_TIMEOUT);
+    if (typeof this.#deferRenderTimer?.unref === "function") {
+      this.#deferRenderTimer.unref();
+    }
+  }
+  #clearRenderDeferral() {
+    if (this.#deferRenderTimer) {
+      clearTimeout(this.#deferRenderTimer);
+      this.#deferRenderTimer = void 0;
+    }
+  }
+  // Helper to build complete line with symbol, text, prefix, and suffix
+  #buildOutputLine(symbol, text, prefixText, suffixText) {
+    const fullPrefixText = this.#getFullPrefixText(prefixText, " ");
+    const separatorText = symbol ? " " : "";
+    const fullText = typeof text === "string" ? separatorText + text : "";
+    const fullSuffixText = this.#getFullSuffixText(suffixText, " ");
+    return fullPrefixText + symbol + fullText + fullSuffixText;
+  }
   constructor(options) {
     if (typeof options === "string") {
       options = {
@@ -16959,18 +17341,23 @@ var Ora = class {
       ...options
     };
     this.color = this.#options.color;
-    this.spinner = this.#options.spinner;
-    this.#initialInterval = this.#options.interval;
     this.#stream = this.#options.stream;
-    this.#isEnabled = typeof this.#options.isEnabled === "boolean" ? this.#options.isEnabled : isInteractive({ stream: this.#stream });
-    this.#isSilent = typeof this.#options.isSilent === "boolean" ? this.#options.isSilent : false;
+    if (typeof this.#options.isEnabled !== "boolean") {
+      this.#options.isEnabled = isInteractive({ stream: this.#stream });
+    }
+    if (typeof this.#options.isSilent !== "boolean") {
+      this.#options.isSilent = false;
+    }
+    const userInterval = this.#options.interval;
+    this.spinner = this.#options.spinner;
+    this.#options.interval = userInterval;
     this.text = this.#options.text;
     this.prefixText = this.#options.prefixText;
     this.suffixText = this.#options.suffixText;
     this.indent = this.#options.indent;
     if (process14.env.NODE_ENV === "test") {
       this._stream = this.#stream;
-      this._isEnabled = this.#isEnabled;
+      this._isEnabled = this.#options.isEnabled;
       Object.defineProperty(this, "_linesToClear", {
         get() {
           return this.#linesToClear;
@@ -16986,30 +17373,36 @@ var Ora = class {
       });
       Object.defineProperty(this, "_lineCount", {
         get() {
-          return this.#lineCount;
+          const columns = this.#stream.columns ?? 80;
+          const prefixText = typeof this.#options.prefixText === "function" ? "" : this.#options.prefixText;
+          const suffixText = typeof this.#options.suffixText === "function" ? "" : this.#options.suffixText;
+          const fullPrefixText = typeof prefixText === "string" && prefixText !== "" ? prefixText + " " : "";
+          const fullSuffixText = typeof suffixText === "string" && suffixText !== "" ? " " + suffixText : "";
+          const spinnerChar = "-";
+          const fullText = " ".repeat(this.#options.indent) + fullPrefixText + spinnerChar + (typeof this.#options.text === "string" ? " " + this.#options.text : "") + fullSuffixText;
+          return this.#computeLineCountFrom(fullText, columns);
         }
       });
     }
   }
   get indent() {
-    return this.#indent;
+    return this.#options.indent;
   }
   set indent(indent = 0) {
     if (!(indent >= 0 && Number.isInteger(indent))) {
       throw new Error("The `indent` option must be an integer from 0 and up");
     }
-    this.#indent = indent;
-    this.#updateLineCount();
+    this.#options.indent = indent;
   }
   get interval() {
-    return this.#initialInterval ?? this.#spinner.interval ?? 100;
+    return this.#options.interval ?? this.#spinner.interval ?? 100;
   }
   get spinner() {
     return this.#spinner;
   }
   set spinner(spinner) {
     this.#frameIndex = -1;
-    this.#initialInterval = void 0;
+    this.#options.interval = void 0;
     if (typeof spinner === "object") {
       if (!Array.isArray(spinner.frames) || spinner.frames.length === 0 || spinner.frames.some((frame) => typeof frame !== "string")) {
         throw new Error("The given spinner must have a non-empty `frames` array of strings");
@@ -17029,25 +17422,22 @@ var Ora = class {
     }
   }
   get text() {
-    return this.#text;
+    return this.#options.text;
   }
   set text(value = "") {
-    this.#text = value;
-    this.#updateLineCount();
+    this.#options.text = value;
   }
   get prefixText() {
-    return this.#prefixText;
+    return this.#options.prefixText;
   }
   set prefixText(value = "") {
-    this.#prefixText = value;
-    this.#updateLineCount();
+    this.#options.prefixText = value;
   }
   get suffixText() {
-    return this.#suffixText;
+    return this.#options.suffixText;
   }
   set suffixText(value = "") {
-    this.#suffixText = value;
-    this.#updateLineCount();
+    this.#options.suffixText = value;
   }
   get isSpinning() {
     return this.#id !== void 0;
@@ -17059,110 +17449,179 @@ var Ora = class {
     }
     return "";
   }
-  #getFullPrefixText(prefixText = this.#prefixText, postfix = " ") {
+  #getFullPrefixText(prefixText = this.#options.prefixText, postfix = " ") {
     return this.#formatAffix(prefixText, postfix, false);
   }
-  #getFullSuffixText(suffixText = this.#suffixText, prefix = " ") {
+  #getFullSuffixText(suffixText = this.#options.suffixText, prefix = " ") {
     return this.#formatAffix(suffixText, prefix, true);
   }
   #computeLineCountFrom(text, columns) {
     let count2 = 0;
-    for (const line of stripAnsi(text).split("\n")) {
+    for (const line of stripVTControlCharacters2(text).split("\n")) {
       count2 += Math.max(1, Math.ceil(stringWidth(line) / columns));
     }
     return count2;
   }
-  #updateLineCount() {
-    const columns = this.#stream.columns ?? 80;
-    const prefixText = typeof this.#prefixText === "function" ? "" : this.#prefixText;
-    const suffixText = typeof this.#suffixText === "function" ? "" : this.#suffixText;
-    const fullPrefixText = typeof prefixText === "string" && prefixText !== "" ? prefixText + " " : "";
-    const fullSuffixText = typeof suffixText === "string" && suffixText !== "" ? " " + suffixText : "";
-    const spinnerChar = "-";
-    const fullText = " ".repeat(this.#indent) + fullPrefixText + spinnerChar + (typeof this.#text === "string" ? " " + this.#text : "") + fullSuffixText;
-    this.#lineCount = this.#computeLineCountFrom(fullText, columns);
-  }
   get isEnabled() {
-    return this.#isEnabled && !this.#isSilent;
+    return this.#options.isEnabled && !this.#options.isSilent;
   }
   set isEnabled(value) {
     if (typeof value !== "boolean") {
       throw new TypeError("The `isEnabled` option must be a boolean");
     }
-    this.#isEnabled = value;
+    this.#options.isEnabled = value;
   }
   get isSilent() {
-    return this.#isSilent;
+    return this.#options.isSilent;
   }
   set isSilent(value) {
     if (typeof value !== "boolean") {
       throw new TypeError("The `isSilent` option must be a boolean");
     }
-    this.#isSilent = value;
+    this.#options.isSilent = value;
   }
   frame() {
     const now = Date.now();
-    if (this.#frameIndex === -1 || now - this.#lastSpinnerFrameTime >= this.interval) {
-      this.#frameIndex = ++this.#frameIndex % this.#spinner.frames.length;
-      this.#lastSpinnerFrameTime = now;
+    if (this.#frameIndex === -1 || now - this.#lastFrameTime >= this.interval) {
+      this.#frameIndex = (this.#frameIndex + 1) % this.#spinner.frames.length;
+      this.#lastFrameTime = now;
     }
     const { frames } = this.#spinner;
     let frame = frames[this.#frameIndex];
     if (this.color) {
       frame = source_default[this.color](frame);
     }
-    const fullPrefixText = this.#getFullPrefixText(this.#prefixText, " ");
+    const fullPrefixText = this.#getFullPrefixText(this.#options.prefixText, " ");
     const fullText = typeof this.text === "string" ? " " + this.text : "";
-    const fullSuffixText = this.#getFullSuffixText(this.#suffixText, " ");
+    const fullSuffixText = this.#getFullSuffixText(this.#options.suffixText, " ");
     return fullPrefixText + frame + fullText + fullSuffixText;
   }
   clear() {
-    if (!this.#isEnabled || !this.#stream.isTTY) {
+    if (!this.isEnabled || !this.#stream.isTTY) {
       return this;
     }
-    this.#stream.cursorTo(0);
-    for (let index = 0; index < this.#linesToClear; index++) {
-      if (index > 0) {
-        this.#stream.moveCursor(0, -1);
+    this.#internalWrite(() => {
+      this.#stream.cursorTo(0);
+      for (let index = 0; index < this.#linesToClear; index++) {
+        if (index > 0) {
+          this.#stream.moveCursor(0, -1);
+        }
+        this.#stream.clearLine(1);
       }
-      this.#stream.clearLine(1);
-    }
-    if (this.#indent || this.#lastIndent !== this.#indent) {
-      this.#stream.cursorTo(this.#indent);
-    }
-    this.#lastIndent = this.#indent;
+      if (this.#options.indent) {
+        this.#stream.cursorTo(this.#options.indent);
+      }
+    });
     this.#linesToClear = 0;
     return this;
   }
-  render() {
-    if (!this.#isEnabled || this.#isSilent) {
-      return this;
+  // Helper to hook a single stream
+  #hookStream(stream) {
+    if (!stream || this.#hookedStreams.has(stream) || !stream.isTTY || typeof stream.write !== "function") {
+      return;
+    }
+    if (activeHooksPerStream.has(stream)) {
+      console.warn("[ora] Multiple concurrent spinners detected. This may cause visual corruption. Use one spinner at a time.");
+    }
+    const originalWrite = stream.write;
+    this.#hookedStreams.set(stream, originalWrite);
+    activeHooksPerStream.set(stream, this);
+    stream.write = (chunk, encoding, callback) => this.#hookedWrite(stream, originalWrite, chunk, encoding, callback);
+  }
+  /**
+  Intercept stream writes while spinner is active to handle external writes cleanly without visual corruption.
+  Hooks process stdio streams and the active spinner stream so console.log(), console.error(), and direct writes stay tidy.
+  */
+  #installHook() {
+    if (!this.isEnabled || this.#hookedStreams.size > 0) {
+      return;
+    }
+    const streamsToHook = /* @__PURE__ */ new Set([this.#stream, process14.stdout, process14.stderr]);
+    for (const stream of streamsToHook) {
+      this.#hookStream(stream);
+    }
+  }
+  #uninstallHook() {
+    for (const [stream, originalWrite] of this.#hookedStreams) {
+      stream.write = originalWrite;
+      if (activeHooksPerStream.get(stream) === this) {
+        activeHooksPerStream.delete(stream);
+      }
+    }
+    this.#hookedStreams.clear();
+  }
+  // eslint-disable-next-line max-params -- Need stream and originalWrite for multi-stream support
+  #hookedWrite(stream, originalWrite, chunk, encoding, callback) {
+    if (typeof encoding === "function") {
+      callback = encoding;
+      encoding = void 0;
+    }
+    if (this.#isInternalWrite) {
+      return originalWrite.call(stream, chunk, encoding, callback);
     }
     this.clear();
-    let frameContent = this.frame();
-    const columns = this.#stream.columns ?? 80;
-    const actualLineCount = this.#computeLineCountFrom(frameContent, columns);
-    const consoleHeight = this.#stream.rows;
-    if (consoleHeight && consoleHeight > 1 && actualLineCount > consoleHeight) {
-      const lines = frameContent.split("\n");
-      const maxLines = consoleHeight - 1;
-      frameContent = [...lines.slice(0, maxLines), "... (content truncated to fit terminal)"].join("\n");
+    const chunkString = this.#stringifyChunk(chunk, encoding);
+    const chunkTerminatesLine = this.#chunkTerminatesLine(chunkString);
+    const writeResult = originalWrite.call(stream, chunk, encoding, callback);
+    if (chunkTerminatesLine) {
+      this.#clearRenderDeferral();
+    } else if (chunkString.length > 0) {
+      this.#scheduleRenderDeferral();
     }
-    this.#stream.write(frameContent);
-    this.#linesToClear = this.#computeLineCountFrom(frameContent, columns);
+    if (this.isSpinning && !this.#deferRenderTimer) {
+      this.render();
+    }
+    return writeResult;
+  }
+  render() {
+    if (!this.isEnabled || this.#drainHandler || this.#deferRenderTimer) {
+      return this;
+    }
+    const useSynchronizedOutput = this.#stream.isTTY;
+    let shouldDisableSynchronizedOutput = false;
+    try {
+      if (useSynchronizedOutput) {
+        this.#internalWrite(() => this.#stream.write(SYNCHRONIZED_OUTPUT_ENABLE));
+        shouldDisableSynchronizedOutput = true;
+      }
+      this.clear();
+      let frameContent = this.frame();
+      const columns = this.#stream.columns ?? 80;
+      const actualLineCount = this.#computeLineCountFrom(frameContent, columns);
+      const consoleHeight = this.#stream.rows;
+      if (consoleHeight && consoleHeight > 1 && actualLineCount > consoleHeight) {
+        const lines = frameContent.split("\n");
+        const maxLines = consoleHeight - 1;
+        frameContent = [...lines.slice(0, maxLines), "... (content truncated to fit terminal)"].join("\n");
+      }
+      const canContinue = this.#internalWrite(() => this.#stream.write(frameContent));
+      if (canContinue === false && this.#stream.isTTY) {
+        this.#drainHandler = () => {
+          this.#drainHandler = void 0;
+          this.#tryRender();
+        };
+        this.#stream.once("drain", this.#drainHandler);
+      }
+      this.#linesToClear = this.#computeLineCountFrom(frameContent, columns);
+    } finally {
+      if (shouldDisableSynchronizedOutput) {
+        this.#internalWrite(() => this.#stream.write(SYNCHRONIZED_OUTPUT_DISABLE));
+      }
+    }
     return this;
   }
   start(text) {
     if (text) {
       this.text = text;
     }
-    if (this.#isSilent) {
+    if (this.isSilent) {
       return this;
     }
-    if (!this.#isEnabled) {
-      const line = " ".repeat(this.#indent) + this.#getFullPrefixText(this.#prefixText, " ") + (this.text ? `- ${this.text}` : "") + this.#getFullSuffixText(this.#suffixText, " ");
+    if (!this.isEnabled) {
+      const symbol = this.text ? "-" : "";
+      const line = " ".repeat(this.#options.indent) + this.#buildOutputLine(symbol, this.text, this.#options.prefixText, this.#options.suffixText);
       if (line.trim() !== "") {
-        this.#stream.write(line + "\n");
+        this.#internalWrite(() => this.#stream.write(line + "\n"));
       }
       return this;
     }
@@ -17173,9 +17632,10 @@ var Ora = class {
       cli_cursor_default.hide(this.#stream);
     }
     if (this.#options.discardStdin && process14.stdin.isTTY) {
-      this.#isDiscardingStdin = true;
       stdin_discarder_default.start();
+      this.#isDiscardingStdin = true;
     }
+    this.#installHook();
     this.render();
     this.#id = setInterval(this.render.bind(this), this.interval);
     return this;
@@ -17183,16 +17643,23 @@ var Ora = class {
   stop() {
     clearInterval(this.#id);
     this.#id = void 0;
-    this.#frameIndex = 0;
-    if (this.#isEnabled) {
+    this.#frameIndex = -1;
+    this.#lastFrameTime = 0;
+    this.#clearRenderDeferral();
+    this.#uninstallHook();
+    if (this.#drainHandler) {
+      this.#stream.removeListener("drain", this.#drainHandler);
+      this.#drainHandler = void 0;
+    }
+    if (this.isEnabled) {
       this.clear();
       if (this.#options.hideCursor) {
         cli_cursor_default.show(this.#stream);
       }
     }
-    if (this.#options.discardStdin && process14.stdin.isTTY && this.#isDiscardingStdin) {
-      stdin_discarder_default.stop();
+    if (this.#isDiscardingStdin) {
       this.#isDiscardingStdin = false;
+      stdin_discarder_default.stop();
     }
     return this;
   }
@@ -17209,20 +17676,16 @@ var Ora = class {
     return this.stopAndPersist({ symbol: symbols_exports.info, text });
   }
   stopAndPersist(options = {}) {
-    if (this.#isSilent) {
+    if (this.isSilent) {
       return this;
     }
-    const prefixText = options.prefixText ?? this.#prefixText;
-    const fullPrefixText = this.#getFullPrefixText(prefixText, " ");
-    const symbolText = options.symbol ?? " ";
+    const symbol = options.symbol ?? " ";
     const text = options.text ?? this.text;
-    const separatorText = symbolText ? " " : "";
-    const fullText = typeof text === "string" ? separatorText + text : "";
-    const suffixText = options.suffixText ?? this.#suffixText;
-    const fullSuffixText = this.#getFullSuffixText(suffixText, " ");
-    const textToWrite = fullPrefixText + symbolText + fullText + fullSuffixText + "\n";
+    const prefixText = options.prefixText ?? this.#options.prefixText;
+    const suffixText = options.suffixText ?? this.#options.suffixText;
+    const textToWrite = this.#buildOutputLine(symbol, text, prefixText, suffixText) + "\n";
     this.stop();
-    this.#stream.write(textToWrite);
+    this.#internalWrite(() => this.#stream.write(textToWrite));
     return this;
   }
 };
@@ -17541,7 +18004,7 @@ async function main4(deps) {
   const fsExtra = deps.fsExtra || _fsExtra;
   async function getTemplates() {
     debugTemplates("Fetching available templates");
-    const spinner2 = Y2();
+    const spinner2 = bt2();
     spinner2.start("Loading template library...");
     try {
       const templatesPath = join4(dirname(fileURLToPath3(import.meta.url)), "..", "template-library");
@@ -17561,7 +18024,7 @@ async function main4(deps) {
   }
   async function applyTemplate(templateName, projectDir2, answers2) {
     debugTemplatesApply("Applying template: %s to project: %s", templateName, projectDir2);
-    const spinner2 = Y2();
+    const spinner2 = bt2();
     spinner2.start(`Applying template: ${templateName}...`);
     try {
       const templateDir = join4(
@@ -17619,23 +18082,23 @@ async function main4(deps) {
       process.exit(1);
     }
   }
-  Ie("Let's create a new project!");
+  We("Let's create a new project!");
   const cliArgs = process.argv.slice(2).filter((arg) => !arg.startsWith("--"));
   const projectNameFromArg = cliArgs[0];
   const answers = {};
   if (projectNameFromArg) {
     answers.projectName = projectNameFromArg;
-    M2.info(`Using project name from argument: ${projectNameFromArg}`);
+    R2.info(`Using project name from argument: ${projectNameFromArg}`);
   }
   const answersArg = args.find((arg) => arg.startsWith("--answers="));
   if (answersArg) {
     const answersJSON = answersArg.split("=")[1];
     Object.assign(answers, JSON.parse(answersJSON));
   } else {
-    const group = await Ce(
+    const group = await Oe(
       {
         ...!projectNameFromArg && {
-          projectName: () => he({
+          projectName: () => Ze({
             message: "Project name:",
             placeholder: "my-awesome-project",
             validate: (value) => {
@@ -17643,23 +18106,23 @@ async function main4(deps) {
             }
           })
         },
-        template: async () => ve({
+        template: async () => Je({
           message: "Select a project template:",
           options: (await getTemplates()).map((t2) => ({ value: t2, label: t2 }))
         })
       },
       {
         onCancel: () => {
-          xe("Operation cancelled.");
+          Ne("Operation cancelled.");
           process.exit(0);
         }
       }
     );
     Object.assign(answers, group);
     if (answers.template === "discord-bot") {
-      const discordGroup = await Ce(
+      const discordGroup = await Oe(
         {
-          discordFeatures: () => fe({
+          discordFeatures: () => je({
             message: "Select Discord bot features:",
             options: [
               { value: "welcome", label: "Include welcome messages for new users" },
@@ -17668,14 +18131,14 @@ async function main4(deps) {
             ],
             required: false
           }),
-          discordRPC: () => ye({
+          discordRPC: () => Re({
             message: "Include Discord RPC (activity status)?",
             initialValue: false
           })
         },
         {
           onCancel: () => {
-            xe("Operation cancelled.");
+            Ne("Operation cancelled.");
             process.exit(0);
           }
         }
@@ -17683,42 +18146,42 @@ async function main4(deps) {
       Object.assign(answers, discordGroup);
     }
     if (answers.template === "vue-wizard") {
-      const vueWizardGroup = await Ce(
+      const vueWizardGroup = await Oe(
         {
-          isPublic: () => ye({
+          isPublic: () => Re({
             message: "Make the repository public?",
             initialValue: true
           }),
-          addLicense: () => ye({
+          addLicense: () => Re({
             message: "Add a LICENSE file?",
             initialValue: true
           }),
-          addFunding: () => ye({
+          addFunding: () => Re({
             message: "Add a FUNDING.yml file?",
             initialValue: false
           }),
-          addDocs: () => ye({
+          addDocs: () => Re({
             message: "Set up a docs/ directory?",
             initialValue: false
           }),
-          useGhPages: () => ye({
+          useGhPages: () => Re({
             message: "Set up a GitHub Pages deployment workflow?",
             initialValue: false
           })
         },
         {
           onCancel: () => {
-            xe("Operation cancelled.");
+            Ne("Operation cancelled.");
             process.exit(0);
           }
         }
       );
       Object.assign(answers, vueWizardGroup);
     }
-    const customizationGroup = await Ce(
+    const customizationGroup = await Oe(
       {
         ...!answers.template.startsWith("vue-wizard") && {
-          dependencies: () => fe({
+          dependencies: () => je({
             message: "Which packages should be installed?",
             options: [
               { value: { name: "express", version: "^4.18.2" }, label: "express" },
@@ -17730,17 +18193,17 @@ async function main4(deps) {
             required: false
           })
         },
-        initGit: () => ye({
+        initGit: () => Re({
           message: "Initialize a Git repository?",
           initialValue: true
         }),
-        includeTestFramework: () => ye({
+        includeTestFramework: () => Re({
           message: "Include a testing framework?",
           initialValue: false
         }),
         testFramework: ({ results }) => {
           if (results.includeTestFramework) {
-            return ve({
+            return Je({
               message: "Which testing framework?",
               options: [
                 { value: "Jest", label: "Jest" },
@@ -17750,38 +18213,38 @@ async function main4(deps) {
             });
           }
         },
-        includeTypeScript: () => ye({
+        includeTypeScript: () => Re({
           message: "Include TypeScript?",
           initialValue: false
         }),
-        includeEslint: () => ye({
+        includeEslint: () => Re({
           message: "Include ESLint for linting?",
           initialValue: false
         }),
-        includePrettier: () => ye({
+        includePrettier: () => Re({
           message: "Include Prettier for code formatting?",
           initialValue: false
         }),
-        includeDocker: () => ye({
+        includeDocker: () => Re({
           message: "Include Docker support?",
           initialValue: false
         }),
-        includeGithubActions: () => ye({
+        includeGithubActions: () => Re({
           message: "Include GitHub Actions workflow?",
           initialValue: false
         }),
-        includeGitlabCi: () => ye({
+        includeGitlabCi: () => Re({
           message: "Include GitLab CI/CD pipeline?",
           initialValue: false
         }),
-        includeDebugConfig: () => ye({
+        includeDebugConfig: () => Re({
           message: "Include VS Code debug configuration?",
           initialValue: false
         })
       },
       {
         onCancel: () => {
-          xe("Operation cancelled.");
+          Ne("Operation cancelled.");
           process.exit(0);
         }
       }
@@ -17790,12 +18253,12 @@ async function main4(deps) {
   }
   const projectDir = join4(process.cwd(), answers.projectName);
   if (fs3.existsSync(projectDir)) {
-    xe("Error: Project folder already exists.");
+    Ne("Error: Project folder already exists.");
     process.exit(1);
   }
   fs3.mkdirSync(projectDir, { recursive: true });
   process.chdir(projectDir);
-  const spinner = Y2();
+  const spinner = bt2();
   spinner.start("Initializing new project (npm init -y)...");
   await execa2("npm", ["init", "-y"]);
   spinner.stop("Project initialized.");
@@ -18089,7 +18552,7 @@ test-job:
     spinner.stop("Initial commit created.");
     debugGit("Initial commit created successfully");
   }
-  Se("Project successfully created!");
+  Le("Project successfully created!");
   console.log("\nThank you for using @involvex/create-wizard!");
   console.log(
     "If you want to support the project, you can do so at https://buymeacoffee.com/involvex"

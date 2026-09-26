@@ -13,5 +13,5 @@
   'insertPragma': true,
   'checkIgnorePragma': true,
   'proseWrap': 'preserve',
-  'plugins': ['eslint-plugin-license-header', 'prettier'],
+  'plugins': ['prettier'],
 }

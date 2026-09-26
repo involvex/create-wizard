@@ -8,7 +8,6 @@ import globals from "globals";
 import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 // import vitest from '@vitest/eslint-plugin';
-import licenseHeader from 'eslint-plugin-license-header';
 
 import docusaurus from '@docusaurus/eslint-plugin';
 

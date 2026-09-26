@@ -10,6 +10,12 @@ const endpoint = 'https://models.github.ai/inference'
 const model = 'openai/gpt-4.1'
 
 export async function main() {
+  if (!token) {
+    console.error(
+      'Missing GH_TOKEN. Set it via a .env file (GH_TOKEN=...) or the GH_TOKEN environment variable.',
+    )
+    process.exit(1)
+  }
   const client = ModelClient(endpoint, new AzureKeyCredential(token))
 
   const response = await client.path('/chat/completions').post({

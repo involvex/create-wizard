@@ -719,17 +719,11 @@ if (resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url))) {
   const userArgs = process.argv.slice(2) // Get arguments passed by the user
 
   if (userArgs.includes('--plugin')) {
-    createPlugin({
-      /* dependencies */
-    })
+    createPlugin({/* dependencies */})
   } else if (userArgs.includes('--license')) {
-    generateLicense({
-      /* dependencies */
-    })
+    generateLicense({/* dependencies */})
   } else if (userArgs.includes('--create-test')) {
-    createTestSetup({
-      /* dependencies */
-    })
+    createTestSetup({/* dependencies */})
   } else if (userArgs.includes('--list-templates')) {
     const templatesPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'template-library')
     const templates = _fs.readdirSync(templatesPath).filter(file => {

@@ -23,7 +23,7 @@ jobs:
           node-version: '22' # Use a stable Node.js version
 
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
       - name: Build Documentation
         run: |

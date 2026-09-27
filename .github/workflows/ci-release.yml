@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Security audit (root)
+        run: bun audit || echo "::warning::Vulnerabilities found in root dependencies"
+
       - name: Build project
         run: bun run build
 
@@ -46,6 +49,9 @@ jobs:
           bun-version: 'latest'
       - name: Install dependencies
         run: bun install
+
+      - name: Security audit (root)
+        run: bun audit || echo "::warning::Vulnerabilities found in root dependencies"
 
       - run: bun run test
 

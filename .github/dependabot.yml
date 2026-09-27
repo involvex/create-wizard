@@ -1,0 +1,101 @@
+# @format
+
+version: 2
+updates:
+  # Root CLI project
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    allow:
+      - dependency-type: direct
+      - dependency-type: all
+        dependency-namespace: involvex
+    ignore:
+      - dependency-name: "@azure-rest/ai-inference"
+        versions: ["1.0.0-beta.6"]
+      - dependency-name: "@azure/core-auth"
+        versions: ["1.10.1"]
+
+  # Documentation site
+  - package-ecosystem: npm
+    directory: /docs
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  # E2E test project
+  - package-ecosystem: npm
+    directory: /e2e-test-project
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  # Template sub-projects (each has its own package.json)
+  - package-ecosystem: npm
+    directory: /template-library/docusaurus-site
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/electron-next-ts/renderer
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/fullstack-auth/backend
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/fullstack-auth/frontend
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/gemini-ai-starter/files
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/gemini-chatbot-express/files
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/node-api/files
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/react-native-app/files
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/vue-wizard/files
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /template-library/vscode-extension
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  # GitHub Actions workflows
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

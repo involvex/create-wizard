@@ -6,7 +6,7 @@ var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-  get: (a2, b) => (typeof require !== "undefined" ? require : a2)[b]
+  get: (a3, b) => (typeof require !== "undefined" ? require : a3)[b]
 }) : x2)(function(x2) {
   if (typeof require !== "undefined") return require.apply(this, arguments);
   throw Error('Dynamic require of "' + x2 + '" is not supported');
@@ -54,7 +54,7 @@ var require_src = __commonJS({
     var ESC2 = "\x1B";
     var CSI2 = `${ESC2}[`;
     var beep = "\x07";
-    var cursor = {
+    var cursor3 = {
       to(x2, y2) {
         if (!y2) return `${CSI2}${x2 + 1}G`;
         return `${CSI2}${y2 + 1};${x2 + 1}H`;
@@ -83,7 +83,7 @@ var require_src = __commonJS({
       up: (count2 = 1) => `${CSI2}S`.repeat(count2),
       down: (count2 = 1) => `${CSI2}T`.repeat(count2)
     };
-    var erase = {
+    var erase3 = {
       screen: `${CSI2}2J`,
       up: (count2 = 1) => `${CSI2}1J`.repeat(count2),
       down: (count2 = 1) => `${CSI2}J`.repeat(count2),
@@ -92,14 +92,14 @@ var require_src = __commonJS({
       lineStart: `${CSI2}1K`,
       lines(count2) {
         let clear = "";
-        for (let i3 = 0; i3 < count2; i3++)
-          clear += this.line + (i3 < count2 - 1 ? cursor.up() : "");
+        for (let i4 = 0; i4 < count2; i4++)
+          clear += this.line + (i4 < count2 - 1 ? cursor3.up() : "");
         if (count2)
-          clear += cursor.left;
+          clear += cursor3.left;
         return clear;
       }
     };
-    module.exports = { cursor, scroll, erase, beep };
+    module.exports = { cursor: cursor3, scroll, erase: erase3, beep };
   }
 });
 
@@ -118,13 +118,13 @@ function dataUriToBuffer(uri) {
   let base64 = false;
   const type = meta[0] || "text/plain";
   let typeFull = type;
-  for (let i3 = 1; i3 < meta.length; i3++) {
-    if (meta[i3] === "base64") {
+  for (let i4 = 1; i4 < meta.length; i4++) {
+    if (meta[i4] === "base64") {
       base64 = true;
-    } else if (meta[i3]) {
-      typeFull += `;${meta[i3]}`;
-      if (meta[i3].indexOf("charset=") === 0) {
-        charset = meta[i3].substring(8);
+    } else if (meta[i4]) {
+      typeFull += `;${meta[i4]}`;
+      if (meta[i4].indexOf("charset=") === 0) {
+        charset = meta[i4].substring(8);
       }
     }
   }
@@ -209,15 +209,15 @@ var require_ponyfill_es2018 = __commonJS({
         }
         return _queueMicrotask(callback);
       };
-      function reflectCall(F3, V3, args2) {
-        if (typeof F3 !== "function") {
+      function reflectCall(F2, V, args2) {
+        if (typeof F2 !== "function") {
           throw new TypeError("Argument is not a function");
         }
-        return Function.prototype.apply.call(F3, V3, args2);
+        return Function.prototype.apply.call(F2, V, args2);
       }
-      function promiseCall(F3, V3, args2) {
+      function promiseCall(F2, V, args2) {
         try {
-          return promiseResolvedWith(reflectCall(F3, V3, args2));
+          return promiseResolvedWith(reflectCall(F2, V, args2));
         } catch (value) {
           return promiseRejectedWith(value);
         }
@@ -288,28 +288,28 @@ var require_ponyfill_es2018 = __commonJS({
         // with undefined values until we either "catch up" with elements that still
         // exist or reach the back of the queue.
         forEach(callback) {
-          let i3 = this._cursor;
+          let i4 = this._cursor;
           let node = this._front;
           let elements = node._elements;
-          while (i3 !== elements.length || node._next !== void 0) {
-            if (i3 === elements.length) {
+          while (i4 !== elements.length || node._next !== void 0) {
+            if (i4 === elements.length) {
               node = node._next;
               elements = node._elements;
-              i3 = 0;
+              i4 = 0;
               if (elements.length === 0) {
                 break;
               }
             }
-            callback(elements[i3]);
-            ++i3;
+            callback(elements[i4]);
+            ++i4;
           }
         }
         // Return the element that would be returned if shift() was called now,
         // without modifying the queue.
         peek() {
           const front = this._front;
-          const cursor = this._cursor;
-          return front._elements[cursor];
+          const cursor3 = this._cursor;
+          return front._elements[cursor3];
         }
       }
       const AbortSteps = /* @__PURE__ */ Symbol("[[AbortSteps]]");
@@ -713,26 +713,26 @@ var require_ponyfill_es2018 = __commonJS({
       function CreateArrayFromList(elements) {
         return elements.slice();
       }
-      function CopyDataBlockBytes(dest, destOffset, src, srcOffset, n2) {
-        new Uint8Array(dest).set(new Uint8Array(src, srcOffset, n2), destOffset);
+      function CopyDataBlockBytes(dest, destOffset, src, srcOffset, n4) {
+        new Uint8Array(dest).set(new Uint8Array(src, srcOffset, n4), destOffset);
       }
-      let TransferArrayBuffer = (O3) => {
-        if (typeof O3.transfer === "function") {
+      let TransferArrayBuffer = (O) => {
+        if (typeof O.transfer === "function") {
           TransferArrayBuffer = (buffer) => buffer.transfer();
         } else if (typeof structuredClone === "function") {
           TransferArrayBuffer = (buffer) => structuredClone(buffer, { transfer: [buffer] });
         } else {
           TransferArrayBuffer = (buffer) => buffer;
         }
-        return TransferArrayBuffer(O3);
+        return TransferArrayBuffer(O);
       };
-      let IsDetachedBuffer = (O3) => {
-        if (typeof O3.detached === "boolean") {
+      let IsDetachedBuffer = (O) => {
+        if (typeof O.detached === "boolean") {
           IsDetachedBuffer = (buffer) => buffer.detached;
         } else {
           IsDetachedBuffer = (buffer) => buffer.byteLength === 0;
         }
-        return IsDetachedBuffer(O3);
+        return IsDetachedBuffer(O);
       };
       function ArrayBufferSlice(buffer, begin, end) {
         if (buffer.slice) {
@@ -812,8 +812,8 @@ var require_ponyfill_es2018 = __commonJS({
         }
         return true;
       }
-      function CloneAsUint8Array(O3) {
-        const buffer = ArrayBufferSlice(O3.buffer, O3.byteOffset, O3.byteOffset + O3.byteLength);
+      function CloneAsUint8Array(O) {
+        const buffer = ArrayBufferSlice(O.buffer, O.byteOffset, O.byteOffset + O.byteLength);
         return new Uint8Array(buffer);
       }
       function DequeueValue(container) {
@@ -1484,8 +1484,8 @@ var require_ponyfill_es2018 = __commonJS({
           controller._started = true;
           ReadableByteStreamControllerCallPullIfNeeded(controller);
           return null;
-        }, (r2) => {
-          ReadableByteStreamControllerError(controller, r2);
+        }, (r3) => {
+          ReadableByteStreamControllerError(controller, r3);
           return null;
         });
       }
@@ -2459,9 +2459,9 @@ var require_ponyfill_es2018 = __commonJS({
           controller._started = true;
           WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller);
           return null;
-        }, (r2) => {
+        }, (r3) => {
           controller._started = true;
-          WritableStreamDealWithRejection(stream, r2);
+          WritableStreamDealWithRejection(stream, r3);
           return null;
         });
       }
@@ -3118,8 +3118,8 @@ var require_ponyfill_es2018 = __commonJS({
           controller._started = true;
           ReadableStreamDefaultControllerCallPullIfNeeded(controller);
           return null;
-        }, (r2) => {
-          ReadableStreamDefaultControllerError(controller, r2);
+        }, (r3) => {
+          ReadableStreamDefaultControllerError(controller, r3);
           return null;
         });
       }
@@ -3235,9 +3235,9 @@ var require_ponyfill_es2018 = __commonJS({
         }
         branch1 = CreateReadableStream(startAlgorithm, pullAlgorithm, cancel1Algorithm);
         branch2 = CreateReadableStream(startAlgorithm, pullAlgorithm, cancel2Algorithm);
-        uponRejection(reader._closedPromise, (r2) => {
-          ReadableStreamDefaultControllerError(branch1._readableStreamController, r2);
-          ReadableStreamDefaultControllerError(branch2._readableStreamController, r2);
+        uponRejection(reader._closedPromise, (r3) => {
+          ReadableStreamDefaultControllerError(branch1._readableStreamController, r3);
+          ReadableStreamDefaultControllerError(branch2._readableStreamController, r3);
           if (!canceled1 || !canceled2) {
             resolveCancelPromise(void 0);
           }
@@ -3261,12 +3261,12 @@ var require_ponyfill_es2018 = __commonJS({
           resolveCancelPromise = resolve2;
         });
         function forwardReaderError(thisReader) {
-          uponRejection(thisReader._closedPromise, (r2) => {
+          uponRejection(thisReader._closedPromise, (r3) => {
             if (thisReader !== reader) {
               return null;
             }
-            ReadableByteStreamControllerError(branch1._readableStreamController, r2);
-            ReadableByteStreamControllerError(branch2._readableStreamController, r2);
+            ReadableByteStreamControllerError(branch1._readableStreamController, r3);
+            ReadableByteStreamControllerError(branch2._readableStreamController, r3);
             if (!canceled1 || !canceled2) {
               resolveCancelPromise(void 0);
             }
@@ -3556,13 +3556,13 @@ var require_ponyfill_es2018 = __commonJS({
         assertDictionary(source, context);
         const original = source;
         const autoAllocateChunkSize = original === null || original === void 0 ? void 0 : original.autoAllocateChunkSize;
-        const cancel = original === null || original === void 0 ? void 0 : original.cancel;
+        const cancel2 = original === null || original === void 0 ? void 0 : original.cancel;
         const pull = original === null || original === void 0 ? void 0 : original.pull;
         const start = original === null || original === void 0 ? void 0 : original.start;
         const type = original === null || original === void 0 ? void 0 : original.type;
         return {
           autoAllocateChunkSize: autoAllocateChunkSize === void 0 ? void 0 : convertUnsignedLongLongWithEnforceRange(autoAllocateChunkSize, `${context} has member 'autoAllocateChunkSize' that`),
-          cancel: cancel === void 0 ? void 0 : convertUnderlyingSourceCancelCallback(cancel, original, `${context} has member 'cancel' that`),
+          cancel: cancel2 === void 0 ? void 0 : convertUnderlyingSourceCancelCallback(cancel2, original, `${context} has member 'cancel' that`),
           pull: pull === void 0 ? void 0 : convertUnderlyingSourcePullCallback(pull, original, `${context} has member 'pull' that`),
           start: start === void 0 ? void 0 : convertUnderlyingSourceStartCallback(start, original, `${context} has member 'start' that`),
           type: type === void 0 ? void 0 : convertReadableStreamType(type, `${context} has member 'type' that`)
@@ -3988,14 +3988,14 @@ var require_ponyfill_es2018 = __commonJS({
       }
       function convertTransformer(original, context) {
         assertDictionary(original, context);
-        const cancel = original === null || original === void 0 ? void 0 : original.cancel;
+        const cancel2 = original === null || original === void 0 ? void 0 : original.cancel;
         const flush = original === null || original === void 0 ? void 0 : original.flush;
         const readableType = original === null || original === void 0 ? void 0 : original.readableType;
         const start = original === null || original === void 0 ? void 0 : original.start;
         const transform = original === null || original === void 0 ? void 0 : original.transform;
         const writableType = original === null || original === void 0 ? void 0 : original.writableType;
         return {
-          cancel: cancel === void 0 ? void 0 : convertTransformerCancelCallback(cancel, original, `${context} has member 'cancel' that`),
+          cancel: cancel2 === void 0 ? void 0 : convertTransformerCancelCallback(cancel2, original, `${context} has member 'cancel' that`),
           flush: flush === void 0 ? void 0 : convertTransformerFlushCallback(flush, original, `${context} has member 'flush' that`),
           readableType,
           start: start === void 0 ? void 0 : convertTransformerStartCallback(start, original, `${context} has member 'start' that`),
@@ -4268,9 +4268,9 @@ var require_ponyfill_es2018 = __commonJS({
       }
       function TransformStreamDefaultControllerPerformTransform(controller, chunk) {
         const transformPromise = controller._transformAlgorithm(chunk);
-        return transformPromiseWith(transformPromise, void 0, (r2) => {
-          TransformStreamError(controller._controlledTransformStream, r2);
-          throw r2;
+        return transformPromiseWith(transformPromise, void 0, (r3) => {
+          TransformStreamError(controller._controlledTransformStream, r3);
+          throw r3;
         });
       }
       function TransformStreamDefaultControllerTerminate(controller) {
@@ -4315,9 +4315,9 @@ var require_ponyfill_es2018 = __commonJS({
             defaultControllerFinishPromiseResolve(controller);
           }
           return null;
-        }, (r2) => {
-          ReadableStreamDefaultControllerError(readable2._readableStreamController, r2);
-          defaultControllerFinishPromiseReject(controller, r2);
+        }, (r3) => {
+          ReadableStreamDefaultControllerError(readable2._readableStreamController, r3);
+          defaultControllerFinishPromiseReject(controller, r3);
           return null;
         });
         return controller._finishPromise;
@@ -4342,9 +4342,9 @@ var require_ponyfill_es2018 = __commonJS({
             defaultControllerFinishPromiseResolve(controller);
           }
           return null;
-        }, (r2) => {
-          ReadableStreamDefaultControllerError(readable2._readableStreamController, r2);
-          defaultControllerFinishPromiseReject(controller, r2);
+        }, (r3) => {
+          ReadableStreamDefaultControllerError(readable2._readableStreamController, r3);
+          defaultControllerFinishPromiseReject(controller, r3);
           return null;
         });
         return controller._finishPromise;
@@ -4374,10 +4374,10 @@ var require_ponyfill_es2018 = __commonJS({
             defaultControllerFinishPromiseResolve(controller);
           }
           return null;
-        }, (r2) => {
-          WritableStreamDefaultControllerErrorIfNeeded(writable2._writableStreamController, r2);
+        }, (r3) => {
+          WritableStreamDefaultControllerErrorIfNeeded(writable2._writableStreamController, r3);
           TransformStreamUnblockWrite(stream);
-          defaultControllerFinishPromiseReject(controller, r2);
+          defaultControllerFinishPromiseReject(controller, r3);
           return null;
         });
         return controller._finishPromise;
@@ -4598,16 +4598,16 @@ var init_fetch_blob = __esm({
         return data.buffer;
       }
       stream() {
-        const it2 = toIterator(this.#parts, true);
+        const it = toIterator(this.#parts, true);
         return new globalThis.ReadableStream({
           // @ts-ignore
           type: "bytes",
           async pull(ctrl) {
-            const chunk = await it2.next();
+            const chunk = await it.next();
             chunk.done ? ctrl.close() : ctrl.enqueue(chunk.value);
           },
           async cancel() {
-            await it2.return();
+            await it.return();
           }
         });
       }
@@ -4717,97 +4717,97 @@ var init_file = __esm({
 });
 
 // node_modules/formdata-polyfill/esm.min.js
-function formDataToBlob(F3, B = fetch_blob_default) {
-  var b = `${r()}${r()}`.replace(/\./g, "").slice(-28).padStart(32, "-"), c4 = [], p2 = `--${b}\r
+function formDataToBlob(F2, B = fetch_blob_default) {
+  var b = `${r2()}${r2()}`.replace(/\./g, "").slice(-28).padStart(32, "-"), c4 = [], p = `--${b}\r
 Content-Disposition: form-data; name="`;
-  F3.forEach((v, n2) => typeof v == "string" ? c4.push(p2 + e(n2) + `"\r
+  F2.forEach((v, n4) => typeof v == "string" ? c4.push(p + e(n4) + `"\r
 \r
 ${v.replace(/\r(?!\n)|(?<!\r)\n/g, "\r\n")}\r
-`) : c4.push(p2 + e(n2) + `"; filename="${e(v.name, 1)}"\r
+`) : c4.push(p + e(n4) + `"; filename="${e(v.name, 1)}"\r
 Content-Type: ${v.type || "application/octet-stream"}\r
 \r
 `, v, "\r\n"));
   c4.push(`--${b}--`);
   return new B(c4, { type: "multipart/form-data; boundary=" + b });
 }
-var t2, i2, h2, r, m, f, e, x, FormData;
+var t2, i3, h3, r2, m2, f, e, x, FormData;
 var init_esm_min = __esm({
   "node_modules/formdata-polyfill/esm.min.js"() {
     init_fetch_blob();
     init_file();
-    ({ toStringTag: t2, iterator: i2, hasInstance: h2 } = Symbol);
-    r = Math.random;
-    m = "append,set,get,getAll,delete,keys,values,entries,forEach,constructor".split(",");
-    f = (a2, b, c4) => (a2 += "", /^(Blob|File)$/.test(b && b[t2]) ? [(c4 = c4 !== void 0 ? c4 + "" : b[t2] == "File" ? b.name : "blob", a2), b.name !== c4 || b[t2] == "blob" ? new file_default([b], c4, b) : b] : [a2, b + ""]);
+    ({ toStringTag: t2, iterator: i3, hasInstance: h3 } = Symbol);
+    r2 = Math.random;
+    m2 = "append,set,get,getAll,delete,keys,values,entries,forEach,constructor".split(",");
+    f = (a3, b, c4) => (a3 += "", /^(Blob|File)$/.test(b && b[t2]) ? [(c4 = c4 !== void 0 ? c4 + "" : b[t2] == "File" ? b.name : "blob", a3), b.name !== c4 || b[t2] == "blob" ? new file_default([b], c4, b) : b] : [a3, b + ""]);
     e = (c4, f3) => (f3 ? c4 : c4.replace(/\r?\n|\r/g, "\r\n")).replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
-    x = (n2, a2, e2) => {
-      if (a2.length < e2) {
-        throw new TypeError(`Failed to execute '${n2}' on 'FormData': ${e2} arguments required, but only ${a2.length} present.`);
+    x = (n4, a3, e2) => {
+      if (a3.length < e2) {
+        throw new TypeError(`Failed to execute '${n4}' on 'FormData': ${e2} arguments required, but only ${a3.length} present.`);
       }
     };
     FormData = class FormData2 {
       #d = [];
-      constructor(...a2) {
-        if (a2.length) throw new TypeError(`Failed to construct 'FormData': parameter 1 is not of type 'HTMLFormElement'.`);
+      constructor(...a3) {
+        if (a3.length) throw new TypeError(`Failed to construct 'FormData': parameter 1 is not of type 'HTMLFormElement'.`);
       }
       get [t2]() {
         return "FormData";
       }
-      [i2]() {
+      [i3]() {
         return this.entries();
       }
-      static [h2](o2) {
-        return o2 && typeof o2 === "object" && o2[t2] === "FormData" && !m.some((m2) => typeof o2[m2] != "function");
+      static [h3](o2) {
+        return o2 && typeof o2 === "object" && o2[t2] === "FormData" && !m2.some((m3) => typeof o2[m3] != "function");
       }
-      append(...a2) {
+      append(...a3) {
         x("append", arguments, 2);
-        this.#d.push(f(...a2));
+        this.#d.push(f(...a3));
       }
-      delete(a2) {
+      delete(a3) {
         x("delete", arguments, 1);
-        a2 += "";
-        this.#d = this.#d.filter(([b]) => b !== a2);
+        a3 += "";
+        this.#d = this.#d.filter(([b]) => b !== a3);
       }
-      get(a2) {
+      get(a3) {
         x("get", arguments, 1);
-        a2 += "";
-        for (var b = this.#d, l = b.length, c4 = 0; c4 < l; c4++) if (b[c4][0] === a2) return b[c4][1];
+        a3 += "";
+        for (var b = this.#d, l2 = b.length, c4 = 0; c4 < l2; c4++) if (b[c4][0] === a3) return b[c4][1];
         return null;
       }
-      getAll(a2, b) {
+      getAll(a3, b) {
         x("getAll", arguments, 1);
         b = [];
-        a2 += "";
-        this.#d.forEach((c4) => c4[0] === a2 && b.push(c4[1]));
+        a3 += "";
+        this.#d.forEach((c4) => c4[0] === a3 && b.push(c4[1]));
         return b;
       }
-      has(a2) {
+      has(a3) {
         x("has", arguments, 1);
-        a2 += "";
-        return this.#d.some((b) => b[0] === a2);
+        a3 += "";
+        return this.#d.some((b) => b[0] === a3);
       }
-      forEach(a2, b) {
+      forEach(a3, b) {
         x("forEach", arguments, 1);
-        for (var [c4, d3] of this) a2.call(b, d3, c4, this);
+        for (var [c4, d] of this) a3.call(b, d, c4, this);
       }
-      set(...a2) {
+      set(...a3) {
         x("set", arguments, 2);
         var b = [], c4 = true;
-        a2 = f(...a2);
-        this.#d.forEach((d3) => {
-          d3[0] === a2[0] ? c4 && (c4 = !b.push(a2)) : b.push(d3);
+        a3 = f(...a3);
+        this.#d.forEach((d) => {
+          d[0] === a3[0] ? c4 && (c4 = !b.push(a3)) : b.push(d);
         });
-        c4 && b.push(a2);
+        c4 && b.push(a3);
         this.#d = b;
       }
       *entries() {
         yield* this.#d;
       }
       *keys() {
-        for (var [a2] of this) yield a2;
+        for (var [a3] of this) yield a3;
       }
       *values() {
-        for (var [, a2] of this) yield a2;
+        for (var [, a3] of this) yield a3;
       }
     };
   }
@@ -4967,14 +4967,14 @@ __export(multipart_parser_exports, {
   toFormData: () => toFormData
 });
 function _fileName(headerValue) {
-  const m2 = headerValue.match(/\bfilename=("(.*?)"|([^()<>@,;:\\"/[\]?={}\s\t]+))($|;\s)/i);
-  if (!m2) {
+  const m3 = headerValue.match(/\bfilename=("(.*?)"|([^()<>@,;:\\"/[\]?={}\s\t]+))($|;\s)/i);
+  if (!m3) {
     return;
   }
-  const match = m2[2] || m2[3] || "";
+  const match = m3[2] || m3[3] || "";
   let filename = match.slice(match.lastIndexOf("\\") + 1);
   filename = filename.replace(/%22/g, '"');
-  filename = filename.replace(/&#(\d{4});/g, (m3, code) => {
+  filename = filename.replace(/&#(\d{4});/g, (m4, code) => {
     return String.fromCharCode(code);
   });
   return filename;
@@ -4983,11 +4983,11 @@ async function toFormData(Body2, ct) {
   if (!/multipart/i.test(ct)) {
     throw new TypeError("Failed to fetch");
   }
-  const m2 = ct.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
-  if (!m2) {
+  const m3 = ct.match(/boundary=(?:"([^"]+)"|([^;]+))/i);
+  if (!m3) {
     throw new TypeError("no or bad content-type header, no multipart boundary");
   }
-  const parser = new MultipartParser(m2[1] || m2[2]);
+  const parser = new MultipartParser(m3[1] || m3[2]);
   let headerField;
   let headerValue;
   let entryValue;
@@ -5032,9 +5032,9 @@ async function toFormData(Body2, ct) {
     headerValue += decoder.decode();
     headerField = headerField.toLowerCase();
     if (headerField === "content-disposition") {
-      const m3 = headerValue.match(/\bname=("([^"]*)"|([^()<>@,;:\\"/[\]?={}\s\t]+))/i);
-      if (m3) {
-        entryName = m3[2] || m3[3] || "";
+      const m4 = headerValue.match(/\bname=("([^"]*)"|([^()<>@,;:\\"/[\]?={}\s\t]+))/i);
+      if (m4) {
+        entryName = m4[2] || m4[3] || "";
       }
       filename = _fileName(headerValue);
       if (filename) {
@@ -5053,13 +5053,13 @@ async function toFormData(Body2, ct) {
   parser.end();
   return formData;
 }
-var s, S2, f2, F2, LF2, CR2, SPACE, HYPHEN, COLON, A2, Z, lower, noop3, MultipartParser;
+var s, S, f2, F, LF2, CR2, SPACE, HYPHEN, COLON, A, Z, lower, noop3, MultipartParser;
 var init_multipart_parser = __esm({
   "node_modules/node-fetch/src/utils/multipart-parser.js"() {
     init_from();
     init_esm_min();
     s = 0;
-    S2 = {
+    S = {
       START_BOUNDARY: s++,
       HEADER_FIELD_START: s++,
       HEADER_FIELD: s++,
@@ -5072,7 +5072,7 @@ var init_multipart_parser = __esm({
       END: s++
     };
     f2 = 1;
-    F2 = {
+    F = {
       PART_BOUNDARY: f2,
       LAST_BOUNDARY: f2 *= 2
     };
@@ -5081,7 +5081,7 @@ var init_multipart_parser = __esm({
     SPACE = 32;
     HYPHEN = 45;
     COLON = 58;
-    A2 = 97;
+    A = 97;
     Z = 122;
     lower = (c4) => c4 | 32;
     noop3 = () => {
@@ -5103,19 +5103,19 @@ var init_multipart_parser = __esm({
         this.boundaryChars = {};
         boundary = "\r\n--" + boundary;
         const ui8a = new Uint8Array(boundary.length);
-        for (let i3 = 0; i3 < boundary.length; i3++) {
-          ui8a[i3] = boundary.charCodeAt(i3);
-          this.boundaryChars[ui8a[i3]] = true;
+        for (let i4 = 0; i4 < boundary.length; i4++) {
+          ui8a[i4] = boundary.charCodeAt(i4);
+          this.boundaryChars[ui8a[i4]] = true;
         }
         this.boundary = ui8a;
         this.lookbehind = new Uint8Array(this.boundary.length + 8);
-        this.state = S2.START_BOUNDARY;
+        this.state = S.START_BOUNDARY;
       }
       /**
        * @param {Uint8Array} data
        */
       write(data) {
-        let i3 = 0;
+        let i4 = 0;
         const length_ = data.length;
         let previousIndex = this.index;
         let { lookbehind, boundary, boundaryChars, index, state, flags } = this;
@@ -5125,7 +5125,7 @@ var init_multipart_parser = __esm({
         let c4;
         let cl;
         const mark = (name) => {
-          this[name + "Mark"] = i3;
+          this[name + "Mark"] = i4;
         };
         const clear = (name) => {
           delete this[name + "Mark"];
@@ -5141,33 +5141,33 @@ var init_multipart_parser = __esm({
             return;
           }
           if (clear2) {
-            callback(name, this[markSymbol], i3, data);
+            callback(name, this[markSymbol], i4, data);
             delete this[markSymbol];
           } else {
             callback(name, this[markSymbol], data.length, data);
             this[markSymbol] = 0;
           }
         };
-        for (i3 = 0; i3 < length_; i3++) {
-          c4 = data[i3];
+        for (i4 = 0; i4 < length_; i4++) {
+          c4 = data[i4];
           switch (state) {
-            case S2.START_BOUNDARY:
+            case S.START_BOUNDARY:
               if (index === boundary.length - 2) {
                 if (c4 === HYPHEN) {
-                  flags |= F2.LAST_BOUNDARY;
+                  flags |= F.LAST_BOUNDARY;
                 } else if (c4 !== CR2) {
                   return;
                 }
                 index++;
                 break;
               } else if (index - 1 === boundary.length - 2) {
-                if (flags & F2.LAST_BOUNDARY && c4 === HYPHEN) {
-                  state = S2.END;
+                if (flags & F.LAST_BOUNDARY && c4 === HYPHEN) {
+                  state = S.END;
                   flags = 0;
-                } else if (!(flags & F2.LAST_BOUNDARY) && c4 === LF2) {
+                } else if (!(flags & F.LAST_BOUNDARY) && c4 === LF2) {
                   index = 0;
                   callback("onPartBegin");
-                  state = S2.HEADER_FIELD_START;
+                  state = S.HEADER_FIELD_START;
                 } else {
                   return;
                 }
@@ -5180,15 +5180,15 @@ var init_multipart_parser = __esm({
                 index++;
               }
               break;
-            case S2.HEADER_FIELD_START:
-              state = S2.HEADER_FIELD;
+            case S.HEADER_FIELD_START:
+              state = S.HEADER_FIELD;
               mark("onHeaderField");
               index = 0;
             // falls through
-            case S2.HEADER_FIELD:
+            case S.HEADER_FIELD:
               if (c4 === CR2) {
                 clear("onHeaderField");
-                state = S2.HEADERS_ALMOST_DONE;
+                state = S.HEADERS_ALMOST_DONE;
                 break;
               }
               index++;
@@ -5200,54 +5200,54 @@ var init_multipart_parser = __esm({
                   return;
                 }
                 dataCallback("onHeaderField", true);
-                state = S2.HEADER_VALUE_START;
+                state = S.HEADER_VALUE_START;
                 break;
               }
               cl = lower(c4);
-              if (cl < A2 || cl > Z) {
+              if (cl < A || cl > Z) {
                 return;
               }
               break;
-            case S2.HEADER_VALUE_START:
+            case S.HEADER_VALUE_START:
               if (c4 === SPACE) {
                 break;
               }
               mark("onHeaderValue");
-              state = S2.HEADER_VALUE;
+              state = S.HEADER_VALUE;
             // falls through
-            case S2.HEADER_VALUE:
+            case S.HEADER_VALUE:
               if (c4 === CR2) {
                 dataCallback("onHeaderValue", true);
                 callback("onHeaderEnd");
-                state = S2.HEADER_VALUE_ALMOST_DONE;
+                state = S.HEADER_VALUE_ALMOST_DONE;
               }
               break;
-            case S2.HEADER_VALUE_ALMOST_DONE:
+            case S.HEADER_VALUE_ALMOST_DONE:
               if (c4 !== LF2) {
                 return;
               }
-              state = S2.HEADER_FIELD_START;
+              state = S.HEADER_FIELD_START;
               break;
-            case S2.HEADERS_ALMOST_DONE:
+            case S.HEADERS_ALMOST_DONE:
               if (c4 !== LF2) {
                 return;
               }
               callback("onHeadersEnd");
-              state = S2.PART_DATA_START;
+              state = S.PART_DATA_START;
               break;
-            case S2.PART_DATA_START:
-              state = S2.PART_DATA;
+            case S.PART_DATA_START:
+              state = S.PART_DATA;
               mark("onPartData");
             // falls through
-            case S2.PART_DATA:
+            case S.PART_DATA:
               previousIndex = index;
               if (index === 0) {
-                i3 += boundaryEnd;
-                while (i3 < bufferLength && !(data[i3] in boundaryChars)) {
-                  i3 += boundaryLength;
+                i4 += boundaryEnd;
+                while (i4 < bufferLength && !(data[i4] in boundaryChars)) {
+                  i4 += boundaryLength;
                 }
-                i3 -= boundaryEnd;
-                c4 = data[i3];
+                i4 -= boundaryEnd;
+                c4 = data[i4];
               }
               if (index < boundary.length) {
                 if (boundary[index] === c4) {
@@ -5261,26 +5261,26 @@ var init_multipart_parser = __esm({
               } else if (index === boundary.length) {
                 index++;
                 if (c4 === CR2) {
-                  flags |= F2.PART_BOUNDARY;
+                  flags |= F.PART_BOUNDARY;
                 } else if (c4 === HYPHEN) {
-                  flags |= F2.LAST_BOUNDARY;
+                  flags |= F.LAST_BOUNDARY;
                 } else {
                   index = 0;
                 }
               } else if (index - 1 === boundary.length) {
-                if (flags & F2.PART_BOUNDARY) {
+                if (flags & F.PART_BOUNDARY) {
                   index = 0;
                   if (c4 === LF2) {
-                    flags &= ~F2.PART_BOUNDARY;
+                    flags &= ~F.PART_BOUNDARY;
                     callback("onPartEnd");
                     callback("onPartBegin");
-                    state = S2.HEADER_FIELD_START;
+                    state = S.HEADER_FIELD_START;
                     break;
                   }
-                } else if (flags & F2.LAST_BOUNDARY) {
+                } else if (flags & F.LAST_BOUNDARY) {
                   if (c4 === HYPHEN) {
                     callback("onPartEnd");
-                    state = S2.END;
+                    state = S.END;
                     flags = 0;
                   } else {
                     index = 0;
@@ -5296,10 +5296,10 @@ var init_multipart_parser = __esm({
                 callback("onPartData", 0, previousIndex, _lookbehind);
                 previousIndex = 0;
                 mark("onPartData");
-                i3--;
+                i4--;
               }
               break;
-            case S2.END:
+            case S.END:
               break;
             default:
               throw new Error(`Unexpected state entered: ${state}`);
@@ -5313,9 +5313,9 @@ var init_multipart_parser = __esm({
         this.flags = flags;
       }
       end() {
-        if (this.state === S2.HEADER_FIELD_START && this.index === 0 || this.state === S2.PART_DATA && this.index === this.boundary.length) {
+        if (this.state === S.HEADER_FIELD_START && this.index === 0 || this.state === S.PART_DATA && this.index === this.boundary.length) {
           this.onPartEnd();
-        } else if (this.state !== S2.END) {
+        } else if (this.state !== S.END) {
           throw new Error("MultipartParser.end(): stream ended unexpectedly");
         }
       }
@@ -5470,8 +5470,8 @@ var init_body = __esm({
        * @return  Promise
        */
       async json() {
-        const text = await this.text();
-        return JSON.parse(text);
+        const text2 = await this.text();
+        return JSON.parse(text2);
       }
       /**
        * Decode response as text
@@ -5664,14 +5664,14 @@ var init_headers = __esm({
         }) : void 0;
         super(result);
         return new Proxy(this, {
-          get(target, p2, receiver) {
-            switch (p2) {
+          get(target, p, receiver) {
+            switch (p) {
               case "append":
               case "set":
                 return (name, value) => {
                   validateHeaderName(name);
                   validateHeaderValue(name, String(value));
-                  return URLSearchParams.prototype[p2].call(
+                  return URLSearchParams.prototype[p].call(
                     target,
                     String(name).toLowerCase(),
                     String(value)
@@ -5682,7 +5682,7 @@ var init_headers = __esm({
               case "getAll":
                 return (name) => {
                   validateHeaderName(name);
-                  return URLSearchParams.prototype[p2].call(
+                  return URLSearchParams.prototype[p].call(
                     target,
                     String(name).toLowerCase()
                   );
@@ -5693,7 +5693,7 @@ var init_headers = __esm({
                   return new Set(URLSearchParams.prototype.keys.call(target)).keys();
                 };
               default:
-                return Reflect.get(target, p2, receiver);
+                return Reflect.get(target, p, receiver);
             }
           }
         });
@@ -6770,17 +6770,17 @@ var parseExpression = (expression) => {
   }
   throw new TypeError(`Unexpected "${typeOfExpression}" in template expression`);
 };
-var getSubprocessResult = ({ stdout }) => {
-  if (typeof stdout === "string") {
-    return stdout;
+var getSubprocessResult = ({ stdout: stdout2 }) => {
+  if (typeof stdout2 === "string") {
+    return stdout2;
   }
-  if (isUint8Array(stdout)) {
-    return uint8ArrayToString(stdout);
+  if (isUint8Array(stdout2)) {
+    return uint8ArrayToString(stdout2);
   }
-  if (stdout === void 0) {
+  if (stdout2 === void 0) {
     throw new TypeError(`Missing result.stdout in template expression. This is probably due to the previous subprocess' "stdout" option.`);
   }
-  throw new TypeError(`Unexpected "${typeof stdout}" stdout in template expression`);
+  throw new TypeError(`Unexpected "${typeof stdout2}" stdout in template expression`);
 };
 
 // node_modules/execa/lib/methods/main-sync.js
@@ -7246,6 +7246,10 @@ var bold = format(1, 22);
 var dim = format(2, 22);
 var italic = format(3, 23);
 var underline = format(4, 24);
+var underlineDouble = format("4:2", 24);
+var underlineCurly = format("4:3", 24);
+var underlineDotted = format("4:4", 24);
+var underlineDashed = format("4:5", 24);
 var overline = format(53, 55);
 var inverse = format(7, 27);
 var hidden = format(8, 28);
@@ -7282,6 +7286,22 @@ var bgBlueBright = format(104, 49);
 var bgMagentaBright = format(105, 49);
 var bgCyanBright = format(106, 49);
 var bgWhiteBright = format(107, 49);
+var underlineBlack = format("58;5;0", 59);
+var underlineRed = format("58;5;1", 59);
+var underlineGreen = format("58;5;2", 59);
+var underlineYellow = format("58;5;3", 59);
+var underlineBlue = format("58;5;4", 59);
+var underlineMagenta = format("58;5;5", 59);
+var underlineCyan = format("58;5;6", 59);
+var underlineWhite = format("58;5;7", 59);
+var underlineGray = format("58;5;8", 59);
+var underlineRedBright = format("58;5;9", 59);
+var underlineGreenBright = format("58;5;10", 59);
+var underlineYellowBright = format("58;5;11", 59);
+var underlineBlueBright = format("58;5;12", 59);
+var underlineMagentaBright = format("58;5;13", 59);
+var underlineCyanBright = format("58;5;14", 59);
+var underlineWhiteBright = format("58;5;15", 59);
 
 // node_modules/execa/lib/verbose/default.js
 var defaultVerboseFunction = ({
@@ -8202,13 +8222,13 @@ var getInvalidStdioOptionMessage = (fdNumber, fdName, options, isWritable) => {
   return `The "${optionName}: ${serializeOptionValue(optionValue)}" option is incompatible with using "${getOptionName(isWritable)}: ${serializeOptionValue(fdName)}".
 Please set this option with "pipe" instead.`;
 };
-var getInvalidStdioOption = (fdNumber, { stdin, stdout, stderr, stdio }) => {
+var getInvalidStdioOption = (fdNumber, { stdin: stdin2, stdout: stdout2, stderr, stdio }) => {
   const usedDescriptor = getUsedDescriptor(fdNumber);
-  if (usedDescriptor === 0 && stdin !== void 0) {
-    return { optionName: "stdin", optionValue: stdin };
+  if (usedDescriptor === 0 && stdin2 !== void 0) {
+    return { optionName: "stdin", optionValue: stdin2 };
   }
-  if (usedDescriptor === 1 && stdout !== void 0) {
-    return { optionName: "stdout", optionValue: stdout };
+  if (usedDescriptor === 1 && stdout2 !== void 0) {
+    return { optionName: "stdout", optionValue: stdout2 };
   }
   if (usedDescriptor === 2 && stderr !== void 0) {
     return { optionName: "stderr", optionValue: stderr };
@@ -8988,8 +9008,8 @@ function i() {
   return this[n].next();
 }
 Object.defineProperty(i, "name", { value: "next" });
-function o(r2) {
-  return this[n].return(r2);
+function o(r3) {
+  return this[n].return(r3);
 }
 Object.defineProperty(o, "name", { value: "return" });
 var u = Object.create(a, {
@@ -9006,10 +9026,10 @@ var u = Object.create(a, {
     value: o
   }
 });
-function h({ preventCancel: r2 = false } = {}) {
+function h({ preventCancel: r3 = false } = {}) {
   const e2 = this.getReader(), t3 = new c(
     e2,
-    r2
+    r3
   ), s2 = Object.create(u);
   return s2[n] = t3, s2;
 }
@@ -9740,7 +9760,8 @@ function prettyMilliseconds(milliseconds, options) {
         const millisecondsAndBelow = milliseconds2 + microseconds / 1e3 + nanoseconds / 1e6;
         const millisecondsDecimalDigits = typeof options.millisecondsDecimalDigits === "number" ? options.millisecondsDecimalDigits : 0;
         const roundedMilliseconds = millisecondsAndBelow >= 1 ? Math.round(millisecondsAndBelow) : Math.ceil(millisecondsAndBelow);
-        const millisecondsString = millisecondsDecimalDigits ? millisecondsAndBelow.toFixed(millisecondsDecimalDigits) : roundedMilliseconds;
+        const maximumMilliseconds = 1e3 - 10 ** -millisecondsDecimalDigits;
+        const millisecondsString = millisecondsDecimalDigits ? Math.min(millisecondsAndBelow, maximumMilliseconds).toFixed(millisecondsDecimalDigits) : Math.min(roundedMilliseconds, maximumMilliseconds);
         add(
           Number.parseFloat(millisecondsString),
           "millisecond",
@@ -10120,7 +10141,7 @@ var getStdioArray = (stdio, options) => {
     throw new TypeError(`Expected \`stdio\` to be of type \`string\` or \`Array\`, got \`${typeof stdio}\``);
   }
   const length = Math.max(stdio.length, STANDARD_STREAMS_ALIASES.length);
-  return Array.from({ length }, (_2, fdNumber) => stdio[fdNumber]);
+  return Array.from({ length }, (_, fdNumber) => stdio[fdNumber]);
 };
 var hasAlias = (options) => STANDARD_STREAMS_ALIASES.some((alias) => options[alias] !== void 0);
 var addDefaultValue2 = (stdioOption, fdNumber) => {
@@ -10983,26 +11004,26 @@ var writeToFiles = (serializedResult, stdioItems, outputFiles) => {
 };
 
 // node_modules/execa/lib/resolve/all-sync.js
-var getAllSync = ([, stdout, stderr], options) => {
+var getAllSync = ([, stdout2, stderr], options) => {
   if (!options.all) {
     return;
   }
-  if (stdout === void 0) {
+  if (stdout2 === void 0) {
     return stderr;
   }
   if (stderr === void 0) {
-    return stdout;
+    return stdout2;
   }
-  if (Array.isArray(stdout)) {
-    return Array.isArray(stderr) ? [...stdout, ...stderr] : [...stdout, stripNewline(stderr, options, "all")];
+  if (Array.isArray(stdout2)) {
+    return Array.isArray(stderr) ? [...stdout2, ...stderr] : [...stdout2, stripNewline(stderr, options, "all")];
   }
   if (Array.isArray(stderr)) {
-    return [stripNewline(stdout, options, "all"), ...stderr];
+    return [stripNewline(stdout2, options, "all"), ...stderr];
   }
-  if (isUint8Array(stdout) && isUint8Array(stderr)) {
-    return concatUint8Arrays([stdout, stderr]);
+  if (isUint8Array(stdout2) && isUint8Array(stderr)) {
+    return concatUint8Arrays([stdout2, stderr]);
   }
-  return `${stdout}${stderr}`;
+  return `${stdout2}${stderr}`;
 };
 
 // node_modules/execa/lib/resolve/exit-async.js
@@ -11397,15 +11418,15 @@ var handleEarlyError = ({ error: error2, command, escapedCommand, fileDescriptor
   return { subprocess, promise };
 };
 var createDummyStreams = (subprocess, fileDescriptors) => {
-  const stdin = createDummyStream();
-  const stdout = createDummyStream();
+  const stdin2 = createDummyStream();
+  const stdout2 = createDummyStream();
   const stderr = createDummyStream();
   const extraStdio = Array.from({ length: fileDescriptors.length - 3 }, createDummyStream);
   const all = createDummyStream();
-  const stdio = [stdin, stdout, stderr, ...extraStdio];
+  const stdio = [stdin2, stdout2, stderr, ...extraStdio];
   Object.assign(subprocess, {
-    stdin,
-    stdout,
+    stdin: stdin2,
+    stdout: stdout2,
     stderr,
     all,
     stdio
@@ -11836,14 +11857,14 @@ var Emitter = class {
   }
   removeListener(ev, fn) {
     const list = this.listeners[ev];
-    const i3 = list.indexOf(fn);
-    if (i3 === -1) {
+    const i4 = list.indexOf(fn);
+    if (i4 === -1) {
       return;
     }
-    if (i3 === 0 && list.length === 1) {
+    if (i4 === 0 && list.length === 1) {
       list.length = 0;
     } else {
-      list.splice(i3, 1);
+      list.splice(i4, 1);
     }
   }
   emit(ev, code, signal) {
@@ -11906,9 +11927,9 @@ var SignalExit = class extends SignalExitBase {
       this.#sigListeners[sig] = () => {
         const listeners = this.#process.listeners(sig);
         let { count: count2 } = this.#emitter;
-        const p2 = process15;
-        if (typeof p2.__signal_exit_emitter__ === "object" && typeof p2.__signal_exit_emitter__.count === "number") {
-          count2 += p2.__signal_exit_emitter__.count;
+        const p = process15;
+        if (typeof p.__signal_exit_emitter__ === "object" && typeof p.__signal_exit_emitter__.count === "number") {
+          count2 += p.__signal_exit_emitter__.count;
         }
         if (listeners.length === count2) {
           this.unload();
@@ -11950,11 +11971,11 @@ var SignalExit = class extends SignalExitBase {
         const fn = this.#sigListeners[sig];
         if (fn)
           this.#process.on(sig, fn);
-      } catch (_2) {
+      } catch (_) {
       }
     }
-    this.#process.emit = (ev, ...a2) => {
-      return this.#processEmit(ev, ...a2);
+    this.#process.emit = (ev, ...a3) => {
+      return this.#processEmit(ev, ...a3);
     };
     this.#process.reallyExit = (code) => {
       return this.#processReallyExit(code);
@@ -11972,7 +11993,7 @@ var SignalExit = class extends SignalExitBase {
       }
       try {
         this.#process.removeListener(sig, listener);
-      } catch (_2) {
+      } catch (_) {
       }
     });
     this.#process.emit = this.#originalProcessEmit;
@@ -12571,7 +12592,7 @@ var waitForSubprocessStream = async ({ stream, fdNumber, encoding, buffer, maxBu
 };
 
 // node_modules/execa/lib/resolve/all-async.js
-var makeAllStream = ({ stdout, stderr }, { all }) => all && (stdout || stderr) ? mergeStreams([stdout, stderr].filter(Boolean)) : void 0;
+var makeAllStream = ({ stdout: stdout2, stderr }, { all }) => all && (stdout2 || stderr) ? mergeStreams([stdout2, stderr].filter(Boolean)) : void 0;
 var waitForAllStream = ({ subprocess, encoding, buffer, maxBuffer, lines, stripFinalNewline: stripFinalNewline2, verboseInfo, streamInfo }) => waitForSubprocessStream({
   ...getAllStream(subprocess, buffer),
   fdNumber: "all",
@@ -12583,7 +12604,7 @@ var waitForAllStream = ({ subprocess, encoding, buffer, maxBuffer, lines, stripF
   verboseInfo,
   streamInfo
 });
-var getAllStream = ({ stdout, stderr, all }, [, bufferStdout, bufferStderr]) => {
+var getAllStream = ({ stdout: stdout2, stderr, all }, [, bufferStdout, bufferStderr]) => {
   const buffer = bufferStdout || bufferStderr;
   if (!buffer) {
     return { stream: all, buffer };
@@ -12592,11 +12613,11 @@ var getAllStream = ({ stdout, stderr, all }, [, bufferStdout, bufferStderr]) => 
     return { stream: stderr, buffer };
   }
   if (!bufferStderr) {
-    return { stream: stdout, buffer };
+    return { stream: stdout2, buffer };
   }
   return { stream: all, buffer };
 };
-var getAllMixed = ({ all, stdout, stderr }) => all && stdout && stderr && stdout.readableObjectMode !== stderr.readableObjectMode;
+var getAllMixed = ({ all, stdout: stdout2, stderr }) => all && stdout2 && stderr && stdout2.readableObjectMode !== stderr.readableObjectMode;
 
 // node_modules/execa/lib/resolve/wait-subprocess.js
 import { once as once8 } from "node:events";
@@ -13377,25 +13398,34 @@ import _fsExtra from "fs-extra";
 import { fileURLToPath as fileURLToPath3 } from "url";
 
 // node_modules/@clack/core/dist/index.mjs
-import { styleText as y } from "node:util";
-import { stdout as S, stdin as $2 } from "node:process";
-import * as _ from "node:readline";
-import P from "node:readline";
+import { styleText } from "node:util";
+import { stdout, stdin } from "node:process";
+import * as l from "node:readline";
+import l__default from "node:readline";
 
 // node_modules/fast-string-truncated-width/dist/utils.js
-var isAmbiguous = (x2) => {
-  return x2 === 161 || x2 === 164 || x2 === 167 || x2 === 168 || x2 === 170 || x2 === 173 || x2 === 174 || x2 >= 176 && x2 <= 180 || x2 >= 182 && x2 <= 186 || x2 >= 188 && x2 <= 191 || x2 === 198 || x2 === 208 || x2 === 215 || x2 === 216 || x2 >= 222 && x2 <= 225 || x2 === 230 || x2 >= 232 && x2 <= 234 || x2 === 236 || x2 === 237 || x2 === 240 || x2 === 242 || x2 === 243 || x2 >= 247 && x2 <= 250 || x2 === 252 || x2 === 254 || x2 === 257 || x2 === 273 || x2 === 275 || x2 === 283 || x2 === 294 || x2 === 295 || x2 === 299 || x2 >= 305 && x2 <= 307 || x2 === 312 || x2 >= 319 && x2 <= 322 || x2 === 324 || x2 >= 328 && x2 <= 331 || x2 === 333 || x2 === 338 || x2 === 339 || x2 === 358 || x2 === 359 || x2 === 363 || x2 === 462 || x2 === 464 || x2 === 466 || x2 === 468 || x2 === 470 || x2 === 472 || x2 === 474 || x2 === 476 || x2 === 593 || x2 === 609 || x2 === 708 || x2 === 711 || x2 >= 713 && x2 <= 715 || x2 === 717 || x2 === 720 || x2 >= 728 && x2 <= 731 || x2 === 733 || x2 === 735 || x2 >= 768 && x2 <= 879 || x2 >= 913 && x2 <= 929 || x2 >= 931 && x2 <= 937 || x2 >= 945 && x2 <= 961 || x2 >= 963 && x2 <= 969 || x2 === 1025 || x2 >= 1040 && x2 <= 1103 || x2 === 1105 || x2 === 8208 || x2 >= 8211 && x2 <= 8214 || x2 === 8216 || x2 === 8217 || x2 === 8220 || x2 === 8221 || x2 >= 8224 && x2 <= 8226 || x2 >= 8228 && x2 <= 8231 || x2 === 8240 || x2 === 8242 || x2 === 8243 || x2 === 8245 || x2 === 8251 || x2 === 8254 || x2 === 8308 || x2 === 8319 || x2 >= 8321 && x2 <= 8324 || x2 === 8364 || x2 === 8451 || x2 === 8453 || x2 === 8457 || x2 === 8467 || x2 === 8470 || x2 === 8481 || x2 === 8482 || x2 === 8486 || x2 === 8491 || x2 === 8531 || x2 === 8532 || x2 >= 8539 && x2 <= 8542 || x2 >= 8544 && x2 <= 8555 || x2 >= 8560 && x2 <= 8569 || x2 === 8585 || x2 >= 8592 && x2 <= 8601 || x2 === 8632 || x2 === 8633 || x2 === 8658 || x2 === 8660 || x2 === 8679 || x2 === 8704 || x2 === 8706 || x2 === 8707 || x2 === 8711 || x2 === 8712 || x2 === 8715 || x2 === 8719 || x2 === 8721 || x2 === 8725 || x2 === 8730 || x2 >= 8733 && x2 <= 8736 || x2 === 8739 || x2 === 8741 || x2 >= 8743 && x2 <= 8748 || x2 === 8750 || x2 >= 8756 && x2 <= 8759 || x2 === 8764 || x2 === 8765 || x2 === 8776 || x2 === 8780 || x2 === 8786 || x2 === 8800 || x2 === 8801 || x2 >= 8804 && x2 <= 8807 || x2 === 8810 || x2 === 8811 || x2 === 8814 || x2 === 8815 || x2 === 8834 || x2 === 8835 || x2 === 8838 || x2 === 8839 || x2 === 8853 || x2 === 8857 || x2 === 8869 || x2 === 8895 || x2 === 8978 || x2 >= 9312 && x2 <= 9449 || x2 >= 9451 && x2 <= 9547 || x2 >= 9552 && x2 <= 9587 || x2 >= 9600 && x2 <= 9615 || x2 >= 9618 && x2 <= 9621 || x2 === 9632 || x2 === 9633 || x2 >= 9635 && x2 <= 9641 || x2 === 9650 || x2 === 9651 || x2 === 9654 || x2 === 9655 || x2 === 9660 || x2 === 9661 || x2 === 9664 || x2 === 9665 || x2 >= 9670 && x2 <= 9672 || x2 === 9675 || x2 >= 9678 && x2 <= 9681 || x2 >= 9698 && x2 <= 9701 || x2 === 9711 || x2 === 9733 || x2 === 9734 || x2 === 9737 || x2 === 9742 || x2 === 9743 || x2 === 9756 || x2 === 9758 || x2 === 9792 || x2 === 9794 || x2 === 9824 || x2 === 9825 || x2 >= 9827 && x2 <= 9829 || x2 >= 9831 && x2 <= 9834 || x2 === 9836 || x2 === 9837 || x2 === 9839 || x2 === 9886 || x2 === 9887 || x2 === 9919 || x2 >= 9926 && x2 <= 9933 || x2 >= 9935 && x2 <= 9939 || x2 >= 9941 && x2 <= 9953 || x2 === 9955 || x2 === 9960 || x2 === 9961 || x2 >= 9963 && x2 <= 9969 || x2 === 9972 || x2 >= 9974 && x2 <= 9977 || x2 === 9979 || x2 === 9980 || x2 === 9982 || x2 === 9983 || x2 === 10045 || x2 >= 10102 && x2 <= 10111 || x2 >= 11094 && x2 <= 11097 || x2 >= 12872 && x2 <= 12879 || x2 >= 57344 && x2 <= 63743 || x2 >= 65024 && x2 <= 65039 || x2 === 65533 || x2 >= 127232 && x2 <= 127242 || x2 >= 127248 && x2 <= 127277 || x2 >= 127280 && x2 <= 127337 || x2 >= 127344 && x2 <= 127373 || x2 === 127375 || x2 === 127376 || x2 >= 127387 && x2 <= 127404 || x2 >= 917760 && x2 <= 917999 || x2 >= 983040 && x2 <= 1048573 || x2 >= 1048576 && x2 <= 1114109;
-};
+var getCodePointsLength = /* @__PURE__ */ (() => {
+  const SURROGATE_PAIR_RE = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
+  return (input) => {
+    let surrogatePairsNr = 0;
+    SURROGATE_PAIR_RE.lastIndex = 0;
+    while (SURROGATE_PAIR_RE.test(input)) {
+      surrogatePairsNr += 1;
+    }
+    return input.length - surrogatePairsNr;
+  };
+})();
 var isFullWidth = (x2) => {
   return x2 === 12288 || x2 >= 65281 && x2 <= 65376 || x2 >= 65504 && x2 <= 65510;
 };
-var isWide = (x2) => {
-  return x2 >= 4352 && x2 <= 4447 || x2 === 8986 || x2 === 8987 || x2 === 9001 || x2 === 9002 || x2 >= 9193 && x2 <= 9196 || x2 === 9200 || x2 === 9203 || x2 === 9725 || x2 === 9726 || x2 === 9748 || x2 === 9749 || x2 >= 9800 && x2 <= 9811 || x2 === 9855 || x2 === 9875 || x2 === 9889 || x2 === 9898 || x2 === 9899 || x2 === 9917 || x2 === 9918 || x2 === 9924 || x2 === 9925 || x2 === 9934 || x2 === 9940 || x2 === 9962 || x2 === 9970 || x2 === 9971 || x2 === 9973 || x2 === 9978 || x2 === 9981 || x2 === 9989 || x2 === 9994 || x2 === 9995 || x2 === 10024 || x2 === 10060 || x2 === 10062 || x2 >= 10067 && x2 <= 10069 || x2 === 10071 || x2 >= 10133 && x2 <= 10135 || x2 === 10160 || x2 === 10175 || x2 === 11035 || x2 === 11036 || x2 === 11088 || x2 === 11093 || x2 >= 11904 && x2 <= 11929 || x2 >= 11931 && x2 <= 12019 || x2 >= 12032 && x2 <= 12245 || x2 >= 12272 && x2 <= 12287 || x2 >= 12289 && x2 <= 12350 || x2 >= 12353 && x2 <= 12438 || x2 >= 12441 && x2 <= 12543 || x2 >= 12549 && x2 <= 12591 || x2 >= 12593 && x2 <= 12686 || x2 >= 12688 && x2 <= 12771 || x2 >= 12783 && x2 <= 12830 || x2 >= 12832 && x2 <= 12871 || x2 >= 12880 && x2 <= 19903 || x2 >= 19968 && x2 <= 42124 || x2 >= 42128 && x2 <= 42182 || x2 >= 43360 && x2 <= 43388 || x2 >= 44032 && x2 <= 55203 || x2 >= 63744 && x2 <= 64255 || x2 >= 65040 && x2 <= 65049 || x2 >= 65072 && x2 <= 65106 || x2 >= 65108 && x2 <= 65126 || x2 >= 65128 && x2 <= 65131 || x2 >= 94176 && x2 <= 94180 || x2 === 94192 || x2 === 94193 || x2 >= 94208 && x2 <= 100343 || x2 >= 100352 && x2 <= 101589 || x2 >= 101632 && x2 <= 101640 || x2 >= 110576 && x2 <= 110579 || x2 >= 110581 && x2 <= 110587 || x2 === 110589 || x2 === 110590 || x2 >= 110592 && x2 <= 110882 || x2 === 110898 || x2 >= 110928 && x2 <= 110930 || x2 === 110933 || x2 >= 110948 && x2 <= 110951 || x2 >= 110960 && x2 <= 111355 || x2 === 126980 || x2 === 127183 || x2 === 127374 || x2 >= 127377 && x2 <= 127386 || x2 >= 127488 && x2 <= 127490 || x2 >= 127504 && x2 <= 127547 || x2 >= 127552 && x2 <= 127560 || x2 === 127568 || x2 === 127569 || x2 >= 127584 && x2 <= 127589 || x2 >= 127744 && x2 <= 127776 || x2 >= 127789 && x2 <= 127797 || x2 >= 127799 && x2 <= 127868 || x2 >= 127870 && x2 <= 127891 || x2 >= 127904 && x2 <= 127946 || x2 >= 127951 && x2 <= 127955 || x2 >= 127968 && x2 <= 127984 || x2 === 127988 || x2 >= 127992 && x2 <= 128062 || x2 === 128064 || x2 >= 128066 && x2 <= 128252 || x2 >= 128255 && x2 <= 128317 || x2 >= 128331 && x2 <= 128334 || x2 >= 128336 && x2 <= 128359 || x2 === 128378 || x2 === 128405 || x2 === 128406 || x2 === 128420 || x2 >= 128507 && x2 <= 128591 || x2 >= 128640 && x2 <= 128709 || x2 === 128716 || x2 >= 128720 && x2 <= 128722 || x2 >= 128725 && x2 <= 128727 || x2 >= 128732 && x2 <= 128735 || x2 === 128747 || x2 === 128748 || x2 >= 128756 && x2 <= 128764 || x2 >= 128992 && x2 <= 129003 || x2 === 129008 || x2 >= 129292 && x2 <= 129338 || x2 >= 129340 && x2 <= 129349 || x2 >= 129351 && x2 <= 129535 || x2 >= 129648 && x2 <= 129660 || x2 >= 129664 && x2 <= 129672 || x2 >= 129680 && x2 <= 129725 || x2 >= 129727 && x2 <= 129733 || x2 >= 129742 && x2 <= 129755 || x2 >= 129760 && x2 <= 129768 || x2 >= 129776 && x2 <= 129784 || x2 >= 131072 && x2 <= 196605 || x2 >= 196608 && x2 <= 262141;
+var isWideNotCJKTNotEmoji = (x2) => {
+  return x2 === 8987 || x2 === 9001 || x2 >= 12272 && x2 <= 12287 || x2 >= 12289 && x2 <= 12350 || x2 >= 12441 && x2 <= 12543 || x2 >= 12549 && x2 <= 12591 || x2 >= 12593 && x2 <= 12686 || x2 >= 12688 && x2 <= 12771 || x2 >= 12783 && x2 <= 12830 || x2 >= 12832 && x2 <= 12871 || x2 >= 12880 && x2 <= 19903 || x2 >= 65040 && x2 <= 65049 || x2 >= 65072 && x2 <= 65106 || x2 >= 65108 && x2 <= 65126 || x2 >= 65128 && x2 <= 65131 || x2 >= 127488 && x2 <= 127490 || x2 >= 127504 && x2 <= 127547 || x2 >= 127552 && x2 <= 127560 || x2 >= 131072 && x2 <= 196605 || x2 >= 196608 && x2 <= 262141;
 };
 
 // node_modules/fast-string-truncated-width/dist/index.js
-var ANSI_RE = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/y;
+var ANSI_RE = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]|\u001b\]8;[^;]*;.*?(?:\u0007|\u001b\u005c)/y;
 var CONTROL_RE = /[\x00-\x08\x0A-\x1F\x7F-\x9F]{1,1000}/y;
+var CJKT_WIDE_RE = /(?:(?![\uFF61-\uFF9F\uFF00-\uFFEF])[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Tangut}]){1,1000}/yu;
 var TAB_RE = /\t{1,1000}/y;
 var EMOJI_RE = new RegExp("[\\u{1F1E6}-\\u{1F1FF}]{2}|\\u{1F3F4}[\\u{E0061}-\\u{E007A}]{2}[\\u{E0030}-\\u{E0039}\\u{E0061}-\\u{E007A}]{1,3}\\u{E007F}|(?:\\p{Emoji}\\uFE0F\\u20E3?|\\p{Emoji_Modifier_Base}\\p{Emoji_Modifier}?|\\p{Emoji_Presentation})(?:\\u200D(?:\\p{Emoji_Modifier_Base}\\p{Emoji_Modifier}?|\\p{Emoji_Presentation}|\\p{Emoji}\\uFE0F\\u20E3?))*", "yu");
 var LATIN_RE = /(?:[\x20-\x7E\xA0-\xFF](?!\uFE0F)){1,1000}/y;
@@ -13405,14 +13435,21 @@ var getStringTruncatedWidth = (input, truncationOptions = {}, widthOptions = {})
   const LIMIT = truncationOptions.limit ?? Infinity;
   const ELLIPSIS = truncationOptions.ellipsis ?? "";
   const ELLIPSIS_WIDTH = truncationOptions?.ellipsisWidth ?? (ELLIPSIS ? getStringTruncatedWidth(ELLIPSIS, NO_TRUNCATION, widthOptions).width : 0);
-  const ANSI_WIDTH = widthOptions.ansiWidth ?? 0;
+  const ANSI_WIDTH = 0;
   const CONTROL_WIDTH = widthOptions.controlWidth ?? 0;
   const TAB_WIDTH = widthOptions.tabWidth ?? 8;
-  const AMBIGUOUS_WIDTH = widthOptions.ambiguousWidth ?? 1;
   const EMOJI_WIDTH = widthOptions.emojiWidth ?? 2;
-  const FULL_WIDTH_WIDTH = widthOptions.fullWidthWidth ?? 2;
+  const FULL_WIDTH_WIDTH = 2;
   const REGULAR_WIDTH = widthOptions.regularWidth ?? 1;
-  const WIDE_WIDTH = widthOptions.wideWidth ?? 2;
+  const WIDE_WIDTH = widthOptions.wideWidth ?? FULL_WIDTH_WIDTH;
+  const PARSE_BLOCKS = [
+    [LATIN_RE, REGULAR_WIDTH],
+    [ANSI_RE, ANSI_WIDTH],
+    [CONTROL_RE, CONTROL_WIDTH],
+    [TAB_RE, TAB_WIDTH],
+    [EMOJI_RE, EMOJI_WIDTH],
+    [CJKT_WIDE_RE, WIDE_WIDTH]
+  ];
   let indexPrev = 0;
   let index = 0;
   let length = input.length;
@@ -13432,10 +13469,8 @@ var getStringTruncatedWidth = (input, truncationOptions = {}, widthOptions = {})
         const codePoint = char.codePointAt(0) || 0;
         if (isFullWidth(codePoint)) {
           widthExtra = FULL_WIDTH_WIDTH;
-        } else if (isWide(codePoint)) {
+        } else if (isWideNotCJKTNotEmoji(codePoint)) {
           widthExtra = WIDE_WIDTH;
-        } else if (AMBIGUOUS_WIDTH !== REGULAR_WIDTH && isAmbiguous(codePoint)) {
-          widthExtra = AMBIGUOUS_WIDTH;
         } else {
           widthExtra = REGULAR_WIDTH;
         }
@@ -13451,88 +13486,28 @@ var getStringTruncatedWidth = (input, truncationOptions = {}, widthOptions = {})
       }
       unmatchedStart = unmatchedEnd = 0;
     }
-    if (index >= length)
-      break;
-    LATIN_RE.lastIndex = index;
-    if (LATIN_RE.test(input)) {
-      lengthExtra = LATIN_RE.lastIndex - index;
-      widthExtra = lengthExtra * REGULAR_WIDTH;
-      if (width + widthExtra > truncationLimit) {
-        truncationIndex = Math.min(truncationIndex, index + Math.floor((truncationLimit - width) / REGULAR_WIDTH));
-      }
-      if (width + widthExtra > LIMIT) {
-        truncationEnabled = true;
-        break;
-      }
-      width += widthExtra;
-      unmatchedStart = indexPrev;
-      unmatchedEnd = index;
-      index = indexPrev = LATIN_RE.lastIndex;
-      continue;
+    if (index >= length) {
+      break outer;
     }
-    ANSI_RE.lastIndex = index;
-    if (ANSI_RE.test(input)) {
-      if (width + ANSI_WIDTH > truncationLimit) {
-        truncationIndex = Math.min(truncationIndex, index);
+    for (let i4 = 0, l2 = PARSE_BLOCKS.length; i4 < l2; i4++) {
+      const [BLOCK_RE, BLOCK_WIDTH] = PARSE_BLOCKS[i4];
+      BLOCK_RE.lastIndex = index;
+      if (BLOCK_RE.test(input)) {
+        lengthExtra = BLOCK_RE === CJKT_WIDE_RE ? getCodePointsLength(input.slice(index, BLOCK_RE.lastIndex)) : BLOCK_RE === EMOJI_RE ? 1 : BLOCK_RE.lastIndex - index;
+        widthExtra = lengthExtra * BLOCK_WIDTH;
+        if (width + widthExtra > truncationLimit) {
+          truncationIndex = Math.min(truncationIndex, index + Math.floor((truncationLimit - width) / BLOCK_WIDTH));
+        }
+        if (width + widthExtra > LIMIT) {
+          truncationEnabled = true;
+          break outer;
+        }
+        width += widthExtra;
+        unmatchedStart = indexPrev;
+        unmatchedEnd = index;
+        index = indexPrev = BLOCK_RE.lastIndex;
+        continue outer;
       }
-      if (width + ANSI_WIDTH > LIMIT) {
-        truncationEnabled = true;
-        break;
-      }
-      width += ANSI_WIDTH;
-      unmatchedStart = indexPrev;
-      unmatchedEnd = index;
-      index = indexPrev = ANSI_RE.lastIndex;
-      continue;
-    }
-    CONTROL_RE.lastIndex = index;
-    if (CONTROL_RE.test(input)) {
-      lengthExtra = CONTROL_RE.lastIndex - index;
-      widthExtra = lengthExtra * CONTROL_WIDTH;
-      if (width + widthExtra > truncationLimit) {
-        truncationIndex = Math.min(truncationIndex, index + Math.floor((truncationLimit - width) / CONTROL_WIDTH));
-      }
-      if (width + widthExtra > LIMIT) {
-        truncationEnabled = true;
-        break;
-      }
-      width += widthExtra;
-      unmatchedStart = indexPrev;
-      unmatchedEnd = index;
-      index = indexPrev = CONTROL_RE.lastIndex;
-      continue;
-    }
-    TAB_RE.lastIndex = index;
-    if (TAB_RE.test(input)) {
-      lengthExtra = TAB_RE.lastIndex - index;
-      widthExtra = lengthExtra * TAB_WIDTH;
-      if (width + widthExtra > truncationLimit) {
-        truncationIndex = Math.min(truncationIndex, index + Math.floor((truncationLimit - width) / TAB_WIDTH));
-      }
-      if (width + widthExtra > LIMIT) {
-        truncationEnabled = true;
-        break;
-      }
-      width += widthExtra;
-      unmatchedStart = indexPrev;
-      unmatchedEnd = index;
-      index = indexPrev = TAB_RE.lastIndex;
-      continue;
-    }
-    EMOJI_RE.lastIndex = index;
-    if (EMOJI_RE.test(input)) {
-      if (width + EMOJI_WIDTH > truncationLimit) {
-        truncationIndex = Math.min(truncationIndex, index);
-      }
-      if (width + EMOJI_WIDTH > LIMIT) {
-        truncationEnabled = true;
-        break;
-      }
-      width += EMOJI_WIDTH;
-      unmatchedStart = indexPrev;
-      unmatchedEnd = index;
-      index = indexPrev = EMOJI_RE.lastIndex;
-      continue;
     }
     index += 1;
   }
@@ -13718,16 +13693,19 @@ var exec = (string, columns, options = {}) => {
   }
   const preString = rows.join("\n");
   let inSurrogate = false;
-  for (let i3 = 0; i3 < preString.length; i3++) {
-    const character = preString[i3];
+  for (let i4 = 0; i4 < preString.length; i4++) {
+    const character = preString[i4];
     returnValue += character;
     if (!inSurrogate) {
       inSurrogate = character >= "\uD800" && character <= "\uDBFF";
+      if (inSurrogate) {
+        continue;
+      }
     } else {
-      continue;
+      inSurrogate = false;
     }
     if (character === ESC || character === CSI) {
-      GROUP_REGEX.lastIndex = i3 + 1;
+      GROUP_REGEX.lastIndex = i4 + 1;
       const groupsResult = GROUP_REGEX.exec(preString);
       const groups = groupsResult?.groups;
       if (groups?.code !== void 0) {
@@ -13737,7 +13715,7 @@ var exec = (string, columns, options = {}) => {
         escapeUrl = groups.uri.length === 0 ? void 0 : groups.uri;
       }
     }
-    if (preString[i3 + 1] === "\n") {
+    if (preString[i4 + 1] === "\n") {
       if (escapeUrl) {
         returnValue += wrapAnsiHyperlink("");
       }
@@ -13763,67 +13741,147 @@ function wrapAnsi(string, columns, options) {
 
 // node_modules/@clack/core/dist/index.mjs
 var import_sisteransi = __toESM(require_src(), 1);
-import { ReadStream as D } from "node:tty";
-function d(r2, t3, e2) {
-  if (!e2.some((o2) => !o2.disabled)) return r2;
-  const s2 = r2 + t3, i3 = Math.max(e2.length - 1, 0), n2 = s2 < 0 ? i3 : s2 > i3 ? 0 : s2;
-  return e2[n2].disabled ? d(n2, t3 < 0 ? -1 : 1, e2) : n2;
+import { ReadStream } from "node:tty";
+function findCursor(s2, o2, l2) {
+  if (!l2.some((r3) => !r3.disabled))
+    return s2;
+  const t3 = s2 + o2, n4 = Math.max(l2.length - 1, 0), e2 = t3 < 0 ? n4 : t3 > n4 ? 0 : t3;
+  return l2[e2]?.disabled ? findCursor(e2, o2 < 0 ? -1 : 1, l2) : e2;
 }
-var E = ["up", "down", "left", "right", "space", "enter", "cancel"];
-var G = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var u2 = { actions: new Set(E), aliases: /* @__PURE__ */ new Map([["k", "up"], ["j", "down"], ["h", "left"], ["l", "right"], ["", "cancel"], ["escape", "cancel"]]), messages: { cancel: "Canceled", error: "Something went wrong" }, withGuide: true, date: { monthNames: [...G], messages: { required: "Please enter a valid date", invalidMonth: "There are only 12 months in a year", invalidDay: (r2, t3) => `There are only ${r2} days in ${t3}`, afterMin: (r2) => `Date must be on or after ${r2.toISOString().slice(0, 10)}`, beforeMax: (r2) => `Date must be on or before ${r2.toISOString().slice(0, 10)}` } } };
-function V(r2, t3) {
-  if (typeof r2 == "string") return u2.aliases.get(r2) === t3;
-  for (const e2 of r2) if (e2 !== void 0 && V(e2, t3)) return true;
+var a$1 = ["up", "down", "left", "right", "space", "enter", "cancel"];
+var t = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+var settings = {
+  actions: new Set(a$1),
+  aliases: /* @__PURE__ */ new Map([
+    // vim support
+    ["k", "up"],
+    ["j", "down"],
+    ["h", "left"],
+    ["l", "right"],
+    ["", "cancel"],
+    // opinionated defaults!
+    ["escape", "cancel"]
+  ]),
+  messages: {
+    cancel: "Canceled",
+    error: "Something went wrong"
+  },
+  withGuide: true,
+  accessible: void 0,
+  date: {
+    monthNames: [...t],
+    messages: {
+      required: "Please enter a valid date",
+      invalidMonth: "There are only 12 months in a year",
+      invalidDay: (n4, e2) => `There are only ${n4} days in ${e2}`,
+      afterMin: (n4) => `Date must be on or after ${n4.toISOString().slice(0, 10)}`,
+      beforeMax: (n4) => `Date must be on or before ${n4.toISOString().slice(0, 10)}`
+    }
+  }
+};
+function isAccessible(n4) {
+  if (n4 !== void 0) return n4;
+  if (settings.accessible !== void 0) return settings.accessible;
+  const e2 = process.env.ACCESSIBLE;
+  return e2 !== void 0 && e2 !== "" && e2 !== "0" && e2 !== "false";
+}
+function isActionKey(n4, e2) {
+  if (typeof n4 == "string")
+    return settings.aliases.get(n4) === e2;
+  for (const s2 of n4)
+    if (s2 !== void 0 && isActionKey(s2, e2))
+      return true;
   return false;
 }
-function j(r2, t3) {
-  if (r2 === t3) return;
-  const e2 = r2.split(`
-`), s2 = t3.split(`
-`), i3 = Math.max(e2.length, s2.length), n2 = [];
-  for (let o2 = 0; o2 < i3; o2++) e2[o2] !== s2[o2] && n2.push(o2);
-  return { lines: n2, numLinesBefore: e2.length, numLinesAfter: s2.length, numLines: i3 };
+function diffLines(i4, s2) {
+  if (i4 === s2) return;
+  const e2 = i4.split(`
+`), t3 = s2.split(`
+`), r3 = Math.max(e2.length, t3.length), f3 = [];
+  for (let n4 = 0; n4 < r3; n4++)
+    e2[n4] !== t3[n4] && f3.push(n4);
+  return {
+    lines: f3,
+    numLinesBefore: e2.length,
+    numLinesAfter: t3.length,
+    numLines: r3
+  };
 }
-var Y = globalThis.process.platform.startsWith("win");
-var C = /* @__PURE__ */ Symbol("clack:cancel");
-function q(r2) {
-  return r2 === C;
+var R = globalThis.process.platform.startsWith("win");
+var CANCEL_SYMBOL = /* @__PURE__ */ Symbol("clack:cancel");
+function isCancel(e2) {
+  return e2 === CANCEL_SYMBOL;
 }
-function w(r2, t3) {
-  const e2 = r2;
-  e2.isTTY && e2.setRawMode(t3);
+function setRawMode(e2, r3) {
+  const o2 = e2;
+  o2.isTTY && o2.setRawMode(r3);
 }
-function z({ input: r2 = $2, output: t3 = S, overwrite: e2 = true, hideCursor: s2 = true } = {}) {
-  const i3 = _.createInterface({ input: r2, output: t3, prompt: "", tabSize: 1 });
-  _.emitKeypressEvents(r2, i3), r2 instanceof D && r2.isTTY && r2.setRawMode(true);
-  const n2 = (o2, { name: a2, sequence: h3 }) => {
-    const l = String(o2);
-    if (V([l, a2, h3], "cancel")) {
-      s2 && t3.write(import_sisteransi.cursor.show), process.exit(0);
+function block({
+  input: e2 = stdin,
+  output: r3 = stdout,
+  overwrite: o2 = true,
+  hideCursor: n4 = true
+} = {}) {
+  const s2 = l.createInterface({
+    input: e2,
+    output: r3,
+    prompt: "",
+    tabSize: 1
+  });
+  l.emitKeypressEvents(e2, s2), e2 instanceof ReadStream && e2.isTTY && e2.setRawMode(true);
+  const t3 = (f3, { name: a3, sequence: w }) => {
+    const c4 = String(f3);
+    if (isActionKey([c4, a3, w], "cancel")) {
+      n4 && r3.write(import_sisteransi.cursor.show), process.exit(0);
       return;
     }
-    if (!e2) return;
-    const f3 = a2 === "return" ? 0 : -1, v = a2 === "return" ? -1 : 0;
-    _.moveCursor(t3, f3, v, () => {
-      _.clearLine(t3, 1, () => {
-        r2.once("keypress", n2);
+    if (!o2) return;
+    const i4 = a3 === "return" ? 0 : -1, m3 = a3 === "return" ? -1 : 0;
+    l.moveCursor(r3, i4, m3, () => {
+      l.clearLine(r3, 1, () => {
+        e2.once("keypress", t3);
       });
     });
   };
-  return s2 && t3.write(import_sisteransi.cursor.hide), r2.once("keypress", n2), () => {
-    r2.off("keypress", n2), s2 && t3.write(import_sisteransi.cursor.show), r2 instanceof D && r2.isTTY && !Y && r2.setRawMode(false), i3.terminal = false, i3.close();
+  return n4 && r3.write(import_sisteransi.cursor.hide), e2.once("keypress", t3), () => {
+    e2.off("keypress", t3), n4 && r3.write(import_sisteransi.cursor.show), e2 instanceof ReadStream && e2.isTTY && !R && e2.setRawMode(false), s2.terminal = false, s2.close();
   };
 }
-var O = (r2) => "columns" in r2 && typeof r2.columns == "number" ? r2.columns : 80;
-var A = (r2) => "rows" in r2 && typeof r2.rows == "number" ? r2.rows : 20;
-function R(r2, t3, e2, s2 = e2) {
-  const i3 = O(r2 ?? S);
-  return wrapAnsi(t3, i3 - e2.length, { hard: true, trim: false }).split(`
-`).map((n2, o2) => `${o2 === 0 ? s2 : e2}${n2}`).join(`
+var getColumns = (e2) => "columns" in e2 && typeof e2.columns == "number" ? e2.columns : 80;
+var getRows = (e2) => "rows" in e2 && typeof e2.rows == "number" ? e2.rows : 20;
+function wrapTextWithPrefix(e2, r3, o2, n4 = o2, s2 = o2, t3) {
+  const f3 = getColumns(e2 ?? stdout);
+  return wrapAnsi(r3, f3 - o2.length, {
+    hard: true,
+    trim: false
+  }).split(`
+`).map((c4, i4, m3) => {
+    const d = t3 ? t3(c4, i4) : c4;
+    return i4 === 0 ? `${n4}${d}` : i4 === m3.length - 1 ? `${s2}${d}` : `${o2}${d}`;
+  }).join(`
 `);
 }
-var p = class {
+function runValidation(e2, a3) {
+  if ("~standard" in e2) {
+    const n4 = e2["~standard"].validate(a3);
+    return n4 instanceof Promise ? n4.then((r3) => r3.issues?.at(0)?.message) : n4.issues?.at(0)?.message;
+  }
+  return e2(a3);
+}
+var y = class {
   input;
   output;
   _abortSignal;
@@ -13838,45 +13896,91 @@ var p = class {
   error = "";
   value;
   userInput = "";
-  constructor(t3, e2 = true) {
-    const { input: s2 = $2, output: i3 = S, render: n2, signal: o2, ...a2 } = t3;
-    this.opts = a2, this.onKeypress = this.onKeypress.bind(this), this.close = this.close.bind(this), this.render = this.render.bind(this), this._render = n2.bind(this), this._track = e2, this._abortSignal = o2, this.input = s2, this.output = i3;
+  /**
+   * Whether accessible (static, screen-reader friendly) output is enabled for
+   * this prompt, resolved from the `accessible` option, the global setting,
+   * and the `ACCESSIBLE` env var.
+   */
+  get accessible() {
+    return isAccessible(this.opts.accessible);
   }
+  constructor(t3, e2 = true) {
+    const { input: i4 = stdin, output: s2 = stdout, render: r3, signal: n4, ...o2 } = t3;
+    this.opts = o2, this.onKeypress = this.onKeypress.bind(this), this.close = this.close.bind(this), this.render = this.render.bind(this), this._render = r3.bind(this), this._track = e2, this._abortSignal = n4, this.input = i4, this.output = s2;
+  }
+  /**
+   * Unsubscribe all listeners
+   */
   unsubscribe() {
     this._subscribers.clear();
   }
+  /**
+   * Set a subscriber with opts
+   * @param event - The event name
+   */
   setSubscriber(t3, e2) {
-    const s2 = this._subscribers.get(t3) ?? [];
-    s2.push(e2), this._subscribers.set(t3, s2);
+    const i4 = this._subscribers.get(t3) ?? [];
+    i4.push(e2), this._subscribers.set(t3, i4);
   }
+  /**
+   * Subscribe to an event
+   * @param event - The event name
+   * @param cb - The callback
+   */
   on(t3, e2) {
     this.setSubscriber(t3, { cb: e2 });
   }
+  /**
+   * Subscribe to an event once
+   * @param event - The event name
+   * @param cb - The callback
+   */
   once(t3, e2) {
     this.setSubscriber(t3, { cb: e2, once: true });
   }
+  /**
+   * Emit an event with data
+   * @param event - The event name
+   * @param data - The data to pass to the callback
+   */
   emit(t3, ...e2) {
-    const s2 = this._subscribers.get(t3) ?? [], i3 = [];
-    for (const n2 of s2) n2.cb(...e2), n2.once && i3.push(() => s2.splice(s2.indexOf(n2), 1));
-    for (const n2 of i3) n2();
+    const i4 = this._subscribers.get(t3) ?? [], s2 = [];
+    for (const r3 of i4)
+      r3.cb(...e2), r3.once && s2.push(() => i4.splice(i4.indexOf(r3), 1));
+    for (const r3 of s2)
+      r3();
   }
   prompt() {
     return new Promise((t3) => {
       if (this._abortSignal) {
-        if (this._abortSignal.aborted) return this.state = "cancel", this.close(), t3(C);
-        this._abortSignal.addEventListener("abort", () => {
-          this.state = "cancel", this.close();
-        }, { once: true });
+        if (this._abortSignal.aborted)
+          return this.state = "cancel", this.close(), t3(CANCEL_SYMBOL);
+        this._abortSignal.addEventListener(
+          "abort",
+          () => {
+            this.state = "cancel", this.close();
+          },
+          { once: true }
+        );
       }
-      this.rl = P.createInterface({ input: this.input, tabSize: 2, prompt: "", escapeCodeTimeout: 50, terminal: true }), this.rl.prompt(), this.opts.initialUserInput !== void 0 && this._setUserInput(this.opts.initialUserInput, true), this.input.on("keypress", this.onKeypress), w(this.input, true), this.output.on("resize", this.render), this.render(), this.once("submit", () => {
-        this.output.write(import_sisteransi.cursor.show), this.output.off("resize", this.render), w(this.input, false), t3(this.value);
+      this.rl = l__default.createInterface({
+        input: this.input,
+        tabSize: 2,
+        prompt: "",
+        escapeCodeTimeout: 50,
+        terminal: true
+      }), this.rl.prompt(), this.opts.initialUserInput !== void 0 && this._setUserInput(this.opts.initialUserInput, true), this.input.on("keypress", this.onKeypress), setRawMode(this.input, true), this.output.on("resize", this.render), this.render(), this.once("submit", () => {
+        this.output.write(import_sisteransi.cursor.show), this.output.off("resize", this.render), setRawMode(this.input, false), t3(this.value);
       }), this.once("cancel", () => {
-        this.output.write(import_sisteransi.cursor.show), this.output.off("resize", this.render), w(this.input, false), t3(C);
+        this.output.write(import_sisteransi.cursor.show), this.output.off("resize", this.render), setRawMode(this.input, false), t3(CANCEL_SYMBOL);
       });
     });
   }
   _isActionKey(t3, e2) {
     return t3 === "	";
+  }
+  _shouldSubmit(t3, e2) {
+    return true;
   }
   _setValue(t3) {
     this.value = t3, this.emit("value", this.value);
@@ -13887,19 +13991,22 @@ var p = class {
   _clearUserInput() {
     this.rl?.write(null, { ctrl: true, name: "u" }), this._setUserInput("");
   }
-  onKeypress(t3, e2) {
-    if (this._track && e2.name !== "return" && (e2.name && this._isActionKey(t3, e2) && this.rl?.write(null, { ctrl: true, name: "h" }), this._cursor = this.rl?.cursor ?? 0, this._setUserInput(this.rl?.line)), this.state === "error" && (this.state = "active"), e2?.name && (!this._track && u2.aliases.has(e2.name) && this.emit("cursor", u2.aliases.get(e2.name)), u2.actions.has(e2.name) && this.emit("cursor", e2.name)), t3 && (t3.toLowerCase() === "y" || t3.toLowerCase() === "n") && this.emit("confirm", t3.toLowerCase() === "y"), this.emit("key", t3?.toLowerCase(), e2), e2?.name === "return") {
-      if (this.opts.validate) {
-        const s2 = this.opts.validate(this.value);
-        s2 && (this.error = s2 instanceof Error ? s2.message : s2, this.state = "error", this.rl?.write(this.userInput));
+  async onKeypress(t3, e2) {
+    if (this.state !== "validating") {
+      if (this._track && e2.name !== "return" && (e2.name && this._isActionKey(t3, e2) && this.rl?.write(null, { ctrl: true, name: "h" }), this._cursor = this.rl?.cursor ?? 0, this._setUserInput(this.rl?.line)), this.state === "error" && (this.state = "active"), e2?.name && (!this._track && settings.aliases.has(e2.name) && this.emit("cursor", settings.aliases.get(e2.name)), settings.actions.has(e2.name) && this.emit("cursor", e2.name)), t3 && (t3.toLowerCase() === "y" || t3.toLowerCase() === "n") && this.emit("confirm", t3.toLowerCase() === "y"), this.emit("key", t3, e2), e2?.name === "return" && this._shouldSubmit(t3, e2)) {
+        if (this.opts.validate) {
+          const i4 = runValidation(this.opts.validate, this.value);
+          let s2;
+          i4 instanceof Promise ? (this.state = "validating", this.render(), s2 = await i4) : s2 = i4, s2 && (this.error = s2 instanceof Error ? s2.message : s2, this.state = "error", this.rl?.write(this.userInput));
+        }
+        this.state !== "error" && (this.state = "submit");
       }
-      this.state !== "error" && (this.state = "submit");
+      isActionKey([t3, e2?.name, e2?.sequence], "cancel") && (this.state = "cancel"), (this.state === "submit" || this.state === "cancel") && this.emit("finalize"), this.render(), (this.state === "submit" || this.state === "cancel") && this.close();
     }
-    V([t3, e2?.name, e2?.sequence], "cancel") && (this.state = "cancel"), (this.state === "submit" || this.state === "cancel") && this.emit("finalize"), this.render(), (this.state === "submit" || this.state === "cancel") && this.close();
   }
   close() {
     this.input.unpipe(), this.input.removeListener("keypress", this.onKeypress), this.output.write(`
-`), w(this.input, false), this.rl?.close(), this.rl = void 0, this.emit(`${this.state}`, this.value), this.unsubscribe();
+`), setRawMode(this.input, false), this.rl?.close(), this.rl = void 0, this.emit(`${this.state}`, this.value), this.unsubscribe();
   }
   restoreCursor() {
     const t3 = wrapAnsi(this._prevFrame, process.stdout.columns, { hard: true, trim: false }).split(`
@@ -13907,34 +14014,39 @@ var p = class {
     this.output.write(import_sisteransi.cursor.move(-999, t3 * -1));
   }
   render() {
-    const t3 = wrapAnsi(this._render(this) ?? "", process.stdout.columns, { hard: true, trim: false });
+    const t3 = wrapAnsi(this._render(this) ?? "", process.stdout.columns, {
+      hard: true,
+      trim: false
+    });
     if (t3 !== this._prevFrame) {
-      if (this.state === "initial") this.output.write(import_sisteransi.cursor.hide);
+      if (this.state === "initial")
+        this.output.write(import_sisteransi.cursor.hide);
       else {
-        const e2 = j(this._prevFrame, t3), s2 = A(this.output);
+        const e2 = diffLines(this._prevFrame, t3), i4 = getRows(this.output);
         if (this.restoreCursor(), e2) {
-          const i3 = Math.max(0, e2.numLinesAfter - s2), n2 = Math.max(0, e2.numLinesBefore - s2);
-          let o2 = e2.lines.find((a2) => a2 >= i3);
-          if (o2 === void 0) {
+          const s2 = Math.max(0, e2.numLinesAfter - i4), r3 = Math.max(0, e2.numLinesBefore - i4);
+          let n4 = e2.lines.find((o2) => o2 >= s2);
+          if (n4 === void 0) {
             this._prevFrame = t3;
             return;
           }
           if (e2.lines.length === 1) {
-            this.output.write(import_sisteransi.cursor.move(0, o2 - n2)), this.output.write(import_sisteransi.erase.lines(1));
-            const a2 = t3.split(`
+            this.output.write(import_sisteransi.cursor.move(0, n4 - r3)), this.output.write(import_sisteransi.erase.lines(1));
+            const o2 = t3.split(`
 `);
-            this.output.write(a2[o2]), this._prevFrame = t3, this.output.write(import_sisteransi.cursor.move(0, a2.length - o2 - 1));
+            this.output.write(o2[n4]), this._prevFrame = t3, this.output.write(import_sisteransi.cursor.move(0, o2.length - n4 - 1));
             return;
           } else if (e2.lines.length > 1) {
-            if (i3 < n2) o2 = i3;
+            if (s2 < r3)
+              n4 = s2;
             else {
-              const h3 = o2 - n2;
-              h3 > 0 && this.output.write(import_sisteransi.cursor.move(0, h3));
+              const h4 = n4 - r3;
+              h4 > 0 && this.output.write(import_sisteransi.cursor.move(0, h4));
             }
             this.output.write(import_sisteransi.erase.down());
-            const a2 = t3.split(`
-`).slice(o2);
-            this.output.write(a2.join(`
+            const f3 = t3.split(`
+`).slice(n4);
+            this.output.write(f3.join(`
 `)), this._prevFrame = t3;
             return;
           }
@@ -13945,7 +14057,7 @@ var p = class {
     }
   }
 };
-var Q = class extends p {
+var r = class extends y {
   get cursor() {
     return this.value ? 0 : 1;
   }
@@ -13955,51 +14067,55 @@ var Q = class extends p {
   constructor(t3) {
     super(t3, false), this.value = !!t3.initialValue, this.on("userInput", () => {
       this.value = this._value;
-    }), this.on("confirm", (e2) => {
-      this.output.write(import_sisteransi.cursor.move(0, -1)), this.value = e2, this.state = "submit", this.close();
+    }), this.on("confirm", (i4) => {
+      this.output.write(import_sisteransi.cursor.move(0, -1)), this.value = i4, this.state = "submit", this.close();
     }), this.on("cursor", () => {
       this.value = !this.value;
     });
   }
 };
-var it = class extends p {
+var a2 = class extends y {
   options;
   cursor = 0;
   get _value() {
-    return this.options[this.cursor].value;
+    return this.options[this.cursor]?.value;
   }
   get _enabledOptions() {
-    return this.options.filter((t3) => t3.disabled !== true);
+    return this.options.filter((e2) => e2.disabled !== true);
   }
   toggleAll() {
-    const t3 = this._enabledOptions, e2 = this.value !== void 0 && this.value.length === t3.length;
-    this.value = e2 ? [] : t3.map((s2) => s2.value);
+    const e2 = this._enabledOptions, i4 = this.value !== void 0 && this.value.length === e2.length;
+    this.value = i4 ? [] : e2.map((t3) => t3.value);
   }
   toggleInvert() {
-    const t3 = this.value;
-    if (!t3) return;
-    const e2 = this._enabledOptions.filter((s2) => !t3.includes(s2.value));
-    this.value = e2.map((s2) => s2.value);
+    const e2 = this.value;
+    if (!e2)
+      return;
+    const i4 = this._enabledOptions.filter((t3) => !e2.includes(t3.value));
+    this.value = i4.map((t3) => t3.value);
   }
   toggleValue() {
     this.value === void 0 && (this.value = []);
-    const t3 = this.value.includes(this._value);
-    this.value = t3 ? this.value.filter((e2) => e2 !== this._value) : [...this.value, this._value];
+    const e2 = this.value.includes(this._value);
+    this.value = e2 ? this.value.filter((i4) => i4 !== this._value) : [...this.value, this._value];
   }
-  constructor(t3) {
-    super(t3, false), this.options = t3.options, this.value = [...t3.initialValues ?? []];
-    const e2 = Math.max(this.options.findIndex(({ value: s2 }) => s2 === t3.cursorAt), 0);
-    this.cursor = this.options[e2].disabled ? d(e2, 1, this.options) : e2, this.on("key", (s2) => {
-      s2 === "a" && this.toggleAll(), s2 === "i" && this.toggleInvert();
-    }), this.on("cursor", (s2) => {
-      switch (s2) {
+  constructor(e2) {
+    super(e2, false), this.options = e2.options, this.value = [...e2.initialValues ?? []];
+    const i4 = Math.max(
+      this.options.findIndex(({ value: t3 }) => t3 === e2.cursorAt),
+      0
+    );
+    this.cursor = this.options[i4]?.disabled ? findCursor(i4, 1, this.options) : i4, this.on("key", (t3, l2) => {
+      l2.name === "a" && this.toggleAll(), l2.name === "i" && this.toggleInvert();
+    }), this.on("cursor", (t3) => {
+      switch (t3) {
         case "left":
         case "up":
-          this.cursor = d(this.cursor, -1, this.options);
+          this.cursor = findCursor(this.cursor, -1, this.options);
           break;
         case "down":
         case "right":
-          this.cursor = d(this.cursor, 1, this.options);
+          this.cursor = findCursor(this.cursor, 1, this.options);
           break;
         case "space":
           this.toggleValue();
@@ -14008,47 +14124,53 @@ var it = class extends p {
     });
   }
 };
-var nt = class extends p {
+var n$1 = class n2 extends y {
   options;
   cursor = 0;
   get _selectedValue() {
     return this.options[this.cursor];
   }
   changeValue() {
-    this.value = this._selectedValue.value;
+    const e2 = this._selectedValue;
+    this.value = e2 === void 0 ? void 0 : e2.value;
   }
-  constructor(t3) {
-    super(t3, false), this.options = t3.options;
-    const e2 = this.options.findIndex(({ value: i3 }) => i3 === t3.initialValue), s2 = e2 === -1 ? 0 : e2;
-    this.cursor = this.options[s2].disabled ? d(s2, 1, this.options) : s2, this.changeValue(), this.on("cursor", (i3) => {
-      switch (i3) {
+  constructor(e2) {
+    super(e2, false), this.options = e2.options;
+    const o2 = this.options.findIndex(({ value: s2 }) => s2 === e2.initialValue), t3 = o2 === -1 ? 0 : o2;
+    this.cursor = this.options[t3]?.disabled ? findCursor(t3, 1, this.options) : t3, this.changeValue(), this.on("cursor", (s2) => {
+      switch (s2) {
         case "left":
         case "up":
-          this.cursor = d(this.cursor, -1, this.options);
+          this.cursor = findCursor(this.cursor, -1, this.options);
           break;
         case "down":
         case "right":
-          this.cursor = d(this.cursor, 1, this.options);
+          this.cursor = findCursor(this.cursor, 1, this.options);
           break;
       }
       this.changeValue();
     });
   }
 };
-var at = class extends p {
+var n3 = class extends y {
   get userInputWithCursor() {
-    if (this.state === "submit") return this.userInput;
+    if (this.state === "submit")
+      return this.userInput;
     const t3 = this.userInput;
-    if (this.cursor >= t3.length) return `${this.userInput}\u2588`;
-    const e2 = t3.slice(0, this.cursor), [s2, ...i3] = t3.slice(this.cursor);
-    return `${e2}${y("inverse", s2)}${i3.join("")}`;
+    if (this.cursor >= t3.length)
+      return `${this.userInput}\u2588`;
+    const r3 = t3.slice(0, this.cursor), s2 = t3.slice(this.cursor, this.cursor + 1), e2 = t3.slice(this.cursor + 1);
+    return `${r3}${styleText("inverse", s2)}${e2}`;
   }
   get cursor() {
     return this._cursor;
   }
   constructor(t3) {
-    super({ ...t3, initialUserInput: t3.initialUserInput ?? t3.initialValue }), this.on("userInput", (e2) => {
-      this._setValue(e2);
+    super({
+      ...t3,
+      initialUserInput: t3.initialUserInput ?? t3.initialValue
+    }), this.on("userInput", (r3) => {
+      this._setValue(r3);
     }), this.on("finalize", () => {
       this.value || (this.value = t3.defaultValue), this.value === void 0 && (this.value = "");
     });
@@ -14056,365 +14178,581 @@ var at = class extends p {
 };
 
 // node_modules/@clack/prompts/dist/index.mjs
-import { styleText as t, stripVTControlCharacters as ne } from "node:util";
-import P2 from "node:process";
+import { styleText as styleText2, stripVTControlCharacters as stripVTControlCharacters2 } from "node:util";
+import process$1 from "node:process";
 var import_sisteransi2 = __toESM(require_src(), 1);
-function Ze() {
-  return P2.platform !== "win32" ? P2.env.TERM !== "linux" : !!P2.env.CI || !!P2.env.WT_SESSION || !!P2.env.TERMINUS_SUBLIME || P2.env.ConEmuTask === "{cmd::Cmder}" || P2.env.TERM_PROGRAM === "Terminus-Sublime" || P2.env.TERM_PROGRAM === "vscode" || P2.env.TERM === "xterm-256color" || P2.env.TERM === "alacritty" || P2.env.TERMINAL_EMULATOR === "JetBrains-JediTerm";
+function isUnicodeSupported2() {
+  if (process$1.platform !== "win32") {
+    return process$1.env.TERM !== "linux";
+  }
+  return Boolean(process$1.env.CI) || Boolean(process$1.env.WT_SESSION) || Boolean(process$1.env.TERMINUS_SUBLIME) || process$1.env.ConEmuTask === "{cmd::Cmder}" || process$1.env.TERM_PROGRAM === "Terminus-Sublime" || process$1.env.TERM_PROGRAM === "vscode" || process$1.env.TERM === "xterm-256color" || process$1.env.TERM === "alacritty" || process$1.env.TERMINAL_EMULATOR === "JetBrains-JediTerm";
 }
-var ee = Ze();
-var ae = () => process.env.CI === "true";
-var w2 = (e2, i3) => ee ? e2 : i3;
-var _e = w2("\u25C6", "*");
-var oe = w2("\u25A0", "x");
-var ue = w2("\u25B2", "x");
-var F = w2("\u25C7", "o");
-var le = w2("\u250C", "T");
-var d2 = w2("\u2502", "|");
-var E2 = w2("\u2514", "\u2014");
-var Ie = w2("\u2510", "T");
-var Ee = w2("\u2518", "\u2014");
-var z2 = w2("\u25CF", ">");
-var H2 = w2("\u25CB", " ");
-var te = w2("\u25FB", "[\u2022]");
-var U = w2("\u25FC", "[+]");
-var J = w2("\u25FB", "[ ]");
-var xe = w2("\u25AA", "\u2022");
-var se = w2("\u2500", "-");
-var ce = w2("\u256E", "+");
-var Ge = w2("\u251C", "+");
-var $e = w2("\u256F", "+");
-var de = w2("\u2570", "+");
-var Oe = w2("\u256D", "+");
-var he = w2("\u25CF", "\u2022");
-var pe = w2("\u25C6", "*");
-var me = w2("\u25B2", "!");
-var ge = w2("\u25A0", "x");
-var V2 = (e2) => {
-  switch (e2) {
+var unicode = isUnicodeSupported2();
+var isCI = () => process.env.CI === "true";
+var unicodeOr = (o2, e2) => unicode ? o2 : e2;
+var S_STEP_ACTIVE = unicodeOr("\u25C6", "*");
+var S_STEP_CANCEL = unicodeOr("\u25A0", "x");
+var S_STEP_ERROR = unicodeOr("\u25B2", "x");
+var S_STEP_SUBMIT = unicodeOr("\u25C7", "o");
+var S_BAR_START = unicodeOr("\u250C", "T");
+var S_BAR = unicodeOr("\u2502", "|");
+var S_BAR_END = unicodeOr("\u2514", "\u2014");
+var S_BAR_START_RIGHT = unicodeOr("\u2510", "T");
+var S_BAR_END_RIGHT = unicodeOr("\u2518", "\u2014");
+var S_RADIO_ACTIVE = unicodeOr("\u25CF", ">");
+var S_RADIO_INACTIVE = unicodeOr("\u25CB", " ");
+var S_CHECKBOX_ACTIVE = unicodeOr("\u25FB", "[\u2022]");
+var S_CHECKBOX_SELECTED = unicodeOr("\u25FC", "[+]");
+var S_CHECKBOX_INACTIVE = unicodeOr("\u25FB", "[ ]");
+var S_PASSWORD_MASK = unicodeOr("\u25AA", "\u2022");
+var S_BAR_H = unicodeOr("\u2500", "-");
+var S_CORNER_TOP_RIGHT = unicodeOr("\u256E", "+");
+var S_CONNECT_LEFT = unicodeOr("\u251C", "+");
+var S_CORNER_BOTTOM_RIGHT = unicodeOr("\u256F", "+");
+var S_CORNER_BOTTOM_LEFT = unicodeOr("\u2570", "+");
+var S_CORNER_TOP_LEFT = unicodeOr("\u256D", "+");
+var S_INFO = unicodeOr("\u25CF", "\u2022");
+var S_SUCCESS = unicodeOr("\u25C6", "*");
+var S_WARN = unicodeOr("\u25B2", "!");
+var S_ERROR = unicodeOr("\u25A0", "x");
+var symbol = (o2) => {
+  switch (o2) {
     case "initial":
     case "active":
-      return t("cyan", _e);
+      return styleText2("cyan", S_STEP_ACTIVE);
     case "cancel":
-      return t("red", oe);
+      return styleText2("red", S_STEP_CANCEL);
     case "error":
-      return t("yellow", ue);
+      return styleText2("yellow", S_STEP_ERROR);
     case "submit":
-      return t("green", F);
+      return styleText2("green", S_STEP_SUBMIT);
+    case "validating":
+      return styleText2("dim", S_STEP_ACTIVE);
   }
 };
-var ye = (e2) => {
-  switch (e2) {
+var symbolBar = (o2) => {
+  switch (o2) {
     case "initial":
     case "active":
-      return t("cyan", d2);
+      return styleText2("cyan", S_BAR);
     case "cancel":
-      return t("red", d2);
+      return styleText2("red", S_BAR);
     case "error":
-      return t("yellow", d2);
+      return styleText2("yellow", S_BAR);
     case "submit":
-      return t("green", d2);
+      return styleText2("green", S_BAR);
   }
 };
-var et2 = (e2, i3, s2, r2, u3) => {
-  let n2 = i3, o2 = 0;
-  for (let c4 = s2; c4 < r2; c4++) {
-    const a2 = e2[c4];
-    if (n2 = n2 - a2.length, o2++, n2 <= u3) break;
-  }
-  return { lineCount: n2, removals: o2 };
+function formatInstructionFooter(o2, e2) {
+  const r3 = [`${e2 ? `${styleText2("cyan", S_BAR)}  ` : ""}${o2.join(" \u2022 ")}`];
+  return e2 && r3.push(styleText2("cyan", S_BAR_END)), r3;
+}
+var I = (l2, e2, w, p, b, C = false) => {
+  let r3 = e2, O = 0;
+  if (C)
+    for (let i4 = p - 1; i4 >= w; i4--) {
+      const m3 = l2[i4];
+      if (m3 && (r3 -= m3.length), O++, r3 <= b) break;
+    }
+  else
+    for (let i4 = w; i4 < p; i4++) {
+      const m3 = l2[i4];
+      if (m3 && (r3 -= m3.length), O++, r3 <= b) break;
+    }
+  return { lineCount: r3, removals: O };
 };
-var Y2 = ({ cursor: e2, options: i3, style: s2, output: r2 = process.stdout, maxItems: u3 = Number.POSITIVE_INFINITY, columnPadding: n2 = 0, rowPadding: o2 = 4 }) => {
-  const c4 = O(r2) - n2, a2 = A(r2), l = t("dim", "..."), $3 = Math.max(a2 - o2, 0), y2 = Math.max(Math.min(u3, $3), 5);
-  let p2 = 0;
-  e2 >= y2 - 3 && (p2 = Math.max(Math.min(e2 - y2 + 3, i3.length - y2), 0));
-  let m2 = y2 < i3.length && p2 > 0, g = y2 < i3.length && p2 + y2 < i3.length;
-  const S3 = Math.min(p2 + y2, i3.length), h3 = [];
+var limitOptions = ({
+  cursor: l2,
+  options: e2,
+  style: w,
+  output: p = process.stdout,
+  maxItems: b = Number.POSITIVE_INFINITY,
+  columnPadding: C = 0,
+  rowPadding: r3 = 4
+}) => {
+  const i4 = getColumns(p) - C, m3 = getRows(p), M = styleText2("dim", "..."), v = Math.max(m3 - r3, 0), a3 = Math.max(Math.min(b, v), 5);
   let f3 = 0;
-  m2 && f3++, g && f3++;
-  const v = p2 + (m2 ? 1 : 0), T = S3 - (g ? 1 : 0);
-  for (let b = v; b < T; b++) {
-    const x2 = wrapAnsi(s2(i3[b], b === e2), c4, { hard: true, trim: false }).split(`
+  l2 >= a3 - 3 && (f3 = Math.max(
+    Math.min(l2 - a3 + 3, e2.length - a3),
+    0
+  ));
+  let d = a3 < e2.length && f3 > 0, c4 = a3 < e2.length && f3 + a3 < e2.length;
+  const W2 = Math.min(
+    f3 + a3,
+    e2.length
+  ), s2 = [];
+  let g = 0;
+  d && g++, c4 && g++;
+  const T = f3 + (d ? 1 : 0), y2 = W2 - (c4 ? 1 : 0);
+  for (let t3 = T; t3 < y2; t3++) {
+    const n4 = e2[t3], o2 = n4 ? w(n4, t3 === l2) : "", h4 = wrapAnsi(o2, i4, {
+      hard: true,
+      trim: false
+    }).split(`
 `);
-    h3.push(x2), f3 += x2.length;
+    s2.push(h4), g += h4.length;
   }
-  if (f3 > $3) {
-    let b = 0, x2 = 0, G2 = f3;
-    const M2 = e2 - v, R2 = (j2, D2) => et2(h3, G2, j2, D2, $3);
-    m2 ? ({ lineCount: G2, removals: b } = R2(0, M2), G2 > $3 && ({ lineCount: G2, removals: x2 } = R2(M2 + 1, h3.length))) : ({ lineCount: G2, removals: x2 } = R2(M2 + 1, h3.length), G2 > $3 && ({ lineCount: G2, removals: b } = R2(0, M2))), b > 0 && (m2 = true, h3.splice(0, b)), x2 > 0 && (g = true, h3.splice(h3.length - x2, x2));
+  if (g > v) {
+    let t3 = 0, n4 = 0, o2 = g;
+    const h4 = l2 - T;
+    let u4 = v;
+    const L = () => I(s2, o2, 0, h4, u4), E = () => I(
+      s2,
+      o2,
+      h4 + 1,
+      s2.length,
+      u4,
+      true
+    );
+    d ? ({ lineCount: o2, removals: t3 } = L(), o2 > u4 && (c4 || (u4 -= 1), { lineCount: o2, removals: n4 } = E())) : (c4 || (u4 -= 1), { lineCount: o2, removals: n4 } = E(), o2 > u4 && (u4 -= 1, { lineCount: o2, removals: t3 } = L())), t3 > 0 && (d = true, s2.splice(0, t3)), n4 > 0 && (c4 = true, s2.splice(s2.length - n4, n4));
   }
-  const C2 = [];
-  m2 && C2.push(l);
-  for (const b of h3) for (const x2 of b) C2.push(x2);
-  return g && C2.push(l), C2;
+  const x2 = [];
+  d && x2.push(M);
+  for (const t3 of s2)
+    for (const n4 of t3)
+      x2.push(n4);
+  return c4 && x2.push(M), x2;
 };
-var ot2 = (e2) => {
-  const i3 = e2.active ?? "Yes", s2 = e2.inactive ?? "No";
-  return new Q({ active: i3, inactive: s2, signal: e2.signal, input: e2.input, output: e2.output, initialValue: e2.initialValue ?? true, render() {
-    const r2 = e2.withGuide ?? u2.withGuide, u3 = `${V2(this.state)}  `, n2 = r2 ? `${t("gray", d2)}  ` : "", o2 = R(e2.output, e2.message, n2, u3), c4 = `${r2 ? `${t("gray", d2)}
-` : ""}${o2}
-`, a2 = this.value ? i3 : s2;
-    switch (this.state) {
-      case "submit": {
-        const l = r2 ? `${t("gray", d2)}  ` : "";
-        return `${c4}${l}${t("dim", a2)}`;
-      }
-      case "cancel": {
-        const l = r2 ? `${t("gray", d2)}  ` : "";
-        return `${c4}${l}${t(["strikethrough", "dim"], a2)}${r2 ? `
-${t("gray", d2)}` : ""}`;
-      }
-      default: {
-        const l = r2 ? `${t("cyan", d2)}  ` : "", $3 = r2 ? t("cyan", E2) : "";
-        return `${c4}${l}${this.value ? `${t("green", z2)} ${i3}` : `${t("dim", H2)} ${t("dim", i3)}`}${e2.vertical ? r2 ? `
-${t("cyan", d2)}  ` : `
-` : ` ${t("dim", "/")} `}${this.value ? `${t("dim", H2)} ${t("dim", s2)}` : `${t("green", z2)} ${s2}`}
-${$3}
+var confirm = (e2) => {
+  const a3 = e2.active ?? "Yes", o2 = e2.inactive ?? "No";
+  return new r({
+    active: a3,
+    inactive: o2,
+    signal: e2.signal,
+    input: e2.input,
+    output: e2.output,
+    initialValue: e2.initialValue ?? true,
+    render() {
+      const i4 = e2.withGuide ?? settings.withGuide, u4 = `${symbol(this.state)}  `, l2 = i4 ? `${styleText2("gray", S_BAR)}  ` : "", f3 = wrapTextWithPrefix(
+        e2.output,
+        e2.message,
+        l2,
+        u4
+      ), s2 = `${i4 ? `${styleText2("gray", S_BAR)}
+` : ""}${f3}
+`, c4 = this.value ? a3 : o2;
+      switch (this.state) {
+        case "submit": {
+          const r3 = i4 ? `${styleText2("gray", S_BAR)}  ` : "";
+          return `${s2}${r3}${styleText2("dim", c4)}`;
+        }
+        case "cancel": {
+          const r3 = i4 ? `${styleText2("gray", S_BAR)}  ` : "";
+          return `${s2}${r3}${styleText2(["strikethrough", "dim"], c4)}${i4 ? `
+${styleText2("gray", S_BAR)}` : ""}`;
+        }
+        default: {
+          const r3 = i4 ? `${styleText2("cyan", S_BAR)}  ` : "", g = i4 ? styleText2("cyan", S_BAR_END) : "";
+          return `${s2}${r3}${this.value ? `${styleText2("green", S_RADIO_ACTIVE)} ${a3}` : `${styleText2("dim", S_RADIO_INACTIVE)} ${styleText2("dim", a3)}`}${e2.vertical ? i4 ? `
+${styleText2("cyan", S_BAR)}  ` : `
+` : ` ${styleText2("dim", "/")} `}${this.value ? `${styleText2("dim", S_RADIO_INACTIVE)} ${styleText2("dim", o2)}` : `${styleText2("green", S_RADIO_ACTIVE)} ${o2}`}
+${g}
 `;
+        }
       }
     }
-  } }).prompt();
+  }).prompt();
 };
-var dt = async (e2, i3) => {
-  const s2 = {}, r2 = Object.keys(e2);
-  for (const u3 of r2) {
-    const n2 = e2[u3], o2 = await n2({ results: s2 })?.catch((c4) => {
-      throw c4;
+var group = async (o2, r3) => {
+  const t3 = {}, p = Object.keys(o2);
+  for (const e2 of p) {
+    const i4 = o2[e2], n4 = await i4({ results: t3 })?.catch((a3) => {
+      throw a3;
     });
-    if (typeof i3?.onCancel == "function" && q(o2)) {
-      s2[u3] = "canceled", i3.onCancel({ results: s2 });
+    if (typeof r3?.onCancel == "function" && isCancel(n4)) {
+      t3[e2] = "canceled", r3.onCancel({ results: t3 });
       continue;
     }
-    s2[u3] = o2;
+    t3[e2] = n4;
   }
-  return s2;
+  return t3;
 };
-var O2 = { message: (e2 = [], { symbol: i3 = t("gray", d2), secondarySymbol: s2 = t("gray", d2), output: r2 = process.stdout, spacing: u3 = 1, withGuide: n2 } = {}) => {
-  const o2 = [], c4 = n2 ?? u2.withGuide, a2 = c4 ? s2 : "", l = c4 ? `${i3}  ` : "", $3 = c4 ? `${s2}  ` : "";
-  for (let p2 = 0; p2 < u3; p2++) o2.push(a2);
-  const y2 = Array.isArray(e2) ? e2 : e2.split(`
+var MULTISELECT_INSTRUCTIONS = [
+  `${styleText2("dim", "\u2191/\u2193")} to navigate`,
+  `${styleText2("dim", "Space:")} select`,
+  `${styleText2("dim", "Enter:")} confirm`
+];
+var m = (i4, u4) => i4.split(`
+`).map((d) => u4(d)).join(`
 `);
-  if (y2.length > 0) {
-    const [p2, ...m2] = y2;
-    p2.length > 0 ? o2.push(`${l}${p2}`) : o2.push(c4 ? i3 : "");
-    for (const g of m2) g.length > 0 ? o2.push(`${$3}${g}`) : o2.push(c4 ? s2 : "");
-  }
-  r2.write(`${o2.join(`
+var multiselect = (i4) => {
+  const u4 = (t3, a3) => {
+    const r3 = t3.label ?? String(t3.value);
+    return a3 === "disabled" ? `${styleText2("gray", S_CHECKBOX_INACTIVE)} ${m(r3, (o2) => styleText2(["strikethrough", "gray"], o2))}${t3.hint ? ` ${styleText2("dim", `(${t3.hint ?? "disabled"})`)}` : ""}` : a3 === "active" ? `${styleText2("cyan", S_CHECKBOX_ACTIVE)} ${r3}${t3.hint ? ` ${styleText2("dim", `(${t3.hint})`)}` : ""}` : a3 === "selected" ? `${styleText2("green", S_CHECKBOX_SELECTED)} ${m(r3, (o2) => styleText2("dim", o2))}${t3.hint ? ` ${styleText2("dim", `(${t3.hint})`)}` : ""}` : a3 === "cancelled" ? `${m(r3, (o2) => styleText2(["strikethrough", "dim"], o2))}` : a3 === "active-selected" ? `${styleText2("green", S_CHECKBOX_SELECTED)} ${r3}${t3.hint ? ` ${styleText2("dim", `(${t3.hint})`)}` : ""}` : a3 === "submitted" ? `${m(r3, (o2) => styleText2("dim", o2))}` : `${styleText2("dim", S_CHECKBOX_INACTIVE)} ${m(r3, (o2) => styleText2("dim", o2))}`;
+  }, d = i4.required ?? true, x2 = i4.showInstructions ?? true;
+  return new a2({
+    options: i4.options,
+    signal: i4.signal,
+    input: i4.input,
+    output: i4.output,
+    initialValues: i4.initialValues,
+    required: d,
+    cursorAt: i4.cursorAt,
+    validate(t3) {
+      if (d && (t3 === void 0 || t3.length === 0))
+        return `Please select at least one option.
+${styleText2(
+          "reset",
+          styleText2(
+            "dim",
+            `Press ${styleText2(["gray", "bgWhite", "inverse"], " space ")} to select, ${styleText2(
+              "gray",
+              styleText2("bgWhite", styleText2("inverse", " enter "))
+            )} to submit`
+          )
+        )}`;
+    },
+    render() {
+      const t3 = i4.withGuide ?? settings.withGuide, a3 = wrapTextWithPrefix(
+        i4.output,
+        i4.message,
+        t3 ? `${symbolBar(this.state)}  ` : "",
+        `${symbol(this.state)}  `
+      ), r3 = `${t3 ? `${styleText2("gray", S_BAR)}
+` : ""}${a3}
+`, o2 = this.value ?? [], g = (n4, l2) => {
+        if (n4.disabled)
+          return u4(n4, "disabled");
+        const s2 = o2.includes(n4.value);
+        return l2 && s2 ? u4(n4, "active-selected") : s2 ? u4(n4, "selected") : u4(n4, l2 ? "active" : "inactive");
+      };
+      switch (this.state) {
+        case "submit": {
+          const n4 = this.options.filter(({ value: s2 }) => o2.includes(s2)).map((s2) => u4(s2, "submitted")).join(styleText2("dim", ", ")) || styleText2("dim", "none"), l2 = wrapTextWithPrefix(
+            i4.output,
+            n4,
+            t3 ? `${styleText2("gray", S_BAR)}  ` : ""
+          );
+          return `${r3}${l2}`;
+        }
+        case "cancel": {
+          const n4 = this.options.filter(({ value: s2 }) => o2.includes(s2)).map((s2) => u4(s2, "cancelled")).join(styleText2("dim", ", "));
+          if (n4.trim() === "")
+            return `${r3}${styleText2("gray", S_BAR)}`;
+          const l2 = wrapTextWithPrefix(
+            i4.output,
+            n4,
+            t3 ? `${styleText2("gray", S_BAR)}  ` : ""
+          );
+          return `${r3}${l2}${t3 ? `
+${styleText2("gray", S_BAR)}` : ""}`;
+        }
+        case "error": {
+          const n4 = t3 ? `${styleText2("yellow", S_BAR)}  ` : "", l2 = this.error.split(`
+`).map(
+            ($2, v) => v === 0 ? `${t3 ? `${styleText2("yellow", S_BAR_END)}  ` : ""}${styleText2("yellow", $2)}` : `   ${$2}`
+          ).join(`
+`), s2 = r3.split(`
+`).length, h4 = l2.split(`
+`).length + 1;
+          return `${r3}${n4}${limitOptions({
+            output: i4.output,
+            options: this.options,
+            cursor: this.cursor,
+            maxItems: i4.maxItems,
+            columnPadding: n4.length,
+            rowPadding: s2 + h4,
+            style: g
+          }).join(`
+${n4}`)}
+${l2}
+`;
+        }
+        default: {
+          const n4 = t3 ? `${styleText2("cyan", S_BAR)}  ` : "", l2 = r3.split(`
+`).length, s2 = x2 ? formatInstructionFooter(MULTISELECT_INSTRUCTIONS, t3) : t3 ? [styleText2("cyan", S_BAR_END)] : [], h4 = s2.join(`
+`), $2 = s2.length + 1;
+          return `${r3}${n4}${limitOptions({
+            output: i4.output,
+            options: this.options,
+            cursor: this.cursor,
+            maxItems: i4.maxItems,
+            columnPadding: n4.length,
+            rowPadding: l2 + $2,
+            style: g
+          }).join(`
+${n4}`)}
+${h4}
+`;
+        }
+      }
+    }
+  }).prompt();
+};
+var log = {
+  message: (s2 = [], {
+    symbol: e2 = styleText2("gray", S_BAR),
+    secondarySymbol: r3 = styleText2("gray", S_BAR),
+    output: m3 = process.stdout,
+    spacing: l2 = 1,
+    withGuide: c4
+  } = {}) => {
+    const t3 = [], o2 = c4 ?? settings.withGuide, f3 = o2 ? r3 : "", O = o2 ? `${e2}  ` : "", u4 = o2 ? `${r3}  ` : "";
+    for (let i4 = 0; i4 < l2; i4++)
+      t3.push(f3);
+    const g = Array.isArray(s2) ? s2 : s2.split(`
+`);
+    if (g.length > 0) {
+      const [i4, ...y2] = g;
+      i4.length > 0 ? t3.push(`${O}${i4}`) : t3.push(o2 ? e2 : "");
+      for (const p of y2)
+        p.length > 0 ? t3.push(`${u4}${p}`) : t3.push(o2 ? r3 : "");
+    }
+    m3.write(`${t3.join(`
 `)}
 `);
-}, info: (e2, i3) => {
-  O2.message(e2, { ...i3, symbol: t("blue", he) });
-}, success: (e2, i3) => {
-  O2.message(e2, { ...i3, symbol: t("green", pe) });
-}, step: (e2, i3) => {
-  O2.message(e2, { ...i3, symbol: t("green", F) });
-}, warn: (e2, i3) => {
-  O2.message(e2, { ...i3, symbol: t("yellow", me) });
-}, warning: (e2, i3) => {
-  O2.warn(e2, i3);
-}, error: (e2, i3) => {
-  O2.message(e2, { ...i3, symbol: t("red", ge) });
-} };
-var pt = (e2 = "", i3) => {
-  const s2 = i3?.output ?? process.stdout, r2 = i3?.withGuide ?? u2.withGuide ? `${t("gray", E2)}  ` : "";
-  s2.write(`${r2}${t("red", e2)}
+  },
+  info: (s2, e2) => {
+    log.message(s2, { ...e2, symbol: styleText2("blue", S_INFO) });
+  },
+  success: (s2, e2) => {
+    log.message(s2, { ...e2, symbol: styleText2("green", S_SUCCESS) });
+  },
+  step: (s2, e2) => {
+    log.message(s2, { ...e2, symbol: styleText2("green", S_STEP_SUBMIT) });
+  },
+  warn: (s2, e2) => {
+    log.message(s2, { ...e2, symbol: styleText2("yellow", S_WARN) });
+  },
+  /** alias for `log.warn()`. */
+  warning: (s2, e2) => {
+    log.warn(s2, e2);
+  },
+  error: (s2, e2) => {
+    log.message(s2, { ...e2, symbol: styleText2("red", S_ERROR) });
+  }
+};
+var cancel = (o2 = "", t3) => {
+  const i4 = t3?.output ?? process.stdout, e2 = t3?.withGuide ?? settings.withGuide ? `${styleText2("gray", S_BAR_END)}  ` : "";
+  i4.write(`${e2}${styleText2("red", o2)}
 
 `);
 };
-var mt = (e2 = "", i3) => {
-  const s2 = i3?.output ?? process.stdout, r2 = i3?.withGuide ?? u2.withGuide ? `${t("gray", le)}  ` : "";
-  s2.write(`${r2}${e2}
+var intro = (o2 = "", t3) => {
+  const i4 = t3?.output ?? process.stdout, e2 = t3?.withGuide ?? settings.withGuide ? `${styleText2("gray", S_BAR_START)}  ` : "";
+  i4.write(`${e2}${o2}
 `);
 };
-var gt = (e2 = "", i3) => {
-  const s2 = i3?.output ?? process.stdout, r2 = i3?.withGuide ?? u2.withGuide ? `${t("gray", d2)}
-${t("gray", E2)}  ` : "";
-  s2.write(`${r2}${e2}
+var outro = (o2 = "", t3) => {
+  const i4 = t3?.output ?? process.stdout, e2 = t3?.withGuide ?? settings.withGuide ? `${styleText2("gray", S_BAR)}
+${styleText2("gray", S_BAR_END)}  ` : "";
+  i4.write(`${e2}${o2}
 
 `);
 };
-var Q2 = (e2, i3) => e2.split(`
-`).map((s2) => i3(s2)).join(`
+var W = (l2) => styleText2("magenta", l2);
+var spinner = ({
+  indicator: l2 = "dots",
+  onCancel: h4,
+  output: n4 = process.stdout,
+  cancelMessage: G,
+  errorMessage: O,
+  frames: E = unicode ? ["\u25D2", "\u25D0", "\u25D3", "\u25D1"] : ["\u2022", "o", "O", "0"],
+  delay: F2 = unicode ? 80 : 120,
+  signal: m3,
+  ...I2
+} = {}) => {
+  const u4 = isCI();
+  let M, T, d = false, S2 = false, s2 = "", p, w = performance.now();
+  const x2 = getColumns(n4), k = I2?.styleFrame ?? W, g = (e2) => {
+    const r3 = e2 > 1 ? O ?? settings.messages.error : G ?? settings.messages.cancel;
+    S2 = e2 === 1, d && (a3(r3, e2), S2 && typeof h4 == "function" && h4());
+  }, f3 = () => g(2), i4 = () => g(1), A2 = () => {
+    process.on("uncaughtExceptionMonitor", f3), process.on("unhandledRejection", f3), process.on("SIGINT", i4), process.on("SIGTERM", i4), process.on("exit", g), m3 && m3.addEventListener("abort", i4);
+  }, H = () => {
+    process.removeListener("uncaughtExceptionMonitor", f3), process.removeListener("unhandledRejection", f3), process.removeListener("SIGINT", i4), process.removeListener("SIGTERM", i4), process.removeListener("exit", g), m3 && m3.removeEventListener("abort", i4);
+  }, y2 = () => {
+    if (p === void 0) return;
+    u4 && n4.write(`
 `);
-var yt = (e2) => {
-  const i3 = (r2, u3) => {
-    const n2 = r2.label ?? String(r2.value);
-    return u3 === "disabled" ? `${t("gray", J)} ${Q2(n2, (o2) => t(["strikethrough", "gray"], o2))}${r2.hint ? ` ${t("dim", `(${r2.hint ?? "disabled"})`)}` : ""}` : u3 === "active" ? `${t("cyan", te)} ${n2}${r2.hint ? ` ${t("dim", `(${r2.hint})`)}` : ""}` : u3 === "selected" ? `${t("green", U)} ${Q2(n2, (o2) => t("dim", o2))}${r2.hint ? ` ${t("dim", `(${r2.hint})`)}` : ""}` : u3 === "cancelled" ? `${Q2(n2, (o2) => t(["strikethrough", "dim"], o2))}` : u3 === "active-selected" ? `${t("green", U)} ${n2}${r2.hint ? ` ${t("dim", `(${r2.hint})`)}` : ""}` : u3 === "submitted" ? `${Q2(n2, (o2) => t("dim", o2))}` : `${t("dim", J)} ${Q2(n2, (o2) => t("dim", o2))}`;
-  }, s2 = e2.required ?? true;
-  return new it({ options: e2.options, signal: e2.signal, input: e2.input, output: e2.output, initialValues: e2.initialValues, required: s2, cursorAt: e2.cursorAt, validate(r2) {
-    if (s2 && (r2 === void 0 || r2.length === 0)) return `Please select at least one option.
-${t("reset", t("dim", `Press ${t(["gray", "bgWhite", "inverse"], " space ")} to select, ${t("gray", t("bgWhite", t("inverse", " enter ")))} to submit`))}`;
-  }, render() {
-    const r2 = e2.withGuide ?? u2.withGuide, u3 = R(e2.output, e2.message, r2 ? `${ye(this.state)}  ` : "", `${V2(this.state)}  `), n2 = `${r2 ? `${t("gray", d2)}
-` : ""}${u3}
-`, o2 = this.value ?? [], c4 = (a2, l) => {
-      if (a2.disabled) return i3(a2, "disabled");
-      const $3 = o2.includes(a2.value);
-      return l && $3 ? i3(a2, "active-selected") : $3 ? i3(a2, "selected") : i3(a2, l ? "active" : "inactive");
-    };
-    switch (this.state) {
-      case "submit": {
-        const a2 = this.options.filter(({ value: $3 }) => o2.includes($3)).map(($3) => i3($3, "submitted")).join(t("dim", ", ")) || t("dim", "none"), l = R(e2.output, a2, r2 ? `${t("gray", d2)}  ` : "");
-        return `${n2}${l}`;
+    const r3 = wrapAnsi(p, x2, {
+      hard: true,
+      trim: false
+    }).split(`
+`);
+    r3.length > 1 && n4.write(import_sisteransi2.cursor.up(r3.length - 1)), n4.write(import_sisteransi2.cursor.to(0)), n4.write(import_sisteransi2.erase.down());
+  }, C = (e2) => e2.replace(/\.+$/, ""), _ = (e2) => {
+    const r3 = (performance.now() - e2) / 1e3, t3 = Math.floor(r3 / 60), o2 = Math.floor(r3 % 60);
+    return t3 > 0 ? `[${t3}m ${o2}s]` : `[${o2}s]`;
+  }, N = I2.withGuide ?? settings.withGuide, P = (e2 = "") => {
+    d = true, M = block({ output: n4 }), s2 = C(e2), w = performance.now(), N && n4.write(`${styleText2("gray", S_BAR)}
+`);
+    let r3 = 0, t3 = 0;
+    A2(), T = setInterval(() => {
+      if (u4 && s2 === p)
+        return;
+      y2(), p = s2;
+      const o2 = k(E[r3]);
+      let v;
+      if (u4)
+        v = `${o2}  ${s2}...`;
+      else if (l2 === "timer")
+        v = `${o2}  ${s2} ${_(w)}`;
+      else {
+        const B = ".".repeat(Math.floor(t3)).slice(0, 3);
+        v = `${o2}  ${s2}${B}`;
       }
-      case "cancel": {
-        const a2 = this.options.filter(({ value: $3 }) => o2.includes($3)).map(($3) => i3($3, "cancelled")).join(t("dim", ", "));
-        if (a2.trim() === "") return `${n2}${t("gray", d2)}`;
-        const l = R(e2.output, a2, r2 ? `${t("gray", d2)}  ` : "");
-        return `${n2}${l}${r2 ? `
-${t("gray", d2)}` : ""}`;
+      const j = wrapAnsi(v, x2, {
+        hard: true,
+        trim: false
+      });
+      n4.write(j), r3 = r3 + 1 < E.length ? r3 + 1 : 0, t3 = t3 < 4 ? t3 + 0.125 : 0;
+    }, F2);
+  }, a3 = (e2 = "", r3 = 0, t3 = false) => {
+    if (!d) return;
+    d = false, clearInterval(T), y2();
+    const o2 = r3 === 0 ? styleText2("green", S_STEP_SUBMIT) : r3 === 1 ? styleText2("red", S_STEP_CANCEL) : styleText2("red", S_STEP_ERROR);
+    s2 = e2 ?? s2, t3 || (l2 === "timer" ? n4.write(`${o2}  ${s2} ${_(w)}
+`) : n4.write(`${o2}  ${s2}
+`)), H(), M();
+  };
+  return {
+    start: P,
+    stop: (e2 = "") => a3(e2, 0),
+    message: (e2 = "") => {
+      s2 = C(e2 ?? s2);
+    },
+    cancel: (e2 = "") => a3(e2, 1),
+    error: (e2 = "") => a3(e2, 2),
+    clear: () => a3("", 0, true),
+    get isCancelled() {
+      return S2;
+    }
+  };
+};
+var u3 = {
+  light: unicodeOr("\u2500", "-"),
+  heavy: unicodeOr("\u2501", "="),
+  block: unicodeOr("\u2588", "#")
+};
+var SELECT_INSTRUCTIONS = [
+  `${styleText2("dim", "\u2191/\u2193")} to navigate`,
+  `${styleText2("dim", "Enter:")} confirm`
+];
+var c3 = (t3, o2) => t3.includes(`
+`) ? t3.split(`
+`).map((d) => o2(d)).join(`
+`) : o2(t3);
+var select = (t3) => {
+  const o2 = (n4, m3) => {
+    if (n4 === void 0)
+      return "";
+    const s2 = n4.label ?? String(n4.value);
+    switch (m3) {
+      case "disabled":
+        return `${styleText2("gray", S_RADIO_INACTIVE)} ${c3(s2, (i4) => styleText2("gray", i4))}${n4.hint ? ` ${styleText2("dim", `(${n4.hint ?? "disabled"})`)}` : ""}`;
+      case "selected":
+        return `${c3(s2, (i4) => styleText2("dim", i4))}`;
+      case "active":
+        return `${styleText2("green", S_RADIO_ACTIVE)} ${s2}${n4.hint ? ` ${styleText2("dim", `(${n4.hint})`)}` : ""}`;
+      case "cancelled":
+        return `${c3(s2, (i4) => styleText2(["strikethrough", "dim"], i4))}`;
+      default:
+        return `${styleText2("dim", S_RADIO_INACTIVE)} ${c3(s2, (i4) => styleText2("dim", i4))}`;
+    }
+  }, d = t3.showInstructions ?? true;
+  return new n$1({
+    options: t3.options,
+    signal: t3.signal,
+    input: t3.input,
+    output: t3.output,
+    initialValue: t3.initialValue,
+    render() {
+      const n4 = t3.withGuide ?? settings.withGuide, m3 = `${symbol(this.state)}  `, s2 = `${symbolBar(this.state)}  `, i4 = wrapTextWithPrefix(
+        t3.output,
+        t3.message,
+        s2,
+        m3
+      ), u4 = `${n4 ? `${styleText2("gray", S_BAR)}
+` : ""}${i4}
+`;
+      switch (this.state) {
+        case "submit": {
+          const r3 = n4 ? `${styleText2("gray", S_BAR)}  ` : "", a3 = wrapTextWithPrefix(
+            t3.output,
+            o2(this.options[this.cursor], "selected"),
+            r3
+          );
+          return `${u4}${a3}`;
+        }
+        case "cancel": {
+          const r3 = n4 ? `${styleText2("gray", S_BAR)}  ` : "", a3 = wrapTextWithPrefix(
+            t3.output,
+            o2(this.options[this.cursor], "cancelled"),
+            r3
+          );
+          return `${u4}${a3}${n4 ? `
+${styleText2("gray", S_BAR)}` : ""}`;
+        }
+        default: {
+          const r3 = n4 ? `${styleText2("cyan", S_BAR)}  ` : "", a3 = u4.split(`
+`).length, p = d ? formatInstructionFooter(SELECT_INSTRUCTIONS, n4) : n4 ? [styleText2("cyan", S_BAR_END)] : [], f3 = p.join(`
+`), b = p.length + 1;
+          return `${u4}${r3}${limitOptions({
+            output: t3.output,
+            cursor: this.cursor,
+            options: this.options,
+            maxItems: t3.maxItems,
+            columnPadding: r3.length,
+            rowPadding: a3 + b,
+            style: (g, x2) => o2(g, g.disabled ? "disabled" : x2 ? "active" : "inactive")
+          }).join(`
+${r3}`)}
+${f3}
+`;
+        }
+      }
+    }
+  }).prompt();
+};
+var i2 = `${styleText2("gray", S_BAR)}  `;
+var text = (t3) => new n3({
+  validate: t3.validate,
+  placeholder: t3.placeholder,
+  defaultValue: t3.defaultValue,
+  initialValue: t3.initialValue,
+  output: t3.output,
+  signal: t3.signal,
+  input: t3.input,
+  render() {
+    const r3 = t3?.withGuide ?? settings.withGuide, l2 = `${`${r3 ? `${styleText2("gray", S_BAR)}
+` : ""}${symbol(this.state)}  `}${t3.message}
+`, d = t3.placeholder && t3.placeholder.length > 0 ? (
+      // biome-ignore lint/style/noNonNullAssertion: guarded by placeholder.length > 0
+      styleText2("inverse", t3.placeholder[0]) + styleText2("dim", t3.placeholder.slice(1))
+    ) : styleText2(["inverse", "hidden"], "_"), o2 = this.userInput ? this.userInputWithCursor : d, s2 = this.value ?? "";
+    switch (this.state) {
+      case "validating": {
+        const n4 = r3 ? `${styleText2("cyan", S_BAR)}  ` : "", i4 = r3 ? styleText2("cyan", S_BAR_END) : "", c4 = styleText2("dim", o2), $2 = styleText2("dim", "Validating...");
+        return `${l2}${n4}${c4}
+${i4}  ${$2}
+`;
       }
       case "error": {
-        const a2 = r2 ? `${t("yellow", d2)}  ` : "", l = this.error.split(`
-`).map((p2, m2) => m2 === 0 ? `${r2 ? `${t("yellow", E2)}  ` : ""}${t("yellow", p2)}` : `   ${p2}`).join(`
-`), $3 = n2.split(`
-`).length, y2 = l.split(`
-`).length + 1;
-        return `${n2}${a2}${Y2({ output: e2.output, options: this.options, cursor: this.cursor, maxItems: e2.maxItems, columnPadding: a2.length, rowPadding: $3 + y2, style: c4 }).join(`
-${a2}`)}
-${l}
+        const n4 = this.error ? `  ${styleText2("yellow", this.error)}` : "", i4 = r3 ? `${styleText2("yellow", S_BAR)}  ` : "", c4 = r3 ? styleText2("yellow", S_BAR_END) : "";
+        return `${l2.trim()}
+${i4}${o2}
+${c4}${n4}
 `;
       }
-      default: {
-        const a2 = r2 ? `${t("cyan", d2)}  ` : "", l = n2.split(`
-`).length, $3 = r2 ? 2 : 1;
-        return `${n2}${a2}${Y2({ output: e2.output, options: this.options, cursor: this.cursor, maxItems: e2.maxItems, columnPadding: a2.length, rowPadding: l + $3, style: c4 }).join(`
-${a2}`)}
-${r2 ? t("cyan", E2) : ""}
-`;
-      }
-    }
-  } }).prompt();
-};
-var Ct = (e2) => t("magenta", e2);
-var fe = ({ indicator: e2 = "dots", onCancel: i3, output: s2 = process.stdout, cancelMessage: r2, errorMessage: u3, frames: n2 = ee ? ["\u25D2", "\u25D0", "\u25D3", "\u25D1"] : ["\u2022", "o", "O", "0"], delay: o2 = ee ? 80 : 120, signal: c4, ...a2 } = {}) => {
-  const l = ae();
-  let $3, y2, p2 = false, m2 = false, g = "", S3, h3 = performance.now();
-  const f3 = O(s2), v = a2?.styleFrame ?? Ct, T = (_2) => {
-    const A3 = _2 > 1 ? u3 ?? u2.messages.error : r2 ?? u2.messages.cancel;
-    m2 = _2 === 1, p2 && (W(A3, _2), m2 && typeof i3 == "function" && i3());
-  }, C2 = () => T(2), b = () => T(1), x2 = () => {
-    process.on("uncaughtExceptionMonitor", C2), process.on("unhandledRejection", C2), process.on("SIGINT", b), process.on("SIGTERM", b), process.on("exit", T), c4 && c4.addEventListener("abort", b);
-  }, G2 = () => {
-    process.removeListener("uncaughtExceptionMonitor", C2), process.removeListener("unhandledRejection", C2), process.removeListener("SIGINT", b), process.removeListener("SIGTERM", b), process.removeListener("exit", T), c4 && c4.removeEventListener("abort", b);
-  }, M2 = () => {
-    if (S3 === void 0) return;
-    l && s2.write(`
-`);
-    const _2 = wrapAnsi(S3, f3, { hard: true, trim: false }).split(`
-`);
-    _2.length > 1 && s2.write(import_sisteransi2.cursor.up(_2.length - 1)), s2.write(import_sisteransi2.cursor.to(0)), s2.write(import_sisteransi2.erase.down());
-  }, R2 = (_2) => _2.replace(/\.+$/, ""), j2 = (_2) => {
-    const A3 = (performance.now() - _2) / 1e3, k = Math.floor(A3 / 60), L = Math.floor(A3 % 60);
-    return k > 0 ? `[${k}m ${L}s]` : `[${L}s]`;
-  }, D2 = a2.withGuide ?? u2.withGuide, ie = (_2 = "") => {
-    p2 = true, $3 = z({ output: s2 }), g = R2(_2), h3 = performance.now(), D2 && s2.write(`${t("gray", d2)}
-`);
-    let A3 = 0, k = 0;
-    x2(), y2 = setInterval(() => {
-      if (l && g === S3) return;
-      M2(), S3 = g;
-      const L = v(n2[A3]);
-      let Z2;
-      if (l) Z2 = `${L}  ${g}...`;
-      else if (e2 === "timer") Z2 = `${L}  ${g} ${j2(h3)}`;
-      else {
-        const Be = ".".repeat(Math.floor(k)).slice(0, 3);
-        Z2 = `${L}  ${g}${Be}`;
-      }
-      const Ne = wrapAnsi(Z2, f3, { hard: true, trim: false });
-      s2.write(Ne), A3 = A3 + 1 < n2.length ? A3 + 1 : 0, k = k < 4 ? k + 0.125 : 0;
-    }, o2);
-  }, W = (_2 = "", A3 = 0, k = false) => {
-    if (!p2) return;
-    p2 = false, clearInterval(y2), M2();
-    const L = A3 === 0 ? t("green", F) : A3 === 1 ? t("red", oe) : t("red", ue);
-    g = _2 ?? g, k || (e2 === "timer" ? s2.write(`${L}  ${g} ${j2(h3)}
-`) : s2.write(`${L}  ${g}
-`)), G2(), $3();
-  };
-  return { start: ie, stop: (_2 = "") => W(_2, 0), message: (_2 = "") => {
-    g = R2(_2 ?? g);
-  }, cancel: (_2 = "") => W(_2, 1), error: (_2 = "") => W(_2, 2), clear: () => W("", 0, true), get isCancelled() {
-    return m2;
-  } };
-};
-var Ve = { light: w2("\u2500", "-"), heavy: w2("\u2501", "="), block: w2("\u2588", "#") };
-var re = (e2, i3) => e2.includes(`
-`) ? e2.split(`
-`).map((s2) => i3(s2)).join(`
-`) : i3(e2);
-var _t = (e2) => {
-  const i3 = (s2, r2) => {
-    const u3 = s2.label ?? String(s2.value);
-    switch (r2) {
-      case "disabled":
-        return `${t("gray", H2)} ${re(u3, (n2) => t("gray", n2))}${s2.hint ? ` ${t("dim", `(${s2.hint ?? "disabled"})`)}` : ""}`;
-      case "selected":
-        return `${re(u3, (n2) => t("dim", n2))}`;
-      case "active":
-        return `${t("green", z2)} ${u3}${s2.hint ? ` ${t("dim", `(${s2.hint})`)}` : ""}`;
-      case "cancelled":
-        return `${re(u3, (n2) => t(["strikethrough", "dim"], n2))}`;
-      default:
-        return `${t("dim", H2)} ${re(u3, (n2) => t("dim", n2))}`;
-    }
-  };
-  return new nt({ options: e2.options, signal: e2.signal, input: e2.input, output: e2.output, initialValue: e2.initialValue, render() {
-    const s2 = e2.withGuide ?? u2.withGuide, r2 = `${V2(this.state)}  `, u3 = `${ye(this.state)}  `, n2 = R(e2.output, e2.message, u3, r2), o2 = `${s2 ? `${t("gray", d2)}
-` : ""}${n2}
-`;
-    switch (this.state) {
       case "submit": {
-        const c4 = s2 ? `${t("gray", d2)}  ` : "", a2 = R(e2.output, i3(this.options[this.cursor], "selected"), c4);
-        return `${o2}${a2}`;
+        const n4 = s2 ? `${r3 ? "  " : ""}${styleText2("dim", s2)}` : "", i4 = r3 ? styleText2("gray", S_BAR) : "";
+        return `${l2}${i4}${n4}`;
       }
       case "cancel": {
-        const c4 = s2 ? `${t("gray", d2)}  ` : "", a2 = R(e2.output, i3(this.options[this.cursor], "cancelled"), c4);
-        return `${o2}${a2}${s2 ? `
-${t("gray", d2)}` : ""}`;
+        const n4 = s2 ? `  ${styleText2(["strikethrough", "dim"], s2)}` : "", i4 = r3 ? styleText2("gray", S_BAR) : "";
+        return `${l2}${i4}${n4}${s2.trim() ? `
+${i4}` : ""}`;
       }
       default: {
-        const c4 = s2 ? `${t("cyan", d2)}  ` : "", a2 = s2 ? t("cyan", E2) : "", l = o2.split(`
-`).length, $3 = s2 ? 2 : 1;
-        return `${o2}${c4}${Y2({ output: e2.output, cursor: this.cursor, options: this.options, maxItems: e2.maxItems, columnPadding: c4.length, rowPadding: l + $3, style: (y2, p2) => i3(y2, y2.disabled ? "disabled" : p2 ? "active" : "inactive") }).join(`
-${c4}`)}
-${a2}
+        const n4 = r3 ? `${styleText2("cyan", S_BAR)}  ` : "", i4 = r3 ? styleText2("cyan", S_BAR_END) : "";
+        return `${l2}${n4}${o2}
+${i4}
 `;
       }
     }
-  } }).prompt();
-};
-var je = `${t("gray", d2)}  `;
-var Ot = (e2) => new at({ validate: e2.validate, placeholder: e2.placeholder, defaultValue: e2.defaultValue, initialValue: e2.initialValue, output: e2.output, signal: e2.signal, input: e2.input, render() {
-  const i3 = e2?.withGuide ?? u2.withGuide, s2 = `${`${i3 ? `${t("gray", d2)}
-` : ""}${V2(this.state)}  `}${e2.message}
-`, r2 = e2.placeholder ? t("inverse", e2.placeholder[0]) + t("dim", e2.placeholder.slice(1)) : t(["inverse", "hidden"], "_"), u3 = this.userInput ? this.userInputWithCursor : r2, n2 = this.value ?? "";
-  switch (this.state) {
-    case "error": {
-      const o2 = this.error ? `  ${t("yellow", this.error)}` : "", c4 = i3 ? `${t("yellow", d2)}  ` : "", a2 = i3 ? t("yellow", E2) : "";
-      return `${s2.trim()}
-${c4}${u3}
-${a2}${o2}
-`;
-    }
-    case "submit": {
-      const o2 = n2 ? `  ${t("dim", n2)}` : "", c4 = i3 ? t("gray", d2) : "";
-      return `${s2}${c4}${o2}`;
-    }
-    case "cancel": {
-      const o2 = n2 ? `  ${t(["strikethrough", "dim"], n2)}` : "", c4 = i3 ? t("gray", d2) : "";
-      return `${s2}${c4}${o2}${n2.trim() ? `
-${c4}` : ""}`;
-    }
-    default: {
-      const o2 = i3 ? `${t("cyan", d2)}  ` : "", c4 = i3 ? t("cyan", E2) : "";
-      return `${s2}${o2}${u3}
-${c4}
-`;
-    }
   }
-} }).prompt();
+}).prompt();
 
 // scripts/create-app.js
 import debug2 from "debug";
@@ -14426,17 +14764,17 @@ import _fs from "fs";
 async function main(deps) {
   const execa2 = deps.execa || execa;
   const fs3 = deps.fs || _fs;
-  mt("Interactive Plugin Setup Wizard");
-  const { targetDir } = await dt(
+  intro("Interactive Plugin Setup Wizard");
+  const { targetDir } = await group(
     {
-      targetDir: () => Ot({
+      targetDir: () => text({
         message: "Enter the target directory for the configuration (leave empty for current directory):",
         initialValue: "."
       })
     },
     {
       onCancel: () => {
-        pt("Operation cancelled.");
+        cancel("Operation cancelled.");
         process.exit(0);
       }
     }
@@ -14445,9 +14783,9 @@ async function main(deps) {
   if (!fs3.existsSync(absoluteTargetDir)) {
     fs3.mkdirSync(absoluteTargetDir, { recursive: true });
   }
-  const { pluginType } = await dt(
+  const { pluginType } = await group(
     {
-      pluginType: () => _t({
+      pluginType: () => select({
         message: "Which type of plugin do you want to configure?",
         options: [
           { value: "formatter", label: "formatter" },
@@ -14459,7 +14797,7 @@ async function main(deps) {
     },
     {
       onCancel: () => {
-        pt("Operation cancelled.");
+        cancel("Operation cancelled.");
         process.exit(0);
       }
     }
@@ -14469,12 +14807,12 @@ async function main(deps) {
   switch (pluginType) {
     case "formatter":
       {
-        O2.step("Configuring Prettier...");
-        const answers = await dt(
+        log.step("Configuring Prettier...");
+        const answers = await group(
           {
-            semi: () => ot2({ message: "Use semicolons?", initialValue: false }),
-            singleQuote: () => ot2({ message: "Use single quotes?", initialValue: true }),
-            trailingComma: () => _t({
+            semi: () => confirm({ message: "Use semicolons?", initialValue: false }),
+            singleQuote: () => confirm({ message: "Use single quotes?", initialValue: true }),
+            trailingComma: () => select({
               message: "Use trailing commas?",
               options: [
                 { value: "none", label: "none" },
@@ -14486,7 +14824,7 @@ async function main(deps) {
           },
           {
             onCancel: () => {
-              pt("Operation cancelled.");
+              cancel("Operation cancelled.");
               process.exit(0);
             }
           }
@@ -14501,39 +14839,39 @@ async function main(deps) {
           JSON.stringify(prettierConfig, null, 2)
         );
         configGenerated = true;
-        const { installDeps } = await dt(
+        const { installDeps } = await group(
           {
-            installDeps: () => ot2({ message: "Install Prettier dependency?", initialValue: true })
+            installDeps: () => confirm({ message: "Install Prettier dependency?", initialValue: true })
           },
           {
             onCancel: () => {
-              pt("Operation cancelled.");
+              cancel("Operation cancelled.");
               process.exit(0);
             }
           }
         );
         if (installDeps) {
-          const spinner = fe();
-          spinner.start("Installing Prettier...");
+          const spinner2 = spinner();
+          spinner2.start("Installing Prettier...");
           try {
             await execa2("npm", ["install", "--save-dev", "prettier"], {
               cwd: absoluteTargetDir
             });
-            spinner.stop("Prettier installed.");
+            spinner2.stop("Prettier installed.");
             depsInstalled = true;
           } catch (error2) {
-            spinner.stop("Failed to install Prettier.");
-            O2.error(error2);
+            spinner2.stop("Failed to install Prettier.");
+            log.error(error2);
           }
         }
       }
       break;
     case "linter":
       {
-        O2.step("Configuring ESLint...");
-        const answers = await dt(
+        log.step("Configuring ESLint...");
+        const answers = await group(
           {
-            env: () => yt({
+            env: () => multiselect({
               message: "Select the environments your code will run in:",
               options: [
                 { value: "browser", label: "browser" },
@@ -14541,14 +14879,14 @@ async function main(deps) {
               ],
               initialValue: ["browser", "node"]
             }),
-            extendPrettier: () => ot2({
+            extendPrettier: () => confirm({
               message: "Extend Prettier configuration (if you use Prettier)?",
               initialValue: true
             })
           },
           {
             onCancel: () => {
-              pt("Operation cancelled.");
+              cancel("Operation cancelled.");
               process.exit(0);
             }
           }
@@ -14573,20 +14911,20 @@ export default [
 `;
         fs3.writeFileSync(join(absoluteTargetDir, "eslint.config.js"), eslintConfig.trim());
         configGenerated = true;
-        const { installDeps } = await dt(
+        const { installDeps } = await group(
           {
-            installDeps: () => ot2({ message: "Install ESLint dependencies?", initialValue: true })
+            installDeps: () => confirm({ message: "Install ESLint dependencies?", initialValue: true })
           },
           {
             onCancel: () => {
-              pt("Operation cancelled.");
+              cancel("Operation cancelled.");
               process.exit(0);
             }
           }
         );
         if (installDeps) {
-          const spinner = fe();
-          spinner.start("Installing ESLint dependencies...");
+          const spinner2 = spinner();
+          spinner2.start("Installing ESLint dependencies...");
           const deps2 = ["eslint", "@eslint/js", "globals"];
           if (answers.extendPrettier) {
             deps2.push("eslint-config-prettier");
@@ -14595,36 +14933,36 @@ export default [
             await execa2("npm", ["install", "--save-dev", ...deps2], {
               cwd: absoluteTargetDir
             });
-            spinner.stop("ESLint dependencies installed.");
+            spinner2.stop("ESLint dependencies installed.");
             depsInstalled = true;
           } catch (error2) {
-            spinner.stop("Failed to install ESLint dependencies.");
-            O2.error(error2);
+            spinner2.stop("Failed to install ESLint dependencies.");
+            log.error(error2);
           }
         }
       }
       break;
     case "typescript":
       {
-        O2.step("Configuring TypeScript...");
-        const answers = await dt(
+        log.step("Configuring TypeScript...");
+        const answers = await group(
           {
-            target: () => _t({
+            target: () => select({
               message: "Select the ECMAScript target version:",
               options: ["ES5", "ES6", "ES2020", "ES2021", "ESNext"],
               initialValue: "ES6"
             }),
-            module: () => _t({
+            module: () => select({
               message: "Select the module system:",
               options: ["CommonJS", "ESNext", "NodeNext"],
               initialValue: "CommonJS"
             }),
-            strict: () => ot2({ message: "Enable strict type-checking?", initialValue: true }),
-            esModuleInterop: () => ot2({ message: "Enable esModuleInterop?", initialValue: true })
+            strict: () => confirm({ message: "Enable strict type-checking?", initialValue: true }),
+            esModuleInterop: () => confirm({ message: "Enable esModuleInterop?", initialValue: true })
           },
           {
             onCancel: () => {
-              pt("Operation cancelled.");
+              cancel("Operation cancelled.");
               process.exit(0);
             }
           }
@@ -14644,39 +14982,39 @@ export default [
           JSON.stringify(tsConfig, null, 2)
         );
         configGenerated = true;
-        const { installDeps } = await dt(
+        const { installDeps } = await group(
           {
-            installDeps: () => ot2({ message: "Install TypeScript dependency?", initialValue: true })
+            installDeps: () => confirm({ message: "Install TypeScript dependency?", initialValue: true })
           },
           {
             onCancel: () => {
-              pt("Operation cancelled.");
+              cancel("Operation cancelled.");
               process.exit(0);
             }
           }
         );
         if (installDeps) {
-          const spinner = fe();
-          spinner.start("Installing TypeScript...");
+          const spinner2 = spinner();
+          spinner2.start("Installing TypeScript...");
           try {
             await execa2("npm", ["install", "--save-dev", "typescript"], {
               cwd: absoluteTargetDir
             });
-            spinner.stop("TypeScript installed.");
+            spinner2.stop("TypeScript installed.");
             depsInstalled = true;
           } catch (error2) {
-            spinner.stop("Failed to install TypeScript.");
-            O2.error(error2);
+            spinner2.stop("Failed to install TypeScript.");
+            log.error(error2);
           }
         }
       }
       break;
     case "gitignore":
       {
-        O2.step("Configuring .gitignore...");
-        const { templates } = await dt(
+        log.step("Configuring .gitignore...");
+        const { templates } = await group(
           {
-            templates: () => yt({
+            templates: () => multiselect({
               message: "Select .gitignore templates:",
               options: ["node", "visualstudiocode", "windows", "macos", "linux", "jetbrain"],
               initialValue: ["node", "visualstudiocode"]
@@ -14684,37 +15022,37 @@ export default [
           },
           {
             onCancel: () => {
-              pt("Operation cancelled.");
+              cancel("Operation cancelled.");
               process.exit(0);
             }
           }
         );
         if (templates.length > 0) {
-          const spinner = fe();
-          spinner.start("Fetching .gitignore content...");
+          const spinner2 = spinner();
+          spinner2.start("Fetching .gitignore content...");
           try {
             const url = `https://www.toptal.com/developers/gitignore/api/${templates.join(",")}`;
             const fetch2 = (await Promise.resolve().then(() => (init_src(), src_exports))).default;
             const response = await fetch2(url);
             const content = await response.text();
             fs3.writeFileSync(join(absoluteTargetDir, ".gitignore"), content);
-            spinner.stop(".gitignore file created.");
+            spinner2.stop(".gitignore file created.");
             configGenerated = true;
           } catch (error2) {
-            spinner.stop("Failed to fetch .gitignore templates.");
-            O2.error(error2);
+            spinner2.stop("Failed to fetch .gitignore templates.");
+            log.error(error2);
           }
         }
       }
       break;
   }
   if (configGenerated) {
-    O2.success("Configuration file generated successfully.");
+    log.success("Configuration file generated successfully.");
   }
   if (depsInstalled) {
-    O2.success("Dependencies installed successfully.");
+    log.success("Dependencies installed successfully.");
   }
-  gt("Done!");
+  outro("Done!");
 }
 
 // scripts/generate-license.js
@@ -14724,7 +15062,7 @@ import { join as join2 } from "path";
 
 // node_modules/ora/index.js
 import process14 from "node:process";
-import { stripVTControlCharacters as stripVTControlCharacters2 } from "node:util";
+import { stripVTControlCharacters as stripVTControlCharacters3 } from "node:util";
 
 // node_modules/ora/node_modules/chalk/source/vendor/ansi-styles/index.js
 var ANSI_BACKGROUND_OFFSET = 10;
@@ -14797,17 +15135,17 @@ var backgroundColorNames = Object.keys(styles.bgColor);
 var colorNames = [...foregroundColorNames, ...backgroundColorNames];
 function assembleStyles() {
   const codes = /* @__PURE__ */ new Map();
-  for (const [groupName, group] of Object.entries(styles)) {
-    for (const [styleName, style] of Object.entries(group)) {
+  for (const [groupName, group2] of Object.entries(styles)) {
+    for (const [styleName, style] of Object.entries(group2)) {
       styles[styleName] = {
         open: `\x1B[${style[0]}m`,
         close: `\x1B[${style[1]}m`
       };
-      group[styleName] = styles[styleName];
+      group2[styleName] = styles[styleName];
       codes.set(style[0], style[1]);
     }
     Object.defineProperty(styles, groupName, {
-      value: group,
+      value: group2,
       enumerable: false
     });
   }
@@ -17061,34 +17399,96 @@ var success = green(_isUnicodeSupported ? "\u2714" : "\u221A");
 var warning = yellow(_isUnicodeSupported ? "\u26A0" : "\u203C");
 var error = red(_isUnicodeSupported ? "\u2716" : "\xD7");
 
-// node_modules/ora/node_modules/string-width/node_modules/strip-ansi/node_modules/ansi-regex/index.js
+// node_modules/ansi-regex/index.js
 function ansiRegex({ onlyFirst = false } = {}) {
   const ST = "(?:\\u0007|\\u001B\\u005C|\\u009C)";
-  const osc = `(?:\\u001B\\][\\s\\S]*?${ST})`;
+  const osc = `(?:\\u001B\\][^\\u0007\\u001B\\u009C]*${ST})`;
   const csi = "[\\u001B\\u009B][[\\]()#;?]*(?:\\d{1,4}(?:[;:]\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]";
   const pattern = `${osc}|${csi}`;
   return new RegExp(pattern, onlyFirst ? void 0 : "g");
 }
 
-// node_modules/ora/node_modules/string-width/node_modules/strip-ansi/index.js
+// node_modules/strip-ansi/index.js
 var regex = ansiRegex();
 function stripAnsi(string) {
   if (typeof string !== "string") {
     throw new TypeError(`Expected a \`string\`, got \`${typeof string}\``);
   }
+  if (!string.includes("\x1B") && !string.includes("\x9B")) {
+    return string;
+  }
   return string.replace(regex, "");
 }
 
+// node_modules/get-east-asian-width/lookup-data.js
+var ambiguousMinimalCodePoint = 161;
+var ambiguousMaximumCodePoint = 1114109;
+var ambiguousRanges = [161, 161, 164, 164, 167, 168, 170, 170, 173, 174, 176, 180, 182, 186, 188, 191, 198, 198, 208, 208, 215, 216, 222, 225, 230, 230, 232, 234, 236, 237, 240, 240, 242, 243, 247, 250, 252, 252, 254, 254, 257, 257, 273, 273, 275, 275, 283, 283, 294, 295, 299, 299, 305, 307, 312, 312, 319, 322, 324, 324, 328, 331, 333, 333, 338, 339, 358, 359, 363, 363, 462, 462, 464, 464, 466, 466, 468, 468, 470, 470, 472, 472, 474, 474, 476, 476, 593, 593, 609, 609, 708, 708, 711, 711, 713, 715, 717, 717, 720, 720, 728, 731, 733, 733, 735, 735, 768, 879, 913, 929, 931, 937, 945, 961, 963, 969, 1025, 1025, 1040, 1103, 1105, 1105, 8208, 8208, 8211, 8214, 8216, 8217, 8220, 8221, 8224, 8226, 8228, 8231, 8240, 8240, 8242, 8243, 8245, 8245, 8251, 8251, 8254, 8254, 8308, 8308, 8319, 8319, 8321, 8324, 8364, 8364, 8451, 8451, 8453, 8453, 8457, 8457, 8467, 8467, 8470, 8470, 8481, 8482, 8486, 8486, 8491, 8491, 8531, 8532, 8539, 8542, 8544, 8555, 8560, 8569, 8585, 8585, 8592, 8601, 8632, 8633, 8658, 8658, 8660, 8660, 8679, 8679, 8704, 8704, 8706, 8707, 8711, 8712, 8715, 8715, 8719, 8719, 8721, 8721, 8725, 8725, 8730, 8730, 8733, 8736, 8739, 8739, 8741, 8741, 8743, 8748, 8750, 8750, 8756, 8759, 8764, 8765, 8776, 8776, 8780, 8780, 8786, 8786, 8800, 8801, 8804, 8807, 8810, 8811, 8814, 8815, 8834, 8835, 8838, 8839, 8853, 8853, 8857, 8857, 8869, 8869, 8895, 8895, 8978, 8978, 9312, 9449, 9451, 9547, 9552, 9587, 9600, 9615, 9618, 9621, 9632, 9633, 9635, 9641, 9650, 9651, 9654, 9655, 9660, 9661, 9664, 9665, 9670, 9672, 9675, 9675, 9678, 9681, 9698, 9701, 9711, 9711, 9733, 9734, 9737, 9737, 9742, 9743, 9756, 9756, 9758, 9758, 9792, 9792, 9794, 9794, 9824, 9825, 9827, 9829, 9831, 9834, 9836, 9837, 9839, 9839, 9886, 9887, 9919, 9919, 9926, 9933, 9935, 9939, 9941, 9953, 9955, 9955, 9960, 9961, 9963, 9969, 9972, 9972, 9974, 9977, 9979, 9980, 9982, 9983, 10045, 10045, 10102, 10111, 11094, 11097, 12872, 12879, 57344, 63743, 65024, 65039, 65533, 65533, 127232, 127242, 127248, 127277, 127280, 127337, 127344, 127373, 127375, 127376, 127387, 127404, 917760, 917999, 983040, 1048573, 1048576, 1114109];
+var fullwidthMinimalCodePoint = 12288;
+var fullwidthMaximumCodePoint = 65510;
+var fullwidthRanges = [12288, 12288, 65281, 65376, 65504, 65510];
+var wideMinimalCodePoint = 4352;
+var wideMaximumCodePoint = 262141;
+var wideRanges = [4352, 4447, 8986, 8987, 9001, 9002, 9193, 9196, 9200, 9200, 9203, 9203, 9725, 9726, 9748, 9749, 9776, 9783, 9800, 9811, 9855, 9855, 9866, 9871, 9875, 9875, 9889, 9889, 9898, 9899, 9917, 9918, 9924, 9925, 9934, 9934, 9940, 9940, 9962, 9962, 9970, 9971, 9973, 9973, 9978, 9978, 9981, 9981, 9989, 9989, 9994, 9995, 10024, 10024, 10060, 10060, 10062, 10062, 10067, 10069, 10071, 10071, 10133, 10135, 10160, 10160, 10175, 10175, 11035, 11036, 11088, 11088, 11093, 11093, 11904, 11929, 11931, 12019, 12032, 12245, 12272, 12287, 12289, 12350, 12353, 12438, 12441, 12543, 12549, 12591, 12593, 12686, 12688, 12773, 12783, 12830, 12832, 12871, 12880, 42124, 42128, 42182, 43360, 43388, 44032, 55203, 63744, 64255, 65040, 65049, 65072, 65106, 65108, 65126, 65128, 65131, 94176, 94180, 94192, 94198, 94208, 101594, 101631, 101664, 101760, 101874, 101888, 102801, 102816, 102866, 110576, 110579, 110581, 110587, 110589, 110590, 110592, 110888, 110898, 110898, 110928, 110930, 110933, 110933, 110948, 110952, 110960, 111355, 119552, 119638, 119648, 119670, 126980, 126980, 127183, 127183, 127374, 127374, 127377, 127386, 127406, 127406, 127488, 127490, 127504, 127547, 127552, 127560, 127568, 127569, 127584, 127589, 127744, 127776, 127789, 127797, 127799, 127868, 127870, 127891, 127904, 127946, 127951, 127955, 127968, 127984, 127988, 127988, 127992, 128062, 128064, 128064, 128066, 128252, 128255, 128317, 128331, 128334, 128336, 128359, 128378, 128378, 128405, 128406, 128420, 128420, 128507, 128591, 128640, 128709, 128716, 128716, 128720, 128722, 128725, 128729, 128732, 128735, 128747, 128748, 128756, 128764, 128986, 128986, 128992, 129003, 129008, 129008, 129292, 129338, 129340, 129349, 129351, 129535, 129648, 129660, 129664, 129734, 129736, 129736, 129740, 129757, 129759, 129771, 129775, 129786, 131072, 196605, 196608, 262141];
+
+// node_modules/get-east-asian-width/utilities.js
+var isInRange = (ranges, codePoint) => {
+  let low = 0;
+  let high = Math.floor(ranges.length / 2) - 1;
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const i4 = mid * 2;
+    if (codePoint < ranges[i4]) {
+      high = mid - 1;
+    } else if (codePoint > ranges[i4 + 1]) {
+      low = mid + 1;
+    } else {
+      return true;
+    }
+  }
+  return false;
+};
+
 // node_modules/get-east-asian-width/lookup.js
-function isAmbiguous2(x2) {
-  return x2 === 161 || x2 === 164 || x2 === 167 || x2 === 168 || x2 === 170 || x2 === 173 || x2 === 174 || x2 >= 176 && x2 <= 180 || x2 >= 182 && x2 <= 186 || x2 >= 188 && x2 <= 191 || x2 === 198 || x2 === 208 || x2 === 215 || x2 === 216 || x2 >= 222 && x2 <= 225 || x2 === 230 || x2 >= 232 && x2 <= 234 || x2 === 236 || x2 === 237 || x2 === 240 || x2 === 242 || x2 === 243 || x2 >= 247 && x2 <= 250 || x2 === 252 || x2 === 254 || x2 === 257 || x2 === 273 || x2 === 275 || x2 === 283 || x2 === 294 || x2 === 295 || x2 === 299 || x2 >= 305 && x2 <= 307 || x2 === 312 || x2 >= 319 && x2 <= 322 || x2 === 324 || x2 >= 328 && x2 <= 331 || x2 === 333 || x2 === 338 || x2 === 339 || x2 === 358 || x2 === 359 || x2 === 363 || x2 === 462 || x2 === 464 || x2 === 466 || x2 === 468 || x2 === 470 || x2 === 472 || x2 === 474 || x2 === 476 || x2 === 593 || x2 === 609 || x2 === 708 || x2 === 711 || x2 >= 713 && x2 <= 715 || x2 === 717 || x2 === 720 || x2 >= 728 && x2 <= 731 || x2 === 733 || x2 === 735 || x2 >= 768 && x2 <= 879 || x2 >= 913 && x2 <= 929 || x2 >= 931 && x2 <= 937 || x2 >= 945 && x2 <= 961 || x2 >= 963 && x2 <= 969 || x2 === 1025 || x2 >= 1040 && x2 <= 1103 || x2 === 1105 || x2 === 8208 || x2 >= 8211 && x2 <= 8214 || x2 === 8216 || x2 === 8217 || x2 === 8220 || x2 === 8221 || x2 >= 8224 && x2 <= 8226 || x2 >= 8228 && x2 <= 8231 || x2 === 8240 || x2 === 8242 || x2 === 8243 || x2 === 8245 || x2 === 8251 || x2 === 8254 || x2 === 8308 || x2 === 8319 || x2 >= 8321 && x2 <= 8324 || x2 === 8364 || x2 === 8451 || x2 === 8453 || x2 === 8457 || x2 === 8467 || x2 === 8470 || x2 === 8481 || x2 === 8482 || x2 === 8486 || x2 === 8491 || x2 === 8531 || x2 === 8532 || x2 >= 8539 && x2 <= 8542 || x2 >= 8544 && x2 <= 8555 || x2 >= 8560 && x2 <= 8569 || x2 === 8585 || x2 >= 8592 && x2 <= 8601 || x2 === 8632 || x2 === 8633 || x2 === 8658 || x2 === 8660 || x2 === 8679 || x2 === 8704 || x2 === 8706 || x2 === 8707 || x2 === 8711 || x2 === 8712 || x2 === 8715 || x2 === 8719 || x2 === 8721 || x2 === 8725 || x2 === 8730 || x2 >= 8733 && x2 <= 8736 || x2 === 8739 || x2 === 8741 || x2 >= 8743 && x2 <= 8748 || x2 === 8750 || x2 >= 8756 && x2 <= 8759 || x2 === 8764 || x2 === 8765 || x2 === 8776 || x2 === 8780 || x2 === 8786 || x2 === 8800 || x2 === 8801 || x2 >= 8804 && x2 <= 8807 || x2 === 8810 || x2 === 8811 || x2 === 8814 || x2 === 8815 || x2 === 8834 || x2 === 8835 || x2 === 8838 || x2 === 8839 || x2 === 8853 || x2 === 8857 || x2 === 8869 || x2 === 8895 || x2 === 8978 || x2 >= 9312 && x2 <= 9449 || x2 >= 9451 && x2 <= 9547 || x2 >= 9552 && x2 <= 9587 || x2 >= 9600 && x2 <= 9615 || x2 >= 9618 && x2 <= 9621 || x2 === 9632 || x2 === 9633 || x2 >= 9635 && x2 <= 9641 || x2 === 9650 || x2 === 9651 || x2 === 9654 || x2 === 9655 || x2 === 9660 || x2 === 9661 || x2 === 9664 || x2 === 9665 || x2 >= 9670 && x2 <= 9672 || x2 === 9675 || x2 >= 9678 && x2 <= 9681 || x2 >= 9698 && x2 <= 9701 || x2 === 9711 || x2 === 9733 || x2 === 9734 || x2 === 9737 || x2 === 9742 || x2 === 9743 || x2 === 9756 || x2 === 9758 || x2 === 9792 || x2 === 9794 || x2 === 9824 || x2 === 9825 || x2 >= 9827 && x2 <= 9829 || x2 >= 9831 && x2 <= 9834 || x2 === 9836 || x2 === 9837 || x2 === 9839 || x2 === 9886 || x2 === 9887 || x2 === 9919 || x2 >= 9926 && x2 <= 9933 || x2 >= 9935 && x2 <= 9939 || x2 >= 9941 && x2 <= 9953 || x2 === 9955 || x2 === 9960 || x2 === 9961 || x2 >= 9963 && x2 <= 9969 || x2 === 9972 || x2 >= 9974 && x2 <= 9977 || x2 === 9979 || x2 === 9980 || x2 === 9982 || x2 === 9983 || x2 === 10045 || x2 >= 10102 && x2 <= 10111 || x2 >= 11094 && x2 <= 11097 || x2 >= 12872 && x2 <= 12879 || x2 >= 57344 && x2 <= 63743 || x2 >= 65024 && x2 <= 65039 || x2 === 65533 || x2 >= 127232 && x2 <= 127242 || x2 >= 127248 && x2 <= 127277 || x2 >= 127280 && x2 <= 127337 || x2 >= 127344 && x2 <= 127373 || x2 === 127375 || x2 === 127376 || x2 >= 127387 && x2 <= 127404 || x2 >= 917760 && x2 <= 917999 || x2 >= 983040 && x2 <= 1048573 || x2 >= 1048576 && x2 <= 1114109;
+var commonCjkCodePoint = 19968;
+var [wideFastPathStart, wideFastPathEnd] = /* @__PURE__ */ findWideFastPathRange(wideRanges);
+function findWideFastPathRange(ranges) {
+  let fastPathStart = ranges[0];
+  let fastPathEnd = ranges[1];
+  for (let index = 0; index < ranges.length; index += 2) {
+    const start = ranges[index];
+    const end = ranges[index + 1];
+    if (commonCjkCodePoint >= start && commonCjkCodePoint <= end) {
+      return [start, end];
+    }
+    if (end - start > fastPathEnd - fastPathStart) {
+      fastPathStart = start;
+      fastPathEnd = end;
+    }
+  }
+  return [fastPathStart, fastPathEnd];
 }
-function isFullWidth2(x2) {
-  return x2 === 12288 || x2 >= 65281 && x2 <= 65376 || x2 >= 65504 && x2 <= 65510;
-}
-function isWide2(x2) {
-  return x2 >= 4352 && x2 <= 4447 || x2 === 8986 || x2 === 8987 || x2 === 9001 || x2 === 9002 || x2 >= 9193 && x2 <= 9196 || x2 === 9200 || x2 === 9203 || x2 === 9725 || x2 === 9726 || x2 === 9748 || x2 === 9749 || x2 >= 9776 && x2 <= 9783 || x2 >= 9800 && x2 <= 9811 || x2 === 9855 || x2 >= 9866 && x2 <= 9871 || x2 === 9875 || x2 === 9889 || x2 === 9898 || x2 === 9899 || x2 === 9917 || x2 === 9918 || x2 === 9924 || x2 === 9925 || x2 === 9934 || x2 === 9940 || x2 === 9962 || x2 === 9970 || x2 === 9971 || x2 === 9973 || x2 === 9978 || x2 === 9981 || x2 === 9989 || x2 === 9994 || x2 === 9995 || x2 === 10024 || x2 === 10060 || x2 === 10062 || x2 >= 10067 && x2 <= 10069 || x2 === 10071 || x2 >= 10133 && x2 <= 10135 || x2 === 10160 || x2 === 10175 || x2 === 11035 || x2 === 11036 || x2 === 11088 || x2 === 11093 || x2 >= 11904 && x2 <= 11929 || x2 >= 11931 && x2 <= 12019 || x2 >= 12032 && x2 <= 12245 || x2 >= 12272 && x2 <= 12287 || x2 >= 12289 && x2 <= 12350 || x2 >= 12353 && x2 <= 12438 || x2 >= 12441 && x2 <= 12543 || x2 >= 12549 && x2 <= 12591 || x2 >= 12593 && x2 <= 12686 || x2 >= 12688 && x2 <= 12773 || x2 >= 12783 && x2 <= 12830 || x2 >= 12832 && x2 <= 12871 || x2 >= 12880 && x2 <= 42124 || x2 >= 42128 && x2 <= 42182 || x2 >= 43360 && x2 <= 43388 || x2 >= 44032 && x2 <= 55203 || x2 >= 63744 && x2 <= 64255 || x2 >= 65040 && x2 <= 65049 || x2 >= 65072 && x2 <= 65106 || x2 >= 65108 && x2 <= 65126 || x2 >= 65128 && x2 <= 65131 || x2 >= 94176 && x2 <= 94180 || x2 >= 94192 && x2 <= 94198 || x2 >= 94208 && x2 <= 101589 || x2 >= 101631 && x2 <= 101662 || x2 >= 101760 && x2 <= 101874 || x2 >= 110576 && x2 <= 110579 || x2 >= 110581 && x2 <= 110587 || x2 === 110589 || x2 === 110590 || x2 >= 110592 && x2 <= 110882 || x2 === 110898 || x2 >= 110928 && x2 <= 110930 || x2 === 110933 || x2 >= 110948 && x2 <= 110951 || x2 >= 110960 && x2 <= 111355 || x2 >= 119552 && x2 <= 119638 || x2 >= 119648 && x2 <= 119670 || x2 === 126980 || x2 === 127183 || x2 === 127374 || x2 >= 127377 && x2 <= 127386 || x2 >= 127488 && x2 <= 127490 || x2 >= 127504 && x2 <= 127547 || x2 >= 127552 && x2 <= 127560 || x2 === 127568 || x2 === 127569 || x2 >= 127584 && x2 <= 127589 || x2 >= 127744 && x2 <= 127776 || x2 >= 127789 && x2 <= 127797 || x2 >= 127799 && x2 <= 127868 || x2 >= 127870 && x2 <= 127891 || x2 >= 127904 && x2 <= 127946 || x2 >= 127951 && x2 <= 127955 || x2 >= 127968 && x2 <= 127984 || x2 === 127988 || x2 >= 127992 && x2 <= 128062 || x2 === 128064 || x2 >= 128066 && x2 <= 128252 || x2 >= 128255 && x2 <= 128317 || x2 >= 128331 && x2 <= 128334 || x2 >= 128336 && x2 <= 128359 || x2 === 128378 || x2 === 128405 || x2 === 128406 || x2 === 128420 || x2 >= 128507 && x2 <= 128591 || x2 >= 128640 && x2 <= 128709 || x2 === 128716 || x2 >= 128720 && x2 <= 128722 || x2 >= 128725 && x2 <= 128728 || x2 >= 128732 && x2 <= 128735 || x2 === 128747 || x2 === 128748 || x2 >= 128756 && x2 <= 128764 || x2 >= 128992 && x2 <= 129003 || x2 === 129008 || x2 >= 129292 && x2 <= 129338 || x2 >= 129340 && x2 <= 129349 || x2 >= 129351 && x2 <= 129535 || x2 >= 129648 && x2 <= 129660 || x2 >= 129664 && x2 <= 129674 || x2 >= 129678 && x2 <= 129734 || x2 === 129736 || x2 >= 129741 && x2 <= 129756 || x2 >= 129759 && x2 <= 129770 || x2 >= 129775 && x2 <= 129784 || x2 >= 131072 && x2 <= 196605 || x2 >= 196608 && x2 <= 262141;
-}
+var isAmbiguous = (codePoint) => {
+  if (codePoint < ambiguousMinimalCodePoint || codePoint > ambiguousMaximumCodePoint) {
+    return false;
+  }
+  return isInRange(ambiguousRanges, codePoint);
+};
+var isFullwidth = (codePoint) => {
+  if (codePoint < fullwidthMinimalCodePoint || codePoint > fullwidthMaximumCodePoint) {
+    return false;
+  }
+  return isInRange(fullwidthRanges, codePoint);
+};
+var isWide = (codePoint) => {
+  if (codePoint >= wideFastPathStart && codePoint <= wideFastPathEnd) {
+    return true;
+  }
+  if (codePoint < wideMinimalCodePoint || codePoint > wideMaximumCodePoint) {
+    return false;
+  }
+  return isInRange(wideRanges, codePoint);
+};
 
 // node_modules/get-east-asian-width/index.js
 function validate(codePoint) {
@@ -17098,30 +17498,90 @@ function validate(codePoint) {
 }
 function eastAsianWidth(codePoint, { ambiguousAsWide = false } = {}) {
   validate(codePoint);
-  if (isFullWidth2(codePoint) || isWide2(codePoint) || ambiguousAsWide && isAmbiguous2(codePoint)) {
+  if (isFullwidth(codePoint) || isWide(codePoint) || ambiguousAsWide && isAmbiguous(codePoint)) {
     return 2;
   }
   return 1;
 }
 
-// node_modules/ora/node_modules/string-width/index.js
+// node_modules/string-width/index.js
 var segmenter = new Intl.Segmenter();
-var zeroWidthClusterRegex = new RegExp("^(?:\\p{Default_Ignorable_Code_Point}|\\p{Control}|\\p{Format}|\\p{Mark}|\\p{Surrogate})+$", "v");
-var leadingNonPrintingRegex = new RegExp("^[\\p{Default_Ignorable_Code_Point}\\p{Control}\\p{Format}\\p{Mark}\\p{Surrogate}]+", "v");
+var visibleCharacterRegex = new RegExp("[^\\p{Default_Ignorable_Code_Point}\\p{Control}\\p{Format}\\p{Nonspacing_Mark}\\p{Enclosing_Mark}\\p{Surrogate}]", "v");
+var spacingMarkRegex = new RegExp("\\p{Spacing_Mark}", "v");
 var rgiEmojiRegex = new RegExp("^\\p{RGI_Emoji}$", "v");
+var unqualifiedKeycapRegex = /^[\d#*]\u20E3$/;
+var extendedPictographicRegex = new RegExp("\\p{Extended_Pictographic}", "gu");
+function isDoubleWidthNonRgiEmojiSequence(segment) {
+  if (segment.length > 50) {
+    return false;
+  }
+  if (unqualifiedKeycapRegex.test(segment)) {
+    return true;
+  }
+  if (segment.includes("\u200D")) {
+    const pictographics = segment.match(extendedPictographicRegex);
+    return pictographics !== null && pictographics.length >= 2;
+  }
+  return false;
+}
 function baseVisible(segment) {
-  return segment.replace(leadingNonPrintingRegex, "");
+  const index = segment.search(visibleCharacterRegex);
+  return index === -1 ? void 0 : segment.slice(index);
 }
-function isZeroWidthCluster(segment) {
-  return zeroWidthClusterRegex.test(segment);
+function isHangulLeadingJamo(codePoint) {
+  return codePoint >= 4352 && codePoint <= 4447 || codePoint >= 43360 && codePoint <= 43388;
 }
-function trailingHalfwidthWidth(segment, eastAsianWidthOptions) {
-  let extra = 0;
-  if (segment.length > 1) {
-    for (const char of segment.slice(1)) {
-      if (char >= "\uFF00" && char <= "\uFFEF") {
-        extra += eastAsianWidth(char.codePointAt(0), eastAsianWidthOptions);
+function isHangulVowelJamo(codePoint) {
+  return codePoint >= 4448 && codePoint <= 4519 || codePoint >= 55216 && codePoint <= 55238;
+}
+function isHangulTrailingJamo(codePoint) {
+  return codePoint >= 4520 && codePoint <= 4607 || codePoint >= 55243 && codePoint <= 55291;
+}
+function isHangulJamo(codePoint) {
+  return isHangulLeadingJamo(codePoint) || isHangulVowelJamo(codePoint) || isHangulTrailingJamo(codePoint);
+}
+function hangulClusterWidth(visibleSegment, eastAsianWidthOptions) {
+  const codePoints = [];
+  for (const character of visibleSegment) {
+    if (!visibleCharacterRegex.test(character)) {
+      continue;
+    }
+    codePoints.push(character.codePointAt(0));
+  }
+  if (codePoints.length === 0) {
+    return void 0;
+  }
+  let width = 0;
+  for (let index = 0; index < codePoints.length; index++) {
+    const codePoint = codePoints[index];
+    if (!isHangulJamo(codePoint)) {
+      if (width === 0) {
+        return void 0;
       }
+      for (let remaining = index; remaining < codePoints.length; remaining++) {
+        width += eastAsianWidth(codePoints[remaining], eastAsianWidthOptions);
+      }
+      return width;
+    }
+    if (isHangulLeadingJamo(codePoint) && isHangulVowelJamo(codePoints[index + 1])) {
+      width += 2;
+      index += isHangulTrailingJamo(codePoints[index + 2]) ? 2 : 1;
+      continue;
+    }
+    width += eastAsianWidth(codePoint, eastAsianWidthOptions);
+  }
+  return width;
+}
+function trailingWidth(visibleSegment, eastAsianWidthOptions) {
+  let extra = 0;
+  let first = true;
+  for (const character of visibleSegment) {
+    if (first) {
+      first = false;
+      continue;
+    }
+    if (spacingMarkRegex.test(character) || character >= "\uFF00" && character <= "\uFFEF") {
+      extra += eastAsianWidth(character.codePointAt(0), eastAsianWidthOptions);
     }
   }
   return extra;
@@ -17135,25 +17595,34 @@ function stringWidth(input, options = {}) {
     countAnsiEscapeCodes = false
   } = options;
   let string = input;
-  if (!countAnsiEscapeCodes) {
+  if (!countAnsiEscapeCodes && (string.includes("\x1B") || string.includes("\x9B"))) {
     string = stripAnsi(string);
   }
   if (string.length === 0) {
     return 0;
   }
+  if (/^[\u0020-\u007E]*$/.test(string)) {
+    return string.length;
+  }
   let width = 0;
   const eastAsianWidthOptions = { ambiguousAsWide: !ambiguousIsNarrow };
   for (const { segment } of segmenter.segment(string)) {
-    if (isZeroWidthCluster(segment)) {
+    const visibleSegment = baseVisible(segment);
+    if (visibleSegment === void 0) {
       continue;
     }
-    if (rgiEmojiRegex.test(segment)) {
+    if (rgiEmojiRegex.test(segment) || isDoubleWidthNonRgiEmojiSequence(segment)) {
       width += 2;
       continue;
     }
-    const codePoint = baseVisible(segment).codePointAt(0);
+    const hangulWidth = hangulClusterWidth(visibleSegment, eastAsianWidthOptions);
+    if (hangulWidth !== void 0) {
+      width += hangulWidth;
+      continue;
+    }
+    const codePoint = visibleSegment.codePointAt(0);
     width += eastAsianWidth(codePoint, eastAsianWidthOptions);
-    width += trailingHalfwidthWidth(segment, eastAsianWidthOptions);
+    width += trailingWidth(visibleSegment, eastAsianWidthOptions);
   }
   return width;
 }
@@ -17179,11 +17648,7 @@ var StdinDiscarder = class {
     }
     const code = typeof chunk === "string" ? chunk.codePointAt(0) : chunk[0];
     if (code === ASCII_ETX_CODE) {
-      if (process13.listenerCount("SIGINT") > 0) {
-        process13.emit("SIGINT");
-      } else {
-        process13.kill(process13.pid, "SIGINT");
-      }
+      process13.kill(process13.pid, "SIGINT");
     }
   };
   start() {
@@ -17201,31 +17666,31 @@ var StdinDiscarder = class {
     }
   }
   #realStart() {
-    const { stdin } = process13;
-    if (process13.platform === "win32" || !stdin?.isTTY || typeof stdin.setRawMode !== "function") {
+    const { stdin: stdin2 } = process13;
+    if (process13.platform === "win32" || !stdin2?.isTTY || typeof stdin2.setRawMode !== "function") {
       this.#stdin = void 0;
       return;
     }
-    this.#stdin = stdin;
-    this.#stdinWasPaused = stdin.isPaused();
-    this.#stdinWasRaw = Boolean(stdin.isRaw);
-    stdin.setRawMode(true);
-    stdin.prependListener("data", this.#handleInputBound);
+    this.#stdin = stdin2;
+    this.#stdinWasPaused = stdin2.isPaused();
+    this.#stdinWasRaw = Boolean(stdin2.isRaw);
+    stdin2.setRawMode(true);
+    stdin2.prependListener("data", this.#handleInputBound);
     if (this.#stdinWasPaused) {
-      stdin.resume();
+      stdin2.resume();
     }
   }
   #realStop() {
     if (!this.#stdin) {
       return;
     }
-    const stdin = this.#stdin;
-    stdin.off("data", this.#handleInputBound);
-    if (stdin.isTTY) {
-      stdin.setRawMode?.(this.#stdinWasRaw);
+    const stdin2 = this.#stdin;
+    stdin2.off("data", this.#handleInputBound);
+    if (stdin2.isTTY) {
+      stdin2.setRawMode?.(this.#stdinWasRaw);
     }
     if (this.#stdinWasPaused) {
-      stdin.pause();
+      stdin2.pause();
     }
     this.#stdin = void 0;
     this.#stdinWasPaused = false;
@@ -17240,6 +17705,7 @@ var RENDER_DEFERRAL_TIMEOUT = 200;
 var SYNCHRONIZED_OUTPUT_ENABLE = "\x1B[?2026h";
 var SYNCHRONIZED_OUTPUT_DISABLE = "\x1B[?2026l";
 var activeHooksPerStream = /* @__PURE__ */ new Map();
+var validColors = /* @__PURE__ */ new Set(["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white", "gray"]);
 var Ora = class {
   #linesToClear = 0;
   #frameIndex = -1;
@@ -17253,7 +17719,7 @@ var Ora = class {
   #drainHandler;
   #deferRenderTimer;
   #isDiscardingStdin = false;
-  color;
+  #color;
   // Helper to execute writes while preventing hook recursion
   #internalWrite(fn) {
     this.#isInternalWrite = true;
@@ -17310,12 +17776,12 @@ var Ora = class {
     }
   }
   // Helper to build complete line with symbol, text, prefix, and suffix
-  #buildOutputLine(symbol, text, prefixText, suffixText) {
+  #buildOutputLine(symbol2, text2, prefixText, suffixText) {
     const fullPrefixText = this.#getFullPrefixText(prefixText, " ");
-    const separatorText = symbol ? " " : "";
-    const fullText = typeof text === "string" ? separatorText + text : "";
+    const separatorText = symbol2 ? " " : "";
+    const fullText = typeof text2 === "string" ? separatorText + text2 : "";
     const fullSuffixText = this.#getFullSuffixText(suffixText, " ");
-    return fullPrefixText + symbol + fullText + fullSuffixText;
+    return fullPrefixText + symbol2 + fullText + fullSuffixText;
   }
   constructor(options) {
     if (typeof options === "string") {
@@ -17337,6 +17803,9 @@ var Ora = class {
     }
     if (typeof this.#options.isSilent !== "boolean") {
       this.#options.isSilent = false;
+    }
+    if (this.#options.interval !== void 0 && !(Number.isInteger(this.#options.interval) && this.#options.interval > 0)) {
+      throw new Error("The `interval` option must be a positive integer");
     }
     const userInterval = this.#options.interval;
     this.spinner = this.#options.spinner;
@@ -17390,25 +17859,25 @@ var Ora = class {
   get spinner() {
     return this.#spinner;
   }
-  set spinner(spinner) {
+  set spinner(spinner2) {
     this.#frameIndex = -1;
     this.#options.interval = void 0;
-    if (typeof spinner === "object") {
-      if (!Array.isArray(spinner.frames) || spinner.frames.length === 0 || spinner.frames.some((frame) => typeof frame !== "string")) {
+    if (typeof spinner2 === "object") {
+      if (!Array.isArray(spinner2.frames) || spinner2.frames.length === 0 || spinner2.frames.some((frame) => typeof frame !== "string")) {
         throw new Error("The given spinner must have a non-empty `frames` array of strings");
       }
-      if (spinner.interval !== void 0 && !(Number.isInteger(spinner.interval) && spinner.interval > 0)) {
+      if (spinner2.interval !== void 0 && !(Number.isInteger(spinner2.interval) && spinner2.interval > 0)) {
         throw new Error("`spinner.interval` must be a positive integer if provided");
       }
-      this.#spinner = spinner;
+      this.#spinner = spinner2;
     } else if (!isUnicodeSupported()) {
       this.#spinner = cli_spinners_default.line;
-    } else if (spinner === void 0) {
+    } else if (spinner2 === void 0) {
       this.#spinner = cli_spinners_default.dots;
-    } else if (spinner !== "default" && cli_spinners_default[spinner]) {
-      this.#spinner = cli_spinners_default[spinner];
+    } else if (spinner2 !== "default" && cli_spinners_default[spinner2]) {
+      this.#spinner = cli_spinners_default[spinner2];
     } else {
-      throw new Error(`There is no built-in spinner named '${spinner}'. See https://github.com/sindresorhus/cli-spinners/blob/main/spinners.json for a full list.`);
+      throw new Error(`There is no built-in spinner named '${spinner2}'. See https://github.com/sindresorhus/cli-spinners/blob/main/spinners.json for a full list.`);
     }
   }
   get text() {
@@ -17445,12 +17914,21 @@ var Ora = class {
   #getFullSuffixText(suffixText = this.#options.suffixText, prefix = " ") {
     return this.#formatAffix(suffixText, prefix, true);
   }
-  #computeLineCountFrom(text, columns) {
+  #computeLineCountFrom(text2, columns) {
     let count2 = 0;
-    for (const line of stripVTControlCharacters2(text).split("\n")) {
+    for (const line of stripVTControlCharacters3(text2).split("\n")) {
       count2 += Math.max(1, Math.ceil(stringWidth(line) / columns));
     }
     return count2;
+  }
+  get color() {
+    return this.#color;
+  }
+  set color(value) {
+    if (value !== void 0 && value !== false && !validColors.has(value)) {
+      throw new Error("The `color` option must be a valid color or `false` to disable");
+    }
+    this.#color = value;
   }
   get isEnabled() {
     return this.#options.isEnabled && !this.#options.isSilent;
@@ -17478,8 +17956,8 @@ var Ora = class {
     }
     const { frames } = this.#spinner;
     let frame = frames[this.#frameIndex];
-    if (this.color) {
-      frame = source_default[this.color](frame);
+    if (this.#color) {
+      frame = source_default[this.#color](frame);
     }
     const fullPrefixText = this.#getFullPrefixText(this.#options.prefixText, " ");
     const fullText = typeof this.text === "string" ? " " + this.text : "";
@@ -17600,16 +18078,16 @@ var Ora = class {
     }
     return this;
   }
-  start(text) {
-    if (text) {
-      this.text = text;
+  start(text2) {
+    if (text2 !== void 0) {
+      this.text = text2;
     }
     if (this.isSilent) {
       return this;
     }
     if (!this.isEnabled) {
-      const symbol = this.text ? "-" : "";
-      const line = " ".repeat(this.#options.indent) + this.#buildOutputLine(symbol, this.text, this.#options.prefixText, this.#options.suffixText);
+      const symbol2 = this.text ? "-" : "";
+      const line = " ".repeat(this.#options.indent) + this.#buildOutputLine(symbol2, this.text, this.#options.prefixText, this.#options.suffixText);
       if (line.trim() !== "") {
         this.#internalWrite(() => this.#stream.write(line + "\n"));
       }
@@ -17653,27 +18131,27 @@ var Ora = class {
     }
     return this;
   }
-  succeed(text) {
-    return this.stopAndPersist({ symbol: symbols_exports.success, text });
+  succeed(text2) {
+    return this.stopAndPersist({ symbol: symbols_exports.success, text: text2 });
   }
-  fail(text) {
-    return this.stopAndPersist({ symbol: symbols_exports.error, text });
+  fail(text2) {
+    return this.stopAndPersist({ symbol: symbols_exports.error, text: text2 });
   }
-  warn(text) {
-    return this.stopAndPersist({ symbol: symbols_exports.warning, text });
+  warn(text2) {
+    return this.stopAndPersist({ symbol: symbols_exports.warning, text: text2 });
   }
-  info(text) {
-    return this.stopAndPersist({ symbol: symbols_exports.info, text });
+  info(text2) {
+    return this.stopAndPersist({ symbol: symbols_exports.info, text: text2 });
   }
   stopAndPersist(options = {}) {
     if (this.isSilent) {
       return this;
     }
-    const symbol = options.symbol ?? " ";
-    const text = options.text ?? this.text;
+    const symbol2 = options.symbol ?? " ";
+    const text2 = options.text ?? this.text;
     const prefixText = options.prefixText ?? this.#options.prefixText;
     const suffixText = options.suffixText ?? this.#options.suffixText;
-    const textToWrite = this.#buildOutputLine(symbol, text, prefixText, suffixText) + "\n";
+    const textToWrite = this.#buildOutputLine(symbol2, text2, prefixText, suffixText) + "\n";
     this.stop();
     this.#internalWrite(() => this.#stream.write(textToWrite));
     return this;
@@ -17711,7 +18189,7 @@ async function main2(deps) {
  *
  * @format
  */`;
-  const spinner = ora("Adding license headers...").start();
+  const spinner2 = ora("Adding license headers...").start();
   let filesModified = 0;
   function scanDirectory(dir) {
     const files = fs3.readdirSync(dir);
@@ -17733,9 +18211,9 @@ ${content}`);
   }
   try {
     scanDirectory(absoluteTargetDir);
-    spinner.succeed(`Added license headers to ${filesModified} files.`);
+    spinner2.succeed(`Added license headers to ${filesModified} files.`);
   } catch (error2) {
-    spinner.fail("Failed to add license headers.");
+    spinner2.fail("Failed to add license headers.");
     console.error(error2);
   }
 }
@@ -17763,7 +18241,7 @@ async function main3() {
     }
   ]);
   debugTestSetup("Selected framework: %s", answers.framework);
-  const spinner = ora(`Setting up ${answers.framework}...`).start();
+  const spinner2 = ora(`Setting up ${answers.framework}...`).start();
   try {
     switch (answers.framework) {
       case "Jest":
@@ -17776,11 +18254,11 @@ async function main3() {
         await setupMochaChai(answers);
         break;
     }
-    spinner.succeed(`${answers.framework} setup complete!`);
+    spinner2.succeed(`${answers.framework} setup complete!`);
     debugTestSetup("%s setup completed successfully", answers.framework);
   } catch (error2) {
     debugTestSetup("Failed to set up %s: %o", answers.framework, error2);
-    spinner.fail(`Failed to set up ${answers.framework}.`);
+    spinner2.fail(`Failed to set up ${answers.framework}.`);
     console.error(error2);
     process.exit(1);
   }
@@ -17994,8 +18472,8 @@ async function main4(deps) {
   const fsExtra = deps.fsExtra || _fsExtra;
   async function getTemplates() {
     debugTemplates("Fetching available templates");
-    const spinner2 = fe();
-    spinner2.start("Loading template library...");
+    const spinner3 = spinner();
+    spinner3.start("Loading template library...");
     try {
       const templatesPath = join4(dirname(fileURLToPath3(import.meta.url)), "..", "template-library");
       const templates = fs3.readdirSync(templatesPath).filter((file) => {
@@ -18003,19 +18481,19 @@ async function main4(deps) {
         return fs3.statSync(filePath).isDirectory();
       });
       debugTemplates("Found templates: %o", templates);
-      spinner2.stop("Template library loaded.");
+      spinner3.stop("Template library loaded.");
       return templates;
     } catch (error2) {
       debugTemplates("Failed to fetch templates: %o", error2);
-      spinner2.stop("Failed to load template library.");
+      spinner3.stop("Failed to load template library.");
       console.error(error2);
       process.exit(1);
     }
   }
   async function applyTemplate(templateName, projectDir2, answers2) {
     debugTemplatesApply("Applying template: %s to project: %s", templateName, projectDir2);
-    const spinner2 = fe();
-    spinner2.start(`Applying template: ${templateName}...`);
+    const spinner3 = spinner();
+    spinner3.start(`Applying template: ${templateName}...`);
     try {
       const templateDir = join4(
         dirname(fileURLToPath3(import.meta.url)),
@@ -18064,31 +18542,31 @@ async function main4(deps) {
         }
         fsExtra.copySync(join4(featuresDir, "versioning"), projectDir2);
       }
-      spinner2.stop("Template applied.");
+      spinner3.stop("Template applied.");
     } catch (error2) {
       debugTemplatesApply("Failed to apply template: %o", error2);
-      spinner2.stop("Failed to apply template.");
+      spinner3.stop("Failed to apply template.");
       console.error(error2);
       process.exit(1);
     }
   }
-  mt("Let's create a new project!");
+  intro("Let's create a new project!");
   const cliArgs = process.argv.slice(2).filter((arg) => !arg.startsWith("--"));
   const projectNameFromArg = cliArgs[0];
   const answers = {};
   if (projectNameFromArg) {
     answers.projectName = projectNameFromArg;
-    O2.info(`Using project name from argument: ${projectNameFromArg}`);
+    log.info(`Using project name from argument: ${projectNameFromArg}`);
   }
   const answersArg = args.find((arg) => arg.startsWith("--answers="));
   if (answersArg) {
     const answersJSON = answersArg.split("=")[1];
     Object.assign(answers, JSON.parse(answersJSON));
   } else {
-    const group = await dt(
+    const group2 = await group(
       {
         ...!projectNameFromArg && {
-          projectName: () => Ot({
+          projectName: () => text({
             message: "Project name:",
             placeholder: "my-awesome-project",
             validate: (value) => {
@@ -18096,23 +18574,23 @@ async function main4(deps) {
             }
           })
         },
-        template: async () => _t({
+        template: async () => select({
           message: "Select a project template:",
           options: (await getTemplates()).map((t3) => ({ value: t3, label: t3 }))
         })
       },
       {
         onCancel: () => {
-          pt("Operation cancelled.");
+          cancel("Operation cancelled.");
           process.exit(0);
         }
       }
     );
-    Object.assign(answers, group);
+    Object.assign(answers, group2);
     if (answers.template === "discord-bot") {
-      const discordGroup = await dt(
+      const discordGroup = await group(
         {
-          discordFeatures: () => yt({
+          discordFeatures: () => multiselect({
             message: "Select Discord bot features:",
             options: [
               { value: "welcome", label: "Include welcome messages for new users" },
@@ -18121,14 +18599,14 @@ async function main4(deps) {
             ],
             required: false
           }),
-          discordRPC: () => ot2({
+          discordRPC: () => confirm({
             message: "Include Discord RPC (activity status)?",
             initialValue: false
           })
         },
         {
           onCancel: () => {
-            pt("Operation cancelled.");
+            cancel("Operation cancelled.");
             process.exit(0);
           }
         }
@@ -18136,42 +18614,42 @@ async function main4(deps) {
       Object.assign(answers, discordGroup);
     }
     if (answers.template === "vue-wizard") {
-      const vueWizardGroup = await dt(
+      const vueWizardGroup = await group(
         {
-          isPublic: () => ot2({
+          isPublic: () => confirm({
             message: "Make the repository public?",
             initialValue: true
           }),
-          addLicense: () => ot2({
+          addLicense: () => confirm({
             message: "Add a LICENSE file?",
             initialValue: true
           }),
-          addFunding: () => ot2({
+          addFunding: () => confirm({
             message: "Add a FUNDING.yml file?",
             initialValue: false
           }),
-          addDocs: () => ot2({
+          addDocs: () => confirm({
             message: "Set up a docs/ directory?",
             initialValue: false
           }),
-          useGhPages: () => ot2({
+          useGhPages: () => confirm({
             message: "Set up a GitHub Pages deployment workflow?",
             initialValue: false
           })
         },
         {
           onCancel: () => {
-            pt("Operation cancelled.");
+            cancel("Operation cancelled.");
             process.exit(0);
           }
         }
       );
       Object.assign(answers, vueWizardGroup);
     }
-    const customizationGroup = await dt(
+    const customizationGroup = await group(
       {
         ...!answers.template.startsWith("vue-wizard") && {
-          dependencies: () => yt({
+          dependencies: () => multiselect({
             message: "Which packages should be installed?",
             options: [
               { value: { name: "express", version: "^4.18.2" }, label: "express" },
@@ -18183,17 +18661,17 @@ async function main4(deps) {
             required: false
           })
         },
-        initGit: () => ot2({
+        initGit: () => confirm({
           message: "Initialize a Git repository?",
           initialValue: true
         }),
-        includeTestFramework: () => ot2({
+        includeTestFramework: () => confirm({
           message: "Include a testing framework?",
           initialValue: false
         }),
         testFramework: ({ results }) => {
           if (results.includeTestFramework) {
-            return _t({
+            return select({
               message: "Which testing framework?",
               options: [
                 { value: "Jest", label: "Jest" },
@@ -18203,38 +18681,38 @@ async function main4(deps) {
             });
           }
         },
-        includeTypeScript: () => ot2({
+        includeTypeScript: () => confirm({
           message: "Include TypeScript?",
           initialValue: false
         }),
-        includeEslint: () => ot2({
+        includeEslint: () => confirm({
           message: "Include ESLint for linting?",
           initialValue: false
         }),
-        includePrettier: () => ot2({
+        includePrettier: () => confirm({
           message: "Include Prettier for code formatting?",
           initialValue: false
         }),
-        includeDocker: () => ot2({
+        includeDocker: () => confirm({
           message: "Include Docker support?",
           initialValue: false
         }),
-        includeGithubActions: () => ot2({
+        includeGithubActions: () => confirm({
           message: "Include GitHub Actions workflow?",
           initialValue: false
         }),
-        includeGitlabCi: () => ot2({
+        includeGitlabCi: () => confirm({
           message: "Include GitLab CI/CD pipeline?",
           initialValue: false
         }),
-        includeDebugConfig: () => ot2({
+        includeDebugConfig: () => confirm({
           message: "Include VS Code debug configuration?",
           initialValue: false
         })
       },
       {
         onCancel: () => {
-          pt("Operation cancelled.");
+          cancel("Operation cancelled.");
           process.exit(0);
         }
       }
@@ -18243,18 +18721,18 @@ async function main4(deps) {
   }
   const projectDir = join4(process.cwd(), answers.projectName);
   if (fs3.existsSync(projectDir)) {
-    pt("Error: Project folder already exists.");
+    cancel("Error: Project folder already exists.");
     process.exit(1);
   }
   fs3.mkdirSync(projectDir, { recursive: true });
   process.chdir(projectDir);
-  const spinner = fe();
-  spinner.start("Initializing new project (npm init -y)...");
+  const spinner2 = spinner();
+  spinner2.start("Initializing new project (npm init -y)...");
   await execa2("npm", ["init", "-y"]);
-  spinner.stop("Project initialized.");
+  spinner2.stop("Project initialized.");
   await applyTemplate(answers.template, projectDir, answers);
   if (answers.includeTestFramework) {
-    spinner.start(`Setting up ${answers.testFramework}...`);
+    spinner2.start(`Setting up ${answers.testFramework}...`);
     try {
       process.chdir(projectDir);
       switch (answers.testFramework) {
@@ -18268,9 +18746,9 @@ async function main4(deps) {
           await setupMochaChai(answers);
           break;
       }
-      spinner.stop(`${answers.testFramework} setup complete!`);
+      spinner2.stop(`${answers.testFramework} setup complete!`);
     } catch (error2) {
-      spinner.stop(`Failed to set up ${answers.testFramework}.`);
+      spinner2.stop(`Failed to set up ${answers.testFramework}.`);
       console.error(error2);
       process.exit(1);
     }
@@ -18515,34 +18993,34 @@ test-job:
   );
   if (allDependencies.length > 0) {
     debugDeps("Installing dependencies: %o", allDependencies);
-    spinner.start("Installing dependencies...");
+    spinner2.start("Installing dependencies...");
     await execa2("npm", ["install", ...allDependencies]);
-    spinner.stop("Dependencies installed.");
+    spinner2.stop("Dependencies installed.");
     debugDeps("Dependencies installed successfully");
   }
   if (allDevDependencies.length > 0) {
     debugDeps("Installing dev dependencies: %o", allDevDependencies);
-    spinner.start("Installing dev dependencies...");
+    spinner2.start("Installing dev dependencies...");
     await execa2("npm", ["install", "--save-dev", ...allDevDependencies]);
-    spinner.stop("Dev dependencies installed.");
+    spinner2.stop("Dev dependencies installed.");
     debugDeps("Dev dependencies installed successfully");
   }
   if (answers.initGit) {
     debugGit("Initializing Git repository");
-    spinner.start("Initializing Git repository...");
+    spinner2.start("Initializing Git repository...");
     await execa2("git", ["init"]);
-    spinner.stop("Git repository initialized.");
+    spinner2.stop("Git repository initialized.");
     debugGit("Git repository initialized successfully");
-    spinner.start("Staging files...");
+    spinner2.start("Staging files...");
     await execa2("git", ["add", "."]);
-    spinner.stop("Files staged.");
+    spinner2.stop("Files staged.");
     debugGit("Files staged successfully");
-    spinner.start("Committing initial changes...");
+    spinner2.start("Committing initial changes...");
     await execa2("git", ["commit", "-m", "Initial commit"]);
-    spinner.stop("Initial commit created.");
+    spinner2.stop("Initial commit created.");
     debugGit("Initial commit created successfully");
   }
-  gt("Project successfully created!");
+  outro("Project successfully created!");
   console.log("\nThank you for using @involvex/create-wizard!");
   console.log(
     "If you want to support the project, you can do so at https://buymeacoffee.com/involvex"

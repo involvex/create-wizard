@@ -1,0 +1,18 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "gemini-ai-starter",
+      "dependencies": {
+        "@google/generative-ai": "^0.2.1",
+        "dotenv": "^16.4.5",
+      },
+    },
+  },
+  "packages": {
+    "@google/generative-ai": ["@google/generative-ai@0.2.1", "", {}, "sha512-gNmMFadfwi7qf/6M9gImgyGJXY1jKQ/de8vGOqgJ0PPYgQ7WwzZDavbKrIuXS2zdqZZaYtxW3EFN6aG9x5wtFw=="],
+
+    "dotenv": ["dotenv@16.6.1", "", {}, "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow=="],
+  }
+}

@@ -15,22 +15,26 @@
     "version": "node scripts/version.js"
   },
   "dependencies": {
-    "pinia": "2.1.7",
-    "vue": "3.5.43",
-    "vue-router": "4.3.0"
+    "pinia": "^4.0.3",
+    "vue": "^3.5.43",
+    "vue-router": "^5.4.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.9",
-    "@vue/eslint-config-prettier": "9.0.0",
-    "@vue/eslint-config-typescript": "13.0.0",
-    "@vue/test-utils": "2.4.5",
-    "eslint": "8.57.0",
-    "jsdom": "24.0.0",
-    "prettier": "3.2.5",
-    "semver": "7.6.2",
-    "typescript": "5.4.5",
-    "vite": "^7.3.6",
-    "vitest": "^5.0.2",
-    "vue-tsc": "^2.2.12"
+    "@vitejs/plugin-vue": "^6.0.10",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.9.0",
+    "@vue/test-utils": "^2.5.1",
+    "eslint": "^10.12.0",
+    "jsdom": "^30.1.2",
+    "prettier": "^3.9.10",
+    "semver": "^7.8.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.4",
+    "vue-tsc": "^3.3.13"
+  },
+  "overrides": {
+    "eslint-plugin-vue": "^10.11.1",
+    "postcss-selector-parser": "^7.1.6"
   }
 }

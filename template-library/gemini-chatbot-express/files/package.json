@@ -26,6 +26,9 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "latest"
+  },
+  "overrides": {
+    "chokidar": "^5.0.0"
   }
 }
